@@ -15,6 +15,7 @@ import {NavigationBar} from "./Components/Navigation/Navbar";
 import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
+import {Requests} from "./Screens/Requests/Requests";
 
 
 const store = createStore(reducer);
@@ -27,7 +28,8 @@ const CustomRoute = () => {
       <div>
         {token && <NavigationBar/>}
         <Switch>
-          <PrivateRoute exact path="/" component={Projects}/>
+          <PrivateRoute exact path="/projects" component={Projects}/>
+          <PrivateRoute exact path="/projects/:projectId" component={Requests}/>
           <PublicRoute exact path="/login" component={Login}/>
         </Switch>
       </div>

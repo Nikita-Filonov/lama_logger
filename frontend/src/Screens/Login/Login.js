@@ -24,7 +24,7 @@ export const Login = () => {
       .then(async data => {
         if (data?.token) {
           await onLogin(data.token)
-          history.push('/')
+          history.push('/projects')
         } else {
           setErrors(data)
         }
