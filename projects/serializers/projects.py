@@ -2,9 +2,16 @@ from rest_framework import serializers
 
 from projects.models import Project, Member, Role
 from projects.permissions.roles import Admin, AccountManager, Editor, Viewer
+from projects.serializers.members import MembersSerializer
+from projects.serializers.roles import RolesSerializer
+from users.serializers.users import DefaultUserSerializer
 
 
 class ProjectsSerializer(serializers.ModelSerializer):
+    members = MembersSerializer(many=True, read_only=True)
+    roles = RolesSerializer(many=True, read_only=True)
+    creator = DefaultUserSerializer(many=False, read_only=True)
+
     class Meta:
         model = Project
         fields = '__all__'
