@@ -10,7 +10,7 @@ import reducer from './Redux/Reducers';
 import {createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider, useUsers} from "./Providers/UsersProvider";
-import {Projects} from "./Screens/Projects/Projects";
+import Projects from "./Screens/Projects/Projects";
 import {NavigationBar} from "./Components/Navigation/Navbar";
 import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/PublicRoute";
@@ -39,7 +39,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <UsersProvider>
-        <ProjectsProvider>
+        <ProjectsProvider store={store}>
           <CustomRoute/>
         </ProjectsProvider>
       </UsersProvider>

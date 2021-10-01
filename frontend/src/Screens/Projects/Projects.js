@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import {Container, Fab} from "@material-ui/core";
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {Add} from "@material-ui/icons";
 import {comp} from "../../Styles/Blocks";
+import {connect} from "react-redux";
+import {Project} from "../../Components/Items/Project";
 
 
-export const Projects = () => {
+const Projects = ({projects}) => {
   const [createProjectModal, setCreateProjectModal] = useState(false)
 
   const onCreateProject = () => setCreateProjectModal(true)
@@ -32,24 +30,7 @@ export const Projects = () => {
         }
         className={'mt-3'}
       >
-        <ListItemButton>
-          <ListItemIcon>
-            <FormatListBulletedIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Sent mail"/>
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <FormatListBulletedIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Sent mail"/>
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <FormatListBulletedIcon/>
-          </ListItemIcon>
-          <ListItemText primary="Sent mail"/>
-        </ListItemButton>
+        {projects.map(p => <Project project={p} key={p.id}/>)}
       </List>
       <Fab variant="extended" style={comp.fab} onClick={onCreateProject}>
         <Add sx={{mr: 1}}/>
@@ -59,3 +40,12 @@ export const Projects = () => {
     </Container>
   )
 }
+
+const getState = (state) => ({
+  projects: state.projects.projects
+})
+
+export default connect(
+  getState,
+  null,
+)(Projects);
