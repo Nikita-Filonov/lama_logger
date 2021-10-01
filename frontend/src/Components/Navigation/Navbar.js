@@ -1,17 +1,39 @@
-import React from "react";
-import {Nav, Navbar} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Slide from '@mui/material/Slide';
 
-export const NavigationBar = () => {
+function HideOnScroll(props) {
+  const {children, window} = props;
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={'fixed-top'}>
-      <Navbar.Brand className={'ms-4'} as={Link} to={'/'}>Lama Logger</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav>
-          <Nav.Link eventKey={'/'} to="/" as={Link}>{'Projects'}</Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  )
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+
+export const NavigationBar = (props) => {
+  return (
+    <React.Fragment>
+      <CssBaseline/>
+      <HideOnScroll {...props}>
+        <AppBar>
+          <Toolbar>
+            <Typography variant="h6" component="div">
+              Lama Logger
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
+      <Toolbar/>
+    </React.Fragment>
+  );
 }

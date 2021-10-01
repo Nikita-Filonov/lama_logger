@@ -8,13 +8,13 @@ import {BrowserRouter as Router, Switch} from "react-router-dom";
 
 import reducer from './Redux/Reducers';
 import {createStore} from "redux";
-import reportWebVitals from "./reportWebVitals";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider, useUsers} from "./Providers/UsersProvider";
 import {Projects} from "./Screens/Projects/Projects";
 import {NavigationBar} from "./Components/Navigation/Navbar";
 import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/PublicRoute";
+import {ProjectsProvider} from "./Providers/ProjectsProvider";
 
 
 const store = createStore(reducer);
@@ -39,15 +39,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <UsersProvider>
-        <CustomRoute/>
+        <ProjectsProvider>
+          <CustomRoute/>
+        </ProjectsProvider>
       </UsersProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

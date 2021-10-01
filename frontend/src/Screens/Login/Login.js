@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useUsers} from "../../Providers/UsersProvider";
 import {baseUrl} from "../../Utils/Constants";
 import {useHistory} from 'react-router-dom'
+import {Button, Container, Grid, TextField} from "@material-ui/core";
 
 
 export const Login = () => {
@@ -32,45 +32,44 @@ export const Login = () => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col/>
-        <Col xs={4}>
-          <div className={'text-center'} style={{marginTop: '40%'}}>
-            <h4>Lama Logger</h4>
-          </div>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                value={username}
-                onChange={event => setUsername(event.target.value)}
-                placeholder="Email"
-              />
-              {errors?.username && <Form.Text className={'text-danger'}>{errors.username}</Form.Text>}
-            </Form.Group>
+    <Container maxWidth="sm">>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                value={password}
-                onChange={event => setPassword(event.target.value)}
-                type="password"
-                placeholder="Password"
-              />
-              {errors?.password && <Form.Text className={'text-danger'}>{errors.password}</Form.Text>}
-            </Form.Group>
-            <Button
-              variant="outline-primary"
-              className={'w-100'}
-              onClick={onLoginPress}
-            >
-              Submit
-            </Button>
-          </Form>
-        </Col>
-        <Col/>
-      </Row>
+      <div className={'text-center'} style={{marginTop: '20%'}}>
+        <h4>Lama Logger</h4>
+      </div>
+      <Grid container spacing={2}>
+        <Grid item xs={2}/>
+        <Grid item xs={8}>
+          <TextField
+            value={username}
+            onChange={event => setUsername(event.target.value)}
+            fullWidth
+            label="E-mail"
+            variant="standard"
+            size={'small'}
+            className={'mt-3'}
+            error={errors?.username}
+            helperText={errors?.username}
+          />
+          <TextField
+            type={'password'}
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+            fullWidth
+            label="Password"
+            variant="standard"
+            size={'small'}
+            className={'mt-3'}
+            error={errors?.password}
+            helperText={errors?.password}
+          />
+          <Button className={'mt-4'} variant="outlined" fullWidth onClick={onLoginPress}>
+            Log in
+          </Button>
+        </Grid>
+        <Grid item xs={2}/>
+      </Grid>
+
     </Container>
   )
 }
