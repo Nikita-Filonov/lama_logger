@@ -1,12 +1,35 @@
 import React, {useState} from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useUsers} from "../../Providers/UsersProvider";
+import {baseUrl} from "../../Utils/Constants";
+import {useHistory} from 'react-router-dom'
 
 
 export const Login = () => {
-  const {onLogin, errors} = useUsers()
+  const history = useHistory()
+  const {onLogin} = useUsers()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({})
+
+  const onLoginPress = async () => {
+    await fetch(baseUrl + 'api-token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username, password})
+    })
+      .then(response => response.json())
+      .then(async data => {
+        if (data?.token) {
+          await onLogin(data.token)
+          history.push('/')
+        } else {
+          setErrors(data)
+        }
+      });
+  };
 
   return (
     <Container>
@@ -40,7 +63,7 @@ export const Login = () => {
             <Button
               variant="outline-primary"
               className={'w-100'}
-              onClick={async () => await onLogin({username, password})}
+              onClick={onLoginPress}
             >
               Submit
             </Button>

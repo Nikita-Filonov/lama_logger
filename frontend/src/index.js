@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './Styles/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Styles/main.css'
 
 import {Provider} from 'react-redux'
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Switch} from "react-router-dom";
 
 import reducer from './Redux/Reducers';
 import {createStore} from "redux";
 import reportWebVitals from "./reportWebVitals";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider, useUsers} from "./Providers/UsersProvider";
+import {Projects} from "./Screens/Projects/Projects";
+import {NavigationBar} from "./Components/Navigation/Navbar";
+import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
+import {PublicRoute} from "./Components/Navigation/PublicRoute";
 
 
 const store = createStore(reducer);
@@ -21,16 +25,10 @@ const CustomRoute = () => {
   return (
     <Router>
       <div>
+        {token && <NavigationBar/>}
         <Switch>
-          {
-            token ? (
-              <>
-                <Route exact path="/" component={Login}/>
-              </>
-            ) : (
-              <Route exact path="/login" component={Login}/>
-            )
-          }
+          <PrivateRoute exact path="/" component={Projects}/>
+          <PublicRoute exact path="/login" component={Login}/>
         </Switch>
       </div>
     </Router>

@@ -9,31 +9,19 @@ const UsersProvider = ({children}) => {
   const [token, setToken] = useState(null);
   const [request, setRequest] = useState(false);
   const [user, setUser] = useState({})
-  const [errors, setErrors] = useState({})
 
   useEffect(() => {
     (async () => {
+      const storageToken = localStorage.getItem('token')
+      setToken(storageToken)
 
+      token && await getUser()
     })();
   }, [token]);
 
-  const onLogin = async ({username, password}) => {
-    await fetch(baseUrl + 'api-token-auth/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username, password})
-    })
-      .then(response => response.json())
-      .then(async data => {
-        if (data?.token) {
-          setToken(token);
-          localStorage.setItem('token', data?.token)
-        } else {
-          setErrors(data)
-        }
-      });
+  const onLogin = async (token) => {
+    setToken(token);
+    localStorage.setItem('token', token)
   };
 
   const onLogout = async () => {
@@ -58,7 +46,6 @@ const UsersProvider = ({children}) => {
         user,
         token,
         request,
-        errors,
         onLogin,
         onLogout,
       }}
