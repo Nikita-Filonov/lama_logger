@@ -70,11 +70,13 @@ class Project(models.Model):
     )
     members = models.ManyToManyField(
         Member,
-        verbose_name='Members'
+        verbose_name='Members',
+        blank=True
     )
     roles = models.ManyToManyField(
         Role,
-        verbose_name='Roles'
+        verbose_name='Roles',
+        blank=True
     )
 
     def __str__(self):
