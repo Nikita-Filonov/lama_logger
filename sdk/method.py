@@ -1,10 +1,8 @@
-import json
-
 import requests
 
 from sdk.logger import LamaLogger
 
-logger = LamaLogger(token='ec89ccd61f5312e2cf5e037e2f97a5678030c14f', project_id=2)
+logger = LamaLogger(token='3eaa763398f4a6d12d276d856e8c358991007cb7', project_id=1)
 
 
 def get(url, params=None, **kwargs):
@@ -19,6 +17,19 @@ def post(url, data=None, json=None, **kwargs):
     return response
 
 
-get('http://localhost:8000/api/v1/projects/1/requests/',
-    headers={'Content-Type': 'application/json', 'Authorization': 'Token ec89ccd61f5312e2cf5e037e2f97a5678030c14f'},
-    data=json.dumps({'hello': 1}))
+def patch(url, data=None, **kwargs):
+    response = requests.patch(url, data=data, **kwargs)
+    logger(response)
+    return response
+
+
+def put(url, data=None, **kwargs):
+    response = requests.put(url, data=data, **kwargs)
+    logger(response)
+    return response
+
+
+def delete(url, **kwargs):
+    response = requests.delete(url, **kwargs)
+    logger(response)
+    return response

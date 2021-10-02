@@ -8,7 +8,7 @@ API_VERSION = 'v1'
 
 
 class LamaLogger:
-    api = f'http://localhost:8000/api/{API_VERSION}'
+    api = f'https://lama-logger.herokuapp.com/api/{API_VERSION}'
 
     def __init__(self, token, project_id):
         self._token = token
@@ -33,6 +33,7 @@ class LamaLogger:
             response_body = str(response.content)
 
         return {
+            'method': response.request.method,
             'request_url': response.request.url,
             'request_headers': dict(response.request.headers),
             'request_body': response.request.body,
