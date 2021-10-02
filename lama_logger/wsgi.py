@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lama_logger.settings.local')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lama_logger.settings.server')
 
 application = get_wsgi_application()

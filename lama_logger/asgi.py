@@ -11,7 +11,7 @@ import os
 
 import django
 
-DEBUG = True
+DEBUG = False
 # DEBUG - False for production
 # True - for local development
 
