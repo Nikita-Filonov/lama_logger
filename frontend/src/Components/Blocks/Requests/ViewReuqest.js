@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Divider, IconButton, Tooltip} from "@mui/material";
-import {Close} from "@material-ui/icons";
+import {Close, Send} from "@material-ui/icons";
 import {setRequest} from "../../../Redux/Requests/requestsActions";
 import {styled} from '@mui/material/styles';
-import {Paper} from "@material-ui/core";
+import {Button, Paper} from "@material-ui/core";
 import {Headers} from "./Headers";
 import {StatusCodeIndicator} from "./StatusCodeIndicator";
 import {Body} from "./Body";
@@ -35,6 +35,7 @@ const ViewRequest = ({request, setRequest}) => {
   return (
     <div>
       <div className={'d-flex'}>
+        <Button endIcon={<Send/>}>SEND</Button>
         <div className={'flex-grow-1'}/>
         <Tooltip title={'Close request'}>
           <IconButton onClick={onClose}>

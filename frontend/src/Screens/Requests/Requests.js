@@ -9,8 +9,9 @@ import {ArrowBack, Block} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
 import {IconButton} from "@mui/material";
 import ViewRequest from "../../Components/Blocks/Requests/ViewReuqest";
+import {setRequest} from "../../Redux/Requests/requestsActions";
 
-const Requests = ({project, requests, request}) => {
+const Requests = ({project, requests, request, setRequest}) => {
   const history = useHistory()
   const {token} = useUsers()
   const {getRequests} = useRequests()
@@ -24,10 +25,15 @@ const Requests = ({project, requests, request}) => {
     })()
   }, [project.id, token])
 
+  const onBack = () => {
+    history.goBack()
+    setRequest({})
+  }
+
   return (
     <div className={'me-5 ms-5'}>
       <div className={'mt-3 d-flex justify-content-center align-items-center'}>
-        <Button onClick={() => history.goBack()} startIcon={<ArrowBack/>}>BACK</Button>
+        <Button onClick={onBack} startIcon={<ArrowBack/>}>BACK</Button>
         <div className={'flex-grow-1'}/>
         <TextField
           label="Search"
@@ -65,5 +71,7 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    setRequest
+  },
 )(Requests);

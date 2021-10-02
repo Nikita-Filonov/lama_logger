@@ -15,7 +15,7 @@ class RequestsApi(views.APIView):
 
     def get(self, request, project_id):
         project = Project.objects.get(id=project_id)
-        requests = project.requests.all()
+        requests = project.requests.all().order_by('-created')
         return Response(RequestsSerializer(requests, many=True).data)
 
     def post(self, request, project_id):

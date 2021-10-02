@@ -4,7 +4,6 @@ import ReactJson from "react-json-view";
 import {bodyTypeDetect} from "../../../Utils/Utils";
 
 export const Body = ({body, responseHeaders}) => {
-  console.log(body)
   switch (bodyTypeDetect(responseHeaders, body)) {
     case 'html':
       return <div dangerouslySetInnerHTML={{__html: body}}/>
