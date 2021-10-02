@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from rest_framework.authtoken import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('projects.urls')),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
+    path('login/', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('projects/', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('projects/<int:projects_id>/', TemplateView.as_view(template_name='index.html'), name='index'),
 ]
