@@ -1,11 +1,8 @@
 import React from "react";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
 import {connect} from "react-redux";
 import {Typography} from "@material-ui/core";
-import {getStatusCodeColor} from "../../../Utils/Utils";
 import {setRequest} from "../../../Redux/Requests/requestsActions";
 import {StatusCodeIndicator} from "../../Blocks/Requests/StatusCodeIndicator";
 

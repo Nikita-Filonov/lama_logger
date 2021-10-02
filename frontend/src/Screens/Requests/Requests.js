@@ -13,8 +13,10 @@ import {createRequest, setRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
 import RequestsFilters from "../../Components/Blocks/Requests/RequestsFilters";
+import {successesByStatusCode} from "../../Utils/Utils";
 
-const Requests = ({project, requests, request, setRequest, createRequest}) => {
+const Requests = (props) => {
+  const {project, requests, request, requestsFilters, setRequest, createRequest} = props;
   const client = useRef(null);
   const history = useHistory()
   const {token} = useUsers()
@@ -43,6 +45,12 @@ const Requests = ({project, requests, request, setRequest, createRequest}) => {
     createRequest(request)
   }
 
+  const filteredRequests = useMemo(
+    () => requests.filter(r => requestsFilters.methods.includes(r.method) &&
+      successesByStatusCode(r.response_code, requestsFilters.successes)),
+    [requests, requestsFilters]
+  )
+
   return (
     <div className={'me-5 ms-5'}>
       <div className={'mt-3 d-flex justify-content-center align-items-center'}>
@@ -64,7 +72,7 @@ const Requests = ({project, requests, request, setRequest, createRequest}) => {
       <Grid container spacing={4} className={'mt-3'}>
         <Grid item xs={isRequestSelected ? 6 : 12} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
-            {requests.map(r => <Request item={r} key={r.id}/>)}
+            {filteredRequests.map(r => <Request item={r} key={r.id}/>)}
           </List>
         </Grid>
         {isRequestSelected &&
@@ -80,7 +88,8 @@ const Requests = ({project, requests, request, setRequest, createRequest}) => {
 const getState = (state) => ({
   project: state.projects.project,
   request: state.requests.request,
-  requests: state.requests.requests
+  requests: state.requests.requests,
+  requestsFilters: state.requests.requestsFilters,
 })
 
 export default connect(

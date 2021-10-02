@@ -8,6 +8,21 @@ export const getStatusCodeColor = (statusCode) => {
   }
 }
 
+export const successesByStatusCode = (statusCode, successes) => {
+  if (100 <= statusCode && statusCode <= 299) {
+    return successes.includes('success');
+  }
+
+  if (300 <= statusCode && statusCode <= 399) {
+    return successes.includes('redirect');
+  }
+
+  if (400 <= statusCode && statusCode <= 599) {
+    return successes.includes('error');
+  }
+
+  return false;
+}
 
 export const bodyTypeDetect = (responseHeaders, body = null) => {
   if (body === null) {
