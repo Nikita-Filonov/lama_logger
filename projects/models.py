@@ -63,7 +63,7 @@ class Request(models.Model):
     )
     request_body = models.JSONField(
         verbose_name='Request body',
-        default=list,
+        default=dict,
         blank=True,
         null=True
     )
@@ -78,7 +78,7 @@ class Request(models.Model):
     )
     response_headers = models.JSONField(
         verbose_name='Response headers',
-        default=list,
+        default=dict,
         blank=True
     )
     user = models.ForeignKey(

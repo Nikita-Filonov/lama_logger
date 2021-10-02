@@ -1,19 +1,23 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import {Button, Container, TextField, Tooltip} from "@material-ui/core";
+import {Box, Button, Container, Grid, TextField, Tooltip} from "@material-ui/core";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import Request from "../../Components/Items/Reuqests/Request";
 import {ArrowBack, Block} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
 import {IconButton} from "@mui/material";
+import ViewRequest from "../../Components/Blocks/Requests/ViewReuqest";
 
-const Requests = ({project, requests}) => {
+const Requests = ({project, requests, request}) => {
   const history = useHistory()
   const {token} = useUsers()
   const {getRequests} = useRequests()
+
+  const isRequestSelected = useMemo(() => Boolean(request?.request_url),
+    [request?.id, request?.request_url])
 
   useEffect(() => {
     (async () => {
@@ -22,7 +26,7 @@ const Requests = ({project, requests}) => {
   }, [project.id, token])
 
   return (
-    <Container>
+    <div className={'me-5 ms-5'}>
       <div className={'mt-3 d-flex justify-content-center align-items-center'}>
         <Button onClick={() => history.goBack()} startIcon={<ArrowBack/>}>BACK</Button>
         <div className={'flex-grow-1'}/>
@@ -38,23 +42,25 @@ const Requests = ({project, requests}) => {
           <IconButton><Block/></IconButton>
         </Tooltip>
       </div>
-      <List
-        sx={{width: '100%', bgcolor: 'background.paper'}}
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Requests
-          </ListSubheader>
-        }
-      >
-        {requests.map(r => <Request request={r} key={r.id}/>)}
-      </List>
-    </Container>
+      <Grid container spacing={4} className={'mt-3'}>
+        <Grid item xs={isRequestSelected ? 6 : 12} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>
+          <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+            {requests.map(r => <Request item={r} key={r.id}/>)}
+          </List>
+        </Grid>
+        {isRequestSelected &&
+        <Grid item xs={6} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>
+          <ViewRequest/>
+        </Grid>}
+      </Grid>
+    </div>
   )
 }
 
 
 const getState = (state) => ({
   project: state.projects.project,
+  request: state.requests.request,
   requests: state.requests.requests
 })
 
