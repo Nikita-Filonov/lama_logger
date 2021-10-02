@@ -6,7 +6,7 @@ import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {Add} from "@material-ui/icons";
 import {comp} from "../../Styles/Blocks";
 import {connect} from "react-redux";
-import {Project} from "../../Components/Items/Project";
+import Project from "../../Components/Items/Project";
 
 
 const Projects = ({projects}) => {

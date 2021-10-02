@@ -4,11 +4,17 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
 import {useHistory} from "react-router-dom";
+import {setProject} from "../../Redux/Projects/projectActions";
+import {connect} from "react-redux";
 
-export const Project = ({project}) => {
+const Project = ({project, setProject}) => {
   const history = useHistory()
 
-  const onOpenProject = () => history.push(`/projects/${project.id}`)
+  const onOpenProject = () => {
+    setProject(project)
+    localStorage.setItem('project', JSON.stringify(project))
+    history.push(`/projects/${project.id}`)
+  }
 
   return (
     <ListItemButton onClick={onOpenProject}>
@@ -19,3 +25,11 @@ export const Project = ({project}) => {
     </ListItemButton>
   )
 }
+
+
+export default connect(
+  null,
+  {
+    setProject
+  },
+)(Project);

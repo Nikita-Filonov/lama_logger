@@ -15,7 +15,8 @@ import {NavigationBar} from "./Components/Navigation/Navbar";
 import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
-import {Requests} from "./Screens/Requests/Requests";
+import Requests from "./Screens/Requests/Requests";
+import {RequestsProvider} from "./Providers/RequestsProvider";
 
 
 const store = createStore(reducer);
@@ -42,7 +43,9 @@ ReactDOM.render(
     <Provider store={store}>
       <UsersProvider>
         <ProjectsProvider store={store}>
-          <CustomRoute/>
+          <RequestsProvider store={store}>
+            <CustomRoute/>
+          </RequestsProvider>
         </ProjectsProvider>
       </UsersProvider>
     </Provider>

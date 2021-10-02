@@ -1,4 +1,4 @@
 export const INITIAL_PROJECTS = {
-  project: {},
+  project: JSON.parse(localStorage.getItem('project')) || {},
   projects: []
 }
