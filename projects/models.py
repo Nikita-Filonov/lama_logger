@@ -1,6 +1,7 @@
 from django.db import models
-
 # Create your models here.
+from django.utils import timezone
+
 from users.models import CustomUser
 
 
@@ -48,6 +49,51 @@ class Member(models.Model):
     )
 
 
+class Request(models.Model):
+    request_url = models.CharField(
+        verbose_name='Request url',
+        max_length=500,
+        null=False
+    )
+    request_headers = models.JSONField(
+        verbose_name='Request headers',
+        default=list,
+        blank=True
+    )
+    request_body = models.JSONField(
+        verbose_name='Request body',
+        default=list,
+        blank=True
+    )
+    response_code = models.IntegerField(
+        verbose_name='Response status code'
+    )
+    response_body = models.JSONField(
+        verbose_name='Response body',
+        default=list,
+        blank=True
+    )
+    response_headers = models.JSONField(
+        verbose_name='Response headers',
+        default=list,
+        blank=True
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
+    )
+
+    def __str__(self):
+        return self.request_url
+
+
 class Project(models.Model):
     SCOPES = [
         'Project.view',
@@ -76,6 +122,11 @@ class Project(models.Model):
     roles = models.ManyToManyField(
         Role,
         verbose_name='Roles',
+        blank=True
+    )
+    requests = models.ManyToManyField(
+        Request,
+        verbose_name='Requests',
         blank=True
     )
 
