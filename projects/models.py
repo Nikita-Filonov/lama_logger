@@ -58,12 +58,14 @@ class Request(models.Model):
     request_headers = models.JSONField(
         verbose_name='Request headers',
         default=list,
-        blank=True
+        blank=True,
+        null=True
     )
     request_body = models.JSONField(
         verbose_name='Request body',
         default=list,
-        blank=True
+        blank=True,
+        null=True
     )
     response_code = models.IntegerField(
         verbose_name='Response status code'
@@ -71,7 +73,8 @@ class Request(models.Model):
     response_body = models.JSONField(
         verbose_name='Response body',
         default=list,
-        blank=True
+        blank=True,
+        null=True
     )
     response_headers = models.JSONField(
         verbose_name='Response headers',
