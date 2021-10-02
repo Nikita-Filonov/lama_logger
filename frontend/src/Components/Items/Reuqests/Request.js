@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {Typography} from "@material-ui/core";
 import {getStatusCodeColor} from "../../../Utils/Utils";
 import {setRequest} from "../../../Redux/Requests/requestsActions";
+import {StatusCodeIndicator} from "../../Blocks/Requests/StatusCodeIndicator";
 
 const Request = ({item, request, setRequest}) => {
 
@@ -23,11 +24,7 @@ const Request = ({item, request, setRequest}) => {
         </a>}
       />
       <Typography>{item.response_code}</Typography>
-      <div style={{
-        backgroundColor: getStatusCodeColor(item.response_code),
-        width: 15, height: 15, borderRadius: 10,
-        marginLeft: 20
-      }}/>
+      <StatusCodeIndicator statusCode={item.response_code}/>
     </ListItemButton>
   )
 }

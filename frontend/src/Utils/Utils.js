@@ -7,3 +7,21 @@ export const getStatusCodeColor = (statusCode) => {
     return '#E40F08'
   }
 }
+
+
+export const bodyTypeDetect = (responseHeaders, body = null) => {
+  if (body === null) {
+    return 'text'
+  }
+
+  const contentType = responseHeaders['Content-Type']
+  if (contentType?.startsWith('application/json')) {
+    return 'json'
+  }
+
+  if (contentType?.startsWith('text/html')) {
+    return 'html'
+  }
+
+  return 'text'
+}

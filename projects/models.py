@@ -61,18 +61,16 @@ class Request(models.Model):
         blank=True,
         null=True
     )
-    request_body = models.JSONField(
+    request_body = models.TextField(
         verbose_name='Request body',
-        default=dict,
         blank=True,
         null=True
     )
     response_code = models.IntegerField(
         verbose_name='Response status code'
     )
-    response_body = models.JSONField(
+    response_body = models.TextField(
         verbose_name='Response body',
-        default=list,
         blank=True,
         null=True
     )

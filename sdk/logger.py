@@ -37,7 +37,7 @@ class LamaLogger:
             'request_headers': dict(response.request.headers),
             'request_body': response.request.body,
             'response_code': response.status_code,
-            'response_body': response_body,
+            'response_body': json.dumps(response_body),
             'response_headers': dict(response.headers),
         }
 
