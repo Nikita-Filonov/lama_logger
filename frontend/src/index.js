@@ -11,7 +11,7 @@ import {createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider, useUsers} from "./Providers/UsersProvider";
 import Projects from "./Screens/Projects/Projects";
-import {NavigationBar} from "./Components/Navigation/Navbar";
+import {NavigationBar} from "./Components/Navigation/NavigationBar";
 import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";

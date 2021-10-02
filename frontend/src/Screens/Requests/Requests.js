@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import {Button, Grid, TextField, Tooltip} from "@material-ui/core";
+import {Button, Container, Grid, TextField, Tooltip} from "@material-ui/core";
 import List from "@mui/material/List";
 import Request from "../../Components/Items/Reuqests/Request";
 import {ArrowBack, Block} from "@material-ui/icons";
@@ -52,7 +52,7 @@ const Requests = (props) => {
   )
 
   return (
-    <div className={'me-5 ms-5'}>
+    <Container>
       <div className={'mt-3 d-flex justify-content-center align-items-center'}>
         <Button onClick={onBack} startIcon={<ArrowBack/>}>BACK</Button>
         <RequestsFilters/>
@@ -80,7 +80,7 @@ const Requests = (props) => {
           <ViewRequest/>
         </Grid>}
       </Grid>
-    </div>
+    </Container>
   )
 }
 
