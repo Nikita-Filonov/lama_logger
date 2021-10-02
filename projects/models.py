@@ -50,6 +50,11 @@ class Member(models.Model):
 
 
 class Request(models.Model):
+    method = models.CharField(
+        verbose_name='Method',
+        max_length=20,
+        default='GET'
+    )
     request_url = models.CharField(
         verbose_name='Request url',
         max_length=500,

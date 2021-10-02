@@ -1,4 +1,4 @@
-import {CREATE_REQUEST, SET_REQUEST} from "./actionTypes";
+import {CREATE_REQUEST, SET_REQUEST, SET_REQUESTS_FILTERS} from "./actionTypes";
 
 
 export const setRequest = (state) => ({
@@ -9,5 +9,11 @@ export const setRequest = (state) => ({
 
 export const createRequest = (state) => ({
   type: CREATE_REQUEST,
+  payload: state
+})
+
+
+export const setRequestsFilters = (state) => ({
+  type: SET_REQUESTS_FILTERS,
   payload: state
 })

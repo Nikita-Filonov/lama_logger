@@ -15,6 +15,7 @@ const Request = ({item, request, setRequest}) => {
 
   return (
     <ListItemButton onClick={onSelect} selected={request.id === item.id}>
+      <Typography className={'me-2'}>{item.method}</Typography>
       <ListItemText
         primary={<a href={item.request_url} target={'_blank'} className={'text-decoration-none'}>
           {item.request_url}

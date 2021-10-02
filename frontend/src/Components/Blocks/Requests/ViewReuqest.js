@@ -21,7 +21,8 @@ const Item = styled(Paper)(({theme}) => ({
 
 const ViewRequest = ({request, setRequest}) => {
   const [accordion, setAccordion] = useState({
-    'Url': true,
+    'Request URL': true,
+    'Request method': true,
     'Request headers': true,
     'Status code': true,
     'Request body': true,
@@ -45,8 +46,10 @@ const ViewRequest = ({request, setRequest}) => {
         </Tooltip>
       </div>
 
-      <AccordionTitle title={'Url'} onExpand={onExpand} accordion={accordion}/>
-      {accordion['Url'] && <Item>{request.request_url}</Item>}
+      <AccordionTitle title={'Request URL'} onExpand={onExpand} accordion={accordion}/>
+      {accordion['Request URL'] && <Item>{request.request_url}</Item>}
+      <AccordionTitle title={'Request method'} onExpand={onExpand} accordion={accordion}/>
+      {accordion['Request method'] && <Item>{request.method}</Item>}
       <AccordionTitle title={'Status code'} onExpand={onExpand} accordion={accordion}/>
       {accordion['Status code'] &&
       <Item>{request.response_code}<StatusCodeIndicator statusCode={request.response_code}/></Item>}

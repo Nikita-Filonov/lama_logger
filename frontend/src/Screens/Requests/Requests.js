@@ -12,6 +12,7 @@ import ViewRequest from "../../Components/Blocks/Requests/ViewReuqest";
 import {createRequest, setRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
+import RequestsFilters from "../../Components/Blocks/Requests/RequestsFilters";
 
 const Requests = ({project, requests, request, setRequest, createRequest}) => {
   const client = useRef(null);
@@ -46,6 +47,7 @@ const Requests = ({project, requests, request, setRequest, createRequest}) => {
     <div className={'me-5 ms-5'}>
       <div className={'mt-3 d-flex justify-content-center align-items-center'}>
         <Button onClick={onBack} startIcon={<ArrowBack/>}>BACK</Button>
+        <RequestsFilters/>
         <div className={'flex-grow-1'}/>
         <TextField
           label="Search"
