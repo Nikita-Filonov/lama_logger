@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from "react";
+import React, {useEffect, useMemo, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
@@ -9,9 +9,12 @@ import {ArrowBack, Block} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
 import {IconButton} from "@mui/material";
 import ViewRequest from "../../Components/Blocks/Requests/ViewReuqest";
-import {setRequest} from "../../Redux/Requests/requestsActions";
+import {createRequest, setRequest} from "../../Redux/Requests/requestsActions";
+import {wsUri} from "../../Utils/Constants";
+import {w3cwebsocket as W3CWebSocket} from "websocket";
 
-const Requests = ({project, requests, request, setRequest}) => {
+const Requests = ({project, requests, request, setRequest, createRequest}) => {
+  const client = useRef(null);
   const history = useHistory()
   const {token} = useUsers()
   const {getRequests} = useRequests()
@@ -21,13 +24,22 @@ const Requests = ({project, requests, request, setRequest}) => {
 
   useEffect(() => {
     (async () => {
-      (project.id && token) && await getRequests(project.id)
+      if (project.id && token) {
+        await getRequests(project.id)
+        client.current = await new W3CWebSocket(wsUri + `projects/${project.id}/requests/`);
+        client.current.onmessage = await onRequest
+      }
     })()
   }, [project.id, token])
 
   const onBack = () => {
     history.goBack()
     setRequest({})
+  }
+
+  const onRequest = async (message) => {
+    const request = JSON.parse(message.data);
+    createRequest(request)
   }
 
   return (
@@ -72,6 +84,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setRequest
+    setRequest,
+    createRequest
   },
 )(Requests);

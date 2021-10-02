@@ -1,5 +1,5 @@
 import {INITIAL_REQUESTS} from './initialState';
-import {SET_REQUEST, SET_REQUESTS} from "./actionTypes";
+import {CREATE_REQUEST, SET_REQUEST, SET_REQUESTS} from "./actionTypes";
 
 
 export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
@@ -8,6 +8,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requests: action.payload}
     case SET_REQUEST:
       return {...state, request: action.payload}
+    case CREATE_REQUEST:
+      return {...state, requests: [action.payload, ...state.requests]}
     default:
       return state;
   }

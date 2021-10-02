@@ -15,9 +15,6 @@ const Request = ({item, request, setRequest}) => {
 
   return (
     <ListItemButton onClick={onSelect} selected={request.id === item.id}>
-      <ListItemIcon>
-        <FormatListBulletedIcon/>
-      </ListItemIcon>
       <ListItemText
         primary={<a href={item.request_url} target={'_blank'} className={'text-decoration-none'}>
           {item.request_url}

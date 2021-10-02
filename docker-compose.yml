@@ -1,6 +1,13 @@
 version: "3.8"
 
 services:
+  lama_logger_redis:
+    image: redis
+    restart: always
+    container_name: 'lama_logger_redis'
+    command: redis-server
+    ports:
+      - '6379:6379'
   lama_logger_web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000

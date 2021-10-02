@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Divider, IconButton, Tooltip} from "@mui/material";
-import {Close, Send} from "@material-ui/icons";
+import {Close, InsertLink, Send} from "@material-ui/icons";
 import {setRequest} from "../../../Redux/Requests/requestsActions";
 import {styled} from '@mui/material/styles';
 import {Button, Paper} from "@material-ui/core";
@@ -36,6 +36,7 @@ const ViewRequest = ({request, setRequest}) => {
     <div>
       <div className={'d-flex'}>
         <Button endIcon={<Send/>}>SEND</Button>
+        <Button endIcon={<InsertLink/>}>COPY AS CURL</Button>
         <div className={'flex-grow-1'}/>
         <Tooltip title={'Close request'}>
           <IconButton onClick={onClose}>

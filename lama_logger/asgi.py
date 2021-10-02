@@ -9,8 +9,29 @@ https://docs.djangoproject.com/en/3.2/howto/deployment/asgi/
 
 import os
 
-from django.core.asgi import get_asgi_application
+import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lama_logger.settings.local')
+DEBUG = True
+# DEBUG - False for production
+# True - for local development
 
-application = get_asgi_application()
+if DEBUG:
+    import projects.routing
+    from channels.auth import AuthMiddlewareStack
+    from channels.routing import ProtocolTypeRouter, URLRouter
+
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lama_logger.settings.local")
+
+    application = ProtocolTypeRouter({
+        "websocket": AuthMiddlewareStack(
+            URLRouter(
+                projects.routing.websocket_urlpatterns
+            )
+        ),
+    })
+else:
+    from channels.routing import get_default_application
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lama_logger.settings.server')
+    django.setup()
+    application = get_default_application()

@@ -4,7 +4,7 @@ import requests
 
 from sdk.logger import LamaLogger
 
-logger = LamaLogger(token='ad542e4229f256c88a1482ba8ab5a330266f6198', project_id=2)
+logger = LamaLogger(token='ec89ccd61f5312e2cf5e037e2f97a5678030c14f', project_id=2)
 
 
 def get(url, params=None, **kwargs):
@@ -19,5 +19,6 @@ def post(url, data=None, json=None, **kwargs):
     return response
 
 
-post('http://localhost:8000/api/v1/projects/1/requests/', headers={'Content-Type': 'application/json'},
-     data=json.dumps({'hello': 1}))
+get('http://localhost:8000/api/v1/projects/1/requests/',
+    headers={'Content-Type': 'application/json', 'Authorization': 'Token ec89ccd61f5312e2cf5e037e2f97a5678030c14f'},
+    data=json.dumps({'hello': 1}))
