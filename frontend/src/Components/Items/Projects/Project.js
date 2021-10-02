@@ -4,7 +4,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
 import {useHistory} from "react-router-dom";
-import {setProject} from "../../Redux/Projects/projectActions";
+import {setProject} from "../../../Redux/Projects/projectActions";
 import {connect} from "react-redux";
 
 const Project = ({project, setProject}) => {
