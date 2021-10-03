@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-xlgl251mm=jxe(0@3ipohu!)arpdpwb-f2lzcteti9w9i+4kq6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['lama-logger.herokuapp.com']
 
