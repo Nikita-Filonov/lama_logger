@@ -1,5 +1,5 @@
 import {INITIAL_REQUESTS} from './initialState';
-import {CREATE_REQUEST, SET_REQUEST, SET_REQUESTS, SET_REQUESTS_FILTERS} from "./actionTypes";
+import {CREATE_REQUEST, DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS, SET_REQUESTS_FILTERS} from "./actionTypes";
 
 
 export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
@@ -12,6 +12,10 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requests: [action.payload, ...state.requests]}
     case SET_REQUESTS_FILTERS: {
       return {...state, requestsFilters: action.payload}
+    }
+    case DELETE_REQUESTS: {
+      const filteredRequests = state.requests.filter(r => !action.payload.includes(r.id))
+      return {...state, requests: [...filteredRequests]}
     }
     default:
       return state;

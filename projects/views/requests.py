@@ -44,6 +44,18 @@ class RequestsApi(views.APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    def delete(self, request, project_id):
+        requests = request.data
+        if not isinstance(requests, list):
+            return Response(
+                {'message': 'You should provide requests ids', 'level': 'danger'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        projects = Project.objects.get(id=project_id)
+        projects.requests.filter(id__in=requests).delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(['GET'])
 @authentication_classes((TokenAuthentication,))

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./UsersProvider";
-import {SET_REQUESTS} from "../Redux/Requests/actionTypes";
+import {DELETE_REQUESTS, SET_REQUESTS} from "../Redux/Requests/actionTypes";
 import {useAlerts} from "./AlertsProvider";
 import {copyText} from "../Utils/Utils";
 
@@ -42,11 +42,24 @@ const RequestsProvider = ({children, store}) => {
       });
   }
 
+  const deleteRequests = async (projectId, requests) => {
+    store.dispatch({type: DELETE_REQUESTS, payload: requests})
+    await fetch(projectsApi + `${projectId}/requests/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requests)
+    })
+  }
+
   return (
     <RequestsContext.Provider
       value={{
         getRequests,
-        getRequestAsCurl
+        getRequestAsCurl,
+        deleteRequests
       }}
     >
       {children}
