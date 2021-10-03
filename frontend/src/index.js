@@ -17,6 +17,7 @@ import {PublicRoute} from "./Components/Navigation/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
 import Requests from "./Screens/Requests/Requests";
 import {RequestsProvider} from "./Providers/RequestsProvider";
+import {AlertsProvider} from "./Providers/AlertsProvider";
 
 
 const store = createStore(reducer);
@@ -41,13 +42,15 @@ const CustomRoute = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <UsersProvider>
-        <ProjectsProvider store={store}>
-          <RequestsProvider store={store}>
-            <CustomRoute/>
-          </RequestsProvider>
-        </ProjectsProvider>
-      </UsersProvider>
+      <AlertsProvider>
+        <UsersProvider>
+          <ProjectsProvider store={store}>
+            <RequestsProvider store={store}>
+              <CustomRoute/>
+            </RequestsProvider>
+          </ProjectsProvider>
+        </UsersProvider>
+      </AlertsProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -40,3 +40,13 @@ export const bodyTypeDetect = (responseHeaders, body = null) => {
 
   return 'text'
 }
+
+
+export const copyText = (text) => {
+  const el = document.createElement('input');
+  el.value = text;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+}

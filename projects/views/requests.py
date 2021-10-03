@@ -2,11 +2,13 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from projects.models import Project
+from projects.helpers.utils import to_curl
+from projects.models import Project, Request
 from projects.serializers.requests import RequestsSerializer, RequestSerializer
 
 channel_layer = get_channel_layer()
@@ -41,3 +43,18 @@ class RequestsApi(views.APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+@api_view(['GET'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def request_to_curl(request, project_id, request_id):
+    db_request = Request.objects.get(id=request_id)
+    curl_request = {
+        'method': db_request.method,
+        'headers': db_request.request_headers,
+        'body': db_request.request_body,
+        'url': db_request.request_url
+    }
+    return Response({'curl': to_curl(curl_request)})

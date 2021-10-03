@@ -24,14 +24,14 @@ def to_curl(request, compressed=False, verify=True):
     """
     parts = [
         ('curl', None),
-        ('-X', request.method),
+        ('-X', request['method']),
     ]
 
-    for k, v in sorted(request.headers.items()):
+    for k, v in sorted(request['headers'].items()):
         parts += [('-H', '{0}: {1}'.format(k, v))]
 
-    if request.body:
-        body = request.body
+    if request.get('body'):
+        body = request['body']
         if isinstance(body, bytes):
             body = body.decode('utf-8')
         parts += [('-d', body)]
@@ -42,7 +42,7 @@ def to_curl(request, compressed=False, verify=True):
     if not verify:
         parts += [('--insecure', None)]
 
-    parts += [(None, request.url)]
+    parts += [(None, request['url'])]
 
     flat_parts = []
     for k, v in parts:

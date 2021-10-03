@@ -9,6 +9,7 @@ import {Headers} from "./Headers";
 import {StatusCodeIndicator} from "./StatusCodeIndicator";
 import {Body} from "./Body";
 import {AccordionTitle} from "./AccordionTitle";
+import {useRequests} from "../../../Providers/RequestsProvider";
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -19,7 +20,8 @@ const Item = styled(Paper)(({theme}) => ({
   alignItems: 'center'
 }));
 
-const ViewRequest = ({request, setRequest}) => {
+const ViewRequest = ({project, request, setRequest}) => {
+  const {getRequestAsCurl} = useRequests()
   const [accordion, setAccordion] = useState({
     'Request URL': true,
     'Request method': true,
@@ -30,14 +32,14 @@ const ViewRequest = ({request, setRequest}) => {
     'Response body': true
   });
   const onClose = () => setRequest({})
-
   const onExpand = (block) => setAccordion({...accordion, [block]: !accordion[block]})
+  const onCurl = async () => await getRequestAsCurl(project.id, request.id)
 
   return (
     <div>
       <div className={'d-flex'}>
         <Button endIcon={<Send/>}>SEND</Button>
-        <Button endIcon={<InsertLink/>}>COPY AS CURL</Button>
+        <Button endIcon={<InsertLink/>} onClick={onCurl}>COPY AS CURL</Button>
         <div className={'flex-grow-1'}/>
         <Tooltip title={'Close request'}>
           <IconButton onClick={onClose}>
@@ -72,16 +74,14 @@ const ViewRequest = ({request, setRequest}) => {
 }
 
 
-const getState = (state) => (
-  {
-    request: state.requests.request
-  }
-)
+const getState = (state) => ({
+  project: state.projects.project,
+  request: state.requests.request
+})
 
 export default connect(
   getState,
   {
     setRequest
-  }
-  ,
+  },
 )(ViewRequest);
