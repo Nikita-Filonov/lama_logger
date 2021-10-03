@@ -7,6 +7,10 @@ export const comp = {
     position: 'absolute',
     bottom: 70,
     right: 80
+  },
+  spinner: {
+    marginLeft: '50%',
+    marginTop: '20%'
   }
 }
 

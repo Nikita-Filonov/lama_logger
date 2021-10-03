@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import {Container, Fab} from "@material-ui/core";
+import {CircularProgress, Container, Fab} from "@material-ui/core";
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {Add} from "@material-ui/icons";
 import {comp} from "../../Styles/Blocks";
 import {connect} from "react-redux";
 import Project from "../../Components/Items/Projects/Project";
+import {useProjects} from "../../Providers/ProjectsProvider";
+import {EmptyList} from "../../Components/Other/EmptyList";
 
 
 const Projects = ({projects}) => {
+  const {load} = useProjects();
   const [createProjectModal, setCreateProjectModal] = useState(false)
 
   const onCreateProject = () => setCreateProjectModal(true)
@@ -30,6 +33,8 @@ const Projects = ({projects}) => {
         }
         className={'mt-3'}
       >
+        {projects.length === 0 && !load && <EmptyList text={'You dont have any projects'}/>}
+        {load && <CircularProgress style={comp.spinner}/>}
         {projects.map(p => <Project project={p} key={p.id}/>)}
       </List>
       <Fab variant="extended" style={comp.fab} onClick={onCreateProject}>

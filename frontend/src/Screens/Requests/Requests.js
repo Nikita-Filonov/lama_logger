@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import {Button, Container, Grid, TextField, Tooltip} from "@material-ui/core";
+import {Button, CircularProgress, Container, Grid, TextField, Tooltip} from "@material-ui/core";
 import List from "@mui/material/List";
 import Request from "../../Components/Items/Reuqests/Request";
 import {ArrowBack, Block} from "@material-ui/icons";
@@ -14,13 +14,15 @@ import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
 import RequestsFilters from "../../Components/Blocks/Requests/RequestsFilters";
 import {successesByStatusCode} from "../../Utils/Utils";
+import {EmptyList} from "../../Components/Other/EmptyList";
+import {comp} from "../../Styles/Blocks";
 
 const Requests = (props) => {
   const {project, requests, request, requestsFilters, setRequest, createRequest} = props;
   const client = useRef(null);
   const history = useHistory()
   const {token} = useUsers()
-  const {getRequests} = useRequests()
+  const {load, getRequests} = useRequests()
 
   const isRequestSelected = useMemo(() => Boolean(request?.request_url),
     [request?.id, request?.request_url])
@@ -72,6 +74,8 @@ const Requests = (props) => {
       <Grid container spacing={4} className={'mt-3'}>
         <Grid item xs={isRequestSelected ? 6 : 12} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+            {filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}
+            {load && <CircularProgress style={comp.spinner}/>}
             {filteredRequests.map(r => <Request item={r} key={r.id}/>)}
           </List>
         </Grid>

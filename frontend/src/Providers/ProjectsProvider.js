@@ -9,7 +9,7 @@ const ProjectsContext = React.createContext(null);
 const ProjectsProvider = ({children, store}) => {
   const {token} = useUsers()
   const usersApi = baseUrl + 'api/v1/projects/';
-  const [load, setLoad] = useState(null);
+  const [load, setLoad] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -49,6 +49,7 @@ const ProjectsProvider = ({children, store}) => {
   return (
     <ProjectsContext.Provider
       value={{
+        load,
         createProject
       }}
     >
