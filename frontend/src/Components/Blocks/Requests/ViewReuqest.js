@@ -33,7 +33,7 @@ const ViewRequest = ({project, request, setRequest}) => {
   });
   const onClose = () => setRequest({})
   const onExpand = (block) => setAccordion({...accordion, [block]: !accordion[block]})
-  const onCurl = async () => await getRequestAsCurl(project.id, request.id)
+  const onCurl = async () => await getRequestAsCurl(project.id, request.request_id)
 
   return (
     <div>

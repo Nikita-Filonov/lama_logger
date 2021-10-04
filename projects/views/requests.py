@@ -57,12 +57,22 @@ class RequestsApi(views.APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class RequestApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    def get(self, request, project_id, request_id):
+        db_request = Request.objects.get(request_id=request_id)
+        return Response(RequestsSerializer(db_request, many=False).data)
+
+
 @api_view(['GET'])
 @authentication_classes((TokenAuthentication,))
 @permission_classes((IsAuthenticated,))
 @throttle_classes((UserRateThrottle,))
 def request_to_curl(request, project_id, request_id):
-    db_request = Request.objects.get(id=request_id)
+    db_request = Request.objects.get(request_id=request_id)
     curl_request = {
         'method': db_request.method,
         'headers': db_request.request_headers,

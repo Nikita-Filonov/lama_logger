@@ -1,6 +1,6 @@
 from django.db.models import Q
 from rest_framework import views, status
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -10,7 +10,7 @@ from projects.serializers.projects import ProjectsSerializer, ProjectSerializer
 
 
 class ProjectsApi(views.APIView):
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -35,3 +35,13 @@ class ProjectsApi(views.APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class ProjectApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, project_id):
+        projects = Project.objects.get(id=project_id)
+
+        return Response(ProjectsSerializer(projects, many=False).data)

@@ -1,14 +1,14 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./UsersProvider";
-import {CREATE_PROJECT, SET_PROJECTS} from "../Redux/Projects/actionTypes";
+import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS} from "../Redux/Projects/actionTypes";
 
 
 const ProjectsContext = React.createContext(null);
 
 const ProjectsProvider = ({children, store}) => {
   const {token} = useUsers()
-  const usersApi = baseUrl + 'api/v1/projects/';
+  const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const ProjectsProvider = ({children, store}) => {
 
   const getProjects = useCallback(async () => {
     setLoad(true)
-    await fetch(usersApi, {
+    await fetch(projectsApi, {
       headers: {
         'Authorization': `Token ${token}`,
       },
@@ -31,9 +31,22 @@ const ProjectsProvider = ({children, store}) => {
       });
   }, [token]);
 
+  const getProject = async (projectId) => {
+    setLoad(true)
+    await fetch(projectsApi + `${projectId}/`, {
+      headers: {
+        'Authorization': `Token ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(async data => {
+        store.dispatch({type: SET_PROJECT, payload: data});
+        setLoad(false);
+      });
+  }
 
   const createProject = async (payload) => {
-    await fetch(usersApi, {
+    await fetch(projectsApi, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`,
@@ -50,6 +63,7 @@ const ProjectsProvider = ({children, store}) => {
     <ProjectsContext.Provider
       value={{
         load,
+        getProject,
         createProject
       }}
     >

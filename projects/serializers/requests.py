@@ -6,7 +6,7 @@ from projects.models import Request
 class RequestsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
-        exclude = ('user',)
+        exclude = ('user', 'id')
 
 
 class RequestSerializer(serializers.ModelSerializer):

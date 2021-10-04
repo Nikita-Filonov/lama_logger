@@ -5,21 +5,24 @@ import {useUsers} from "../../Providers/UsersProvider";
 import {CircularProgress, Container, Grid} from "@material-ui/core";
 import List from "@mui/material/List";
 import Request from "../../Components/Items/Reuqests/Request";
-import {useHistory} from "react-router-dom";
 import ViewRequest from "../../Components/Blocks/Requests/ViewReuqest";
-import {createRequest, setRequest} from "../../Redux/Requests/requestsActions";
+import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
 import {successesByStatusCode} from "../../Utils/Utils";
 import {EmptyList} from "../../Components/Other/EmptyList";
 import {comp} from "../../Styles/Blocks";
 import RequestsToolbar from "../../Components/Blocks/Requests/RequestsToolbar";
+import {useHistory} from "react-router-dom";
+import {useProjects} from "../../Providers/ProjectsProvider";
 
 const Requests = (props) => {
   const {project, requests, request, requestsFilters, createRequest} = props;
+  const history = useHistory()
   const client = useRef(null);
   const {token} = useUsers()
-  const {load, getRequests} = useRequests()
+  const {getProject} = useProjects()
+  const {load, getRequests, getRequest} = useRequests()
 
   const isRequestSelected = useMemo(() => Boolean(request?.request_url),
     [request?.id, request?.request_url])
@@ -31,8 +34,26 @@ const Requests = (props) => {
         client.current = await new W3CWebSocket(wsUri + `projects/${project.id}/requests/`);
         client.current.onmessage = await onRequest
       }
+
+      return () => {
+        client.current.close()
+      }
     })()
   }, [project.id, token])
+
+  useEffect(() => {
+    (async () => {
+      if (!token) {
+        return
+      }
+
+      const query = new URLSearchParams(history.location.search);
+      if (query.get('requestId') && query.get('projectId')) {
+        await getProject(query.get('projectId'))
+        await getRequest(query.get('projectId'), query.get('requestId'))
+      }
+    })()
+  }, [token])
 
 
   const onRequest = async (message) => {
@@ -53,7 +74,7 @@ const Requests = (props) => {
           <List sx={{width: '100%', bgcolor: 'background.paper'}}>
             {filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}
             {load && <CircularProgress style={comp.spinner}/>}
-            {filteredRequests.map(r => <Request item={r} key={r.id}/>)}
+            {filteredRequests.map(r => <Request item={r} key={r.request_id}/>)}
           </List>
         </Grid>
         {isRequestSelected &&

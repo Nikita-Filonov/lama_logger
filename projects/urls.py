@@ -1,10 +1,12 @@
 from django.urls import path
 
-from projects.views.projects import ProjectsApi
-from projects.views.requests import RequestsApi, request_to_curl
+from projects.views.projects import ProjectsApi, ProjectApi
+from projects.views.requests import RequestsApi, RequestApi, request_to_curl
 
 urlpatterns = [
     path('projects/', ProjectsApi.as_view(), name='projects'),
+    path('projects/<int:project_id>/', ProjectApi.as_view(), name='project'),
     path('projects/<int:project_id>/requests/', RequestsApi.as_view(), name='requests'),
-    path('projects/<int:project_id>/requests/<int:request_id>/curl/', request_to_curl, name='request_to_curl'),
+    path('projects/<int:project_id>/requests/<str:request_id>/', RequestApi.as_view(), name='request'),
+    path('projects/<int:project_id>/requests/<str:request_id>/curl/', request_to_curl, name='request_to_curl'),
 ]

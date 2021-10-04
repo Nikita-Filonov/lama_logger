@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 # Create your models here.
 from django.utils import timezone
@@ -50,6 +52,12 @@ class Member(models.Model):
 
 
 class Request(models.Model):
+    request_id = models.UUIDField(
+        verbose_name='Request id',
+        default=uuid.uuid4,
+        editable=True,
+        unique=True
+    )
     method = models.CharField(
         verbose_name='Method',
         max_length=20,

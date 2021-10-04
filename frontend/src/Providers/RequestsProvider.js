@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./UsersProvider";
-import {DELETE_REQUESTS, SET_REQUESTS} from "../Redux/Requests/actionTypes";
+import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../Redux/Requests/actionTypes";
 import {useAlerts} from "./AlertsProvider";
 import {copyText} from "../Utils/Utils";
 
@@ -12,7 +12,7 @@ const RequestsProvider = ({children, store}) => {
   const {token} = useUsers()
   const {setAlert} = useAlerts()
   const projectsApi = baseUrl + 'api/v1/projects/';
-  const [load, setLoad] = useState(null);
+  const [load, setLoad] = useState(false);
 
 
   const getRequests = async (projectId) => {
@@ -27,6 +27,16 @@ const RequestsProvider = ({children, store}) => {
         store.dispatch({type: SET_REQUESTS, payload: data});
         setLoad(false);
       });
+  }
+
+  const getRequest = async (projectId, requestId) => {
+    await fetch(projectsApi + `${projectId}/requests/${requestId}/`, {
+      headers: {
+        'Authorization': `Token ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(async data => store.dispatch({type: SET_REQUEST, payload: data}));
   }
 
   const getRequestAsCurl = async (projectId, requestId) => {
@@ -57,6 +67,8 @@ const RequestsProvider = ({children, store}) => {
   return (
     <RequestsContext.Provider
       value={{
+        load,
+        getRequest,
         getRequests,
         getRequestAsCurl,
         deleteRequests
