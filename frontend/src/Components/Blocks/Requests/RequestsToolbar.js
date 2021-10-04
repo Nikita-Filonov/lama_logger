@@ -13,7 +13,7 @@ const RequestsToolbar = ({project, requests, setRequest}) => {
   const {deleteRequests} = useRequests()
 
   const onBack = () => {
-    history.goBack()
+    history.push('/projects')
     setRequest({})
   }
 

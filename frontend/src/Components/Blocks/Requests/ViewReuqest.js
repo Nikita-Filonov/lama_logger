@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import {connect} from "react-redux";
 import {Divider, IconButton, Tooltip} from "@mui/material";
-import {Close, InsertLink, Send} from "@material-ui/icons";
+import {Close} from "@material-ui/icons";
 import {setRequest} from "../../../Redux/Requests/requestsActions";
 import {styled} from '@mui/material/styles';
-import {Button, Paper} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 import {Headers} from "./Headers";
 import {StatusCodeIndicator} from "./StatusCodeIndicator";
 import {Body} from "./Body";
 import {AccordionTitle} from "./AccordionTitle";
-import {useRequests} from "../../../Providers/RequestsProvider";
+import ViewRequestMenu from "../../Menus/Requests/ViewRequestMenu";
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -20,8 +20,7 @@ const Item = styled(Paper)(({theme}) => ({
   alignItems: 'center'
 }));
 
-const ViewRequest = ({project, request, setRequest}) => {
-  const {getRequestAsCurl} = useRequests()
+const ViewRequest = ({request, setRequest}) => {
   const [accordion, setAccordion] = useState({
     'Request URL': true,
     'Request method': true,
@@ -33,19 +32,17 @@ const ViewRequest = ({project, request, setRequest}) => {
   });
   const onClose = () => setRequest({})
   const onExpand = (block) => setAccordion({...accordion, [block]: !accordion[block]})
-  const onCurl = async () => await getRequestAsCurl(project.id, request.request_id)
 
   return (
     <div>
-      <div className={'d-flex'}>
-        <Button endIcon={<Send/>}>SEND</Button>
-        <Button endIcon={<InsertLink/>} onClick={onCurl}>COPY AS CURL</Button>
+      <div className={'d-flex justify-content-center align-items-center'}>
         <div className={'flex-grow-1'}/>
-        <Tooltip title={'Close request'}>
+        <Tooltip title={'Close request'} placement={'top'}>
           <IconButton onClick={onClose}>
             <Close/>
           </IconButton>
         </Tooltip>
+        <ViewRequestMenu/>
       </div>
 
       <AccordionTitle title={'Request URL'} onExpand={onExpand} accordion={accordion}/>
@@ -75,7 +72,6 @@ const ViewRequest = ({project, request, setRequest}) => {
 
 
 const getState = (state) => ({
-  project: state.projects.project,
   request: state.requests.request
 })
 

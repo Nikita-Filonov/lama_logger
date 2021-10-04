@@ -71,7 +71,7 @@ const Requests = (props) => {
       <RequestsToolbar/>
       <Grid container spacing={4} className={'mt-3'}>
         <Grid item xs={isRequestSelected ? 6 : 12} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>
-          <List sx={{width: '100%', bgcolor: 'background.paper'}}>
+          <List sx={{width: '100%', bgcolor: 'background.paper'}} dense>
             {filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}
             {load && <CircularProgress style={comp.spinner}/>}
             {filteredRequests.map(r => <Request item={r} key={r.request_id}/>)}
