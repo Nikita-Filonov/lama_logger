@@ -27,7 +27,7 @@ const CustomRoute = () => {
 
   return (
     <Router>
-      <div>
+      <div className={'d-flex'}>
         {token && <NavigationBar/>}
         <Switch>
           <PrivateRoute exact path="/projects" component={Projects}/>
