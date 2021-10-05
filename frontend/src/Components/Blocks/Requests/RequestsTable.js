@@ -11,42 +11,14 @@ import {
   TableRow,
   TableSortLabel
 } from "@material-ui/core";
-import {successesByStatusCode} from "../../../Utils/Utils";
+import {getComparator, stableSort, successesByStatusCode} from "../../../Utils/Utils";
 import {connect} from "react-redux";
 import {EmptyList} from "../../Other/EmptyList";
 import {useRequests} from "../../../Providers/RequestsProvider";
-import {comp} from "../../../Styles/Blocks";
+import {comp, RequestsTableStyles} from "../../../Styles/Blocks";
 import RequestRow from "../../Items/Reuqests/RequestRow";
 import Box from "@mui/material/Box";
 import {visuallyHidden} from "@mui/utils";
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
 
 const headCells = [
   {
@@ -67,6 +39,7 @@ const headCells = [
 ];
 
 const RequestsTable = ({requests, requestsFilters}) => {
+  const classes = RequestsTableStyles()
   const {load} = useRequests()
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -83,12 +56,10 @@ const RequestsTable = ({requests, requestsFilters}) => {
   };
 
   return (
-    <div>
+    <div className={'mt-3'}>
       {load && <CircularProgress style={comp.spinner}/>}
       {filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}
-      {filteredRequests.length > 0 && <TableContainer component={Paper} style={{
-        maxHeight: window.innerHeight / 1.3
-      }}>
+      {filteredRequests.length > 0 && <TableContainer component={Paper} className={classes.tableContainer}>
         <Table sx={{minWidth: 650}} size="small" aria-label="a dense table" stickyHeader>
           <TableHead>
             <TableRow>
@@ -118,11 +89,12 @@ const RequestsTable = ({requests, requestsFilters}) => {
                   </TableSortLabel>
                 </TableCell>
               ))}
+              <TableCell padding={'checkbox'}/>
             </TableRow>
           </TableHead>
           <TableBody>
             {stableSort(filteredRequests, getComparator(order, orderBy))
-              .map(r => <RequestRow item={r} key={r.request_id}/>)}
+              .map(r => <RequestRow request={r} key={r.request_id}/>)}
           </TableBody>
         </Table>
       </TableContainer>}

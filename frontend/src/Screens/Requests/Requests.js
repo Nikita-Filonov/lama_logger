@@ -2,8 +2,7 @@ import React, {useEffect, useMemo, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import {Container, Grid} from "@material-ui/core";
-import ViewRequest from "../../Components/Blocks/Requests/ViewReuqest";
+import {Container} from "@material-ui/core";
 import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
@@ -14,15 +13,12 @@ import RequestsTable from "../../Components/Blocks/Requests/RequestsTable";
 
 
 const Requests = (props) => {
-  const {project, request, createRequest} = props;
+  const {project, createRequest} = props;
   const history = useHistory()
   const client = useRef(null);
   const {token} = useUsers()
   const {getProject} = useProjects()
   const {getRequests, getRequest} = useRequests()
-
-  const isRequestSelected = useMemo(() => Boolean(request?.request_url),
-    [request?.id, request?.request_url])
 
   useEffect(() => {
     (async () => {
@@ -61,15 +57,16 @@ const Requests = (props) => {
   return (
     <Container maxWidth={'xl'}>
       <RequestsToolbar/>
-      <Grid container spacing={4} className={'mt-3'}>
-        <Grid item xs={isRequestSelected ? 6 : 12}>
-          <RequestsTable/>
-        </Grid>
-        {isRequestSelected &&
-        <Grid item xs={6} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>
-          <ViewRequest/>
-        </Grid>}
-      </Grid>
+      <RequestsTable/>
+      {/*<Grid container spacing={4} className={'mt-3'}>*/}
+      {/*  <Grid item xs={isRequestSelected ? 6 : 12}>*/}
+      {/*    <RequestsTable/>*/}
+      {/*  </Grid>*/}
+      {/*  {isRequestSelected &&*/}
+      {/*  <Grid item xs={6} style={{maxHeight: '75vh', overflow: 'auto', paddingTop: 0}}>*/}
+      {/*    <ViewRequest/>*/}
+      {/*  </Grid>}*/}
+      {/*</Grid>*/}
     </Container>
   )
 }
@@ -77,7 +74,6 @@ const Requests = (props) => {
 
 const getState = (state) => ({
   project: state.projects.project,
-  request: state.requests.request,
 })
 
 export default connect(

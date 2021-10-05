@@ -1,6 +1,7 @@
 import {styled} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
+import {makeStyles} from "@material-ui/core";
 
 export const comp = {
   fab: {
@@ -80,3 +81,30 @@ export const DrawerStyled = styled(MuiDrawer, {shouldForwardProp: (prop) => prop
     }),
   }),
 );
+
+
+export const RequestsTableStyles = makeStyles((theme) => ({
+  tableContainer: {
+    maxHeight: window.innerHeight / 1.3
+  },
+  rowRequestUrlText: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  }
+}));
+
+
+const tabHeight = '28px' // default: '48px'
+export const ViewRequestStyles = makeStyles(theme => ({
+  tabsRoot: {
+    minHeight: tabHeight,
+    height: tabHeight,
+  },
+  tabRoot: {
+    minHeight: tabHeight,
+    height: tabHeight,
+    minWidth: 50,
+    fontSize: 12
+  }
+}));
