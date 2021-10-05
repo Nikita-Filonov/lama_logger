@@ -1,7 +1,6 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {connect} from "react-redux";
 import {Checkbox, Collapse, TableCell, TableRow, Typography} from "@material-ui/core";
-import {setRequest} from "../../../Redux/Requests/requestsActions";
 import {StatusCodeIndicator} from "../../Blocks/Requests/StatusCodeIndicator";
 import {useHistory} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
@@ -10,19 +9,33 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../Styles/Blocks";
 import ViewRequestDemo from "../../Blocks/Requests/ViewReuqestDemo";
 
-const RequestRow = ({request, project}) => {
+const RequestRow = ({request, requests}) => {
   const classes = RequestsTableStyles()
+  const rowRef = useRef(null)
   const history = useHistory();
   const [open, setOpen] = useState(false)
 
   const onSelect = () => {
     setOpen(!open)
-    history.push(`?requestId=${request.request_id}&projectId=${project.id}`)
+    history.push(`?requestId=${request.request_id}`)
   }
+
+  useEffect(() => {
+    if (requests?.length === 0) {
+      return
+    }
+
+    const query = new URLSearchParams(history.location.search);
+    const requestId = query.get('requestId');
+    if (requestId && requestId === request.request_id) {
+      setOpen(true);
+      rowRef.current.scrollIntoView({behavior: 'smooth'});
+    }
+  }, [requests])
 
   return (
     <React.Fragment>
-      <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+      <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}} ref={rowRef}>
         <TableCell padding="checkbox">
           <Checkbox
             size={'small'}
@@ -60,7 +73,7 @@ const RequestRow = ({request, project}) => {
 }
 
 const getState = (state) => ({
-  project: state.projects.project,
+  requests: state.requests.requests
 })
 
 export default connect(

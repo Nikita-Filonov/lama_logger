@@ -6,6 +6,8 @@ import {setRequest} from "../../../Redux/Requests/requestsActions";
 import ViewRequestMenu from "../../Menus/Requests/ViewRequestMenu";
 import {ViewRequestStyles} from "../../../Styles/Blocks";
 import {TabPanel} from "../Common/TabPanel";
+import {Headers} from "./Headers";
+import {Body} from "./Body";
 
 
 function a11yProps(index) {
@@ -37,16 +39,12 @@ const ViewRequestDemo = ({request}) => {
       <Tabs classes={{root: classes.tabsRoot}} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
         <Tab classes={{root: classes.tabRoot}} label="Headers"  {...a11yProps(0)} />
         <Tab classes={{root: classes.tabRoot}} label="Body" {...a11yProps(1)} />
-        <Tab classes={{root: classes.tabRoot}} label="Params" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={requestTab} index={0}>
-        Item One
+        <Headers headers={request.request_headers}/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={requestTab} index={2}>
-        Item Three
+        <Body responseHeaders={request.request_headers} body={request.request_body}/>
       </TabPanel>
 
       <Typography variant={'subtitle1'} gutterBottom>Response</Typography>
@@ -55,10 +53,10 @@ const ViewRequestDemo = ({request}) => {
         <Tab classes={{root: classes.tabRoot}} label="Body" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={responseTab} index={0}>
-        Item One
+        <Headers headers={request.response_headers}/>
       </TabPanel>
       <TabPanel value={responseTab} index={1}>
-        Item Two
+        <Body responseHeaders={request.response_headers} body={request.response_body}/>
       </TabPanel>
 
     </Box>

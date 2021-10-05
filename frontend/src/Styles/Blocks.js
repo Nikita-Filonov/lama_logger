@@ -106,5 +106,8 @@ export const ViewRequestStyles = makeStyles(theme => ({
     height: tabHeight,
     minWidth: 50,
     fontSize: 12
+  },
+  headersContainer: {
+    maxHeight: 200
   }
 }));

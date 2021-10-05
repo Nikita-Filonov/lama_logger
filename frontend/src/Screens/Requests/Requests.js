@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
@@ -7,18 +7,18 @@ import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
 import RequestsToolbar from "../../Components/Blocks/Requests/RequestsToolbar";
-import {useHistory} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useProjects} from "../../Providers/ProjectsProvider";
 import RequestsTable from "../../Components/Blocks/Requests/RequestsTable";
 
 
 const Requests = (props) => {
   const {project, createRequest} = props;
-  const history = useHistory()
+  const {projectId} = useParams()
   const client = useRef(null);
   const {token} = useUsers()
   const {getProject} = useProjects()
-  const {getRequests, getRequest} = useRequests()
+  const {getRequests} = useRequests()
 
   useEffect(() => {
     (async () => {
@@ -36,15 +36,11 @@ const Requests = (props) => {
 
   useEffect(() => {
     (async () => {
-      if (!token) {
+      if (!token && project.id) {
         return
       }
 
-      const query = new URLSearchParams(history.location.search);
-      if (query.get('requestId') && query.get('projectId')) {
-        await getProject(query.get('projectId'))
-        await getRequest(query.get('projectId'), query.get('requestId'))
-      }
+      await getProject(projectId)
     })()
   }, [token])
 
