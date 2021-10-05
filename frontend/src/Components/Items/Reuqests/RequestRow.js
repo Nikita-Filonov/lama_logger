@@ -37,7 +37,7 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
       setOpen(true);
       rowRef.current.scrollIntoView({behavior: 'smooth'});
     }
-  }, [requests])
+  }, [])
 
   return (
     <React.Fragment>

@@ -13,12 +13,13 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {Button} from "@material-ui/core";
+import {Avatar, Button} from "@material-ui/core";
 import {useUsers} from "../../Providers/UsersProvider";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import {Api, Logout} from "@mui/icons-material";
 import {Settings} from "@material-ui/icons";
 import {AppBarStyled, DrawerHeaderStyled, DrawerStyled} from "../../Styles/Blocks";
+import {deepOrange} from "@material-ui/core/colors";
 
 
 export const NavigationBar = () => {
@@ -54,6 +55,7 @@ export const NavigationBar = () => {
           <Typography variant="h6" noWrap component="div" className={'flex-grow-1'}>
             Lama Logger
           </Typography>
+          <Avatar className={'me-3'}>N</Avatar>
           <Button color="inherit" onClick={onLogout}>Logout</Button>
         </Toolbar>
       </AppBarStyled>

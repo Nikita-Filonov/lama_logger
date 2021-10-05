@@ -9,6 +9,7 @@ import {useHistory} from "react-router-dom";
 import {useRequests} from "../../../../Providers/RequestsProvider";
 import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
+import RequestsMenu from "../../../Menus/Requests/RequestsMenu";
 
 const RequestsToolbar = ({project, requests, setRequest}) => {
   const classes = ViewRequestStyles()
@@ -38,9 +39,7 @@ const RequestsToolbar = ({project, requests, setRequest}) => {
         placeholder={'Search'}
         style={{height: 45}}
       />
-      <Tooltip title={'Clear requests'}>
-        <IconButton onClick={onClear}><Block/></IconButton>
-      </Tooltip>
+      <RequestsMenu/>
     </div>
   )
 }
