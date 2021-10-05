@@ -1,6 +1,6 @@
 import React from "react";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
-import {ViewRequestStyles} from "../../../Styles/Blocks";
+import {ViewRequestStyles} from "../../../../Styles/Blocks";
 
 
 export const Headers = ({headers}) => {

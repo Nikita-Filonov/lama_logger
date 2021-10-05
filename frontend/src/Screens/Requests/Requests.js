@@ -9,7 +9,7 @@ import {w3cwebsocket as W3CWebSocket} from "websocket";
 import RequestsToolbar from "../../Components/Blocks/Requests/RequestsToolbar";
 import {useParams} from "react-router-dom";
 import {useProjects} from "../../Providers/ProjectsProvider";
-import RequestsTable from "../../Components/Blocks/Requests/RequestsTable";
+import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/RequestsTable";
 
 
 const Requests = (props) => {

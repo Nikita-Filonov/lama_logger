@@ -1,7 +1,7 @@
 import React from "react";
 import {Typography} from "@mui/material";
 import ReactJson from "react-json-view";
-import {bodyTypeDetect} from "../../../Utils/Utils";
+import {bodyTypeDetect} from "../../../../Utils/Utils";
 
 export const Body = ({body, responseHeaders}) => {
   switch (bodyTypeDetect(responseHeaders, body)) {

@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import {Link, Tab, Tabs, Typography} from "@material-ui/core";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import {setRequest} from "../../../Redux/Requests/requestsActions";
-import ViewRequestMenu from "../../Menus/Requests/ViewRequestMenu";
-import {ViewRequestStyles} from "../../../Styles/Blocks";
-import {TabPanel} from "../Common/TabPanel";
+import {setRequest} from "../../../../Redux/Requests/requestsActions";
+import ViewRequestMenu from "../../../Menus/Requests/ViewRequestMenu";
+import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import {TabPanel} from "../../Common/TabPanel";
 import {Headers} from "./Headers";
 import {Body} from "./Body";
 

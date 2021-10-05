@@ -11,12 +11,12 @@ import {
   TableRow,
   TableSortLabel
 } from "@material-ui/core";
-import {getComparator, stableSort, successesByStatusCode} from "../../../Utils/Utils";
+import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
 import {connect} from "react-redux";
-import {EmptyList} from "../../Other/EmptyList";
-import {useRequests} from "../../../Providers/RequestsProvider";
-import {comp, RequestsTableStyles} from "../../../Styles/Blocks";
-import RequestRow from "../../Items/Reuqests/RequestRow";
+import {EmptyList} from "../../../Other/EmptyList";
+import {useRequests} from "../../../../Providers/RequestsProvider";
+import {comp, RequestsTableStyles} from "../../../../Styles/Blocks";
+import RequestRow from "../../../Items/Reuqests/RequestRow";
 import Box from "@mui/material/Box";
 import {visuallyHidden} from "@mui/utils";
 

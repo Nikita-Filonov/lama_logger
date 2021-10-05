@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../Styles/Blocks";
-import ViewRequestDemo from "../../Blocks/Requests/ViewReuqestDemo";
+import ViewRequest from "../../Blocks/Requests/ViewRequest/ViewReuqest";
 
 const RequestRow = ({request, requests}) => {
   const classes = RequestsTableStyles()
@@ -64,7 +64,7 @@ const RequestRow = ({request, requests}) => {
       <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <ViewRequestDemo request={request}/>
+            <ViewRequest request={request}/>
           </Collapse>
         </TableCell>
       </TableRow>
