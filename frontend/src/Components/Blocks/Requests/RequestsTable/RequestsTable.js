@@ -1,42 +1,14 @@
 import React, {useMemo, useState} from "react";
 import Paper from "@mui/material/Paper";
-import {
-  Checkbox,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel
-} from "@material-ui/core";
+import {CircularProgress, Table, TableBody, TableContainer} from "@material-ui/core";
 import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
 import {connect} from "react-redux";
 import {EmptyList} from "../../../Other/EmptyList";
 import {useRequests} from "../../../../Providers/RequestsProvider";
 import {comp, RequestsTableStyles} from "../../../../Styles/Blocks";
 import RequestRow from "../../../Items/Reuqests/RequestRow";
-import Box from "@mui/material/Box";
-import {visuallyHidden} from "@mui/utils";
+import RequestsTableHeader from "./RequestsTableHeader";
 
-const headCells = [
-  {
-    id: 'method',
-    align: 'left',
-    label: 'Method',
-  },
-  {
-    id: 'request_url',
-    align: 'left',
-    label: 'Url',
-  },
-  {
-    id: 'response_code',
-    align: 'right',
-    label: 'Status code',
-  },
-];
 
 const RequestsTable = ({requests, requestsFilters}) => {
   const classes = RequestsTableStyles()
@@ -61,37 +33,12 @@ const RequestsTable = ({requests, requestsFilters}) => {
       {filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}
       {filteredRequests.length > 0 && <TableContainer component={Paper} className={classes.tableContainer}>
         <Table sx={{minWidth: 650}} size="small" aria-label="a dense table" stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell padding={'checkbox'}>
-                <Checkbox
-                  size={'small'}
-                  color={'primary'}
-                />
-              </TableCell>
-              {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  align={headCell.align}
-                  sortDirection={orderBy === headCell.id ? order : false}
-                >
-                  <TableSortLabel
-                    active={orderBy === headCell.id}
-                    direction={orderBy === headCell.id ? order : 'asc'}
-                    onClick={onRequestSort(headCell.id)}
-                  >
-                    {headCell.label}
-                    {orderBy === headCell.id ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
-              ))}
-              <TableCell padding={'checkbox'}/>
-            </TableRow>
-          </TableHead>
+          <RequestsTableHeader
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={onRequestSort}
+            filteredRequests={filteredRequests}
+          />
           <TableBody>
             {stableSort(filteredRequests, getComparator(order, orderBy))
               .map(r => <RequestRow request={r} key={r.request_id}/>)}

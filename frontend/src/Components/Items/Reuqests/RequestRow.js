@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import {connect} from "react-redux";
 import {Checkbox, Collapse, TableCell, TableRow, Typography} from "@material-ui/core";
 import {StatusCodeIndicator} from "../../Blocks/Requests/StatusCodeIndicator";
@@ -8,12 +8,18 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../Styles/Blocks";
 import ViewRequest from "../../Blocks/Requests/ViewRequest/ViewReuqest";
+import {setSelectedRequests} from "../../../Redux/Requests/requestsActions";
 
-const RequestRow = ({request, requests}) => {
+const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) => {
   const classes = RequestsTableStyles()
   const rowRef = useRef(null)
   const history = useHistory();
   const [open, setOpen] = useState(false)
+
+  const isSelected = useMemo(
+    () => selectedRequests.indexOf(request.request_id) !== -1,
+    [selectedRequests]
+  );
 
   const onSelect = () => {
     setOpen(!open)
@@ -35,11 +41,17 @@ const RequestRow = ({request, requests}) => {
 
   return (
     <React.Fragment>
-      <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}} ref={rowRef}>
+      <TableRow
+        sx={{'&:last-child td, &:last-child th': {border: 0}}}
+        ref={rowRef}
+        selected={isSelected}
+      >
         <TableCell padding="checkbox">
           <Checkbox
             size={'small'}
             color={'primary'}
+            checked={isSelected}
+            onClick={() => setSelectedRequests({isSelected, requestId: request.request_id})}
           />
         </TableCell>
         <TableCell component="th" scope="row" onClick={onSelect}>
@@ -73,10 +85,13 @@ const RequestRow = ({request, requests}) => {
 }
 
 const getState = (state) => ({
-  requests: state.requests.requests
+  requests: state.requests.requests,
+  selectedRequests: state.requests.selectedRequests
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setSelectedRequests
+  },
 )(RequestRow);

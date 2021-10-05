@@ -109,5 +109,8 @@ export const ViewRequestStyles = makeStyles(theme => ({
   },
   headersContainer: {
     maxHeight: 200
+  },
+  toolbarContainer: {
+    height: 50
   }
 }));

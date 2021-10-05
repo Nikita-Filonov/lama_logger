@@ -6,14 +6,15 @@ import {Container} from "@material-ui/core";
 import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
-import RequestsToolbar from "../../Components/Blocks/Requests/RequestsToolbar";
+import RequestsToolbar from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
 import {useProjects} from "../../Providers/ProjectsProvider";
 import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/RequestsTable";
+import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/RequestsToolbarSelected";
 
 
 const Requests = (props) => {
-  const {project, createRequest} = props;
+  const {project, createRequest, selectedRequests} = props;
   const {projectId} = useParams()
   const client = useRef(null);
   const {token} = useUsers()
@@ -52,7 +53,7 @@ const Requests = (props) => {
 
   return (
     <Container maxWidth={'xl'}>
-      <RequestsToolbar/>
+      {selectedRequests.length > 0 ? <RequestsToolbarSelected/> : <RequestsToolbar/>}
       <RequestsTable/>
       {/*<Grid container spacing={4} className={'mt-3'}>*/}
       {/*  <Grid item xs={isRequestSelected ? 6 : 12}>*/}
@@ -70,6 +71,7 @@ const Requests = (props) => {
 
 const getState = (state) => ({
   project: state.projects.project,
+  selectedRequests: state.requests.selectedRequests
 })
 
 export default connect(

@@ -1,14 +1,17 @@
 import React from "react";
 import {Button, TextField, Tooltip} from "@material-ui/core";
 import {ArrowBack, Block} from "@material-ui/icons";
-import RequestsFilters from "./RequestsFilters";
+import RequestsFilters from "../RequestsFilters";
 import {IconButton} from "@mui/material";
 import {connect} from "react-redux";
-import {setRequest} from "../../../Redux/Requests/requestsActions";
+import {setRequest} from "../../../../Redux/Requests/requestsActions";
 import {useHistory} from "react-router-dom";
-import {useRequests} from "../../../Providers/RequestsProvider";
+import {useRequests} from "../../../../Providers/RequestsProvider";
+import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import clsx from "clsx";
 
 const RequestsToolbar = ({project, requests, setRequest}) => {
+  const classes = ViewRequestStyles()
   const history = useHistory();
   const {deleteRequests} = useRequests()
 
@@ -23,7 +26,7 @@ const RequestsToolbar = ({project, requests, setRequest}) => {
   }
 
   return (
-    <div className={'mt-3 d-flex justify-content-center align-items-center'}>
+    <div className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}>
       <Button onClick={onBack} startIcon={<ArrowBack/>}>BACK</Button>
       <RequestsFilters/>
       <div className={'flex-grow-1'}/>
