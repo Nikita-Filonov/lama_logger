@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {Circle} from "@mui/icons-material";
-import {setRequestsFilters} from "../../../Redux/Requests/requestsActions";
+import {setRequestsFilters} from "../../../../Redux/Requests/requestsActions";
 import {connect} from "react-redux";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({theme}) => ({
@@ -25,7 +25,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({theme}) => ({
   },
 }));
 
-const RequestsFilters = ({requestsFilters, setRequestsFilters}) => {
+const RequestsToolbarFilters = ({requestsFilters, setRequestsFilters}) => {
   const [methods, setMethods] = useState(requestsFilters.methods);
   const [successes, setSuccesses] = useState(requestsFilters.successes);
 
@@ -104,4 +104,4 @@ export default connect(
   {
     setRequestsFilters
   },
-)(RequestsFilters);
+)(RequestsToolbarFilters);

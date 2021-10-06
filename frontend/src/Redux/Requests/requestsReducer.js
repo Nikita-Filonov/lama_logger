@@ -5,6 +5,7 @@ import {
   SET_REQUEST,
   SET_REQUESTS,
   SET_REQUESTS_FILTERS,
+  SET_REQUESTS_FILTERS_SIDEBAR,
   SET_SELECT_ALL_REQUESTS,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
@@ -37,6 +38,9 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     }
     case SET_SELECT_ALL_REQUESTS: {
       return {...state, selectedRequests: action.payload}
+    }
+    case SET_REQUESTS_FILTERS_SIDEBAR: {
+      return {...state, requestsFiltersSidebar: action.payload}
     }
     default:
       return state;

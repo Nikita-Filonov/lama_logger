@@ -1,9 +1,9 @@
+import {DEFAULT_REQUESTS_FILTERS} from "../../Utils/Constants";
+
 export const INITIAL_REQUESTS = {
   request: {},
   requests: [],
-  requestsFilters: {
-    methods: JSON.parse(localStorage.getItem('methods')) || ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    successes: JSON.parse(localStorage.getItem('successes')) || ['success', 'redirect', 'error']
-  },
-  selectedRequests: []
+  requestsFilters: JSON.parse(localStorage.getItem('filters')) || DEFAULT_REQUESTS_FILTERS,
+  selectedRequests: [],
+  requestsFiltersSidebar: true
 }

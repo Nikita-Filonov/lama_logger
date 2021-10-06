@@ -2,6 +2,7 @@ import {
   CREATE_REQUEST,
   SET_REQUEST,
   SET_REQUESTS_FILTERS,
+  SET_REQUESTS_FILTERS_SIDEBAR,
   SET_SELECT_ALL_REQUESTS,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
@@ -31,5 +32,10 @@ export const setSelectedRequests = (state) => ({
 
 export const setSelectAllRequests = (state) => ({
   type: SET_SELECT_ALL_REQUESTS,
+  payload: state
+})
+
+export const setRequestsFiltersSidebar = (state) => ({
+  type: SET_REQUESTS_FILTERS_SIDEBAR,
   payload: state
 })

@@ -58,10 +58,7 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
           {request.method}
         </TableCell>
         <TableCell align="left" onClick={onSelect}>
-          <Typography
-            style={{width: window.innerWidth / 2}}
-            className={classes.rowRequestUrlText}
-          >{request.request_url}</Typography>
+          <Typography className={classes.rowRequestUrlText}>{request.request_url}</Typography>
         </TableCell>
         <TableCell align="right" className={'d-flex'} onClick={onSelect}>
           <StatusCodeIndicator statusCode={request.response_code}/>

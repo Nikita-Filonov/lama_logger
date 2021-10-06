@@ -85,7 +85,8 @@ export const DrawerStyled = styled(MuiDrawer, {shouldForwardProp: (prop) => prop
 
 export const RequestsTableStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxHeight: window.innerHeight / 1.3
+    maxHeight: window.innerHeight / 1.3,
+    height: window.innerHeight / 1.3,
   },
   rowRequestUrlText: {
     textOverflow: 'ellipsis',

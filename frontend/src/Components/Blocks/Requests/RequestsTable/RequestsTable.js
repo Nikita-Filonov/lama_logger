@@ -2,17 +2,17 @@ import React, {useMemo, useState} from "react";
 import Paper from "@mui/material/Paper";
 import {CircularProgress, Table, TableBody, TableContainer} from "@material-ui/core";
 import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
-import {connect} from "react-redux";
 import {EmptyList} from "../../../Other/EmptyList";
 import {useRequests} from "../../../../Providers/RequestsProvider";
 import {comp, RequestsTableStyles} from "../../../../Styles/Blocks";
 import RequestRow from "../../../Items/Reuqests/RequestRow";
 import RequestsTableHeader from "./RequestsTableHeader";
+import {connect} from "react-redux";
 
 
 const RequestsTable = ({requests, requestsFilters}) => {
-  const classes = RequestsTableStyles()
-  const {load} = useRequests()
+  const classes = RequestsTableStyles();
+  const {load} = useRequests();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
 
@@ -28,11 +28,11 @@ const RequestsTable = ({requests, requestsFilters}) => {
   };
 
   return (
-    <div className={'mt-3'}>
-      {load && <CircularProgress style={comp.spinner}/>}
-      {filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}
-      {filteredRequests.length > 0 && <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table sx={{minWidth: 650}} size="small" aria-label="a dense table" stickyHeader>
+    <React.Fragment>
+      {/*{load && <CircularProgress style={comp.spinner}/>}*/}
+      {/*{filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}*/}
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table className={'w-100'} size="small" aria-label="a dense table" stickyHeader>
           <RequestsTableHeader
             order={order}
             orderBy={orderBy}
@@ -44,8 +44,8 @@ const RequestsTable = ({requests, requestsFilters}) => {
               .map(r => <RequestRow request={r} key={r.request_id}/>)}
           </TableBody>
         </Table>
-      </TableContainer>}
-    </div>
+      </TableContainer>
+    </React.Fragment>
   )
 }
 

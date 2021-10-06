@@ -6,26 +6,25 @@ import {Container} from "@material-ui/core";
 import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
-import RequestsToolbar from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
+import {RequestsToolbar} from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
-import {useProjects} from "../../Providers/ProjectsProvider";
 import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/RequestsTable";
 import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/RequestsToolbarSelected";
+import RequestsSideFilters from "../../Components/Blocks/Requests/RequestsFilters/RequestsSideFilters";
 
 
 const Requests = (props) => {
-  const {project, createRequest, selectedRequests} = props;
+  const {createRequest, selectedRequests} = props;
   const {projectId} = useParams()
   const client = useRef(null);
   const {token} = useUsers()
-  const {getProject} = useProjects()
   const {getRequests} = useRequests()
 
   useEffect(() => {
     (async () => {
-      if (project.id && token) {
-        await getRequests(project.id)
-        client.current = await new W3CWebSocket(wsUri + `projects/${project.id}/requests/`);
+      if (token) {
+        await getRequests(projectId)
+        client.current = await new W3CWebSocket(wsUri + `projects/${projectId}/requests/`);
         client.current.onmessage = await onRequest
       }
 
@@ -33,18 +32,7 @@ const Requests = (props) => {
         client.current.close()
       }
     })()
-  }, [project.id, token])
-
-  useEffect(() => {
-    (async () => {
-      if (!token && project.id) {
-        return
-      }
-
-      await getProject(projectId)
-    })()
   }, [token])
-
 
   const onRequest = async (message) => {
     const request = JSON.parse(message.data);
@@ -54,7 +42,11 @@ const Requests = (props) => {
   return (
     <Container maxWidth={'xl'}>
       {selectedRequests.length > 0 ? <RequestsToolbarSelected/> : <RequestsToolbar/>}
-      <RequestsTable/>
+      <div className={'d-flex mt-3'}>
+        <RequestsSideFilters/>
+        <RequestsTable/>
+      </div>
+
       {/*<Grid container spacing={4} className={'mt-3'}>*/}
       {/*  <Grid item xs={isRequestSelected ? 6 : 12}>*/}
       {/*    <RequestsTable/>*/}
@@ -70,7 +62,6 @@ const Requests = (props) => {
 
 
 const getState = (state) => ({
-  project: state.projects.project,
   selectedRequests: state.requests.selectedRequests
 })
 

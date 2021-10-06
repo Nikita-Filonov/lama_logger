@@ -15,7 +15,7 @@ const useStyles = makeStyles(
       display: 'block',
       marginLeft: 'auto',
       marginRight: 'auto',
-      width: '15%',
+      width: '20%',
       marginTop: '10%'
     }
   }),
