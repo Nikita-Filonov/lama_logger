@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
-import {Divider, IconButton, Paper, Typography} from "@mui/material";
+import {Button, Checkbox, Divider, IconButton, Paper, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import {Close} from "@material-ui/icons";
+import {AccessTime, Close} from "@material-ui/icons";
 import {setRequestsFilters, setRequestsFiltersSidebar} from "../../../../Redux/Requests/requestsActions";
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
-import {Checkbox, FormControlLabel, FormGroup} from "@material-ui/core";
+import {FormControlLabel, FormGroup} from "@material-ui/core";
 import {StatusCodeIndicator} from "../StatusCodeIndicator";
 import {REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../Utils/Constants";
 
@@ -80,10 +80,11 @@ const RequestsSideFilters = (props) => {
           )}
         </FormGroup>
         <Divider/>
-        <FormGroup>
-          <Typography variant={'subtitle2'} className={'mt-2'}>Time</Typography>
-
-        </FormGroup>
+        <Typography variant={'subtitle2'} className={'mt-2'}>Time</Typography>
+        <Button size={'small'} startIcon={<AccessTime fontSize={'small'}/>} color={'inherit'}>
+          Time filters
+        </Button>
+        <Divider className={'mt-2'}/>
       </Paper>
     </Box>
   )

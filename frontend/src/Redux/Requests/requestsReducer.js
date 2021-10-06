@@ -6,6 +6,7 @@ import {
   SET_REQUESTS,
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
+  SET_REQUESTS_TIME_FILTER_MODAL,
   SET_SELECT_ALL_REQUESTS,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
@@ -39,9 +40,10 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     case SET_SELECT_ALL_REQUESTS: {
       return {...state, selectedRequests: action.payload}
     }
-    case SET_REQUESTS_FILTERS_SIDEBAR: {
+    case SET_REQUESTS_FILTERS_SIDEBAR:
       return {...state, requestsFiltersSidebar: action.payload}
-    }
+    case SET_REQUESTS_TIME_FILTER_MODAL:
+      return {...state, requestsTimeFilterModal: action.payload}
     default:
       return state;
   }

@@ -5,5 +5,6 @@ export const INITIAL_REQUESTS = {
   requests: [],
   requestsFilters: JSON.parse(localStorage.getItem('filters')) || DEFAULT_REQUESTS_FILTERS,
   selectedRequests: [],
-  requestsFiltersSidebar: true
+  requestsFiltersSidebar: true,
+  requestsTimeFilterModal: false
 }

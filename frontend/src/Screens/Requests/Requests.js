@@ -6,11 +6,12 @@ import {Container} from "@material-ui/core";
 import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
-import {RequestsToolbar} from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
+import RequestsToolbar from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
 import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/RequestsTable";
 import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/RequestsToolbarSelected";
 import RequestsSideFilters from "../../Components/Blocks/Requests/RequestsFilters/RequestsSideFilters";
+import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
 
 
 const Requests = (props) => {
@@ -56,6 +57,7 @@ const Requests = (props) => {
       {/*    <ViewRequest/>*/}
       {/*  </Grid>}*/}
       {/*</Grid>*/}
+      <TimeFilters/>
     </Container>
   )
 }

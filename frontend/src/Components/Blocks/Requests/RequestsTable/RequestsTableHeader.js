@@ -1,6 +1,7 @@
 import React, {useMemo} from "react";
-import {Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from "@material-ui/core";
+import {TableCell, TableHead, TableRow, TableSortLabel} from "@material-ui/core";
 import Box from "@mui/material/Box";
+import {Checkbox} from '@mui/material';
 import {visuallyHidden} from "@mui/utils";
 import {connect} from "react-redux";
 import {setSelectAllRequests, setSelectedRequests} from "../../../../Redux/Requests/requestsActions";

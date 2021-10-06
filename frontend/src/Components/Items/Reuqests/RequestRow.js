@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {connect} from "react-redux";
-import {Checkbox, Collapse, TableCell, TableRow, Typography} from "@material-ui/core";
+import {Collapse, TableCell, TableRow, Typography} from "@material-ui/core";
+import {Checkbox} from '@mui/material';
 import {StatusCodeIndicator} from "../../Blocks/Requests/StatusCodeIndicator";
 import {useHistory} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
