@@ -29,11 +29,11 @@ const ViewRequestDemo = ({request}) => {
   return (
     <Box sx={{margin: 1}}>
       <div className={'d-flex justify-content-center align-items-center'}>
-        <Typography variant="subtitle1" gutterBottom component="div" className={'mt-3'}>
+        <Typography variant="h6" gutterBottom component="div" className={'mt-3'} style={{fontSize: 17}}>
           {request.method} request to <Link href={request.request_url} target={'_blank'}>{request.request_url}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
-        <ViewRequestMenu/>
+        <ViewRequestMenu request={request}/>
       </div>
       <Typography variant={'subtitle1'} gutterBottom>Request</Typography>
       <Tabs classes={{root: classes.tabsRoot}} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>

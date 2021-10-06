@@ -45,7 +45,7 @@ const AlertsProvider = ({children}) => {
           horizontal: 'right',
         }}
         autoHideDuration={4000}
-        open={alert?.message}
+        open={Boolean(alert?.message)}
         onClose={onClose}
         TransitionComponent={SlideTransition}
         message={alert.message}

@@ -11,9 +11,12 @@ import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../Styles/Menus";
 import {useRequests} from "../../../Providers/RequestsProvider";
 import {connect} from "react-redux";
+import {useAlerts} from "../../../Providers/AlertsProvider";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const ViewRequestMenu = ({project, request}) => {
-  const {getRequestAsCurl} = useRequests()
+  const {setAlert} = useAlerts();
+  const {getRequestAsCurl} = useRequests();
   const [menu, setMenu] = useState(null);
 
   const onOpen = (event) => setMenu(event.currentTarget);
@@ -22,6 +25,8 @@ const ViewRequestMenu = ({project, request}) => {
     await getRequestAsCurl(project.id, request.request_id)
     onClose()
   }
+  const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard'})
+  
 
   return (
     <React.Fragment>
@@ -53,12 +58,14 @@ const ViewRequestMenu = ({project, request}) => {
           </ListItemIcon>
           Copy as curl
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <ContentCopy fontSize="small"/>
-          </ListItemIcon>
-          Copy request link
-        </MenuItem>
+        <CopyToClipboard text={window.location.href} onCopy={onCopyLink}>
+          <MenuItem>
+            <ListItemIcon>
+              <ContentCopy fontSize="small"/>
+            </ListItemIcon>
+            Copy request link
+          </MenuItem>
+        </CopyToClipboard>
         <Divider/>
         <MenuItem>
           <ListItemIcon>
@@ -72,8 +79,7 @@ const ViewRequestMenu = ({project, request}) => {
 }
 
 const getState = (state) => ({
-  project: state.projects.project,
-  request: state.requests.request
+  project: state.projects.project
 })
 
 export default connect(
