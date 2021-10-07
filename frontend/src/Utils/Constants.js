@@ -1,5 +1,5 @@
-export const baseUrl = 'http://localhost:8000/';
-export const wsUri = 'ws://localhost:8000/'
+export const baseUrl = 'https://lama-logger.herokuapp.com/';
+export const wsUri = 'wss://lama-logger.herokuapp.com/'
 
 export const DEFAULT_REQUESTS_FILTERS = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
