@@ -52,7 +52,7 @@ class RequestsApi(views.APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         projects = Project.objects.get(id=project_id)
-        projects.requests.filter(id__in=requests).delete()
+        projects.requests.filter(request_id__in=requests).delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
