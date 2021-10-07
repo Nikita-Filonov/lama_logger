@@ -5,7 +5,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {Link} from "react-router-dom";
 import {setProject} from "../../../Redux/Projects/projectActions";
 import {connect} from "react-redux";
-import {ProjectMenu} from "../../Menus/Projects/ProjectMenu";
+import ProjectMenu from "../../Menus/Projects/ProjectMenu";
 
 const Project = ({project, setProject}) => {
 
@@ -26,7 +26,7 @@ const Project = ({project, setProject}) => {
         {project.title}
       </Link>
       <div className={'flex-grow-1'}/>
-      <ProjectMenu/>
+      <ProjectMenu project={project}/>
     </ListItemButton>
   )
 }

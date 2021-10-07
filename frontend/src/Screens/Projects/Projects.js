@@ -19,7 +19,7 @@ const Projects = ({projects}) => {
   const onCreateProject = () => setCreateProjectModal(true)
 
   return (
-    <Container>
+    <Container maxWidth={'xl'}>
       {/*<div className={'d-flex mt-2'}>*/}
       {/*  <Button className={'ms-auto'} onClick={onCreateProject} variant="outlined">*/}
       {/*    Create project*/}

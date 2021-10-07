@@ -11,8 +11,12 @@ import {ContentCopyOutlined} from "@mui/icons-material";
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../Styles/Menus";
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {setProject} from "../../../Redux/Projects/projectActions";
 
-export const ProjectMenu = () => {
+const ProjectMenu = ({project, setProject}) => {
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -21,6 +25,13 @@ export const ProjectMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const onSettings = () => {
+    setProject(project)
+    history.push(`/projects/${project.id}/settings/general`)
+    localStorage.setItem('project', JSON.stringify(project))
+  }
+
   return (
     <React.Fragment>
       <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
@@ -51,7 +62,7 @@ export const ProjectMenu = () => {
           </ListItemIcon>
           Duplicate
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={onSettings}>
           <ListItemIcon>
             <Settings fontSize="small"/>
           </ListItemIcon>
@@ -68,3 +79,10 @@ export const ProjectMenu = () => {
     </React.Fragment>
   );
 }
+
+export default connect(
+  null,
+  {
+    setProject
+  },
+)(ProjectMenu);

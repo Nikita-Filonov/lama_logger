@@ -12,12 +12,16 @@ import {Login} from "./Screens/Login/Login";
 import {UsersProvider, useUsers} from "./Providers/UsersProvider";
 import Projects from "./Screens/Projects/Projects";
 import {NavigationBar} from "./Components/Navigation/NavigationBar";
-import {PrivateRoute} from "./Components/Navigation/PrivateRoute";
-import {PublicRoute} from "./Components/Navigation/PublicRoute";
+import {PrivateRoute} from "./Components/Navigation/Routes/Common/PrivateRoute";
+import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
 import Requests from "./Screens/Requests/Requests";
 import {RequestsProvider} from "./Providers/RequestsProvider";
 import {AlertsProvider} from "./Providers/AlertsProvider";
+import {ProjectSettingsGeneral} from "./Screens/Projects/Settings/General/ProjectSettingsGeneral";
+import {ProjectSettingsRoute} from "./Components/Navigation/Routes/Projects/ProjectSettingsRoute";
+import {ProjectSettingsMembers} from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
+import {ProjectSettingsRoles} from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";
 
 
 const store = createStore(reducer);
@@ -32,6 +36,11 @@ const CustomRoute = () => {
         <Switch>
           <PrivateRoute exact path="/projects" component={Projects}/>
           <PrivateRoute exact path="/projects/:projectId" component={Requests}/>
+          <ProjectSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
+          <ProjectSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
+          <ProjectSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
+          <ProjectSettingsRoute exact path="/projects/:projectId/settings/integrations"
+                                component={ProjectSettingsRoles}/>
           <PublicRoute exact path="/login" component={Login}/>
         </Switch>
       </div>
