@@ -24,7 +24,7 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requestsFilters: action.payload}
     }
     case DELETE_REQUESTS: {
-      const filteredRequests = state.requests.filter(r => !action.payload.includes(r.id))
+      const filteredRequests = state.requests.filter(r => !action.payload.includes(r.request_id))
       return {...state, requests: [...filteredRequests]}
     }
     case SET_SELECTED_REQUESTS: {

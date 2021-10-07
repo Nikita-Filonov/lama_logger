@@ -5,9 +5,17 @@ import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
 import {Delete} from "@material-ui/icons";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
+import {useRequests} from "../../../../Providers/RequestsProvider";
+import {setSelectAllRequests} from "../../../../Redux/Requests/requestsActions";
 
-const RequestsToolbarSelected = ({selectedRequests}) => {
-  const classes = ViewRequestStyles()
+const RequestsToolbarSelected = ({project, selectedRequests, setSelectAllRequests}) => {
+  const classes = ViewRequestStyles();
+  const {deleteRequests} = useRequests();
+
+  const onDelete = async () => {
+    await deleteRequests(project.id, selectedRequests)
+    setSelectAllRequests([])
+  }
 
   return (
     <div className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}>
@@ -19,7 +27,7 @@ const RequestsToolbarSelected = ({selectedRequests}) => {
         </IconButton>
       </Tooltip>
       <Tooltip title={'Delete selected requests'} placement={'left'}>
-        <IconButton>
+        <IconButton onClick={onDelete}>
           <Delete/>
         </IconButton>
       </Tooltip>
@@ -28,10 +36,13 @@ const RequestsToolbarSelected = ({selectedRequests}) => {
 }
 
 const getState = (state) => ({
+  project: state.projects.project,
   selectedRequests: state.requests.selectedRequests
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setSelectAllRequests
+  },
 )(RequestsToolbarSelected);
