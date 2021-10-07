@@ -1,14 +1,12 @@
 import React, {useState} from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField
-} from "@material-ui/core";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import {useProjects} from "../../../Providers/ProjectsProvider";
+import {DialogContentText} from "@material-ui/core";
 
 export const CreateProject = ({modal, setModal}) => {
   const {createProject} = useProjects()

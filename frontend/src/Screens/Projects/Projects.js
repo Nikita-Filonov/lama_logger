@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import {CircularProgress, Container, Fab} from "@material-ui/core";
+import {Fab} from '@mui/material';
+import {CircularProgress, Container} from "@material-ui/core";
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {Add} from "@material-ui/icons";
 import {comp} from "../../Styles/Blocks";
@@ -37,7 +38,7 @@ const Projects = ({projects}) => {
         {load && <CircularProgress style={comp.spinner}/>}
         {projects.map(p => <Project project={p} key={p.id}/>)}
       </List>
-      <Fab variant="extended" style={comp.fab} onClick={onCreateProject}>
+      <Fab variant="extended" color={'primary'} style={comp.fab} onClick={onCreateProject}>
         <Add sx={{mr: 1}}/>
         CREATE
       </Fab>
