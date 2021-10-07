@@ -114,4 +114,4 @@ export const ViewRequestStyles = makeStyles(theme => ({
   toolbarContainer: {
     height: 50
   }
-}));
+}), {index: 1});
