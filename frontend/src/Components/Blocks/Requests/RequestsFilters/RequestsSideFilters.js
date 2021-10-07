@@ -3,7 +3,11 @@ import {Button, Checkbox, Divider, IconButton, Paper, Typography} from "@mui/mat
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
 import {AccessTime, Close} from "@material-ui/icons";
-import {setRequestsFilters, setRequestsFiltersSidebar} from "../../../../Redux/Requests/requestsActions";
+import {
+  setRequestsFilters,
+  setRequestsFiltersSidebar,
+  setRequestsTimeFilterModal
+} from "../../../../Redux/Requests/requestsActions";
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
 import {FormControlLabel, FormGroup} from "@material-ui/core";
@@ -11,10 +15,17 @@ import {StatusCodeIndicator} from "../StatusCodeIndicator";
 import {REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../Utils/Constants";
 
 const RequestsSideFilters = (props) => {
-  const {requestsFiltersSidebar, setRequestsFiltersSidebar, requestsFilters, setRequestsFilters} = props;
+  const {
+    requestsFiltersSidebar,
+    setRequestsFiltersSidebar,
+    requestsFilters,
+    setRequestsFilters,
+    setRequestsTimeFilterModal
+  } = props;
   const classes = RequestsTableStyles();
 
   const onClose = () => setRequestsFiltersSidebar(true)
+  const onRequestTimeFilter = () => setRequestsTimeFilterModal(true)
 
   useEffect(() =>
       localStorage.setItem('requestsFilters', JSON.stringify(requestsFilters)),
@@ -22,7 +33,6 @@ const RequestsSideFilters = (props) => {
   )
 
   const onMethod = (event, filter = 'methods') => {
-    console.log(event.value, filter, requestsFilters)
     let selectedMethods;
     if (event?.checked) {
       selectedMethods = [...requestsFilters[filter], event.value]
@@ -81,7 +91,8 @@ const RequestsSideFilters = (props) => {
         </FormGroup>
         <Divider/>
         <Typography variant={'subtitle2'} className={'mt-2'}>Time</Typography>
-        <Button size={'small'} startIcon={<AccessTime fontSize={'small'}/>} color={'inherit'}>
+        <Button onClick={onRequestTimeFilter} size={'small'} startIcon={<AccessTime fontSize={'small'}/>}
+                color={'inherit'}>
           Time filters
         </Button>
         <Divider className={'mt-2'}/>
@@ -100,6 +111,7 @@ export default connect(
   getState,
   {
     setRequestsFilters,
-    setRequestsFiltersSidebar
+    setRequestsFiltersSidebar,
+    setRequestsTimeFilterModal
   },
 )(RequestsSideFilters);

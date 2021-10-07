@@ -11,25 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import {ButtonGroup, Link, Typography} from "@mui/material";
 
-const styles = theme => ({
-  root: {
-    display: "flex",
-    textAlign: "center",
-    width: 300,
-    marginLeft: 100,
-    marginTop: 200
-  },
-  hidden: {
-    display: "none"
-  },
-  button: {
-    background: "green"
-  },
-  label: {
-    backgroundColor: "white"
-  }
-});
 
 const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
   const onClose = () => setRequestsTimeFilterModal(false)
@@ -40,13 +23,14 @@ const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
       <DialogContent>
         <div className={'w-100 d-flex'}>
           <FormControl variant="standard" sx={{marginRight: 3, minWidth: 120}}>
-            <InputLabel id="demo-simple-select-standard-label">Next/Prev</InputLabel>
-            <Select label="Age">
+            <InputLabel>Next/Prev</InputLabel>
+            <Select label="Age" defaultValue={10}>
               <MenuItem value={10}>Prev</MenuItem>
               <MenuItem value={20}>Next</MenuItem>
             </Select>
           </FormControl>
           <TextField
+            defaultValue={5}
             type={'number'}
             fullWidth
             variant={'standard'}
@@ -54,17 +38,31 @@ const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
           />
           <FormControl variant="standard" sx={{marginLeft: 3, minWidth: 120}}>
             <InputLabel id="demo-simple-select-standard-label">Period</InputLabel>
-            <Select label="Age">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Second</MenuItem>
+            <Select label="Age" defaultValue={20}>
+              <MenuItem value={10}>Seconds</MenuItem>
               <MenuItem value={20}>Minutes</MenuItem>
               <MenuItem value={30}>Hours</MenuItem>
               <MenuItem value={30}>Days</MenuItem>
-              <MenuItem value={30}>Month</MenuItem>
+              <MenuItem value={30}>Months</MenuItem>
             </Select>
           </FormControl>
+        </div>
+        <div>
+          <Typography variant={'subtitle1'} className={'mt-3'}>Commonly used</Typography>
+          <ButtonGroup variant="text" size={'small'} orientation={'vertical'}>
+            <Button className={'justify-content-start'}>Today</Button>
+            <Button className={'justify-content-start'}>This week</Button>
+            <Button className={'justify-content-start'}>Last 15 minutes</Button>
+            <Button className={'justify-content-start'}>Last 30 minutes</Button>
+            <Button className={'justify-content-start'}>Last 1 hour</Button>
+          </ButtonGroup>
+          <ButtonGroup variant="text" size={'small'} orientation={'vertical'} className={'ms-5'}>
+            <Button className={'justify-content-start'}>Last 24 hours</Button>
+            <Button className={'justify-content-start'}>Last 7 days</Button>
+            <Button className={'justify-content-start'}>Last 15 minutes</Button>
+            <Button className={'justify-content-start'}>Last 30 minutes</Button>
+            <Button className={'justify-content-start'}>Last 1 hour</Button>
+          </ButtonGroup>
         </div>
       </DialogContent>
       <DialogActions>
