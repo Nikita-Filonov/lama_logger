@@ -7,7 +7,8 @@ import {ViewRequestStyles} from "../../../../Styles/Blocks";
 
 export const ProjectSettingsRoute = ({component: Component, ...rest}) => {
   const classes = ViewRequestStyles()
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
+  const project = localStorage.getItem('project');
 
   return (
     <Container maxWidth={'xl'}>
@@ -21,7 +22,12 @@ export const ProjectSettingsRoute = ({component: Component, ...rest}) => {
           {...rest}
           render={props =>
             token ? (
-              <Component {...props} />
+              <React.Fragment>
+                {project
+                  ? <Component {...props} />
+                  : <Redirect to={{pathname: '/projects', state: {from: props.location}}}/>
+                }
+              </React.Fragment>
             ) : (
               <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
             )
