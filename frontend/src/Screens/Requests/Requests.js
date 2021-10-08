@@ -2,7 +2,6 @@ import React, {useEffect, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import {Container} from "@material-ui/core";
 import {createRequest} from "../../Redux/Requests/requestsActions";
 import {wsUri} from "../../Utils/Constants";
 import {w3cwebsocket as W3CWebSocket} from "websocket";
@@ -12,6 +11,7 @@ import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/Reques
 import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/RequestsToolbarSelected";
 import RequestsSideFilters from "../../Components/Blocks/Requests/RequestsFilters/RequestsSideFilters";
 import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
+import {Container} from "@mui/material";
 
 
 const Requests = (props) => {

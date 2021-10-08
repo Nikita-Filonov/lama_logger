@@ -1,7 +1,7 @@
 import {styled} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
-import {makeStyles} from "@material-ui/core";
+import {makeStyles} from "@mui/styles";
 
 
 export const common = {

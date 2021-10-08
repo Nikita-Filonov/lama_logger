@@ -1,5 +1,5 @@
-import {makeStyles} from "@material-ui/core";
 import {SIDEBAR_WIDTH} from "../Utils/Constants";
+import {makeStyles} from "@mui/styles";
 
 
 export const ProjectSettingsStyles = makeStyles((theme) => ({

@@ -6,8 +6,8 @@ import {AppBarStyled, DrawerHeaderStyled} from "../../Styles/Blocks";
 import NavigationDrawer from "./NavigationDrawer";
 import {connect} from "react-redux";
 import {setTheme} from "../../Redux/Users/usersActions";
-import {Brightness4Outlined} from "@material-ui/icons";
-import Brightness7OutlinedIcon from '@material-ui/icons/Brightness7Outlined';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
 const NavigationBar = ({setTheme}) => {
@@ -45,7 +45,7 @@ const NavigationBar = ({setTheme}) => {
             Lama Logger
           </Typography>
           <IconButton className={'me-3'} onClick={onTheme} color="inherit">
-            {palette.mode === 'light' ? <Brightness4Outlined/> : <Brightness7OutlinedIcon/>}
+            {palette.mode === 'light' ? <Brightness4Icon/> : <Brightness7Icon/>}
           </IconButton>
           <Avatar className={'me-3'}>N</Avatar>
           <Button color="inherit" onClick={onLogout}>Logout</Button>

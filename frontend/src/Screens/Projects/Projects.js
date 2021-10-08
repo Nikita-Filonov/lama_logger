@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
-import List from '@mui/material/List';
-import {Fab, Typography} from '@mui/material';
-import {CircularProgress, Container} from "@material-ui/core";
+import {CircularProgress, Container, Fab, List, Typography} from '@mui/material';
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
-import {Add} from "@material-ui/icons";
 import {common, ViewRequestStyles} from "../../Styles/Blocks";
 import {connect} from "react-redux";
 import Project from "../../Components/Items/Projects/Project";
 import {useProjects} from "../../Providers/ProjectsProvider";
-import {EmptyList} from "../../Components/Other/EmptyList";
+import {EmptyList} from "../../Components/Blocks/Common/EmptyList";
 import clsx from "clsx";
 import {Search} from "../../Components/Blocks/Common/Search";
+import {Add} from "@mui/icons-material";
 
 
 const Projects = ({projects}) => {

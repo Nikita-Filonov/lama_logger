@@ -3,10 +3,10 @@ import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
 import RequestsMenu from "../../../Menus/Requests/RequestsMenu";
 import {Button, Typography} from "@mui/material";
-import {AccessTime} from "@material-ui/icons";
 import {connect} from "react-redux";
 import {setRequestsTimeFilterModal} from "../../../../Redux/Requests/requestsActions";
 import {Search} from "../../Common/Search";
+import {AccessTime} from "@mui/icons-material";
 
 
 const RequestsToolbar = ({setRequestsTimeFilterModal}) => {

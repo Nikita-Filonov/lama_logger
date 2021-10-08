@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import {useUsers} from "../../Providers/UsersProvider";
 import {baseUrl} from "../../Utils/Constants";
 import {useHistory} from 'react-router-dom'
-import {Button, Container, Grid, TextField} from "@material-ui/core";
+import {Container, Grid, TextField, Typography} from '@mui/material';
+import Button from "@mui/material/Button";
 
 
 export const Login = () => {
@@ -32,10 +33,10 @@ export const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">>
+    <Container maxWidth="sm">
 
       <div className={'text-center'} style={{marginTop: '20%'}}>
-        <h4>Lama Logger</h4>
+        <Typography variant={'h5'}>Lama Logger</Typography>
       </div>
       <Grid container spacing={2}>
         <Grid item xs={2}/>

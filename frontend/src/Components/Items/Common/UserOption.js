@@ -1,5 +1,6 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
+import {Avatar} from "@mui/material";
+
 
 export const UserOption = ({label, image = null}) =>
   <div className={'d-flex align-items-center'}>

@@ -5,12 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {FilterList, MoreVert} from "@material-ui/icons";
 import {ProjectMenuStyles} from "../../../Styles/Menus";
 import {connect} from "react-redux";
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import {setRequestsFiltersSidebar} from "../../../Redux/Requests/requestsActions";
+import {FilterList, MoreVert} from "@mui/icons-material";
 
 const RequestsMenu = ({setRequestsFiltersSidebar}) => {
   const [menu, setMenu] = useState(null);

@@ -1,6 +1,6 @@
 import React from "react";
-import {blue} from "@material-ui/core/colors";
 import {CircularProgress} from "@mui/material";
+import {blue} from "@mui/material/colors";
 
 
 export const ButtonSpinner = () => {

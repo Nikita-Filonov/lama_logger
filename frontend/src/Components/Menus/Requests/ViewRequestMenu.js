@@ -5,8 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {DeleteOutline, InsertLink, MoreVert, Send} from "@material-ui/icons";
-import {ContentCopy} from "@mui/icons-material";
+import {ContentCopy, DeleteOutline, InsertLink, MoreVert, Send} from "@mui/icons-material";
 import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../Styles/Menus";
 import {useRequests} from "../../../Providers/RequestsProvider";
@@ -26,7 +25,7 @@ const ViewRequestMenu = ({project, request}) => {
     onClose()
   }
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard'})
-  
+
 
   return (
     <React.Fragment>

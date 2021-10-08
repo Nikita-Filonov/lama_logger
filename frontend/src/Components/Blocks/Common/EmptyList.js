@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {createTheme} from '@material-ui/core/styles';
-import {makeStyles} from '@material-ui/styles';
-import {baseUrl} from "../../Utils/Constants";
+import {baseUrl} from "../../../Utils/Constants";
+import {makeStyles} from "@mui/styles";
+import {createTheme} from "@mui/material";
 
 
 const defaultTheme = createTheme();

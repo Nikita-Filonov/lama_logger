@@ -3,10 +3,10 @@ import {IconButton, Tooltip, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
-import {Delete} from "@material-ui/icons";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import {useRequests} from "../../../../Providers/RequestsProvider";
 import {setSelectAllRequests} from "../../../../Redux/Requests/requestsActions";
+import {Delete} from "@mui/icons-material";
 
 const RequestsToolbarSelected = ({project, selectedRequests, setSelectAllRequests}) => {
   const classes = ViewRequestStyles();

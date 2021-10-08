@@ -1,9 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
-import {Button, Grid, TextField} from "@mui/material";
+import {Autocomplete, Button, Grid, TextField} from "@mui/material";
 import {connect} from "react-redux";
-import {DeleteOutline, SaveOutlined} from "@material-ui/icons";
-import {Autocomplete} from "@material-ui/lab";
 import {UserOption} from "../../../../Components/Items/Common/UserOption";
 import {useProjects} from "../../../../Providers/ProjectsProvider";
 import Box from "@mui/material/Box";
@@ -13,6 +11,7 @@ import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {useAlerts} from "../../../../Providers/AlertsProvider";
 import {removeProject} from "../../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
+import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
 
 
 const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {

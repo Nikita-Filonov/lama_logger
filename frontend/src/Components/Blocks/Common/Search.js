@@ -1,8 +1,7 @@
 import React from "react";
-import {TextField} from "@mui/material";
-import {InputAdornment} from "@material-ui/core";
+import {InputAdornment, TextField} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import {Close} from "@material-ui/icons";
+import {Close} from "@mui/icons-material";
 
 export const Search = ({search, setSearch, placeholder, label}) => {
   const onClear = () => setSearch('')
