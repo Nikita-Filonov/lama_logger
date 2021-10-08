@@ -9,7 +9,7 @@ export const PublicRoute = ({component: Component, ...rest}) => {
       {...rest}
       render={props =>
         token ? (
-          <Redirect to={{pathname: '/timers', state: {from: props.location}}}/>
+          <Redirect to={{pathname: '/projects', state: {from: props.location}}}/>
         ) : (
           <Component {...props} />
         )

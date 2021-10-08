@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useUsers} from "../../Providers/UsersProvider";
 import {baseUrl} from "../../Utils/Constants";
 import {useHistory} from 'react-router-dom'
-import {Container, Grid, TextField, Typography} from '@mui/material';
+import {Container, CssBaseline, Grid, TextField, Typography} from '@mui/material';
 import Button from "@mui/material/Button";
 
 
@@ -33,8 +33,8 @@ export const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-
+    <Container maxWidth={'sm'}>
+      <CssBaseline/>
       <div className={'text-center'} style={{marginTop: '20%'}}>
         <Typography variant={'h5'}>Lama Logger</Typography>
       </div>
