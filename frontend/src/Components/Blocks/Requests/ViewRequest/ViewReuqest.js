@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {Link, Tab, Tabs, Typography} from "@material-ui/core";
-import Box from "@mui/material/Box";
+import {Box, Link, Tab, Tabs, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequest} from "../../../../Redux/Requests/requestsActions";
 import ViewRequestMenu from "../../../Menus/Requests/ViewRequestMenu";
@@ -9,6 +8,7 @@ import {TabPanel} from "../../Common/TabPanel";
 import {Headers} from "./Headers";
 import {Body} from "./Body";
 
+const tabsStyles = {minHeight: 28, height: 28}
 
 function a11yProps(index) {
   return {
@@ -36,9 +36,9 @@ const ViewRequestDemo = ({request}) => {
         <ViewRequestMenu request={request}/>
       </div>
       <Typography variant={'subtitle1'} gutterBottom>Request</Typography>
-      <Tabs classes={{root: classes.tabsRoot}} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
-        <Tab classes={{root: classes.tabRoot}} label="Headers"  {...a11yProps(0)} />
-        <Tab classes={{root: classes.tabRoot}} label="Body" {...a11yProps(1)} />
+      <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
+        <Tab sx={tabsStyles} label="Headers"  {...a11yProps(0)} />
+        <Tab sx={tabsStyles} label="Body" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={requestTab} index={0}>
         <Headers headers={request.request_headers}/>
@@ -48,9 +48,9 @@ const ViewRequestDemo = ({request}) => {
       </TabPanel>
 
       <Typography variant={'subtitle1'} gutterBottom>Response</Typography>
-      <Tabs classes={{root: classes.tabsRoot}} value={responseTab} onChange={onResponseTab} indicatorColor={'primary'}>
-        <Tab classes={{root: classes.tabRoot}} color={'primary'} label="Headers" {...a11yProps(0)} />
-        <Tab classes={{root: classes.tabRoot}} label="Body" {...a11yProps(1)} />
+      <Tabs sx={tabsStyles} value={responseTab} onChange={onResponseTab} indicatorColor={'primary'}>
+        <Tab sx={tabsStyles} color={'primary'} label="Headers" {...a11yProps(0)} />
+        <Tab sx={tabsStyles} label="Body" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={responseTab} index={0}>
         <Headers headers={request.response_headers}/>

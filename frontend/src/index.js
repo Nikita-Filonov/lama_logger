@@ -11,7 +11,7 @@ import {createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider, useUsers} from "./Providers/UsersProvider";
 import Projects from "./Screens/Projects/Projects";
-import {NavigationBar} from "./Components/Navigation/NavigationBar";
+import NavigationBar from "./Components/Navigation/NavigationBar";
 import {PrivateRoute} from "./Components/Navigation/Routes/Common/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
@@ -23,6 +23,7 @@ import {ProjectSettingsRoute} from "./Components/Navigation/Routes/Projects/Proj
 import {ProjectSettingsMembers} from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
 import {ProjectSettingsRoles} from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";
 import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
+import ThemeWrapper from "./Providers/ThemeWrapper";
 
 
 const store = createStore(reducer);
@@ -53,15 +54,17 @@ const CustomRoute = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AlertsProvider>
-        <UsersProvider>
-          <ProjectsProvider store={store}>
-            <RequestsProvider store={store}>
-              <CustomRoute/>
-            </RequestsProvider>
-          </ProjectsProvider>
-        </UsersProvider>
-      </AlertsProvider>
+      <ThemeWrapper>
+        <AlertsProvider>
+          <UsersProvider>
+            <ProjectsProvider store={store}>
+              <RequestsProvider store={store}>
+                <CustomRoute/>
+              </RequestsProvider>
+            </ProjectsProvider>
+          </UsersProvider>
+        </AlertsProvider>
+      </ThemeWrapper>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

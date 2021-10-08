@@ -1,22 +1,28 @@
 import React, {useState} from 'react';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
+import {Avatar, Box, Button, CssBaseline, IconButton, Toolbar, Typography, useTheme} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {Avatar, Button} from "@material-ui/core";
 import {useUsers} from "../../Providers/UsersProvider";
 import {AppBarStyled, DrawerHeaderStyled} from "../../Styles/Blocks";
 import NavigationDrawer from "./NavigationDrawer";
+import {connect} from "react-redux";
+import {setTheme} from "../../Redux/Users/usersActions";
+import {Brightness4Outlined} from "@material-ui/icons";
+import Brightness7OutlinedIcon from '@material-ui/icons/Brightness7Outlined';
 
 
-export const NavigationBar = () => {
+const NavigationBar = ({setTheme}) => {
+  const {palette} = useTheme();
   const {onLogout} = useUsers();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
+
+  const onTheme = () => {
+    const theme = palette.mode === 'light' ? 'dark' : 'light'
+    setTheme(theme)
+    localStorage.setItem('theme', theme)
+  }
 
   return (
     <Box sx={{display: 'flex'}}>
@@ -38,6 +44,9 @@ export const NavigationBar = () => {
           <Typography variant="h6" noWrap component="div" className={'flex-grow-1'}>
             Lama Logger
           </Typography>
+          <IconButton className={'me-3'} onClick={onTheme} color="inherit">
+            {palette.mode === 'light' ? <Brightness4Outlined/> : <Brightness7OutlinedIcon/>}
+          </IconButton>
           <Avatar className={'me-3'}>N</Avatar>
           <Button color="inherit" onClick={onLogout}>Logout</Button>
         </Toolbar>
@@ -49,3 +58,10 @@ export const NavigationBar = () => {
     </Box>
   );
 }
+
+export default connect(
+  null,
+  {
+    setTheme
+  },
+)(NavigationBar);

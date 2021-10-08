@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from "react";
-import Paper from "@mui/material/Paper";
-import {Table, TableBody, TableContainer} from "@material-ui/core";
+import {Paper, Table, TableBody, TableContainer} from "@mui/material";
 import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import RequestRow from "../../../Items/Reuqests/RequestRow";
@@ -29,7 +28,7 @@ const RequestsTable = ({requests, requestsFilters}) => {
       {/*{load && <CircularProgress style={comp.spinner}/>}*/}
       {/*{filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}*/}
       <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table className={'w-100'} size="small" aria-label="a dense table" stickyHeader>
+        <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
           <RequestsTableHeader
             order={order}
             orderBy={orderBy}
