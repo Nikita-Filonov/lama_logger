@@ -8,6 +8,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import {Link as RouterLink} from "react-router-dom";
 import {connect} from "react-redux";
+import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 
 function ListItemLink(props) {
   const {to, open, title, ...other} = props;
@@ -28,22 +29,13 @@ function ListItemLink(props) {
 }
 
 const ProjectSettingsSidebar = ({project}) => {
+  const classes = ProjectSettingsStyles();
   const [collapse, setCollapse] = useState({users: false, requests: false});
 
   const onCollapse = (key) => setCollapse({...collapse, [key]: !collapse[key]})
 
   return (
-    <Box
-      sx={{
-        bgcolor: 'background.paper',
-        flexDirection: 'column',
-        width: 300,
-        overflowX: 'hidden',
-        position: 'fixed'
-      }}
-      component="nav"
-      aria-label="mailbox folders"
-    >
+    <Box className={classes.sidebarContainer} component="nav">
       <List>
         <ListItemLink to={`/projects/${project.id}/settings/general`} title={'General'}/>
         <ListItem button onClick={() => onCollapse('users')}>

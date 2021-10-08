@@ -45,3 +45,13 @@ class ProjectApi(views.APIView):
         projects = Project.objects.get(id=project_id)
 
         return Response(ProjectsSerializer(projects, many=False).data)
+
+    def patch(self, request, project_id):
+        project = Project.objects.get(id=project_id)
+        serializer = ProjectSerializer(project, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            project = serializer.save()
+            return Response(ProjectsSerializer(project, many=False).data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

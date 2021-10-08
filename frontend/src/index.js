@@ -18,7 +18,7 @@ import {ProjectsProvider} from "./Providers/ProjectsProvider";
 import Requests from "./Screens/Requests/Requests";
 import {RequestsProvider} from "./Providers/RequestsProvider";
 import {AlertsProvider} from "./Providers/AlertsProvider";
-import {ProjectSettingsGeneral} from "./Screens/Projects/Settings/General/ProjectSettingsGeneral";
+import ProjectSettingsGeneral from "./Screens/Projects/Settings/General/ProjectSettingsGeneral";
 import {ProjectSettingsRoute} from "./Components/Navigation/Routes/Projects/ProjectSettingsRoute";
 import {ProjectSettingsMembers} from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
 import {ProjectSettingsRoles} from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";

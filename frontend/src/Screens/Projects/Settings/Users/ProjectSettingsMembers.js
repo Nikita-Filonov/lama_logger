@@ -1,8 +1,11 @@
 import React from "react";
+import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 
 export const ProjectSettingsMembers = () => {
+  const classes = ProjectSettingsStyles();
+
   return (
-    <div style={{marginLeft: 320, paddingTop: 0, marginTop: 10}}>
+    <div className={classes.contentContainer}>
       Project settings
     </div>
   )

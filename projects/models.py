@@ -128,6 +128,11 @@ class Project(models.Model):
         max_length=255,
         null=False
     )
+    description = models.TextField(
+        verbose_name='Description',
+        null=True,
+        blank=True
+    )
     members = models.ManyToManyField(
         Member,
         verbose_name='Members',
