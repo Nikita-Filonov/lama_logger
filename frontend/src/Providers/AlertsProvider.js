@@ -1,11 +1,14 @@
 import React, {useContext, useState} from 'react';
-import {Slide, Snackbar} from "@material-ui/core";
-import IconButton from "@mui/material/IconButton";
-import {Close} from "@material-ui/icons";
+import {Slide} from "@material-ui/core";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const AlertsContext = React.createContext(null);
 
 const SlideTransition = (props) => <Slide {...props} direction="up"/>;
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 const AlertsProvider = ({children}) => {
@@ -19,18 +22,6 @@ const AlertsProvider = ({children}) => {
     setAlert({});
   };
 
-  const action = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={onClose}
-      >
-        <Close fontSize="small"/>
-      </IconButton>
-    </React.Fragment>
-  );
 
   return (
     <AlertsContext.Provider
@@ -48,10 +39,12 @@ const AlertsProvider = ({children}) => {
         open={Boolean(alert?.message)}
         onClose={onClose}
         TransitionComponent={SlideTransition}
-        message={alert.message}
         key={SlideTransition.name}
-        action={action}
-      />
+      >
+        <Alert onClose={onClose} severity={alert?.level || 'success'} sx={{width: '100%'}}>
+          {alert?.message}
+        </Alert>
+      </Snackbar>
     </AlertsContext.Provider>
   );
 };

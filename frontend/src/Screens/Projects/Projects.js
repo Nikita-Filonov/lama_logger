@@ -4,7 +4,7 @@ import {Fab, Typography} from '@mui/material';
 import {CircularProgress, Container} from "@material-ui/core";
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {Add} from "@material-ui/icons";
-import {comp, ViewRequestStyles} from "../../Styles/Blocks";
+import {common, ViewRequestStyles} from "../../Styles/Blocks";
 import {connect} from "react-redux";
 import Project from "../../Components/Items/Projects/Project";
 import {useProjects} from "../../Providers/ProjectsProvider";
@@ -14,7 +14,7 @@ import {Search} from "../../Components/Blocks/Common/Search";
 
 
 const Projects = ({projects}) => {
-  const classes = ViewRequestStyles()
+  const classes = ViewRequestStyles();
   const {load} = useProjects();
   const [search, setSearch] = useState('')
   const [createProjectModal, setCreateProjectModal] = useState(false)
@@ -35,10 +35,10 @@ const Projects = ({projects}) => {
       </div>
       <List sx={{width: '100%', bgcolor: 'background.paper'}} className={'mt-3'}>
         {projects.length === 0 && !load && <EmptyList text={'You dont have any projects'}/>}
-        {load && <CircularProgress style={comp.spinner}/>}
+        {load && <CircularProgress style={common.spinner}/>}
         {projects.map(p => <Project project={p} key={p.id}/>)}
       </List>
-      <Fab variant="extended" color={'primary'} style={comp.fab} onClick={onCreateProject}>
+      <Fab variant="extended" color={'primary'} style={common.fab} onClick={onCreateProject}>
         <Add sx={{mr: 1}}/>
         CREATE
       </Fab>

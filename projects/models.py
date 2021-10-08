@@ -148,6 +148,10 @@ class Project(models.Model):
         verbose_name='Requests',
         blank=True
     )
+    archived = models.BooleanField(
+        verbose_name='Archived',
+        default=False
+    )
 
     def __str__(self):
         return self.title

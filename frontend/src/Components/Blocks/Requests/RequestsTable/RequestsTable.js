@@ -1,10 +1,8 @@
 import React, {useMemo, useState} from "react";
 import Paper from "@mui/material/Paper";
-import {CircularProgress, Table, TableBody, TableContainer} from "@material-ui/core";
+import {Table, TableBody, TableContainer} from "@material-ui/core";
 import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
-import {EmptyList} from "../../../Other/EmptyList";
-import {useRequests} from "../../../../Providers/RequestsProvider";
-import {comp, RequestsTableStyles} from "../../../../Styles/Blocks";
+import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import RequestRow from "../../../Items/Reuqests/RequestRow";
 import RequestsTableHeader from "./RequestsTableHeader";
 import {connect} from "react-redux";
@@ -12,7 +10,6 @@ import {connect} from "react-redux";
 
 const RequestsTable = ({requests, requestsFilters}) => {
   const classes = RequestsTableStyles();
-  const {load} = useRequests();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
 

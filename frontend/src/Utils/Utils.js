@@ -79,3 +79,9 @@ export function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
+
+export const objectToQuery = async (object, ignore = ['meta']) =>
+  object && '?' + Object.keys(object)
+    .map(key => !ignore.includes(key) ? `${key}=${object[key]}&` : '')
+    .join('');

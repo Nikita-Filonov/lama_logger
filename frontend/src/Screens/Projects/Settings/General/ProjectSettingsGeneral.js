@@ -8,10 +8,17 @@ import {UserOption} from "../../../../Components/Items/Common/UserOption";
 import {useProjects} from "../../../../Providers/ProjectsProvider";
 import Box from "@mui/material/Box";
 import {ButtonSpinner} from "../../../../Components/Blocks/Common/ButtonSpiner";
+import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
+import {setConfirmAction} from "../../../../Redux/Users/usersActions";
+import {useAlerts} from "../../../../Providers/AlertsProvider";
+import {removeProject} from "../../../../Redux/Projects/projectActions";
+import {useHistory} from "react-router-dom";
 
 
-const ProjectSettingsGeneral = ({project}) => {
+const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
   const classes = ProjectSettingsStyles();
+  const history = useHistory();
+  const {setAlert} = useAlerts();
   const {request, updateProject} = useProjects();
   const [title, setTitle] = useState(project?.title)
   const [creator, setCreator] = useState(project?.creator);
@@ -22,8 +29,6 @@ const ProjectSettingsGeneral = ({project}) => {
     setCreator(project.creator)
     setDescription(project?.description)
   }, [project])
-
-  const onSave = async () => await updateProject(project.id, {title, description, creator: creator?.id})
 
   const disabled = useMemo(() => {
     if (title !== project?.title) {
@@ -37,6 +42,23 @@ const ProjectSettingsGeneral = ({project}) => {
 
   }, [title, description, creator])
   const optionLabel = useCallback((option) => option.username ? option.username : option.email, [])
+
+  const onSave = async () => await updateProject(project.id, {title, description, creator: creator?.id})
+  const onArchive = async () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Archive project?',
+      description: 'You will be able to restore it later',
+      action: async () => {
+        setAlert({message: 'Project was archived', level: 'success'})
+        removeProject(project.id)
+        history.push('/projects')
+        await updateProject(project.id, {archived: true}, true)
+        localStorage.removeItem('project')
+      },
+      confirmButton: 'Archive'
+    })
+  }
 
   return (
     <div className={classes.contentContainer}>
@@ -94,6 +116,9 @@ const ProjectSettingsGeneral = ({project}) => {
         </Box>
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
+        <Button onClick={onArchive} startIcon={<ArchiveOutlinedIcon/>} variant="text">Archive project</Button>
+      </Grid>
+      <Grid item xs={12} className={'mt-3'}>
         <Button startIcon={<DeleteOutline/>} variant="text" style={{color: 'red'}}>Delete project</Button>
       </Grid>
     </div>
@@ -107,5 +132,8 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    removeProject,
+    setConfirmAction
+  },
 )(ProjectSettingsGeneral);

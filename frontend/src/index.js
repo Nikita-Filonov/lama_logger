@@ -22,6 +22,7 @@ import ProjectSettingsGeneral from "./Screens/Projects/Settings/General/ProjectS
 import {ProjectSettingsRoute} from "./Components/Navigation/Routes/Projects/ProjectSettingsRoute";
 import {ProjectSettingsMembers} from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
 import {ProjectSettingsRoles} from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";
+import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
 
 
 const store = createStore(reducer);
@@ -43,6 +44,7 @@ const CustomRoute = () => {
                                 component={ProjectSettingsRoles}/>
           <PublicRoute exact path="/login" component={Login}/>
         </Switch>
+        <ConfirmAction/>
       </div>
     </Router>
   )

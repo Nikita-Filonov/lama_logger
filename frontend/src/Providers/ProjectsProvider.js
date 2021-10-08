@@ -2,6 +2,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
+import {objectToQuery} from "../Utils/Utils";
 
 
 const ProjectsContext = React.createContext(null);
@@ -24,9 +25,9 @@ const ProjectsProvider = ({children, store}) => {
     store.dispatch({type: UPDATE_PROJECT, payload: data});
   }
 
-  const getProjects = useCallback(async () => {
+  const getProjects = useCallback(async (query = {archived: 'False'}) => {
     setLoad(true)
-    await fetch(projectsApi, {
+    await fetch(projectsApi + await objectToQuery(query), {
       headers: {
         'Authorization': `Token ${token}`,
       },
@@ -65,8 +66,8 @@ const ProjectsProvider = ({children, store}) => {
       .then(async data => store.dispatch({type: CREATE_PROJECT, payload: data}));
   }
 
-  const updateProject = async (projectId, payload) => {
-    setRequest(true)
+  const updateProject = async (projectId, payload, isLazy = false) => {
+    !isLazy && setRequest(true)
     await fetch(projectsApi + `${projectId}/`, {
       method: 'PATCH',
       headers: {
@@ -77,7 +78,7 @@ const ProjectsProvider = ({children, store}) => {
     })
       .then(response => response.json())
       .then(async data => {
-        await updateProjectState(data)
+        !isLazy && await updateProjectState(data)
         setRequest(false)
       });
   }

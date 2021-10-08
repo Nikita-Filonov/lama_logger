@@ -3,7 +3,8 @@ import MuiAppBar from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
 import {makeStyles} from "@material-ui/core";
 
-export const comp = {
+
+export const common = {
   fab: {
     position: 'absolute',
     bottom: 70,
@@ -12,6 +13,10 @@ export const comp = {
   spinner: {
     marginLeft: '50%',
     marginTop: '20%'
+  },
+  breakText: {
+    wordWrap: 'break-word',
+    whiteSpace: 'pre-line'
   }
 }
 

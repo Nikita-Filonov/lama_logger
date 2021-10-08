@@ -1,1 +1,1 @@
-
+export const SET_CONFIRM_ACTION = 'SET_CONFIRM_ACTION';
