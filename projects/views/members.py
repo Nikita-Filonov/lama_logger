@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -6,6 +8,48 @@ from rest_framework.response import Response
 from projects.models import Member, Project
 from projects.serializers.members import MemberSerializer
 from projects.serializers.projects import ProjectsSerializer
+from users.models import CustomUser
+
+
+class MembersApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, project_id):
+        username = request.data.get('username')
+        try:
+            user = CustomUser.objects.get(Q(username=username) | Q(email=username))
+        except ObjectDoesNotExist:
+            return Response(
+                {'message': f'User "{username}" does not exists', 'level': 'error'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        # getting project where we want to add member
+        project = Project.objects.get(id=project_id)
+
+        # getting all project where <user> is member
+        is_member = project.members.filter(user=user)
+
+        if is_member:
+            # if group where we want to add <user>
+            # already contains this user the we return error
+            return Response({
+                'message': f'Member "{username}" already exists',
+                'level': 'warning'
+            }, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+        member = Member.objects.create(user=user, role_id=request.data.get('role'))
+        project.members.add(member)
+
+        return Response(ProjectsSerializer(project, many=False).data)
+
+    def delete(self, request, project_id):
+        members = request.data.get('members', [])
+        members_to_delete = Member.objects.filter(id__in=members)
+        members_to_delete.delete()
+
+        project = Project.objects.get(id=project_id)
+        return Response(ProjectsSerializer(project, many=False).data)
 
 
 class MemberApi(views.APIView):

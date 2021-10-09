@@ -16,13 +16,18 @@ import {connect} from "react-redux";
 import {setInviteMemberModal} from "../../../../../Redux/Projects/projectActions";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
+import {useProjects} from "../../../../../Providers/ProjectsProvider";
+import {ButtonSpinner} from "../../../../Blocks/Common/ButtonSpiner";
 
 
 const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
+  const {request, inviteMember} = useProjects();
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const [notify, setNotify] = useState(false);
   const onClose = () => setInviteMemberModal(false)
+
+  const onInvite = async () => inviteMember(project.id, {username, role, notify}).then(() => onClose())
 
   return (
     <Dialog open={inviteMemberModal} onClose={onClose} maxWidth={'sm'} fullWidth>
@@ -55,7 +60,9 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button disabled={!username || !role}>Invite</Button>
+        <Button onClick={onInvite} disabled={!username || !role || request}>
+          {request && <ButtonSpinner/>} Invite
+        </Button>
       </DialogActions>
     </Dialog>
   )

@@ -4,13 +4,26 @@ import {Button, Checkbox, Select, TableCell, TableRow} from '@mui/material';
 import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
 import MenuItem from "@mui/material/MenuItem";
 import {useProjects} from "../../../../../Providers/ProjectsProvider";
+import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
 
-const MemberRow = ({member, project, selectedMembers, setSelectedMembers}) => {
-  const {updateMember} = useProjects();
+const MemberRow = (props) => {
+  const {member, project, selectedMembers, setSelectedMembers, setConfirmAction} = props;
+  const {updateMember, deleteMembers} = useProjects();
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
 
   const onSelectRole = async (role) => {
     await updateMember(project.id, member.id, {role})
+  }
+
+  const onDelete = async () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Delete member?',
+      description: 'Are you sure you want to delete member? ' +
+        'You will not be able to undo this action',
+      confirmButton: 'Delete',
+      action: async () => await deleteMembers(project.id, {members: [member.id]})
+    })
   }
 
   return (
@@ -38,7 +51,7 @@ const MemberRow = ({member, project, selectedMembers, setSelectedMembers}) => {
         </Select>
       </TableCell>
       <TableCell padding="checkbox">
-        <Button style={{color: 'red'}}>Delete</Button>
+        <Button style={{color: 'red'}} onClick={onDelete}>Delete</Button>
       </TableCell>
     </TableRow>
   )
@@ -52,6 +65,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setSelectedMembers
+    setSelectedMembers,
+    setConfirmAction
   },
 )(MemberRow);

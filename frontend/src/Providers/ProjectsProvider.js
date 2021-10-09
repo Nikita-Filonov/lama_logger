@@ -27,6 +27,16 @@ const ProjectsProvider = ({children, store}) => {
     store.dispatch({type: UPDATE_PROJECT, payload: data});
   }
 
+  const checkResponse = async (response, successMessage = {}, errorMessage = null) => {
+    if (SUCCESS_CODES.includes(response.status)) {
+      setAlert(successMessage)
+      response.json().then(async data => await updateProjectState(data))
+    } else {
+      response.json().then(async data => setAlert(errorMessage || data))
+    }
+    setRequest(false)
+  }
+
   const getProjects = useCallback(async (query = {archived: 'False'}) => {
     setLoad(true)
     await fetch(projectsApi + await objectToQuery(query), {
@@ -85,6 +95,19 @@ const ProjectsProvider = ({children, store}) => {
       });
   }
 
+  const inviteMember = async (projectId, payload) => {
+    setRequest(true)
+    const response = await fetch(projectsApi + `${projectId}/members/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    await checkResponse(response, {message: 'Member was invited to project', level: 'success'})
+  }
+
   const updateMember = async (projectId, memberId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
     const response = await fetch(projectsApi + `${projectId}/members/${memberId}/`, {
@@ -95,13 +118,24 @@ const ProjectsProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-    if (SUCCESS_CODES.includes(response.status)) {
-      setAlert({message: 'Member was updated', level: 'success'})
-      response.json().then(async data => await updateProjectState(data))
-    } else {
-      setAlert({message: 'An error occurred while updating member', level: 'error'})
-    }
-    setRequest(false)
+    await checkResponse(
+      response,
+      {message: 'Member was updated', level: 'success'},
+      {message: 'An error occurred while updating member', level: 'error'}
+    )
+  }
+
+  const deleteMembers = async (projectId, payload) => {
+    setRequest(true)
+    const response = await fetch(projectsApi + `${projectId}/members/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    await checkResponse(response, {message: 'Members were deleted', level: 'success'})
   }
 
   return (
@@ -112,7 +146,9 @@ const ProjectsProvider = ({children, store}) => {
         getProject,
         createProject,
         updateProject,
-        updateMember
+        inviteMember,
+        updateMember,
+        deleteMembers
       }}
     >
       {children}
