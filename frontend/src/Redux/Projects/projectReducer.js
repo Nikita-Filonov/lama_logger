@@ -28,7 +28,7 @@ export const projectsReducer = (state = INITIAL_PROJECTS, action = {}) => {
       const {isSelected} = action.payload;
       const {memberId} = action.payload;
 
-      if (!memberId || !isSelected) {
+      if (!memberId) {
         return {...state, selectedMembers: action.payload}
       }
 

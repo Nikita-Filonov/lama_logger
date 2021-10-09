@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export const getStatusCodeColor = (statusCode) => {
   if (100 <= statusCode && statusCode <= 299) {
     return '#02C001'
@@ -53,10 +55,10 @@ export const copyText = (text) => {
 
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  if (_.get(b, orderBy) < _.get(a, orderBy)) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (_.get(b, orderBy) > _.get(a, orderBy)) {
     return 1;
   }
   return 0;

@@ -3,27 +3,29 @@ import Box from "@mui/material/Box";
 import {Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
 import {visuallyHidden} from "@mui/utils";
 import {connect} from "react-redux";
+import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
 
 const headCells = [
   {
-    id: 'method',
+    id: 'user.username',
     align: 'left',
     label: 'Username',
   },
   {
-    id: 'request_url',
+    id: 'role.name',
     align: 'left',
     label: 'Role',
   },
 ];
 
 const MembersTableHeader = (props) => {
-  const {order, orderBy, onRequestSort, filteredMembers, selectedMembers} = props;
+  const {order, orderBy, onRequestSort, filteredMembers, selectedMembers, setSelectedMembers} = props;
   const numSelected = useMemo(() => selectedMembers.length, [selectedMembers])
   const rowCount = useMemo(() => filteredMembers.length, [filteredMembers])
 
-  const onSelectAll = (event) => {
-  }
+  const onSelectAll = (event) => event.target.checked
+    ? setSelectedMembers(filteredMembers.map(r => r.id))
+    : setSelectedMembers([])
 
   return (
     <TableHead>
@@ -69,5 +71,7 @@ export const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    setSelectedMembers
+  },
 )(MembersTableHeader);

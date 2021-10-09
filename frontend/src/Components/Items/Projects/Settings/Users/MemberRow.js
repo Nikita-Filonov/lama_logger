@@ -5,6 +5,7 @@ import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
 import MenuItem from "@mui/material/MenuItem";
 
 const MemberRow = ({member, project, selectedMembers, setSelectedMembers}) => {
+  console.log('selectedMembers', selectedMembers)
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
 
   return (
