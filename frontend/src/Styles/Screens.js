@@ -18,5 +18,8 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
   membersTableContainer: {
     height: window.innerHeight / 1.4,
     maxHeight: window.innerHeight / 1.4
+  },
+  headerContainer: {
+    height: 60
   }
 }));
