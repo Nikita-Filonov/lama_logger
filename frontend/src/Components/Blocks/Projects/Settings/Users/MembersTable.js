@@ -4,8 +4,10 @@ import {connect} from "react-redux";
 import MembersTableHeader from "./MembersTableHeader";
 import {getComparator, stableSort} from "../../../../../Utils/Utils";
 import MemberRow from "../../../../Items/Projects/Settings/Users/MemberRow";
+import {ProjectSettingsStyles} from "../../../../../Styles/Screens";
 
 const MembersTable = ({project}) => {
+  const classes = ProjectSettingsStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
 
@@ -18,7 +20,7 @@ const MembersTable = ({project}) => {
 
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.membersTableContainer}>
       <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
         <MembersTableHeader
           order={order}

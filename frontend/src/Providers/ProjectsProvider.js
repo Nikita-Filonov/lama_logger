@@ -83,6 +83,22 @@ const ProjectsProvider = ({children, store}) => {
       });
   }
 
+  const updateMember = async (projectId, memberId, payload, isLazy = false) => {
+    !isLazy && setRequest(true)
+    await fetch(projectsApi + `${projectId}/members/${memberId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(async data => {
+        !isLazy && await updateProjectState(data)
+        setRequest(false)
+      });
+  }
 
   return (
     <ProjectsContext.Provider
@@ -91,7 +107,8 @@ const ProjectsProvider = ({children, store}) => {
         request,
         getProject,
         createProject,
-        updateProject
+        updateProject,
+        updateMember
       }}
     >
       {children}

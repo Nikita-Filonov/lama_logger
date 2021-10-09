@@ -3,10 +3,15 @@ import {connect} from "react-redux";
 import {Button, Checkbox, Select, TableCell, TableRow} from '@mui/material';
 import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
 import MenuItem from "@mui/material/MenuItem";
+import {useProjects} from "../../../../../Providers/ProjectsProvider";
 
 const MemberRow = ({member, project, selectedMembers, setSelectedMembers}) => {
-  console.log('selectedMembers', selectedMembers)
+  const {updateMember} = useProjects();
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
+
+  const onSelectRole = async (role) => {
+    await updateMember(project.id, member.id, {role})
+  }
 
   return (
     <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}} selected={isSelected}>
@@ -27,7 +32,7 @@ const MemberRow = ({member, project, selectedMembers, setSelectedMembers}) => {
           size={'small'}
           value={member?.role?.id}
           disableUnderline={true}
-          //onChange={async event => await updateMember(group.id, item.id, {permission: event.target.value})}
+          onChange={async event => await onSelectRole(event.target.value)}
         >
           {project?.roles?.map(r => <MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>)}
         </Select>

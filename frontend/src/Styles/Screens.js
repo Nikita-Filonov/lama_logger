@@ -14,5 +14,9 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
     marginLeft: 320,
     paddingTop: 0,
     marginTop: 10
+  },
+  membersTableContainer: {
+    height: window.innerHeight / 1.4,
+    maxHeight: window.innerHeight / 1.4
   }
 }));
