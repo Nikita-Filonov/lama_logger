@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   Button,
   Dialog,
@@ -14,26 +14,32 @@ import {connect} from "react-redux";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {ButtonSpinner} from "../../../../../Blocks/Common/ButtonSpiner";
 import {ScopesList} from "../../../../../Blocks/Projects/Settings/Users/Roles/ScopesList";
+import {setCreateRoleModal, setRole} from "../../../../../../Redux/Projects/projectActions";
+import {INITIAL_PROJECTS} from "../../../../../../Redux/Projects/initialState";
 
 
-const CreateRole = ({project, modal, setModal}) => {
-  const {request, createRole} = useProjects();
-  const [role, setRole] = useState({name: '', scope: [], description: ''})
-  const onClose = () => setModal(false)
+const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal}) => {
+  const {request, createRole, updateRole} = useProjects();
+  const onClose = () => {
+    setCreateRoleModal(false)
+    setRole(INITIAL_PROJECTS.role)
+  }
 
   const onSelectScope = (isSelected, permission) => isSelected
     ? setRole({...role, scope: role.scope.filter(p => p !== permission)})
     : setRole({...role, scope: [...role.scope, permission]})
 
-  const onCreate = async () => createRole(project.id, role).then(() => onClose());
+  const onCreate = async () => role?.editMode
+    ? updateRole(project.id, role.id, role).then(() => onClose())
+    : createRole(project.id, role).then(() => onClose());
 
   return (
-    <Dialog open={modal} onClose={onClose} maxWidth={'sm'} fullWidth>
-      <DialogTitle>Create role</DialogTitle>
+    <Dialog open={createRoleModal} onClose={onClose} maxWidth={'sm'} fullWidth>
+      <DialogTitle>{role?.editMode ? 'Update' : 'Create'} role</DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        {!role?.editMode && <DialogContentText>
           You can create your custom role with custom scope of permissions
-        </DialogContentText>
+        </DialogContentText>}
         <TextField
           value={role.name}
           onChange={event => setRole({...role, name: event.target.value})}
@@ -66,7 +72,7 @@ const CreateRole = ({project, modal, setModal}) => {
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         <Button disabled={!role.name} onClick={onCreate}>
-          {request && <ButtonSpinner/>} Create
+          {request && <ButtonSpinner/>} {role?.editMode ? 'Update' : 'Create'}
         </Button>
       </DialogActions>
     </Dialog>
@@ -75,10 +81,15 @@ const CreateRole = ({project, modal, setModal}) => {
 
 
 const getState = (state) => ({
+  role: state.projects.role,
   project: state.projects.project,
+  createRoleModal: state.projects.createRoleModal,
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setRole,
+    setCreateRoleModal
+  },
 )(CreateRole);

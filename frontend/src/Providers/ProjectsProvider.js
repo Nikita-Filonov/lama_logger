@@ -151,6 +151,23 @@ const ProjectsProvider = ({children, store}) => {
     await checkResponse(response, {message: 'Role was created', level: 'success'})
   }
 
+  const updateRole = async (projectId, roleId, payload, isLazy = false) => {
+    !isLazy && setRequest(true)
+    const response = await fetch(projectsApi + `${projectId}/roles/${roleId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    await checkResponse(
+      response,
+      {message: 'Role was updated', level: 'success'},
+      {message: 'An error occurred while updating role', level: 'error'}
+    )
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -162,7 +179,8 @@ const ProjectsProvider = ({children, store}) => {
         inviteMember,
         updateMember,
         deleteMembers,
-        createRole
+        createRole,
+        updateRole
       }}
     >
       {children}

@@ -9,10 +9,10 @@ from users.models import CustomUser
 
 class Role(models.Model):
     SCOPES = [
-        'Role.view',
-        'Role.create',
-        'Role.update',
-        'Role.delete'
+        'Role.View',
+        'Role.Create',
+        'Role.Update',
+        'Role.Delete'
     ]
 
     name = models.CharField(
@@ -38,10 +38,10 @@ class Role(models.Model):
 
 class Member(models.Model):
     SCOPES = [
-        'Member.view',
-        'Member.create',
-        'Member.update',
-        'Member.delete'
+        'Member.View',
+        'Member.Create',
+        'Member.Update',
+        'Member.Delete'
     ]
 
     user = models.ForeignKey(
@@ -117,10 +117,10 @@ class Request(models.Model):
 
 class Project(models.Model):
     SCOPES = [
-        'Project.view',
-        'Project.create',
-        'Project.update',
-        'Project.delete'
+        'Project.View',
+        'Project.Create',
+        'Project.Update',
+        'Project.Delete'
     ]
 
     creator = models.ForeignKey(

@@ -1,9 +1,10 @@
 import React, {useMemo} from "react";
 import {connect} from "react-redux";
-import {Button, Checkbox, TableCell, TableRow} from '@mui/material';
+import {Checkbox, TableCell, TableRow} from '@mui/material';
 import {setSelectedRoles} from "../../../../../../Redux/Projects/projectActions";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
+import RoleRowMenu from "../../../../../Menus/Projects/Settings/Users/RoleRowMenu";
 
 const RoleRow = (props) => {
   const {role, project, selectedRoles, setSelectedRoles, setConfirmAction} = props;
@@ -36,10 +37,10 @@ const RoleRow = (props) => {
         {role?.name}
       </TableCell>
       <TableCell scope="row" component="th">
-        <Button size={'small'}>{role?.scope.length} scopes</Button>
+        {role?.scope.length} scopes
       </TableCell>
       <TableCell padding="checkbox">
-        <Button style={{color: 'red'}} onClick={onDelete}>Delete</Button>
+        <RoleRowMenu role={role}/>
       </TableCell>
     </TableRow>
   )

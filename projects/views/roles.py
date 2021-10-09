@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from projects.models import Project
+from projects.models import Project, Role
 from projects.serializers.projects import ProjectsSerializer
 from projects.serializers.roles import RoleSerializer
 
@@ -30,3 +30,20 @@ class RolesApi(views.APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class RoleApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    def patch(self, request, project_id, role_id):
+        role = Role.objects.get(id=role_id)
+        serializer = RoleSerializer(role, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            project = Project.objects.get(id=project_id)
+            return Response(ProjectsSerializer(project, many=False).data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
