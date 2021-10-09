@@ -1,19 +1,16 @@
 import React, {useMemo} from "react";
 import {connect} from "react-redux";
-import {Button, Checkbox, Select, TableCell, TableRow} from '@mui/material';
+import {Button, Checkbox, TableCell, TableRow} from '@mui/material';
 import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
-import MenuItem from "@mui/material/MenuItem";
 import {useProjects} from "../../../../../Providers/ProjectsProvider";
 import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
+import RolesSelect from "../../../../Blocks/Projects/Settings/Users/RolesSelect";
+
 
 const MemberRow = (props) => {
   const {member, project, selectedMembers, setSelectedMembers, setConfirmAction} = props;
-  const {updateMember, deleteMembers} = useProjects();
+  const {deleteMembers} = useProjects();
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
-
-  const onSelectRole = async (role) => {
-    await updateMember(project.id, member.id, {role})
-  }
 
   const onDelete = async () => {
     setConfirmAction({
@@ -40,15 +37,7 @@ const MemberRow = (props) => {
         {member?.user?.username}
       </TableCell>
       <TableCell align="left">
-        <Select
-          variant={'standard'}
-          size={'small'}
-          value={member?.role?.id}
-          disableUnderline={true}
-          onChange={async event => await onSelectRole(event.target.value)}
-        >
-          {project?.roles?.map(r => <MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>)}
-        </Select>
+        <RolesSelect member={member}/>
       </TableCell>
       <TableCell padding="checkbox">
         <Button style={{color: 'red'}} onClick={onDelete}>Delete</Button>

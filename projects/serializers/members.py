@@ -7,7 +7,7 @@ from users.serializers.users import DefaultUserSerializer
 
 class MembersSerializer(serializers.ModelSerializer):
     user = DefaultUserSerializer(many=False, read_only=True)
-    role = RolesSerializer(many=False, read_only=True)
+    roles = RolesSerializer(many=True, read_only=True)
 
     class Meta:
         model = Member

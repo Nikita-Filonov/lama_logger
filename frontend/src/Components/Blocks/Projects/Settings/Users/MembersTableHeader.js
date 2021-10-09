@@ -12,9 +12,9 @@ const headCells = [
     label: 'Username',
   },
   {
-    id: 'role.name',
+    id: null,
     align: 'left',
-    label: 'Role',
+    label: 'Roles',
   },
 ];
 
@@ -46,6 +46,7 @@ const MembersTableHeader = (props) => {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
+              disabled={!headCell.id}
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={onRequestSort(headCell.id)}

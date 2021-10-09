@@ -26,6 +26,11 @@ class Role(models.Model):
         blank=True,
         null=True
     )
+    description = models.TextField(
+        verbose_name='Description',
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.name
@@ -44,14 +49,13 @@ class Member(models.Model):
         on_delete=models.CASCADE,
         verbose_name='User'
     )
-    role = models.ForeignKey(
+    roles = models.ManyToManyField(
         Role,
-        on_delete=models.CASCADE,
-        verbose_name='User'
+        verbose_name='Roles'
     )
 
     def __str__(self):
-        return f'{self.id} {self.user.email}:{self.role.name}'
+        return f'{self.id} {self.user.email}'
 
 
 class Request(models.Model):

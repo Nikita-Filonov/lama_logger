@@ -29,9 +29,10 @@ class ProjectSerializer(serializers.ModelSerializer):
             created_role = Role.objects.create(name=role.name, scope=role.scopes)
             project.roles.add(created_role)
 
-        admin_role = project.roles.get(name='Admin')
+        roles = project.roles.all()
 
-        member = Member.objects.create(user=self.context, role=admin_role)
+        member = Member.objects.create(user=self.context)
+        member.roles.set(roles)
         project.members.add(member)
 
         return project
