@@ -1,14 +1,16 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {baseUrl} from "../Utils/Constants";
+import {baseUrl, SUCCESS_CODES} from "../Utils/Constants";
 import {useUsers} from "./UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
 import {objectToQuery} from "../Utils/Utils";
+import {useAlerts} from "./AlertsProvider";
 
 
 const ProjectsContext = React.createContext(null);
 
 const ProjectsProvider = ({children, store}) => {
-  const {token} = useUsers()
+  const {token} = useUsers();
+  const {setAlert} = useAlerts();
   const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false)
@@ -85,7 +87,7 @@ const ProjectsProvider = ({children, store}) => {
 
   const updateMember = async (projectId, memberId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
-    await fetch(projectsApi + `${projectId}/members/${memberId}/`, {
+    const response = await fetch(projectsApi + `${projectId}/members/${memberId}/`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Token ${token}`,
@@ -93,11 +95,13 @@ const ProjectsProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-      .then(response => response.json())
-      .then(async data => {
-        !isLazy && await updateProjectState(data)
-        setRequest(false)
-      });
+    if (SUCCESS_CODES.includes(response.status)) {
+      setAlert({message: 'Member was updated', level: 'success'})
+      response.json().then(async data => await updateProjectState(data))
+    } else {
+      setAlert({message: 'An error occurred while updating member', level: 'error'})
+    }
+    setRequest(false)
   }
 
   return (

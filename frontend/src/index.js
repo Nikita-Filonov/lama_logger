@@ -20,7 +20,7 @@ import {RequestsProvider} from "./Providers/RequestsProvider";
 import {AlertsProvider} from "./Providers/AlertsProvider";
 import ProjectSettingsGeneral from "./Screens/Projects/Settings/General/ProjectSettingsGeneral";
 import {ProjectSettingsRoute} from "./Components/Navigation/Routes/Projects/ProjectSettingsRoute";
-import {ProjectSettingsMembers} from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
+import ProjectSettingsMembers from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
 import {ProjectSettingsRoles} from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";
 import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
 import ThemeWrapper from "./Providers/ThemeWrapper";
@@ -56,7 +56,7 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeWrapper>
         <AlertsProvider>
-          <UsersProvider>
+          <UsersProvider store={store}>
             <ProjectsProvider store={store}>
               <RequestsProvider store={store}>
                 <CustomRoute/>

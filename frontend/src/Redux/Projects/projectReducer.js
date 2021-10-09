@@ -2,6 +2,7 @@ import {INITIAL_PROJECTS} from './initialState';
 import {
   CREATE_PROJECT,
   DELETE_PROJECT,
+  SET_INVITE_MEMBER_MODAL,
   SET_PROJECT,
   SET_PROJECTS,
   SET_SELECTED_MEMBERS,
@@ -38,6 +39,8 @@ export const projectsReducer = (state = INITIAL_PROJECTS, action = {}) => {
         return {...state, selectedMembers: [...state.selectedMembers.filter(r => r !== memberId)]}
       }
     }
+    case SET_INVITE_MEMBER_MODAL:
+      return {...state, inviteMemberModal: action.payload}
     default:
       return state;
   }

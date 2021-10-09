@@ -1,5 +1,6 @@
 export const INITIAL_PROJECTS = {
   project: JSON.parse(localStorage.getItem('project')) || {},
   projects: [],
-  selectedMembers: []
+  selectedMembers: [],
+  inviteMemberModal: false
 }

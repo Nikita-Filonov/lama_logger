@@ -4,11 +4,12 @@ import {baseUrl} from "../Utils/Constants";
 
 const UsersContext = React.createContext(null);
 
-const UsersProvider = ({children}) => {
+const UsersProvider = ({children, store}) => {
   const usersApi = baseUrl + 'api/v1/user/';
   const [token, setToken] = useState(null);
   const [request, setRequest] = useState(false);
   const [user, setUser] = useState({})
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -43,11 +44,12 @@ const UsersProvider = ({children}) => {
   return (
     <UsersContext.Provider
       value={{
+        load,
         user,
         token,
         request,
         onLogin,
-        onLogout,
+        onLogout
       }}
     >
       {children}

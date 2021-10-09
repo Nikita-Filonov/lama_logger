@@ -1,6 +1,8 @@
 export const baseUrl = 'http://localhost:8000/';
 export const wsUri = 'ws://localhost:8000/'
 
+export const SUCCESS_CODES = [200, 201, 204];
+
 export const DEFAULT_REQUESTS_FILTERS = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   successes: ['success', 'redirect', 'error']
