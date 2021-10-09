@@ -8,7 +8,7 @@ export const common = {
   fab: {
     position: 'absolute',
     bottom: 70,
-    right: 80
+    right: 30
   },
   spinner: {
     marginLeft: '50%',
@@ -17,6 +17,12 @@ export const common = {
   breakText: {
     wordWrap: 'break-word',
     whiteSpace: 'pre-line'
+  },
+  listContainer: {
+    width: '100%',
+    bgcolor: 'background.paper',
+    overflow: 'auto',
+    maxHeight: window.innerHeight / 1.3
   }
 }
 

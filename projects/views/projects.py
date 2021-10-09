@@ -17,7 +17,7 @@ class ProjectsApi(views.APIView):
         projects = Project.objects.filter(
             (Q(members__user__in=[request.user]) | Q(creator=request.user)) &
             Q(**query_to_dict(request.query_params))
-        )
+        ).distinct()
 
         return Response(ProjectsSerializer(projects, many=True).data)
 

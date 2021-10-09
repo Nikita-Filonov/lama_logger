@@ -12,6 +12,7 @@ import {useAlerts} from "../../../../Providers/AlertsProvider";
 import {removeProject} from "../../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
 import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
+import Typography from "@mui/material/Typography";
 
 
 const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
@@ -61,7 +62,8 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
 
   return (
     <div className={classes.contentContainer}>
-      <Grid item xs={12}>
+      <Typography variant="subtitle1" gutterBottom>General project settings</Typography>
+      <Grid item xs={12} className={'mt-3'}>
         <TextField
           value={title}
           onChange={event => setTitle(event.target.value)}

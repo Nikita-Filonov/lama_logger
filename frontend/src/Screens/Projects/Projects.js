@@ -31,7 +31,7 @@ const Projects = ({projects}) => {
           placeholder={'Search by project name'}
         />
       </div>
-      <List sx={{width: '100%', bgcolor: 'background.paper'}} className={'mt-3'}>
+      <List sx={common.listContainer} className={'mt-3'}>
         {projects.length === 0 && !load && <EmptyList text={'You dont have any projects'}/>}
         {load && <CircularProgress style={common.spinner}/>}
         {projects.map(p => <Project project={p} key={p.id}/>)}
