@@ -2,18 +2,8 @@ import React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import {Checkbox, ListItemText, Select} from "@mui/material";
 import {connect} from "react-redux";
-import {useProjects} from "../../../../../Providers/ProjectsProvider";
 
-const RolesSelect = ({project, member}) => {
-  const {updateMember} = useProjects();
-
-  const onSelectRole = async (role, isSelected) => {
-    const roles = isSelected
-      ? member.roles.filter(r => r.id !== role.id)
-      : [...member.roles, role]
-    await updateMember(project.id, member.id, {roles: roles.map(r => r.id)})
-  }
-
+const RolesSelect = ({project, member, onSelectRole, fullWidth = false, sx = {}}) => {
   const Role = ({projectRole}) => {
     const isSelected = member?.roles?.some(r => r.id === projectRole.id)
     return (
@@ -34,10 +24,12 @@ const RolesSelect = ({project, member}) => {
 
   return (
     <Select
+      label={'sdfdsfsd'}
+      sx={sx}
+      fullWidth={fullWidth}
       size={'small'}
       variant={'standard'}
       multiple
-      sx={{width: 300, display: 'flex'}}
       value={member?.roles}
       renderValue={(selected) => selected.map(role => role.name).join(', ')}
     >

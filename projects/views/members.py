@@ -38,7 +38,8 @@ class MembersApi(views.APIView):
                 'level': 'warning'
             }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
-        member = Member.objects.create(user=user, role_id=request.data.get('role'))
+        member = Member.objects.create(user=user)
+        member.roles.set(request.data.get('roles'))
         project.members.add(member)
 
         return Response(ProjectsSerializer(project, many=False).data)

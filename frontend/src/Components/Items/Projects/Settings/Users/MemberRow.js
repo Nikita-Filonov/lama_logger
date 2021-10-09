@@ -9,7 +9,7 @@ import RolesSelect from "../../../../Blocks/Projects/Settings/Users/RolesSelect"
 
 const MemberRow = (props) => {
   const {member, project, selectedMembers, setSelectedMembers, setConfirmAction} = props;
-  const {deleteMembers} = useProjects();
+  const {updateMember, deleteMembers} = useProjects();
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
 
   const onDelete = async () => {
@@ -21,6 +21,13 @@ const MemberRow = (props) => {
       confirmButton: 'Delete',
       action: async () => await deleteMembers(project.id, {members: [member.id]})
     })
+  }
+
+  const onSelectRole = async (role, isSelected) => {
+    const roles = isSelected
+      ? member.roles.filter(r => r.id !== role.id)
+      : [...member.roles, role]
+    await updateMember(project.id, member.id, {roles: roles.map(r => r.id)})
   }
 
   return (
@@ -37,7 +44,7 @@ const MemberRow = (props) => {
         {member?.user?.username}
       </TableCell>
       <TableCell align="left">
-        <RolesSelect member={member}/>
+        <RolesSelect member={member} onSelectRole={onSelectRole} sx={{width: 300, display: 'flex'}}/>
       </TableCell>
       <TableCell padding="checkbox">
         <Button style={{color: 'red'}} onClick={onDelete}>Delete</Button>
