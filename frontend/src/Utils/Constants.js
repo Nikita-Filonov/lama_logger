@@ -15,3 +15,5 @@ export const REQUESTS_SUCCESSES_FILTERS = [
 ];
 
 export const SIDEBAR_WIDTH = 300;
+
+export const INSTANCES = ['Request', 'Project', 'Member', 'Role']

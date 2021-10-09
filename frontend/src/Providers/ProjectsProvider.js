@@ -138,6 +138,19 @@ const ProjectsProvider = ({children, store}) => {
     await checkResponse(response, {message: 'Members were deleted', level: 'success'})
   }
 
+  const createRole = async (projectId, payload) => {
+    setRequest(true)
+    const response = await fetch(projectsApi + `${projectId}/roles/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    await checkResponse(response, {message: 'Role was created', level: 'success'})
+  }
+
   return (
     <ProjectsContext.Provider
       value={{
@@ -148,7 +161,8 @@ const ProjectsProvider = ({children, store}) => {
         updateProject,
         inviteMember,
         updateMember,
-        deleteMembers
+        deleteMembers,
+        createRole
       }}
     >
       {children}

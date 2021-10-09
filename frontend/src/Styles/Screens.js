@@ -21,5 +21,12 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
   },
   headerContainer: {
     height: 60
+  },
+  sectionList: {
+    width: '100%',
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: 300,
+    '& ul': {padding: 0},
   }
 }));
