@@ -4,10 +4,10 @@ import {connect} from "react-redux";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import clsx from "clsx";
-import {ProjectSettingsStyles} from "../../../../../Styles/Screens";
-import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
-import {useProjects} from "../../../../../Providers/ProjectsProvider";
-import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
+import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
+import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
+import {useProjects} from "../../../../../../Providers/ProjectsProvider";
+import {setSelectedMembers} from "../../../../../../Redux/Projects/projectActions";
 
 const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelectedMembers}) => {
   const classes = ProjectSettingsStyles();

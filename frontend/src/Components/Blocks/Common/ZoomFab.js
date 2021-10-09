@@ -4,7 +4,7 @@ import {common} from "../../../Styles/Blocks";
 import {Add} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
 
-export const ZoomFab = ({action, variant = 'extended'}) => {
+export const ZoomFab = ({action, variant = 'extended', title = ''}) => {
   const theme = useTheme();
 
   const transitionDuration = {
@@ -21,7 +21,7 @@ export const ZoomFab = ({action, variant = 'extended'}) => {
     >
       <Fab variant={variant} sx={common.fab} color={'primary'} onClick={action}>
         <Add/>
-        INVITE
+        {title}
       </Fab>
     </Zoom>
   )

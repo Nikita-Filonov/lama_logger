@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import {Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
 import {visuallyHidden} from "@mui/utils";
 import {connect} from "react-redux";
-import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
+import {setSelectedMembers} from "../../../../../../Redux/Projects/projectActions";
 
 const headCells = [
   {

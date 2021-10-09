@@ -1,10 +1,10 @@
 import React, {useMemo} from "react";
 import {connect} from "react-redux";
 import {Button, Checkbox, TableCell, TableRow} from '@mui/material';
-import {setSelectedMembers} from "../../../../../Redux/Projects/projectActions";
-import {useProjects} from "../../../../../Providers/ProjectsProvider";
-import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
-import RolesSelect from "../../../../Blocks/Projects/Settings/Users/RolesSelect";
+import {setSelectedMembers} from "../../../../../../Redux/Projects/projectActions";
+import {useProjects} from "../../../../../../Providers/ProjectsProvider";
+import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
+import RolesSelect from "../../../../../Blocks/Projects/Settings/Users/Members/RolesSelect";
 
 
 const MemberRow = (props) => {

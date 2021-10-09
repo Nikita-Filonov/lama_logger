@@ -1,17 +1,17 @@
 import React, {useMemo, useState} from "react";
 import {Paper, Table, TableBody, TableContainer} from "@mui/material";
 import {connect} from "react-redux";
-import MembersTableHeader from "./MembersTableHeader";
-import {getComparator, stableSort} from "../../../../../Utils/Utils";
-import MemberRow from "../../../../Items/Projects/Settings/Users/MemberRow";
-import {ProjectSettingsStyles} from "../../../../../Styles/Screens";
+import {getComparator, stableSort} from "../../../../../../Utils/Utils";
+import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
+import RoleRow from "../../../../../Items/Projects/Settings/Users/Roles/RoleRow";
+import RolesTableHeader from "./RolesTableHeader";
 
-const MembersTable = ({project}) => {
+const RolesTable = ({project}) => {
   const classes = ProjectSettingsStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
 
-  const filteredMembers = useMemo(() => project.members.filter(m => m), [project.members])
+  const filteredRoles = useMemo(() => project.roles.filter(r => r), [project.roles])
   const onRequestSort = (property) => (event) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -22,15 +22,15 @@ const MembersTable = ({project}) => {
   return (
     <TableContainer component={Paper} className={classes.membersTableContainer}>
       <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
-        <MembersTableHeader
+        <RolesTableHeader
           order={order}
           orderBy={orderBy}
           onRequestSort={onRequestSort}
-          filteredMembers={filteredMembers}
+          filteredRoles={filteredRoles}
         />
         <TableBody>
-          {stableSort(filteredMembers, getComparator(order, orderBy))
-            .map(m => <MemberRow member={m} key={m.id}/>)}
+          {stableSort(filteredRoles, getComparator(order, orderBy))
+            .map(role => <RoleRow role={role} key={role.id}/>)}
         </TableBody>
       </Table>
     </TableContainer>
@@ -45,4 +45,4 @@ const getState = (state) => ({
 export default connect(
   getState,
   null,
-)(MembersTable);
+)(RolesTable);
