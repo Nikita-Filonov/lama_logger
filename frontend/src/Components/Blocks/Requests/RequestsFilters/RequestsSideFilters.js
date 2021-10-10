@@ -15,6 +15,7 @@ import {AccessTime, Close} from "@mui/icons-material";
 
 const RequestsSideFilters = (props) => {
   const {
+    project,
     requestsFiltersSidebar,
     setRequestsFiltersSidebar,
     requestsFilters,
@@ -23,8 +24,8 @@ const RequestsSideFilters = (props) => {
   } = props;
   const classes = RequestsTableStyles();
 
-  const onClose = () => setRequestsFiltersSidebar(true)
-  const onRequestTimeFilter = () => setRequestsTimeFilterModal(true)
+  const onClose = () => setRequestsFiltersSidebar(true);
+  const onRequestTimeFilter = () => setRequestsTimeFilterModal(true);
 
   const onMethod = (event, filter = 'methods') => {
     let selectedMethods;
@@ -97,6 +98,7 @@ const RequestsSideFilters = (props) => {
 
 
 const getState = (state) => ({
+  project: state.projects.project,
   requestsFilters: state.requests.requestsFilters,
   requestsFiltersSidebar: state.requests.requestsFiltersSidebar
 })

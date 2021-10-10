@@ -3,12 +3,17 @@ import ast
 from shlex import quote
 
 
-def query_to_dict(query: dict, parse=False) -> dict:
+def query_to_dict(query: dict, parse: bool = False, ignore=None) -> dict:
     """Parse url query and makes dict from it"""
-    if parse:
-        return {field: ast.literal_eval(str(value)) for field, value in query.items()}
+    if ignore is None:
+        ignore = []
 
-    return {field: str(value) for field, value in query.items()}
+    save_query = {field: value for field, value in query.items() if field not in ignore}
+
+    if parse:
+        return {field: ast.literal_eval(str(value)) for field, value in save_query.items()}
+
+    return {field: str(value) for field, value in save_query.items()}
 
 
 def to_curl(request, compressed=False, verify=True):

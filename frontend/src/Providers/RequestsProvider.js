@@ -3,7 +3,7 @@ import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./UsersProvider";
 import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../Redux/Requests/actionTypes";
 import {useAlerts} from "./AlertsProvider";
-import {copyText} from "../Utils/Utils";
+import {copyText, objectToQuery} from "../Utils/Utils";
 
 
 const RequestsContext = React.createContext(null);
@@ -15,9 +15,15 @@ const RequestsProvider = ({children, store}) => {
   const [load, setLoad] = useState(false);
 
 
-  const getRequests = async (projectId, limit = 25, offset = 0) => {
+  const getRequests = async (projectId, limit = null, offset = null, other = {}) => {
     setLoad(true)
-    await fetch(projectsApi + `${projectId}/requests/?limit=${limit}&offset=${offset}`, {
+    const queryPayload = {
+      ...other,
+      limit: limit || localStorage.getItem('rowsPerPageRequests'),
+      offset: offset || 0
+    }
+    const query = await objectToQuery(queryPayload);
+    await fetch(projectsApi + `${projectId}/requests/${query}`, {
       headers: {
         'Authorization': `Token ${token}`,
       },

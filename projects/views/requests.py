@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from projects.helpers.utils import to_curl
+from projects.helpers.utils import to_curl, query_to_dict
 from projects.models import Project, Request
 from projects.serializers.requests import RequestsSerializer, RequestSerializer
 
@@ -19,10 +19,13 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
+    IGNORE_FILERS = ['limit', 'count', 'offset']
 
     def get(self, request, project_id):
+        filters = query_to_dict(request.query_params, parse=True, ignore=self.IGNORE_FILERS)
         project = Project.objects.get(id=project_id)
-        requests = project.requests.all().order_by('-created')
+        requests = project.requests.filter(**filters).order_by('-created')
+
         results = self.paginate_queryset(requests, request, view=self)
         serializer = RequestsSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)
