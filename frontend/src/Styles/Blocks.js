@@ -23,6 +23,11 @@ export const common = {
     bgcolor: 'background.paper',
     overflow: 'auto',
     maxHeight: window.innerHeight / 1.3
+  },
+  ellipsisText: {
+    textOverflow: 'ellipsis',
+    whiteSpace: "nowrap",
+    overflow: 'hidden'
   }
 }
 

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import {common, ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
 import RequestsMenu from "../../../Menus/Requests/RequestsMenu";
 import {Button, IconButton, MenuItem, Select, Typography} from "@mui/material";
@@ -36,11 +36,7 @@ const RequestsToolbar = ({project, projects, setRequestsTimeFilterModal, setProj
           onChange={onSelectProject}
         >
           {projects.map(p => <MenuItem value={p.id} className={'d-flex'} sx={{maxWidth: 300,}}>
-            <Typography style={{
-              textOverflow: 'ellipsis',
-              whiteSpace: "nowrap",
-              overflow: 'hidden'
-            }}>{p.title}</Typography>
+            <Typography style={common.ellipsisText}>{p.title}</Typography>
             <div className={'flex-grow-1'}/>
             <IconButton size={'small'}><Settings fontSize={'small'}/></IconButton>
           </MenuItem>)}

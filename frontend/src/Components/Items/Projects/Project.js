@@ -9,10 +9,7 @@ import ProjectMenu from "../../Menus/Projects/ProjectMenu";
 
 const Project = ({project, setProject}) => {
 
-  const onOpenProject = () => {
-    setProject(project)
-    localStorage.setItem('project', JSON.stringify(project))
-  }
+  const onOpenProject = () => setProject(project)
 
   return (
     <ListItemButton>
