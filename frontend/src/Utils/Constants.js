@@ -1,5 +1,18 @@
+import {getProjectName} from "./Utils";
+
 export const baseUrl = 'http://localhost:8000/';
 export const wsUri = 'ws://localhost:8000/'
+
+
+export const ROUTES = [
+  {path: '/projects/:projectId', breadcrumb: getProjectName},
+  {path: '/projects/:projectId/requests', breadcrumb: 'Requests'},
+  {path: '/projects/:projectId/settings', breadcrumb: 'Settings'},
+  {path: '/projects/:projectId/settings/general', breadcrumb: 'General'},
+  {path: '/projects/:projectId/settings/members', breadcrumb: 'Members'},
+  {path: '/projects/:projectId/settings/roles', breadcrumb: 'Roles'},
+  {path: '/projects', breadcrumb: 'Projects'},
+];
 
 export const SUCCESS_CODES = [200, 201, 204];
 

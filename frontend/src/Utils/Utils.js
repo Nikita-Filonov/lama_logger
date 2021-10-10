@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+export const getProjectName = ({match}) => JSON.parse(localStorage.getItem('project'))?.title
+
 export const getStatusCodeColor = (statusCode) => {
   if (100 <= statusCode && statusCode <= 299) {
     return '#02C001'

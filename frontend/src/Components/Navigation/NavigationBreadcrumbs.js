@@ -3,28 +3,21 @@ import Link from '@mui/material/Link';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
 import {useHistory} from "react-router-dom";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import {ROUTES} from "../../Utils/Constants";
 
-const getProjectName = ({match}) => JSON.parse(localStorage.getItem('project'))?.title
-
-
-const routes = [
-  {path: '/projects/:projectId', breadcrumb: getProjectName},
-  {path: '/projects/:projectId/requests', breadcrumb: 'Requests'},
-  {path: '/projects/:projectId/settings', breadcrumb: 'Settings'},
-  {path: '/projects/:projectId/settings/general', breadcrumb: 'General'},
-  {path: '/projects/:projectId/settings/members', breadcrumb: 'Members'},
-  {path: '/projects/:projectId/settings/roles', breadcrumb: 'Roles'},
-  {path: '/projects', breadcrumb: 'Projects'},
-];
 
 export const NavigationBreadcrumbs = () => {
-  const breadcrumbs = useBreadcrumbs(routes);
+  const breadcrumbs = useBreadcrumbs(ROUTES);
   const history = useHistory();
 
   const onLink = (url) => history.push(url)
 
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs
+      aria-label="breadcrumb"
+      separator={<NavigateNextIcon fontSize="small" style={{color: '#FFFFFF'}}/>}
+    >
       {breadcrumbs
         .slice(1)
         .map(({match, breadcrumb}, index) => (

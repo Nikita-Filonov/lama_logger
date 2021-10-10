@@ -7,6 +7,7 @@ import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import {useRequests} from "../../../../Providers/RequestsProvider";
 import {setSelectedRequests} from "../../../../Redux/Requests/requestsActions";
 import {Delete} from "@mui/icons-material";
+import Paper from "@mui/material/Paper";
 
 const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests}) => {
   const classes = ViewRequestStyles();
@@ -18,7 +19,10 @@ const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests
   }
 
   return (
-    <div className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}>
+    <Paper
+      elevation={3}
+      className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}
+    >
       <Typography>Selected {selectedRequests.length}</Typography>
       <div className={'flex-grow-1'}/>
       <Tooltip title={'Export selected requests'}>
@@ -31,7 +35,7 @@ const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests
           <Delete/>
         </IconButton>
       </Tooltip>
-    </div>
+    </Paper>
   )
 }
 
