@@ -44,7 +44,6 @@ const ProjectMenu = ({project, setProject}) => {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        PaperProps={ProjectMenuStyles.paper}
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >

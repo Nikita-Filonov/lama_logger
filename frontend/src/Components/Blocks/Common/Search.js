@@ -1,30 +1,71 @@
 import React from "react";
-import {InputAdornment, TextField} from "@mui/material";
+import {alpha, InputAdornment, InputBase} from "@mui/material";
+import {Close, Search as SearchIcon} from "@mui/icons-material";
+import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
-import {Close} from "@mui/icons-material";
 
-export const Search = ({search, setSearch, placeholder, label}) => {
+const SearchInput = styled('div')(({theme}) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({theme}) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({theme}) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '15ch',
+      '&:focus': {
+        width: '30ch',
+      },
+    },
+  },
+}));
+
+export const Search = ({search, setSearch, placeholder}) => {
   const onClear = () => setSearch('')
 
   return (
-    <TextField
-      value={search}
-      size={'small'}
-      id="outlined-uncontrolled"
-      label={label}
-      placeholder={placeholder}
-      onChange={event => setSearch(event.target.value)}
-      variant={'standard'}
-      className={'mb-2 me-5 w-25'}
-      InputProps={{
-        endAdornment: search.length > 0 ? (
+    <SearchInput style={{marginRight: 20}}>
+      <SearchIconWrapper>
+        <SearchIcon/>
+      </SearchIconWrapper>
+      <StyledInputBase
+        value={search}
+        onChange={event => setSearch(event.target.value)}
+        placeholder={placeholder}
+        endAdornment={search?.length > 0 ?
           <InputAdornment position={'end'}>
             <IconButton onClick={onClear}>
               <Close fontSize={'small'}/>
             </IconButton>
-          </InputAdornment>
-        ) : null,
-      }}
-    />
+          </InputAdornment> : null
+        }
+      />
+    </SearchInput>
   )
 }

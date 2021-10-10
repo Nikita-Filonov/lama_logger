@@ -27,8 +27,9 @@ export const NavigationBreadcrumbs = () => {
     <Breadcrumbs aria-label="breadcrumb">
       {breadcrumbs
         .slice(1)
-        .map(({match, breadcrumb}) => (
+        .map(({match, breadcrumb}, index) => (
           <Link
+            key={index}
             sx={{color: '#FFFFFF'}}
             to={match.url}
             onClick={() => onLink(match.url)}

@@ -32,7 +32,6 @@ const RequestsMenu = ({setRequestsFiltersSidebar}) => {
         open={Boolean(menu)}
         onClose={onClose}
         onClick={onClose}
-        PaperProps={ProjectMenuStyles.paper}
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >

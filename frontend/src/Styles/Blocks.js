@@ -128,6 +128,6 @@ export const ViewRequestStyles = makeStyles(theme => ({
     maxHeight: 200
   },
   toolbarContainer: {
-    height: 50
-  }
+    padding: 10
+  },
 }), {index: 1});
