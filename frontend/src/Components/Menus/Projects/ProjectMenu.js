@@ -28,7 +28,6 @@ const ProjectMenu = ({project, setProject}) => {
   const onSettings = () => {
     setProject(project)
     history.push(`/projects/${project.id}/settings/general`)
-    localStorage.setItem('project', JSON.stringify(project))
   }
 
   return (
