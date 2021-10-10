@@ -16,7 +16,7 @@ import {Container} from "@mui/material";
 
 const Requests = (props) => {
   const {createRequest, selectedRequests} = props;
-  const {projectId} = useParams()
+  const {projectId} = useParams();
   const client = useRef(null);
   const {token} = useUsers()
   const {getRequests} = useRequests()
@@ -33,7 +33,7 @@ const Requests = (props) => {
         client.current.close()
       }
     })()
-  }, [token])
+  }, [token, projectId])
 
   const onRequest = async (message) => {
     const request = JSON.parse(message.data);
