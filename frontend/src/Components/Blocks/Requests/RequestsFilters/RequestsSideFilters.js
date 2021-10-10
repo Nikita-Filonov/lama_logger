@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
@@ -25,11 +25,6 @@ const RequestsSideFilters = (props) => {
 
   const onClose = () => setRequestsFiltersSidebar(true)
   const onRequestTimeFilter = () => setRequestsTimeFilterModal(true)
-
-  useEffect(() =>
-      localStorage.setItem('requestsFilters', JSON.stringify(requestsFilters)),
-    [requestsFilters]
-  )
 
   const onMethod = (event, filter = 'methods') => {
     let selectedMethods;

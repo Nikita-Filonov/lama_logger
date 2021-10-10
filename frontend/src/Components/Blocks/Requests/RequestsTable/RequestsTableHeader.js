@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import {Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
 import {visuallyHidden} from "@mui/utils";
 import {connect} from "react-redux";
-import {setSelectAllRequests, setSelectedRequests} from "../../../../Redux/Requests/requestsActions";
+import {setSelectedRequests} from "../../../../Redux/Requests/requestsActions";
 
 const headCells = [
   {
@@ -24,13 +24,13 @@ const headCells = [
 ];
 
 const RequestsTableHeader = (props) => {
-  const {order, orderBy, onRequestSort, filteredRequests, selectedRequests, setSelectAllRequests} = props;
+  const {order, orderBy, onRequestSort, filteredRequests, selectedRequests, setSelectedRequests} = props;
   const numSelected = useMemo(() => selectedRequests.length, [selectedRequests])
   const rowCount = useMemo(() => filteredRequests.length, [filteredRequests])
 
   const onSelectAll = (event) => event.target.checked
-    ? setSelectAllRequests(filteredRequests.map(r => r.request_id))
-    : setSelectAllRequests([])
+    ? setSelectedRequests(filteredRequests.map(r => r.request_id))
+    : setSelectedRequests([])
 
   return (
     <TableHead>
@@ -78,6 +78,5 @@ export default connect(
   getState,
   {
     setSelectedRequests,
-    setSelectAllRequests
   },
 )(RequestsTableHeader);

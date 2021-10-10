@@ -15,9 +15,9 @@ const RequestsProvider = ({children, store}) => {
   const [load, setLoad] = useState(false);
 
 
-  const getRequests = async (projectId) => {
+  const getRequests = async (projectId, limit = 25, offset = 0) => {
     setLoad(true)
-    await fetch(projectsApi + `${projectId}/requests/`, {
+    await fetch(projectsApi + `${projectId}/requests/?limit=${limit}&offset=${offset}`, {
       headers: {
         'Authorization': `Token ${token}`,
       },

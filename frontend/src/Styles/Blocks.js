@@ -108,6 +108,11 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
+  },
+  pagination: {
+    position: 'absolute',
+    bottom: 10,
+    right: 0
   }
 }));
 

@@ -3,6 +3,7 @@ from channels.layers import get_channel_layer
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes, throttle_classes
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
@@ -14,7 +15,7 @@ from projects.serializers.requests import RequestsSerializer, RequestSerializer
 channel_layer = get_channel_layer()
 
 
-class RequestsApi(views.APIView):
+class RequestsApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
@@ -22,7 +23,9 @@ class RequestsApi(views.APIView):
     def get(self, request, project_id):
         project = Project.objects.get(id=project_id)
         requests = project.requests.all().order_by('-created')
-        return Response(RequestsSerializer(requests, many=True).data)
+        results = self.paginate_queryset(requests, request, view=self)
+        serializer = RequestsSerializer(results, many=True)
+        return self.get_paginated_response(serializer.data)
 
     def post(self, request, project_id):
         project = Project.objects.get(id=project_id)

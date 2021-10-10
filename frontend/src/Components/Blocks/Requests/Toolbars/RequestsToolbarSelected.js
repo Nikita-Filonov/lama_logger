@@ -5,16 +5,16 @@ import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import {useRequests} from "../../../../Providers/RequestsProvider";
-import {setSelectAllRequests} from "../../../../Redux/Requests/requestsActions";
+import {setSelectedRequests} from "../../../../Redux/Requests/requestsActions";
 import {Delete} from "@mui/icons-material";
 
-const RequestsToolbarSelected = ({project, selectedRequests, setSelectAllRequests}) => {
+const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests}) => {
   const classes = ViewRequestStyles();
   const {deleteRequests} = useRequests();
 
   const onDelete = async () => {
     await deleteRequests(project.id, selectedRequests)
-    setSelectAllRequests([])
+    setSelectedRequests([])
   }
 
   return (
@@ -43,6 +43,6 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setSelectAllRequests
+    setSelectedRequests
   },
 )(RequestsToolbarSelected);

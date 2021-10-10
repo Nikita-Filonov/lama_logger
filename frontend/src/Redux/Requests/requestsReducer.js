@@ -7,7 +7,6 @@ import {
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
   SET_REQUESTS_TIME_FILTER_MODAL,
-  SET_SELECT_ALL_REQUESTS,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
 
@@ -21,7 +20,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     case CREATE_REQUEST:
       return {...state, requests: [action.payload, ...state.requests]}
     case SET_REQUESTS_FILTERS: {
-      return {...state, requestsFilters: action.payload}
+      localStorage.setItem('requestsFilters', JSON.stringify(action.payload))
+      return {...state, requestsFilters: action.payload};
     }
     case DELETE_REQUESTS: {
       const filteredRequests = state.requests.filter(r => !action.payload.includes(r.request_id))
@@ -31,14 +31,15 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       const {isSelected} = action.payload;
       const {requestId} = action.payload;
 
+      if (!requestId) {
+        return {...state, selectedRequests: action.payload}
+      }
+
       if (!isSelected) {
         return {...state, selectedRequests: [...state.selectedRequests, requestId]}
       } else {
         return {...state, selectedRequests: [...state.selectedRequests.filter(r => r !== requestId)]}
       }
-    }
-    case SET_SELECT_ALL_REQUESTS: {
-      return {...state, selectedRequests: action.payload}
     }
     case SET_REQUESTS_FILTERS_SIDEBAR:
       return {...state, requestsFiltersSidebar: action.payload}
