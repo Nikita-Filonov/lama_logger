@@ -34,7 +34,7 @@ const CustomRoute = () =>
     <div className={'d-flex'}>
       <Switch>
         <ProjectRoute exact path="/projects" component={Projects}/>
-        <RequestRoute exact path="/projects/:projectId" component={Requests}/>
+        <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
         <ProjectSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
         <ProjectSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
         <ProjectSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>

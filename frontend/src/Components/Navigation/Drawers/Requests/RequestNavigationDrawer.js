@@ -26,7 +26,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   }
 
   const onSettings = () => history.push(baseRoute + `/settings/general`)
-  const onRequests = () => history.push(baseRoute)
+  const onRequests = () => history.push(baseRoute + '/requests')
 
 
   return (

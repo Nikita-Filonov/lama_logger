@@ -7,11 +7,14 @@ import {connect} from "react-redux";
 import {setTheme} from "../../Redux/Users/usersActions";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import {useHistory} from 'react-router-dom'
+import {NavigationBreadcrumbs} from "./NavigationBreadcrumbs";
 
 
 const NavigationBar = ({drawer, setTheme}) => {
   const {palette} = useTheme();
   const {onLogout} = useUsers();
+  const history = useHistory();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
@@ -21,6 +24,11 @@ const NavigationBar = ({drawer, setTheme}) => {
     const theme = palette.mode === 'light' ? 'dark' : 'light'
     setTheme(theme)
     localStorage.setItem('theme', theme)
+  }
+
+  const onLogoutPress = async () => {
+    await onLogout()
+    history.push('/login')
   }
 
   return (
@@ -41,13 +49,13 @@ const NavigationBar = ({drawer, setTheme}) => {
             <MenuIcon/>
           </IconButton>
           <Typography variant="h6" noWrap component="div" className={'flex-grow-1'}>
-            Lama Logger
+            <NavigationBreadcrumbs/>
           </Typography>
           <IconButton className={'me-3'} onClick={onTheme} color="inherit">
             {palette.mode === 'light' ? <Brightness4Icon/> : <Brightness7Icon/>}
           </IconButton>
           <Avatar className={'me-3'}>N</Avatar>
-          <Button color="inherit" onClick={onLogout}>Logout</Button>
+          <Button color="inherit" onClick={onLogoutPress}>Logout</Button>
         </Toolbar>
       </AppBarStyled>
       {React.createElement(drawer, {open: open, onClose: handleDrawerClose})}

@@ -18,7 +18,7 @@ const Project = ({project, setProject}) => {
       </ListItemIcon>
       <Link
         className={'text-decoration-none'}
-        to={`/projects/${project.id}`}
+        to={`/projects/${project.id}/requests`}
         onClick={onOpenProject}>
         {project.title}
       </Link>

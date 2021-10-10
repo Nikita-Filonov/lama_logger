@@ -21,7 +21,7 @@ const RequestsToolbar = ({project, projects, setRequestsTimeFilterModal, setProj
   const onSelectProject = (event) => {
     const selectedProject = projects.find(p => p.id === event.target.value)
     setProject(selectedProject)
-    history.push(`/projects/${selectedProject.id}`);
+    history.push(`/projects/${selectedProject.id}/requests`);
   }
 
   return (
