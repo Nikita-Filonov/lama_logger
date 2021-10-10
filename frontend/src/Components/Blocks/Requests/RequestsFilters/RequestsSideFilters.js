@@ -15,7 +15,6 @@ import {AccessTime, Close} from "@mui/icons-material";
 
 const RequestsSideFilters = (props) => {
   const {
-    project,
     requestsFiltersSidebar,
     setRequestsFiltersSidebar,
     requestsFilters,
@@ -98,7 +97,6 @@ const RequestsSideFilters = (props) => {
 
 
 const getState = (state) => ({
-  project: state.projects.project,
   requestsFilters: state.requests.requestsFilters,
   requestsFiltersSidebar: state.requests.requestsFiltersSidebar
 })

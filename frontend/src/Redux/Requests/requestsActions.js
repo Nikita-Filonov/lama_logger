@@ -26,6 +26,11 @@ export const setRequestsFilters = (state) => ({
   payload: state
 })
 
+export const setRequestsPagination = (state) => ({
+  type: SET_REQUESTS_PAGINATION,
+  payload: state
+})
+
 export const setSelectedRequests = (state) => ({
   type: SET_SELECTED_REQUESTS,
   payload: state

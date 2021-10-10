@@ -9,6 +9,10 @@ export const INITIAL_REQUESTS = {
     results: []
   },
   requestsFilters: JSON.parse(localStorage.getItem('requestsFilters')) || DEFAULT_REQUESTS_FILTERS,
+  requestsPagination: {
+    page: 0,
+    rowsPerPage: localStorage.getItem('rowsPerPageRequests') || 25
+  },
   selectedRequests: [],
   requestsFiltersSidebar: true,
   requestsTimeFilterModal: false

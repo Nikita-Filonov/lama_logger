@@ -15,7 +15,7 @@ import {Container} from "@mui/material";
 
 
 const Requests = (props) => {
-  const {createRequest, selectedRequests} = props;
+  const {createRequest, selectedRequests, requestsPagination} = props;
   const {projectId} = useParams();
   const client = useRef(null);
   const {token} = useUsers()
@@ -23,17 +23,24 @@ const Requests = (props) => {
 
   useEffect(() => {
     (async () => {
-      if (token) {
-        await getRequests(projectId)
-        client.current = await new W3CWebSocket(wsUri + `projects/${projectId}/requests/`);
-        client.current.onmessage = await onRequest
-      }
+      client.current = await new W3CWebSocket(wsUri + `projects/${projectId}/requests/`);
+      client.current.onmessage = await onRequest
 
       return () => {
         client.current.close()
       }
     })()
-  }, [token, projectId])
+  }, [projectId])
+
+  useEffect(() => {
+    (async () => {
+      token && await getRequests(
+        projectId,
+        requestsPagination.rowsPerPage,
+        requestsPagination.rowsPerPage * requestsPagination.page
+      )
+    })()
+  }, [token, projectId, requestsPagination])
 
   const onRequest = async (message) => {
     const request = JSON.parse(message.data);
@@ -64,7 +71,8 @@ const Requests = (props) => {
 
 
 const getState = (state) => ({
-  selectedRequests: state.requests.selectedRequests
+  selectedRequests: state.requests.selectedRequests,
+  requestsPagination: state.requests.requestsPagination
 })
 
 export default connect(

@@ -6,6 +6,7 @@ import {
   SET_REQUESTS,
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
+  SET_REQUESTS_PAGINATION,
   SET_REQUESTS_TIME_FILTER_MODAL,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
@@ -22,6 +23,9 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     case SET_REQUESTS_FILTERS: {
       localStorage.setItem('requestsFilters', JSON.stringify(action.payload))
       return {...state, requestsFilters: action.payload};
+    }
+    case SET_REQUESTS_PAGINATION: {
+      return {...state, requestsPagination: action.payload};
     }
     case DELETE_REQUESTS: {
       const filteredRequests = state.requests.filter(r => !action.payload.includes(r.request_id))

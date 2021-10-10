@@ -1,27 +1,18 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 import {Paper, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
 import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import RequestRow from "../../../Items/Reuqests/RequestRow";
 import RequestsTableHeader from "./RequestsTableHeader";
 import {connect} from "react-redux";
-import {useRequests} from "../../../../Providers/RequestsProvider";
-import {useUsers} from "../../../../Providers/UsersProvider";
+import {setRequestsPagination} from "../../../../Redux/Requests/requestsActions";
 
 
 const RequestsTable = (props) => {
-  const {project, requests, requestsFilters} = props;
+  const {requests, requestsFilters, requestsPagination, setRequestsPagination} = props;
   const classes = RequestsTableStyles();
-  const {token} = useUsers();
-  const {getRequests} = useRequests();
-  const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('method');
-  const [rowsPerPage, setRowsPerPage] = useState(localStorage.getItem('rowsPerPageRequests') || 25);
-
-  useEffect(() => {
-    (async () => token && await getRequests(project.id, rowsPerPage, rowsPerPage * page))()
-  }, [token, page, rowsPerPage])
 
   const filteredRequests = useMemo(
     () => requests?.results.filter(r => requestsFilters.methods.includes(r.method) &&
@@ -36,9 +27,9 @@ const RequestsTable = (props) => {
 
   const handleChangeRowsPerPage = (event) => {
     localStorage.setItem('rowsPerPageRequests', event.target.value)
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setRequestsPagination({...requestsPagination, page: 0, rowsPerPage: parseInt(event.target.value, 10)})
   };
+  const onPageChange = (e, page) => setRequestsPagination({...requestsPagination, page})
 
   return (
     <React.Fragment>
@@ -62,14 +53,14 @@ const RequestsTable = (props) => {
             rowsPerPageOptions={[25, 50, 100]}
             colSpan={6}
             count={requests.count}
-            rowsPerPage={rowsPerPage}
-            page={page}
+            rowsPerPage={requestsPagination.rowsPerPage}
+            page={requestsPagination.page}
             labelRowsPerPage={<Typography variant={'body2'} sx={{marginTop: 2}}>Requests per page</Typography>}
             labelDisplayedRows={({count, from, page, to}) =>
               <Typography variant={'body2'} sx={{marginTop: 2}}>{from}-{to} of {count}</Typography>
             }
             onRowsPerPageChange={handleChangeRowsPerPage}
-            onPageChange={(e, newPage) => setPage(newPage)}
+            onPageChange={onPageChange}
           />
         </Table>
       </TableContainer>
@@ -78,12 +69,14 @@ const RequestsTable = (props) => {
 }
 
 const getState = (state) => ({
-  project: state.projects.project,
   requests: state.requests.requests,
-  requestsFilters: state.requests.requestsFilters
+  requestsFilters: state.requests.requestsFilters,
+  requestsPagination: state.requests.requestsPagination
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setRequestsPagination
+  },
 )(RequestsTable);
