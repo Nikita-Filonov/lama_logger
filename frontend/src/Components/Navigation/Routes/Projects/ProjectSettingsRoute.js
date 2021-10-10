@@ -4,6 +4,8 @@ import {Container, Typography} from "@mui/material";
 import clsx from "clsx";
 import ProjectSettingsSidebar from "../../../Blocks/Projects/Settings/ProjectSettingsSidebar";
 import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import NavigationBar from "../../NavigationBar";
+import RequestNavigationDrawer from "../../Drawers/Requests/RequestNavigationDrawer";
 
 export const ProjectSettingsRoute = ({component: Component, ...rest}) => {
   const classes = ViewRequestStyles()
@@ -11,29 +13,32 @@ export const ProjectSettingsRoute = ({component: Component, ...rest}) => {
   const project = localStorage.getItem('project');
 
   return (
-    <Container maxWidth={'xl'}>
-      <div className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}>
-        <Typography variant={'h6'}>Settings</Typography>
-        <div className={'flex-grow-1'}/>
-      </div>
-      <ProjectSettingsSidebar/>
-      <div>
-        <Route
-          {...rest}
-          render={props =>
-            token ? (
-              <React.Fragment>
-                {project
-                  ? <Component {...props} />
-                  : <Redirect to={{pathname: '/projects', state: {from: props.location}}}/>
-                }
-              </React.Fragment>
-            ) : (
-              <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
-            )
-          }
-        />
-      </div>
-    </Container>
+    <React.Fragment>
+      <NavigationBar drawer={RequestNavigationDrawer}/>
+      <Container maxWidth={'xl'}>
+        <div className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}>
+          <Typography variant={'h6'}>Settings</Typography>
+          <div className={'flex-grow-1'}/>
+        </div>
+        <ProjectSettingsSidebar/>
+        <div>
+          <Route
+            {...rest}
+            render={props =>
+              token ? (
+                <React.Fragment>
+                  {project
+                    ? <Component {...props} />
+                    : <Redirect to={{pathname: '/projects', state: {from: props.location}}}/>
+                  }
+                </React.Fragment>
+              ) : (
+                <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
+              )
+            }
+          />
+        </div>
+      </Container>
+    </React.Fragment>
   )
 }

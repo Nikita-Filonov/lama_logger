@@ -1,5 +1,4 @@
 import React from "react";
-import {DrawerHeaderStyled, DrawerStyled} from "../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -9,13 +8,14 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
-import {Api, Logout, Settings} from "@mui/icons-material";
+import {Api, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
-import {setRequest} from "../../Redux/Requests/requestsActions";
+import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
+import {setRequest} from "../../../../Redux/Requests/requestsActions";
 
-const NavigationDrawer = ({open, onClose, setRequest}) => {
+const RequestNavigationDrawer = ({open, onClose, setRequest}) => {
   const history = useHistory();
   const theme = useTheme();
 
@@ -39,11 +39,29 @@ const NavigationDrawer = ({open, onClose, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Projects'}/>
         </ListItem>
+        <ListItem button onClick={onProjects}>
+          <ListItemIcon>
+            <FormatListBulletedIcon/>
+          </ListItemIcon>
+          <ListItemText primary={'Requests'}/>
+        </ListItem>
+        <ListItem button onClick={onProjects}>
+          <ListItemIcon>
+            <FormatListBulletedIcon/>
+          </ListItemIcon>
+          <ListItemText primary={'Performance'}/>
+        </ListItem>
         <ListItem button>
           <ListItemIcon>
             <Api/>
           </ListItemIcon>
-          <ListItemText primary={'API'}/>
+          <ListItemText primary={'Tracks'}/>
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <Api/>
+          </ListItemIcon>
+          <ListItemText primary={'Stats'}/>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
@@ -53,9 +71,9 @@ const NavigationDrawer = ({open, onClose, setRequest}) => {
         </ListItem>
         <ListItem button>
           <ListItemIcon>
-            <Logout/>
+            <Settings/>
           </ListItemIcon>
-          <ListItemText primary={'Logout'}/>
+          <ListItemText primary={'Actions'}/>
         </ListItem>
       </List>
     </DrawerStyled>
@@ -67,4 +85,4 @@ export default connect(
   {
     setRequest
   },
-)(NavigationDrawer);
+)(RequestNavigationDrawer);

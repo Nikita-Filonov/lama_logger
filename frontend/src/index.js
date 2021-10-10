@@ -9,10 +9,8 @@ import {BrowserRouter as Router, Switch} from "react-router-dom";
 import reducer from './Redux/Reducers';
 import {createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
-import {UsersProvider, useUsers} from "./Providers/UsersProvider";
+import {UsersProvider} from "./Providers/UsersProvider";
 import Projects from "./Screens/Projects/Projects";
-import NavigationBar from "./Components/Navigation/NavigationBar";
-import {PrivateRoute} from "./Components/Navigation/Routes/Common/PrivateRoute";
 import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
 import Requests from "./Screens/Requests/Requests";
@@ -24,32 +22,29 @@ import ProjectSettingsMembers from "./Screens/Projects/Settings/Users/ProjectSet
 import ProjectSettingsRoles from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";
 import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
 import ThemeWrapper from "./Providers/ThemeWrapper";
+import {ProjectRoute} from "./Components/Navigation/Routes/Projects/ProjectRoute";
+import {RequestRoute} from "./Components/Navigation/Routes/Requests/RequestRoute";
 
 
 const store = createStore(reducer);
 
-const CustomRoute = () => {
-  const {token} = useUsers()
+const CustomRoute = () =>
 
-  return (
-    <Router>
-      <div className={'d-flex'}>
-        {token && <NavigationBar/>}
-        <Switch>
-          <PrivateRoute exact path="/projects" component={Projects}/>
-          <PrivateRoute exact path="/projects/:projectId" component={Requests}/>
-          <ProjectSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
-          <ProjectSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
-          <ProjectSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
-          <ProjectSettingsRoute exact path="/projects/:projectId/settings/integrations"
-                                component={ProjectSettingsRoles}/>
-          <PublicRoute exact path="/login" component={Login}/>
-        </Switch>
-        <ConfirmAction/>
-      </div>
-    </Router>
-  )
-}
+  <Router>
+    <div className={'d-flex'}>
+      <Switch>
+        <ProjectRoute exact path="/projects" component={Projects}/>
+        <RequestRoute exact path="/projects/:projectId" component={Requests}/>
+        <ProjectSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
+        <ProjectSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
+        <ProjectSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
+        <ProjectSettingsRoute exact path="/projects/:projectId/settings/integrations"
+                              component={ProjectSettingsRoles}/>
+        <PublicRoute exact path="/login" component={Login}/>
+      </Switch>
+      <ConfirmAction/>
+    </div>
+  </Router>
 
 ReactDOM.render(
   <React.StrictMode>

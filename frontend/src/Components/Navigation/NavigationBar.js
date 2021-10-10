@@ -3,14 +3,13 @@ import {Avatar, Box, Button, CssBaseline, IconButton, Toolbar, Typography, useTh
 import MenuIcon from '@mui/icons-material/Menu';
 import {useUsers} from "../../Providers/UsersProvider";
 import {AppBarStyled, DrawerHeaderStyled} from "../../Styles/Blocks";
-import NavigationDrawer from "./NavigationDrawer";
 import {connect} from "react-redux";
 import {setTheme} from "../../Redux/Users/usersActions";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
-const NavigationBar = ({setTheme}) => {
+const NavigationBar = ({drawer, setTheme}) => {
   const {palette} = useTheme();
   const {onLogout} = useUsers();
   const [open, setOpen] = useState(false);
@@ -51,7 +50,7 @@ const NavigationBar = ({setTheme}) => {
           <Button color="inherit" onClick={onLogout}>Logout</Button>
         </Toolbar>
       </AppBarStyled>
-      <NavigationDrawer open={open} onClose={handleDrawerClose}/>
+      {React.createElement(drawer, {open: open, onClose: handleDrawerClose})}
       <Box component="main" sx={{flexGrow: 1}}>
         <DrawerHeaderStyled/>
       </Box>
