@@ -1,5 +1,6 @@
 import _ from "lodash";
 import {CODES} from "./Constants";
+import moment from "moment";
 
 export const getProjectName = ({match}) => JSON.parse(localStorage.getItem('project'))?.title
 
@@ -69,12 +70,26 @@ export function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+const getFilterInterval = ({amount, unit, prev}) => {
+  const now = moment(Date.now());
+  const interval = prev === 'prev'
+    ? now.subtract(amount, unit)
+    : now.add(amount, unit)
+
+  const formattedInterval = interval.format('YYYY-MM-DD HH:mm:ss');
+  const formattedNow = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+  return prev === 'prev' ? [formattedInterval, formattedNow] : [formattedNow, formattedInterval];
+}
+
 export const makeRequestsFilters = (filters) => {
-  const codesRange = filters.codes.map(success => CODES[success]).flat()
+  const codes = filters?.successes?.map(success => CODES[success]).flat();
+  const interval = getFilterInterval(filters?.interval);
+  console.log(interval)
   return {
     filters: JSON.stringify({
-      method__in: filters.methods,
-      response_code__in: codesRange
+      method__in: filters?.methods,
+      response_code__in: codes,
+      created__range: interval
     })
   }
 }

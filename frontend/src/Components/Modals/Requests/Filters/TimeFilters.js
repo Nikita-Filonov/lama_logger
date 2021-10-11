@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,16 +6,27 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {connect} from "react-redux";
-import {setRequestsTimeFilterModal} from "../../../../Redux/Requests/requestsActions";
+import {setRequestsFilters, setRequestsTimeFilterModal} from "../../../../Redux/Requests/requestsActions";
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import {ButtonGroup, Link, Typography} from "@mui/material";
+import {ButtonGroup, Typography} from "@mui/material";
+import {UNITS} from "../../../../Utils/Constants";
 
 
-const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
-  const onClose = () => setRequestsTimeFilterModal(false)
+const TimeFilters = (props) => {
+  const {requestsTimeFilterModal, setRequestsTimeFilterModal, requestsFilters, setRequestsFilters} = props;
+  const [prev, setPrev] = useState(requestsFilters?.interval?.prev);
+  const [amount, setAmount] = useState(requestsFilters?.interval?.amount);
+  const [unit, setUnit] = useState(requestsFilters?.interval?.unit);
+
+  const onClose = () => setRequestsTimeFilterModal(false);
+
+  const applyFilter = () => {
+    setRequestsFilters({...requestsFilters, interval: {amount, unit, prev}})
+    onClose();
+  }
 
   return (
     <Dialog open={requestsTimeFilterModal} onClose={onClose}>
@@ -24,13 +35,14 @@ const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
         <div className={'w-100 d-flex'}>
           <FormControl variant="standard" sx={{marginRight: 3, minWidth: 120}}>
             <InputLabel>Next/Prev</InputLabel>
-            <Select label="Age" defaultValue={10}>
-              <MenuItem value={10}>Prev</MenuItem>
-              <MenuItem value={20}>Next</MenuItem>
+            <Select value={prev} onChange={event => setPrev(event.target.value)}>
+              <MenuItem value={'prev'}>Prev</MenuItem>
+              <MenuItem value={'next'}>Next</MenuItem>
             </Select>
           </FormControl>
           <TextField
-            defaultValue={5}
+            value={amount}
+            onChange={event => setAmount(parseInt(event.target.value))}
             type={'number'}
             fullWidth
             variant={'standard'}
@@ -38,12 +50,10 @@ const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
           />
           <FormControl variant="standard" sx={{marginLeft: 3, minWidth: 120}}>
             <InputLabel id="demo-simple-select-standard-label">Period</InputLabel>
-            <Select label="Age" defaultValue={20}>
-              <MenuItem value={10}>Seconds</MenuItem>
-              <MenuItem value={20}>Minutes</MenuItem>
-              <MenuItem value={30}>Hours</MenuItem>
-              <MenuItem value={30}>Days</MenuItem>
-              <MenuItem value={30}>Months</MenuItem>
+            <Select value={unit} onChange={event => setUnit(event.target.value)}>
+              {UNITS.map(int =>
+                <MenuItem key={int.unit} value={int.unit}>{int.label}</MenuItem>
+              )}
             </Select>
           </FormControl>
         </div>
@@ -67,7 +77,7 @@ const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={onClose}>Apply</Button>
+        <Button onClick={applyFilter}>Apply</Button>
       </DialogActions>
     </Dialog>
   );
@@ -75,12 +85,14 @@ const TimeFilters = ({requestsTimeFilterModal, setRequestsTimeFilterModal}) => {
 
 
 const getState = (state) => ({
+  requestsFilters: state.requests.requestsFilters,
   requestsTimeFilterModal: state.requests.requestsTimeFilterModal,
 })
 
 export default connect(
   getState,
   {
-    setRequestsTimeFilterModal
+    setRequestsFilters,
+    setRequestsTimeFilterModal,
   },
 )(TimeFilters);

@@ -22,11 +22,19 @@ export const CODES = {
     409, 410, 411, 412, 413, 414, 415, 416, 418, 422,
     423, 424, 426, 428, 429, 431, 451, 500, 501, 502,
     503, 504, 505, 506, 507, 508, 509, 510, 511]
-}
+};
+export const UNITS = [
+  {label: 'Seconds', unit: 'seconds'},
+  {label: 'Minutes', unit: 'minutes'},
+  {label: 'Hours', unit: 'hours'},
+  {label: 'Days', unit: 'days'},
+  {label: 'Months', unit: 'months'},
+]
 
 export const DEFAULT_REQUESTS_FILTERS = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  successes: ['success', 'redirect', 'error']
+  successes: ['success', 'redirect', 'error'],
+  interval: {amount: 5, unit: 'hours', prev: 'prev'}
 }
 export const REQUESTS_METHODS_FILTERS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 export const REQUESTS_SUCCESSES_FILTERS = [
@@ -37,4 +45,4 @@ export const REQUESTS_SUCCESSES_FILTERS = [
 
 export const SIDEBAR_WIDTH = 300;
 
-export const INSTANCES = ['Request', 'Project', 'Member', 'Role']
+export const INSTANCES = ['Request', 'Project', 'Member', 'Role'];
