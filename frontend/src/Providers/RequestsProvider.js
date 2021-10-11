@@ -15,10 +15,10 @@ const RequestsProvider = ({children, store}) => {
   const [load, setLoad] = useState(false);
 
 
-  const getRequests = async (projectId, limit = null, offset = null, other = {}) => {
+  const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
     setLoad(true)
     const queryPayload = {
-      ...other,
+      ...filters,
       limit: limit || localStorage.getItem('rowsPerPageRequests'),
       offset: offset || 0
     }

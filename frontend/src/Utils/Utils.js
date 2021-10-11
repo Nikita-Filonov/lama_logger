@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {CODES} from "./Constants";
 
 export const getProjectName = ({match}) => JSON.parse(localStorage.getItem('project'))?.title
 
@@ -10,22 +11,6 @@ export const getStatusCodeColor = (statusCode) => {
   } else if (400 <= statusCode && statusCode <= 599) {
     return '#E40F08'
   }
-}
-
-export const successesByStatusCode = (statusCode, successes) => {
-  if (100 <= statusCode && statusCode <= 299) {
-    return successes.includes('success');
-  }
-
-  if (300 <= statusCode && statusCode <= 399) {
-    return successes.includes('redirect');
-  }
-
-  if (400 <= statusCode && statusCode <= 599) {
-    return successes.includes('error');
-  }
-
-  return false;
 }
 
 export const bodyTypeDetect = (responseHeaders, body = null) => {
@@ -84,6 +69,15 @@ export function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+export const makeRequestsFilters = (filters) => {
+  const codesRange = filters.codes.map(success => CODES[success]).flat()
+  return {
+    filters: JSON.stringify({
+      method__in: filters.methods,
+      response_code__in: codesRange
+    })
+  }
+}
 
 export const objectToQuery = async (object, ignore = ['meta']) =>
   object && '?' + Object.keys(object)

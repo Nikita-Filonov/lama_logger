@@ -1,6 +1,6 @@
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import {Paper, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
-import {getComparator, stableSort, successesByStatusCode} from "../../../../Utils/Utils";
+import {getComparator, stableSort} from "../../../../Utils/Utils";
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import RequestRow from "../../../Items/Reuqests/RequestRow";
 import RequestsTableHeader from "./RequestsTableHeader";
@@ -9,16 +9,11 @@ import {setRequestsPagination} from "../../../../Redux/Requests/requestsActions"
 
 
 const RequestsTable = (props) => {
-  const {requests, requestsFilters, requestsPagination, setRequestsPagination} = props;
+  const {requests, requestsPagination, setRequestsPagination} = props;
   const classes = RequestsTableStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('method');
 
-  const filteredRequests = useMemo(
-    () => requests?.results.filter(r => requestsFilters.methods.includes(r.method) &&
-      successesByStatusCode(r.response_code, requestsFilters.successes)),
-    [requests, requestsFilters]
-  )
   const onRequestSort = (property) => (event) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -41,10 +36,9 @@ const RequestsTable = (props) => {
             order={order}
             orderBy={orderBy}
             onRequestSort={onRequestSort}
-            filteredRequests={filteredRequests}
           />
           <TableBody>
-            {stableSort(filteredRequests, getComparator(order, orderBy))
+            {stableSort(requests?.results, getComparator(order, orderBy))
               .map(r => <RequestRow request={r} key={r.request_id}/>)}
           </TableBody>
 
@@ -70,7 +64,6 @@ const RequestsTable = (props) => {
 
 const getState = (state) => ({
   requests: state.requests.requests,
-  requestsFilters: state.requests.requestsFilters,
   requestsPagination: state.requests.requestsPagination
 })
 

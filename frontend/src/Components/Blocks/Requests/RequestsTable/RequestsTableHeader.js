@@ -24,12 +24,12 @@ const headCells = [
 ];
 
 const RequestsTableHeader = (props) => {
-  const {order, orderBy, onRequestSort, filteredRequests, selectedRequests, setSelectedRequests} = props;
+  const {order, orderBy, onRequestSort, requests, selectedRequests, setSelectedRequests} = props;
   const numSelected = useMemo(() => selectedRequests.length, [selectedRequests])
-  const rowCount = useMemo(() => filteredRequests.length, [filteredRequests])
+  const rowCount = useMemo(() => requests?.results?.length, [requests?.results])
 
   const onSelectAll = (event) => event.target.checked
-    ? setSelectedRequests(filteredRequests.map(r => r.request_id))
+    ? setSelectedRequests(requests?.results?.map(r => r.request_id))
     : setSelectedRequests([])
 
   return (
@@ -71,6 +71,7 @@ const RequestsTableHeader = (props) => {
 }
 
 const getState = (state) => ({
+  requests: state.requests.requests,
   selectedRequests: state.requests.selectedRequests
 })
 

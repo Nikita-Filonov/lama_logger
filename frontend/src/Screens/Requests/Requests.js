@@ -12,10 +12,11 @@ import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/R
 import RequestsSideFilters from "../../Components/Blocks/Requests/RequestsFilters/RequestsSideFilters";
 import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
 import {Container} from "@mui/material";
+import {makeRequestsFilters} from "../../Utils/Utils";
 
 
 const Requests = (props) => {
-  const {createRequest, selectedRequests, requestsPagination} = props;
+  const {createRequest, selectedRequests, requestsFilters, requestsPagination} = props;
   const {projectId} = useParams();
   const client = useRef(null);
   const {token} = useUsers()
@@ -37,10 +38,11 @@ const Requests = (props) => {
       token && await getRequests(
         projectId,
         requestsPagination.rowsPerPage,
-        requestsPagination.rowsPerPage * requestsPagination.page
+        requestsPagination.rowsPerPage * requestsPagination.page,
+        makeRequestsFilters(requestsFilters)
       )
     })()
-  }, [token, projectId, requestsPagination])
+  }, [token, projectId, requestsFilters, requestsPagination])
 
   const onRequest = async (message) => {
     const request = JSON.parse(message.data);
@@ -72,6 +74,7 @@ const Requests = (props) => {
 
 const getState = (state) => ({
   selectedRequests: state.requests.selectedRequests,
+  requestsFilters: state.requests.requestsFilters,
   requestsPagination: state.requests.requestsPagination
 })
 

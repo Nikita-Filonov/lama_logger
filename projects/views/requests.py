@@ -1,3 +1,5 @@
+import json
+
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from rest_framework import views, status
@@ -8,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from projects.helpers.utils import to_curl, query_to_dict
+from projects.helpers.utils import to_curl
 from projects.models import Project, Request
 from projects.serializers.requests import RequestsSerializer, RequestSerializer
 
@@ -22,7 +24,7 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
     IGNORE_FILERS = ['limit', 'count', 'offset']
 
     def get(self, request, project_id):
-        filters = query_to_dict(request.query_params, parse=True, ignore=self.IGNORE_FILERS)
+        filters = json.loads(request.query_params['filters'])
         project = Project.objects.get(id=project_id)
         requests = project.requests.filter(**filters).order_by('-created')
 
