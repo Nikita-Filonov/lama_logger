@@ -15,5 +15,6 @@ export const INITIAL_REQUESTS = {
   },
   selectedRequests: [],
   requestsFiltersSidebar: true,
-  requestsTimeFilterModal: false
+  requestsTimeFilterModal: false,
+  requestsRealtime: JSON.parse(localStorage.getItem('requestsRealtime'))
 }

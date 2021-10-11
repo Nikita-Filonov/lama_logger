@@ -135,4 +135,17 @@ export const ViewRequestStyles = makeStyles(theme => ({
   toolbarContainer: {
     padding: 10
   },
+  toolbarButtonsDivider: {
+    height: 40,
+    marginLeft: 10,
+    marginRight: 10
+  }
 }), {index: 1});
+
+export const RequestsToolbarStyles = {
+  buttonsDivider: {
+    height: 40,
+    marginLeft: 10,
+    marginRight: 10
+  }
+}

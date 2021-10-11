@@ -84,7 +84,7 @@ const getFilterInterval = ({amount, unit, prev}) => {
 export const makeRequestsFilters = (filters) => {
   const codes = filters?.successes?.map(success => CODES[success]).flat();
   const interval = getFilterInterval(filters?.interval);
-  console.log(interval)
+
   return {
     filters: JSON.stringify({
       method__in: filters?.methods,

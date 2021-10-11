@@ -7,6 +7,7 @@ import {
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
   SET_REQUESTS_PAGINATION,
+  SET_REQUESTS_REALTIME,
   SET_REQUESTS_TIME_FILTER_MODAL,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
@@ -49,6 +50,10 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requestsFiltersSidebar: action.payload}
     case SET_REQUESTS_TIME_FILTER_MODAL:
       return {...state, requestsTimeFilterModal: action.payload}
+    case SET_REQUESTS_REALTIME: {
+      localStorage.setItem('requestsRealtime', action.payload);
+      return {...state, requestsRealtime: action.payload}
+    }
     default:
       return state;
   }

@@ -2,9 +2,6 @@ import React, {useEffect, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import {createRequest} from "../../Redux/Requests/requestsActions";
-import {wsUri} from "../../Utils/Constants";
-import {w3cwebsocket as W3CWebSocket} from "websocket";
 import RequestsToolbar from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
 import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/RequestsTable";
@@ -16,22 +13,11 @@ import {makeRequestsFilters} from "../../Utils/Utils";
 
 
 const Requests = (props) => {
-  const {createRequest, selectedRequests, requestsFilters, requestsPagination} = props;
+  const {requestsRealtime, selectedRequests, requestsFilters, requestsPagination} = props;
   const {projectId} = useParams();
-  const client = useRef(null);
-  const {token} = useUsers()
-  const {getRequests} = useRequests()
-
-  useEffect(() => {
-    (async () => {
-      client.current = await new W3CWebSocket(wsUri + `projects/${projectId}/requests/`);
-      client.current.onmessage = await onRequest
-
-      return () => {
-        client.current.close()
-      }
-    })()
-  }, [projectId])
+  const requestsInterval = useRef(null);
+  const {token} = useUsers();
+  const {getRequests} = useRequests();
 
   useEffect(() => {
     (async () => {
@@ -44,10 +30,24 @@ const Requests = (props) => {
     })()
   }, [token, projectId, requestsFilters, requestsPagination])
 
-  const onRequest = async (message) => {
-    const request = JSON.parse(message.data);
-    createRequest(request)
-  }
+  useEffect(() => {
+    clearInterval(requestsInterval.current)
+
+    if (requestsRealtime && token) {
+      requestsInterval.current = setInterval(async () => {
+        await getRequests(
+          projectId,
+          requestsPagination.rowsPerPage,
+          requestsPagination.rowsPerPage * requestsPagination.page,
+          makeRequestsFilters(requestsFilters)
+        )
+      }, 10000);
+    }
+
+    return () => {
+      clearInterval(requestsInterval.current)
+    };
+  }, [token, projectId, requestsRealtime, requestsFilters, requestsPagination])
 
   return (
     <Container maxWidth={'xl'}>
@@ -75,12 +75,11 @@ const Requests = (props) => {
 const getState = (state) => ({
   selectedRequests: state.requests.selectedRequests,
   requestsFilters: state.requests.requestsFilters,
-  requestsPagination: state.requests.requestsPagination
+  requestsPagination: state.requests.requestsPagination,
+  requestsRealtime: state.requests.requestsRealtime
 })
 
 export default connect(
   getState,
-  {
-    createRequest
-  },
+  null,
 )(Requests);

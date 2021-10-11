@@ -23,7 +23,7 @@ const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests
       elevation={3}
       className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}
     >
-      <Typography>Selected {selectedRequests.length}</Typography>
+      <Typography sx={{marginLeft: 1}}>Selected {selectedRequests.length}</Typography>
       <div className={'flex-grow-1'}/>
       <Tooltip title={'Export selected requests'}>
         <IconButton className={'me-2'}>
