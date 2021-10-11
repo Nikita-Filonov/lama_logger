@@ -10,13 +10,14 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
 import {BarChart, Dvr, FlashOn, Http, PeopleOutline, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
 import {setRequest} from "../../../../Redux/Requests/requestsActions";
 
 const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   const history = useHistory();
+  const location = useLocation();
   const theme = useTheme();
   const baseRoute = `/projects/${project.id}`
 
@@ -38,13 +39,13 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
       </DrawerHeaderStyled>
       <Divider/>
       <List>
-        <ListItem button onClick={onProjects}>
+        <ListItem button onClick={onProjects} selected={location.pathname === '/projects'}>
           <ListItemIcon>
             <FormatListBulletedIcon/>
           </ListItemIcon>
           <ListItemText primary={'Projects'}/>
         </ListItem>
-        <ListItem button onClick={onRequests}>
+        <ListItem button onClick={onRequests} selected={/\/projects\/[0-9]+\/requests/.test(location.pathname)}>
           <ListItemIcon>
             <Http/>
           </ListItemIcon>
@@ -68,7 +69,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Stats'}/>
         </ListItem>
-        <ListItem button onClick={onSettings}>
+        <ListItem button onClick={onSettings} selected={/\/projects\/[0-9]+\/settings/.test(location.pathname)}>
           <ListItemIcon>
             <Settings/>
           </ListItemIcon>

@@ -58,6 +58,7 @@ const ProjectSelect = ({project, projects, setProject}) => {
           key={p.id}
           sx={{maxWidth: 300}}
           onClick={onSelectProject}
+          selected={project.id === p.id}
         >
           <Typography style={common.ellipsisText}>{p.title}</Typography>
           <div className={'flex-grow-1'}/>

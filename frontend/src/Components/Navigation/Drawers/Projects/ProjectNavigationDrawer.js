@@ -10,7 +10,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
 import {Api, Logout, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
 import {setRequest} from "../../../../Redux/Requests/requestsActions";
@@ -18,6 +18,7 @@ import {setRequest} from "../../../../Redux/Requests/requestsActions";
 const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
   const history = useHistory();
   const theme = useTheme();
+  const location = useLocation();
 
   const onProjects = () => {
     history.push('/projects')
@@ -33,7 +34,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
       </DrawerHeaderStyled>
       <Divider/>
       <List>
-        <ListItem button onClick={onProjects}>
+        <ListItem button onClick={onProjects} selected={location.pathname === '/projects'}>
           <ListItemIcon>
             <FormatListBulletedIcon/>
           </ListItemIcon>
