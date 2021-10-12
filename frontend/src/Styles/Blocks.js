@@ -147,5 +147,10 @@ export const RequestsToolbarStyles = {
     height: 40,
     marginLeft: 10,
     marginRight: 10
+  },
+  timeFiltersButton: {
+    maxWidth: 200,
+    width: 200,
+    justifyContent: 'flex-start'
   }
 }

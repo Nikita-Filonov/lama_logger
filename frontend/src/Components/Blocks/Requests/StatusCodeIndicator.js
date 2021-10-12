@@ -1,6 +1,6 @@
 import React from "react";
-import {getStatusCodeColor} from "../../../Utils/Utils";
 import {Circle} from "@mui/icons-material";
+import {getStatusCodeColor} from "../../../Utils/Untils/Formatters";
 
 
 export const StatusCodeIndicator = ({statusCode}) =>

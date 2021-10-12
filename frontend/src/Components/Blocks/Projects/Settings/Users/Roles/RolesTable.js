@@ -1,10 +1,10 @@
 import React, {useMemo, useState} from "react";
 import {Paper, Table, TableBody, TableContainer} from "@mui/material";
 import {connect} from "react-redux";
-import {getComparator, stableSort} from "../../../../../../Utils/Utils";
 import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
 import RoleRow from "../../../../../Items/Projects/Settings/Users/Roles/RoleRow";
 import RolesTableHeader from "./RolesTableHeader";
+import {getComparator, stableSort} from "../../../../../../Utils/Untils/Sorting";
 
 const RolesTable = ({project}) => {
   const classes = ProjectSettingsStyles();

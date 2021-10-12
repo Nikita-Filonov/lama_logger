@@ -85,8 +85,14 @@ const RequestsSideFilters = (props) => {
         </FormGroup>
         <Divider/>
         <Typography variant={'subtitle2'} className={'mt-2'}>Time</Typography>
-        <Button onClick={onRequestTimeFilter} size={'small'} startIcon={<AccessTime fontSize={'small'}/>}
-                color={'inherit'}>
+        <Button
+          onClick={onRequestTimeFilter}
+          size={'small'}
+          startIcon={<AccessTime fontSize={'small'}/>}
+          color={'inherit'}
+          fullWidth
+          className={'justify-content-start'}
+        >
           Time filters
         </Button>
         <Divider className={'mt-2'}/>

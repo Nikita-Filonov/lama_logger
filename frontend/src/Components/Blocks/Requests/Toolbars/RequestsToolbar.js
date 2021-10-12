@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {RequestsToolbarStyles, ViewRequestStyles} from "../../../../Styles/Blocks";
+import React, {useMemo, useState} from "react";
+import {common, RequestsToolbarStyles, ViewRequestStyles} from "../../../../Styles/Blocks";
 import clsx from "clsx";
 import RequestsMenu from "../../../Menus/Requests/RequestsMenu";
-import {Divider, IconButton, Paper, Tooltip} from "@mui/material";
+import {Divider, IconButton, Paper, Tooltip, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequestsRealtime, setRequestsTimeFilterModal} from "../../../../Redux/Requests/requestsActions";
 import {Search} from "../../Common/Search";
@@ -10,12 +10,15 @@ import ProjectSelect from "./ProjectSelect";
 import {AccessTime, PauseOutlined, PeopleOutline} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
+import {getTimeFiltersLabel} from "../../../../Utils/Untils/Formatters";
 
 
-const RequestsToolbar = ({setRequestsTimeFilterModal, requestsRealtime, setRequestsRealtime}) => {
+const RequestsToolbar = (props) => {
+  const {setRequestsTimeFilterModal, requestsFilters, requestsRealtime, setRequestsRealtime} = props;
   const classes = ViewRequestStyles();
   const [search, setSearch] = useState('')
 
+  const timeFiltersLabel = useMemo(() => getTimeFiltersLabel(requestsFilters?.time), [requestsFilters?.time])
   const onTimeFilters = () => setRequestsTimeFilterModal(true)
 
   return (
@@ -25,8 +28,9 @@ const RequestsToolbar = ({setRequestsTimeFilterModal, requestsRealtime, setReque
     >
       <ProjectSelect/>
       <Divider orientation={'vertical'} flexItem style={RequestsToolbarStyles.buttonsDivider}/>
-      <Button startIcon={<AccessTime/>} color={'inherit'} onClick={onTimeFilters}>
-        Time filters
+      <Button startIcon={<AccessTime/>} color={'inherit'} onClick={onTimeFilters}
+              style={RequestsToolbarStyles.timeFiltersButton}>
+        <Typography style={common.ellipsisText}>{timeFiltersLabel}</Typography>
       </Button>
       <Divider orientation={'vertical'} flexItem style={RequestsToolbarStyles.buttonsDivider}/>
       <Button startIcon={<PeopleOutline/>} color={'inherit'} onClick={onTimeFilters}>
@@ -50,6 +54,7 @@ const RequestsToolbar = ({setRequestsTimeFilterModal, requestsRealtime, setReque
 }
 
 const getState = (state) => ({
+  requestsFilters: state.requests.requestsFilters,
   requestsRealtime: state.requests.requestsRealtime,
 })
 

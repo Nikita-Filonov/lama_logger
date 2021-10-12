@@ -9,7 +9,7 @@ import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/R
 import RequestsSideFilters from "../../Components/Blocks/Requests/RequestsFilters/RequestsSideFilters";
 import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
 import {Container} from "@mui/material";
-import {makeRequestsFilters} from "../../Utils/Utils";
+import {makeRequestsFilters} from "../../Utils/Untils/Filters";
 
 
 const Requests = (props) => {

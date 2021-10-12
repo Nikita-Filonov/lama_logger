@@ -1,4 +1,4 @@
-import {getProjectName} from "./Utils";
+import {getProjectName} from "./Untils/Routing";
 
 export const baseUrl = 'http://localhost:8000/';
 export const wsUri = 'ws://localhost:8000/'
