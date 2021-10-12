@@ -24,6 +24,8 @@ import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
 import ThemeWrapper from "./Providers/ThemeWrapper";
 import {ProjectRoute} from "./Components/Navigation/Routes/Projects/ProjectRoute";
 import {RequestRoute} from "./Components/Navigation/Routes/Requests/RequestRoute";
+import {LocalizationProvider} from "@mui/lab";
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 
 const store = createStore(reducer);
@@ -48,19 +50,21 @@ const CustomRoute = () =>
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeWrapper>
-        <AlertsProvider>
-          <UsersProvider store={store}>
-            <ProjectsProvider store={store}>
-              <RequestsProvider store={store}>
-                <CustomRoute/>
-              </RequestsProvider>
-            </ProjectsProvider>
-          </UsersProvider>
-        </AlertsProvider>
-      </ThemeWrapper>
-    </Provider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Provider store={store}>
+        <ThemeWrapper>
+          <AlertsProvider>
+            <UsersProvider store={store}>
+              <ProjectsProvider store={store}>
+                <RequestsProvider store={store}>
+                  <CustomRoute/>
+                </RequestsProvider>
+              </ProjectsProvider>
+            </UsersProvider>
+          </AlertsProvider>
+        </ThemeWrapper>
+      </Provider>
+    </LocalizationProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

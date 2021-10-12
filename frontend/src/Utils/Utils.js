@@ -81,15 +81,16 @@ const getFilterInterval = ({amount, unit, prev}) => {
   return prev === 'prev' ? [formattedInterval, formattedNow] : [formattedNow, formattedInterval];
 }
 
+
 export const makeRequestsFilters = (filters) => {
   const codes = filters?.successes?.map(success => CODES[success]).flat();
-  const interval = getFilterInterval(filters?.interval);
 
   return {
     filters: JSON.stringify({
       method__in: filters?.methods,
       response_code__in: codes,
-      created__range: interval
+      created__range: filters?.time?.type === 'range'
+        ? filters?.time?.range : getFilterInterval(filters?.time?.interval)
     })
   }
 }

@@ -34,7 +34,11 @@ export const UNITS = [
 export const DEFAULT_REQUESTS_FILTERS = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   successes: ['success', 'redirect', 'error'],
-  interval: {amount: 5, unit: 'hours', prev: 'prev'}
+  time: {
+    type: 'interval',
+    interval: {amount: 5, unit: 'hours', prev: 'prev'},
+    range: {start: null, end: null}
+  }
 }
 export const REQUESTS_METHODS_FILTERS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 export const REQUESTS_SUCCESSES_FILTERS = [
