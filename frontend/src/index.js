@@ -26,6 +26,7 @@ import {ProjectRoute} from "./Components/Navigation/Routes/Projects/ProjectRoute
 import {RequestRoute} from "./Components/Navigation/Routes/Requests/RequestRoute";
 import {LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import {Stats} from "./Screens/Requests/Stats";
 
 
 const store = createStore(reducer);
@@ -37,6 +38,7 @@ const CustomRoute = () =>
       <Switch>
         <ProjectRoute exact path="/projects" component={Projects}/>
         <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
+        <RequestRoute exact path="/projects/:projectId/stats" component={Stats}/>
         <ProjectSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
         <ProjectSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
         <ProjectSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>

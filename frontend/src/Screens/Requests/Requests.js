@@ -2,14 +2,14 @@ import React, {useEffect, useRef} from "react";
 import {useRequests} from "../../Providers/RequestsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
-import RequestsToolbar from "../../Components/Blocks/Requests/Toolbars/RequestsToolbar";
+import RequestsToolbar from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
-import RequestsTable from "../../Components/Blocks/Requests/RequestsTable/RequestsTable";
-import RequestsToolbarSelected from "../../Components/Blocks/Requests/Toolbars/RequestsToolbarSelected";
-import RequestsSideFilters from "../../Components/Blocks/Requests/RequestsFilters/RequestsSideFilters";
+import RequestsTable from "../../Components/Blocks/Requests/Requests/RequestsTable/RequestsTable";
+import RequestsToolbarSelected from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbarSelected";
 import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
 import {Container} from "@mui/material";
 import {makeRequestsFilters} from "../../Utils/Untils/Filters";
+import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";
 
 
 const Requests = (props) => {

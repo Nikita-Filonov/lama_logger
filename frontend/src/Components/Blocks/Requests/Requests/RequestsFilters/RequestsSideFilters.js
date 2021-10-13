@@ -2,16 +2,16 @@ import React from "react";
 import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
+import clsx from "clsx";
+import {AccessTime, Close} from "@mui/icons-material";
+import {RequestsTableStyles} from "../../../../../Styles/Blocks";
+import {REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../../Utils/Constants";
+import {StatusCodeIndicator} from "../StatusCodeIndicator";
 import {
   setRequestsFilters,
   setRequestsFiltersSidebar,
   setRequestsTimeFilterModal
-} from "../../../../Redux/Requests/requestsActions";
-import {RequestsTableStyles} from "../../../../Styles/Blocks";
-import clsx from "clsx";
-import {StatusCodeIndicator} from "../StatusCodeIndicator";
-import {REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../Utils/Constants";
-import {AccessTime, Close} from "@mui/icons-material";
+} from "../../../../../Redux/Requests/requestsActions";
 
 const RequestsSideFilters = (props) => {
   const {

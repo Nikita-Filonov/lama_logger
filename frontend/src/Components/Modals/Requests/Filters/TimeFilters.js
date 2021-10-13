@@ -9,9 +9,9 @@ import {setRequestsFilters, setRequestsTimeFilterModal} from "../../../../Redux/
 import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import moment from "moment";
-import {CommonlyUsed} from "../../../Blocks/Requests/RequestsFilters/TimeFilters/CommonlyUsed";
-import {IntervalFilters} from "../../../Blocks/Requests/RequestsFilters/TimeFilters/IntervalFilters";
-import {RangeFilters} from "../../../Blocks/Requests/RequestsFilters/TimeFilters/RangeFilters";
+import {CommonlyUsed} from "../../../Blocks/Requests/Requests/RequestsFilters/TimeFilters/CommonlyUsed";
+import {IntervalFilters} from "../../../Blocks/Requests/Requests/RequestsFilters/TimeFilters/IntervalFilters";
+import {RangeFilters} from "../../../Blocks/Requests/Requests/RequestsFilters/TimeFilters/RangeFilters";
 
 
 const TimeFilters = (props) => {

@@ -2,12 +2,12 @@ import React, {useState} from "react";
 import {Button, Menu} from "@mui/material";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {setProject} from "../../../../Redux/Projects/projectActions";
+import {setProject} from "../../../../../Redux/Projects/projectActions";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import {common} from "../../../../Styles/Blocks";
+import {common} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import {Settings} from "@mui/icons-material";
 

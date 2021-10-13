@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
-import {BarChart, Dvr, FlashOn, Http, PeopleOutline, Settings} from "@mui/icons-material";
+import {BarChart, Dvr, FlashOn, Http, LibraryBooks, PeopleOutline, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
 import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
@@ -27,7 +27,8 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   }
 
   const onSettings = () => history.push(baseRoute + `/settings/general`)
-  const onRequests = () => history.push(baseRoute + '/requests')
+  const onRequests = () => history.push(baseRoute + '/requests');
+  const onStats = () => history.push(baseRoute + '/stats')
 
 
   return (
@@ -51,6 +52,12 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Requests'}/>
         </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <LibraryBooks/>
+          </ListItemIcon>
+          <ListItemText primary={'API Libraries'}/>
+        </ListItem>
         <ListItem button onClick={onProjects}>
           <ListItemIcon>
             <FlashOn/>
@@ -63,7 +70,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Tracks'}/>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={onStats} elected={/\/projects\/[0-9]+\/stats/.test(location.pathname)}>
           <ListItemIcon>
             <BarChart/>
           </ListItemIcon>

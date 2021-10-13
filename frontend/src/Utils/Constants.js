@@ -6,6 +6,7 @@ export const wsUri = 'ws://localhost:8000/'
 
 export const ROUTES = [
   {path: '/projects/:projectId', breadcrumb: getProjectName},
+  {path: '/projects/:projectId/stats', breadcrumb: 'Stats'},
   {path: '/projects/:projectId/requests', breadcrumb: 'Requests'},
   {path: '/projects/:projectId/settings', breadcrumb: 'Settings'},
   {path: '/projects/:projectId/settings/general', breadcrumb: 'General'},

@@ -1,11 +1,11 @@
 import React from "react";
 import {IconButton, Tooltip, Typography} from "@mui/material";
 import {connect} from "react-redux";
-import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import {ViewRequestStyles} from "../../../../../Styles/Blocks";
 import clsx from "clsx";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
-import {useRequests} from "../../../../Providers/RequestsProvider";
-import {setSelectedRequests} from "../../../../Redux/Requests/requestsActions";
+import {useRequests} from "../../../../../Providers/RequestsProvider";
+import {setSelectedRequests} from "../../../../../Redux/Requests/requestsActions";
 import {Delete} from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 

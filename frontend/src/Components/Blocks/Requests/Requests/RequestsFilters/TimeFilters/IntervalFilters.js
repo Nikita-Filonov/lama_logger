@@ -4,7 +4,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
-import {UNITS} from "../../../../../Utils/Constants";
+import {UNITS} from "../../../../../../Utils/Constants";
 
 export const IntervalFilters = ({prev, setPrev, amount, setAmount, unit, setUnit}) => {
   return (

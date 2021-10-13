@@ -1,13 +1,13 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {connect} from "react-redux";
 import {Checkbox, Collapse, TableCell, TableRow, Typography} from '@mui/material';
-import {StatusCodeIndicator} from "../../Blocks/Requests/StatusCodeIndicator";
+import {StatusCodeIndicator} from "../../Blocks/Requests/Requests/StatusCodeIndicator";
 import {useHistory} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../Styles/Blocks";
-import ViewRequest from "../../Blocks/Requests/ViewRequest/ViewReuqest";
+import ViewRequest from "../../Blocks/Requests/Requests/ViewRequest/ViewReuqest";
 import {setSelectedRequests} from "../../../Redux/Requests/requestsActions";
 
 const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) => {

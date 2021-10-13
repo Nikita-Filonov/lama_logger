@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {Paper, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
-import {RequestsTableStyles} from "../../../../Styles/Blocks";
-import RequestRow from "../../../Items/Reuqests/RequestRow";
+import {RequestsTableStyles} from "../../../../../Styles/Blocks";
+import RequestRow from "../../../../Items/Reuqests/RequestRow";
 import RequestsTableHeader from "./RequestsTableHeader";
 import {connect} from "react-redux";
-import {setRequestsPagination} from "../../../../Redux/Requests/requestsActions";
-import {getComparator, stableSort} from "../../../../Utils/Untils/Sorting";
+import {setRequestsPagination} from "../../../../../Redux/Requests/requestsActions";
+import {getComparator, stableSort} from "../../../../../Utils/Untils/Sorting";
 
 
 const RequestsTable = (props) => {
