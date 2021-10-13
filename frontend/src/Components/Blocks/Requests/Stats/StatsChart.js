@@ -222,7 +222,7 @@ export const StatsChart = () => {
 
   return (
     <Paper elevation={3} className={'mt-4'}>
-      <ResponsiveContainer width="99%" aspect={3}>
+      <ResponsiveContainer width="99%" aspect={3.5}>
         <LineChart
           width={window.innerWidth / 1.085}
           data={data}
@@ -233,8 +233,8 @@ export const StatsChart = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3"/>
-          <XAxis dataKey="name" tick={{fill: palette.text.primary}}/>
-          <YAxis tick={{fill: palette.text.primary}}/>
+          <XAxis dataKey="name" tick={{fill: palette.text.primary, fontSize: 14}}/>
+          <YAxis tick={{fill: palette.text.primary, fontSize: 14}}/>
           <Tooltip contentStyle={{
             backgroundColor: palette.mode === 'dark' ? '#3C3C3C' : '#FFFFFF',
             borderColor: palette.mode === 'dark' ? '#2B2B2B' : '#BDBDBD',

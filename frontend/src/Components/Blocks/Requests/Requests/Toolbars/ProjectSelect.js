@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Menu} from "@mui/material";
+import {Button, Menu, Tooltip} from "@mui/material";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {setProject} from "../../../../../Redux/Projects/projectActions";
@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import {common} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import {Settings} from "@mui/icons-material";
+import {generateProjectPath} from "../../../../../Utils/Untils/Routing";
 
 const ProjectSelect = ({project, projects, setProject}) => {
   const history = useHistory();
@@ -24,25 +25,28 @@ const ProjectSelect = ({project, projects, setProject}) => {
     }
 
     const selectedProject = projects.find(p => p.id === event.target.value)
-    setProject(selectedProject)
-    history.push(`/projects/${selectedProject.id}/requests`);
+    setProject(selectedProject);
+    const path = generateProjectPath(history.location.pathname, selectedProject.id)
+    history.push(path);
     onClose()
   }
 
   return (
     <React.Fragment>
-      <Button
-        id={'basic-button'}
-        color={'inherit'}
-        aria-controls="basic-menu"
-        aria-haspopup="true"
-        aria-expanded={menu ? 'true' : undefined}
-        onClick={onOpen}
-        startIcon={<FormatListBulletedIcon/>}
-        endIcon={<KeyboardArrowDownIcon/>}
-      >
-        <Typography style={{...common.ellipsisText, maxWidth: 150, width: 150}}>{project.title}</Typography>
-      </Button>
+      <Tooltip title={'Select project'}>
+        <Button
+          id={'basic-button'}
+          color={'inherit'}
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={menu ? 'true' : undefined}
+          onClick={onOpen}
+          startIcon={<FormatListBulletedIcon/>}
+          endIcon={<KeyboardArrowDownIcon/>}
+        >
+          <Typography style={{...common.ellipsisText, maxWidth: 150, width: 150}}>{project.title}</Typography>
+        </Button>
+      </Tooltip>
       <Menu
         id="basic-menu"
         anchorEl={menu}

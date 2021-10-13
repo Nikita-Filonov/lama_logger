@@ -1,20 +1,15 @@
 import React from "react";
 import {Container, Grid, Paper, Typography} from "@mui/material";
-import clsx from "clsx";
 import {ViewRequestStyles} from "../../Styles/Blocks";
 import {StatsChart} from "../../Components/Blocks/Requests/Stats/StatsChart";
+import {StatsToolbar} from "../../Components/Blocks/Requests/Stats/StatsToolbar";
 
 export const Stats = () => {
   const classes = ViewRequestStyles();
 
   return (
     <Container maxWidth={'xl'}>
-      <Paper
-        elevation={3}
-        className={clsx('mt-3 d-flex', classes.toolbarContainer)}
-      >
-      </Paper>
-
+      <StatsToolbar/>
       <Grid container spacing={2} className={'mt-3'}>
         <Grid item xs={4}>
           <Paper elevation={3} className={classes.toolbarContainer}>
