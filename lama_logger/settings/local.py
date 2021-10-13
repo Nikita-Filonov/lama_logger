@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'core.users.apps.UsersConfig',
     'core.projects.apps.ProjectsConfig',
     'core.stats.apps.StatsConfig',
-    'channels'
 ]
 
 MIDDLEWARE = [
@@ -82,7 +81,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lama_logger.wsgi.application'
-ASGI_APPLICATION = "lama_logger.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -96,15 +94,6 @@ DATABASES = {
         'HOST': 'lama_logger_db',
         'PORT': 5432,
     }
-}
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('lama_logger_redis', 6379)],
-        },
-    },
 }
 
 # Password validation

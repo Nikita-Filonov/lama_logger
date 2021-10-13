@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'core.users.apps.UsersConfig',
     'core.projects.apps.ProjectsConfig',
     'core.stats.apps.StatsConfig',
-    'channels'
 ]
 
 MIDDLEWARE = [
@@ -82,7 +81,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lama_logger.wsgi.application'
-ASGI_APPLICATION = 'lama_logger.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -97,14 +95,6 @@ DATABASES = {
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [os.environ.get('REDIS_URL')],
-        },
-    },
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

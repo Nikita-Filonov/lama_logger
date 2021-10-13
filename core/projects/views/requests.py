@@ -1,7 +1,5 @@
 import json
 
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes, throttle_classes
@@ -13,8 +11,7 @@ from rest_framework.throttling import UserRateThrottle
 from core.projects.helpers.utils import to_curl
 from core.projects.models import Project, Request
 from core.projects.serializers.requests import RequestsSerializer, RequestSerializer
-
-channel_layer = get_channel_layer()
+from core.stats.tracks.requests import track_request, track_requests
 
 
 class RequestsApi(views.APIView, LimitOffsetPagination):
@@ -40,11 +37,9 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
             created_request.user = request.user
             project.requests.add(created_request)
 
+            track_request(project, created_request, 'create')
+
             payload = RequestsSerializer(created_request, many=False).data
-
-            json_notification = {'type': 'send_request', 'payload': payload}
-            async_to_sync(channel_layer.group_send)(str(project.id), json_notification)
-
             return Response(payload, status=status.HTTP_201_CREATED)
 
         return Response(
@@ -59,8 +54,9 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
                 {'message': 'You should provide requests ids', 'level': 'danger'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        projects = Project.objects.get(id=project_id)
-        projects.requests.filter(request_id__in=requests).delete()
+        project = Project.objects.get(id=project_id)
+        track_requests(project, project.requests, 'delete')
+        project.requests.filter(request_id__in=requests).delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
