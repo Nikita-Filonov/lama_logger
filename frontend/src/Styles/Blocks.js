@@ -154,3 +154,13 @@ export const RequestsToolbarStyles = {
     justifyContent: 'flex-start'
   }
 }
+
+
+export const StatsChartStyles = {
+  lineChartMargin: {
+    top: 20,
+    right: 10,
+    left: 10,
+    bottom: 10
+  }
+}
