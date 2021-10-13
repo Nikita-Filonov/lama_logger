@@ -11,12 +11,12 @@ import os
 
 import django
 
-DEBUG = False
+DEBUG = True
 # DEBUG - False for production
 # True - for local development
 
 if DEBUG:
-    import projects.routing
+    import core.projects.routing
     from channels.auth import AuthMiddlewareStack
     from channels.routing import ProtocolTypeRouter, URLRouter
 
@@ -25,7 +25,7 @@ if DEBUG:
     application = ProtocolTypeRouter({
         "websocket": AuthMiddlewareStack(
             URLRouter(
-                projects.routing.websocket_urlpatterns
+                core.projects.routing.websocket_urlpatterns
             )
         ),
     })

@@ -5,10 +5,10 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from projects.models import Member, Project
-from projects.serializers.members import MemberSerializer
-from projects.serializers.projects import ProjectsSerializer
-from users.models import CustomUser
+from core.projects.models import Member, Project
+from core.projects.serializers.members import MemberSerializer
+from core.projects.serializers.projects import ProjectsSerializer
+from core.users.models import CustomUser
 
 
 class MembersApi(views.APIView):

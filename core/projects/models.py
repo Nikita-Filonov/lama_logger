@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 from django.utils import timezone
 
-from users.models import CustomUser
+from core.users.models import CustomUser
 
 
 class Role(models.Model):

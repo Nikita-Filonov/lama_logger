@@ -4,9 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from projects.models import Project, Role
-from projects.serializers.projects import ProjectsSerializer
-from projects.serializers.roles import RoleSerializer
+from core.projects.models import Project, Role
+from core.projects.serializers.projects import ProjectsSerializer
+from core.projects.serializers.roles import RoleSerializer
 
 
 class RolesApi(views.APIView):

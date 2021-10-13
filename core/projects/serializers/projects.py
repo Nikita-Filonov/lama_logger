@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from projects.models import Project, Member, Role
-from projects.permissions.roles import Admin, AccountManager, Editor, Viewer
-from projects.serializers.members import MembersSerializer
-from projects.serializers.roles import RolesSerializer
-from users.serializers.users import DefaultUserSerializer
+from core.projects.models import Project, Member, Role
+from core.projects.permissions.roles import Admin, AccountManager, Editor, Viewer
+from core.projects.serializers.members import MembersSerializer
+from core.projects.serializers.roles import RolesSerializer
+from core.users.serializers.users import DefaultUserSerializer
 
 
 class ProjectsSerializer(serializers.ModelSerializer):

@@ -4,9 +4,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from projects.helpers.utils import query_to_dict
-from projects.models import Project
-from projects.serializers.projects import ProjectsSerializer, ProjectSerializer
+from core.projects.helpers.utils import query_to_dict
+from core.projects.models import Project
+from core.projects.serializers.projects import ProjectsSerializer, ProjectSerializer
 
 
 class ProjectsApi(views.APIView):

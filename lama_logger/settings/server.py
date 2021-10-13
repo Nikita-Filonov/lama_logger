@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'users.apps.UsersConfig',
-    'projects.apps.ProjectsConfig',
+    'core.users.apps.UsersConfig',
+    'core.projects.apps.ProjectsConfig',
+    'core.stats.apps.StatsConfig',
     'channels'
 ]
 

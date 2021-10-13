@@ -1,4 +1,4 @@
-from projects.models import Project, Member, Role
+from core.projects.models import Project, Member, Role
 
 
 def filter_scopes(scopes, *args):

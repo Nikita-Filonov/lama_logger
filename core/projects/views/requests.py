@@ -10,9 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from projects.helpers.utils import to_curl
-from projects.models import Project, Request
-from projects.serializers.requests import RequestsSerializer, RequestSerializer
+from core.projects.helpers.utils import to_curl
+from core.projects.models import Project, Request
+from core.projects.serializers.requests import RequestsSerializer, RequestSerializer
 
 channel_layer = get_channel_layer()
 

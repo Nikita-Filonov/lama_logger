@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from projects.models import Member
-from projects.serializers.roles import RolesSerializer
-from users.serializers.users import DefaultUserSerializer
+from core.projects.models import Member
+from core.projects.serializers.roles import RolesSerializer
+from core.users.serializers.users import DefaultUserSerializer
 
 
 class MembersSerializer(serializers.ModelSerializer):

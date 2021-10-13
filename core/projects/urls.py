@@ -1,9 +1,9 @@
 from django.urls import path
 
-from projects.views.members import MemberApi, MembersApi
-from projects.views.projects import ProjectsApi, ProjectApi
-from projects.views.requests import RequestsApi, RequestApi, request_to_curl
-from projects.views.roles import RolesApi, RoleApi
+from core.projects.views.members import MemberApi, MembersApi
+from core.projects.views.projects import ProjectsApi, ProjectApi
+from core.projects.views.requests import RequestsApi, RequestApi, request_to_curl
+from core.projects.views.roles import RolesApi, RoleApi
 
 urlpatterns = [
     path('projects/', ProjectsApi.as_view(), name='projects'),
