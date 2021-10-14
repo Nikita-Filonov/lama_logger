@@ -18,7 +18,6 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
-    IGNORE_FILERS = ['limit', 'count', 'offset']
 
     def get(self, request, project_id):
         filters = json.loads(request.query_params['filters'])

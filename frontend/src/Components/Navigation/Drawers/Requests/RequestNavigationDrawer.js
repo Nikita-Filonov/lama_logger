@@ -70,7 +70,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Tracks'}/>
         </ListItem>
-        <ListItem button onClick={onStats} elected={/\/projects\/[0-9]+\/stats/.test(location.pathname)}>
+        <ListItem button onClick={onStats} selected={/\/projects\/[0-9]+\/stats/.test(location.pathname)}>
           <ListItemIcon>
             <BarChart/>
           </ListItemIcon>
