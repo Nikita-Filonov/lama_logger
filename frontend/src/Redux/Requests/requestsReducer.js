@@ -1,6 +1,5 @@
 import {INITIAL_REQUESTS} from './initialState';
 import {
-  CREATE_REQUEST,
   DELETE_REQUESTS,
   SET_REQUEST,
   SET_REQUESTS,
@@ -19,8 +18,6 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requests: action.payload}
     case SET_REQUEST:
       return {...state, request: action.payload}
-    case CREATE_REQUEST:
-      return {...state, requests: [action.payload, ...state.requests]}
     case SET_REQUESTS_FILTERS: {
       localStorage.setItem('requestsFilters', JSON.stringify(action.payload))
       return {...state, requestsFilters: action.payload};
@@ -29,8 +26,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requestsPagination: action.payload};
     }
     case DELETE_REQUESTS: {
-      const filteredRequests = state.requests.filter(r => !action.payload.includes(r.request_id))
-      return {...state, requests: [...filteredRequests]}
+      const filteredRequests = state.requests.results.filter(r => !action.payload.includes(r.request_id))
+      return {...state, requests: {...state.requests, results: filteredRequests}}
     }
     case SET_SELECTED_REQUESTS: {
       const {isSelected} = action.payload;

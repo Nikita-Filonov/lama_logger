@@ -54,8 +54,10 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
                 status=status.HTTP_400_BAD_REQUEST
             )
         project = Project.objects.get(id=project_id)
-        track_requests(project, project.requests, 'delete')
-        project.requests.filter(request_id__in=requests).delete()
+        requests = project.requests.filter(request_id__in=requests)
+
+        track_requests(project, requests, 'delete')
+        requests.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

@@ -1,231 +1,19 @@
 import React from "react";
-import {CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {Paper, useTheme} from "@mui/material";
 import {StatsChartStyles} from "../../../../Styles/Blocks";
-
-const data = [
-  {
-    name: "Page A",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2400
-  },
-  {
-    name: "Page B",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2210
-  },
-  {
-    name: "Page C",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2290
-  },
-  {
-    name: "Page D",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2000
-  },
-  {
-    name: "Page E",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2181
-  },
-  {
-    name: "Page F",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2500
-  },
-  {
-    name: "Page G",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2100
-  },
-  {
-    name: "Page A",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2400
-  },
-  {
-    name: "Page B",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2210
-  },
-  {
-    name: "Page C",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2290
-  },
-  {
-    name: "Page D",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2000
-  },
-  {
-    name: "Page E",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2181
-  },
-  {
-    name: "Page F",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2500
-  },
-  {
-    name: "Page G",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2100
-  },
-  {
-    name: "Page A",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2400
-  },
-  {
-    name: "Page B",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2210
-  },
-  {
-    name: "Page C",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2290
-  },
-  {
-    name: "Page D",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2000
-  },
-  {
-    name: "Page E",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2181
-  },
-  {
-    name: "Page F",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2500
-  },
-  {
-    name: "Page G",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2100
-  },
-  {
-    name: "Page A",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2400
-  },
-  {
-    name: "Page B",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2210
-  },
-  {
-    name: "Page C",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2290
-  },
-  {
-    name: "Page D",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2000
-  },
-  {
-    name: "Page E",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2181
-  },
-  {
-    name: "Page F",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2500
-  },
-  {
-    name: "Page G",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2100
-  },
-  {
-    name: "Page A",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2400
-  },
-  {
-    name: "Page B",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2210
-  },
-  {
-    name: "Page C",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2290
-  },
-  {
-    name: "Page D",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2000
-  },
-  {
-    name: "Page E",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2181
-  },
-  {
-    name: "Page F",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2500
-  },
-  {
-    name: "Page G",
-    Deleted: 4000,
-    Removed: 2400,
-    amt: 2100
-  }
-];
-
+import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
 
 export const StatsChart = () => {
   const {palette} = useTheme();
+  const {requestsStats} = useRequestsStats();
 
   return (
     <Paper elevation={3} className={'mt-4'}>
       <ResponsiveContainer width="99%" aspect={3.5}>
-        <LineChart
+        <BarChart
           width={window.innerWidth / 1.085}
-          data={data}
+          data={requestsStats?.data}
           margin={StatsChartStyles.lineChartMargin}
           style={{
             backgroundColor: palette.mode === 'dark' ? '#3C3C3C' : '#FFFFFF',
@@ -241,14 +29,10 @@ export const StatsChart = () => {
             borderRadius: 3,
           }}/>
           <Legend/>
-          <Line
-            type="monotone"
-            dataKey="Deleted"
-            stroke="#8884d8"
-            activeDot={{r: 8}}
-          />
-          <Line type="monotone" dataKey="Filtered" stroke="#82ca9d"/>
-        </LineChart>
+          <Bar dataKey="Create" stackId="Create" fill="#8884d8"/>
+          <Bar dataKey="Delete" stackId="Create" fill="#82ca9d"/>
+          <Bar dataKey="Filter" stackId="Create" fill="#FFEB67"/>
+        </BarChart>
       </ResponsiveContainer>
     </Paper>
   )

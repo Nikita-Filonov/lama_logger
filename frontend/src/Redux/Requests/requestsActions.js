@@ -1,5 +1,4 @@
 import {
-  CREATE_REQUEST,
   SET_REQUEST,
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
@@ -12,12 +11,6 @@ import {
 
 export const setRequest = (state) => ({
   type: SET_REQUEST,
-  payload: state
-})
-
-
-export const createRequest = (state) => ({
-  type: CREATE_REQUEST,
   payload: state
 })
 

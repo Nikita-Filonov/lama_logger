@@ -13,9 +13,9 @@ const RequestsStatsProvider = ({children}) => {
   const [requestsStats, setRequestsStats] = useState({})
 
 
-  const getRequestsStats = async (projectId, groupBy = null, filters = {}) => {
+  const getRequestsStats = async (projectId, groupBy = 'hours', filters = {}) => {
     setLoad(true)
-    const query = await objectToQuery({...filters, groupBy: groupBy || 'hours'});
+    const query = await objectToQuery({...filters, groupBy});
     await fetch(projectsApi + `${projectId}/requests/stats/${query}`, {
       headers: {
         'Authorization': `Token ${token}`,

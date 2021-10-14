@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.stats.helper.utils import by_hours, by_days, filter_action
+from core.stats.helper.utils import by_hours, by_days, to_stats_payload
 from core.stats.models import RequestStat
 
 group_types = {
@@ -39,9 +39,7 @@ def get_requests_stats(request, project_id):
     grouped_stats_payload = [
         {
             'name': created.strftime(group_type['format']),
-            'Created': filter_action('create', grouped_stats),
-            'Delete': filter_action('delete', grouped_stats),
-            'Filter': filter_action('filter', grouped_stats),
+            **to_stats_payload(grouped_stats)
         }
         for created, grouped_stats in groupby(requests_stats, key=group_type['func'])
     ]
