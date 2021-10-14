@@ -10,6 +10,7 @@ import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
 import {Container} from "@mui/material";
 import {makeRequestsFilters} from "../../Utils/Untils/Filters";
 import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";
+import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/RequestsTableSkeletons";
 
 
 const Requests = (props) => {
@@ -17,7 +18,7 @@ const Requests = (props) => {
   const {projectId} = useParams();
   const requestsInterval = useRef(null);
   const {token} = useUsers();
-  const {getRequests} = useRequests();
+  const {load, getRequests} = useRequests();
 
   useEffect(() => {
     (async () => {
@@ -54,7 +55,7 @@ const Requests = (props) => {
       {selectedRequests.length > 0 ? <RequestsToolbarSelected/> : <RequestsToolbar/>}
       <div className={'d-flex mt-3'}>
         <RequestsSideFilters/>
-        <RequestsTable/>
+        {load ? <RequestsTableSkeletons/> : <RequestsTable/>}
       </div>
 
       {/*<Grid container spacing={4} className={'mt-3'}>*/}
