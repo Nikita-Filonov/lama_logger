@@ -160,7 +160,7 @@ export const StatsChartStyles = {
   lineChartMargin: {
     top: 20,
     right: 10,
-    left: 10,
+    left: 0,
     bottom: 10
   }
 }

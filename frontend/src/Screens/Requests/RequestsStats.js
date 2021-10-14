@@ -6,11 +6,14 @@ import {StatsToolbar} from "../../Components/Blocks/Requests/Stats/StatsToolbar"
 import {useRequestsStats} from "../../Providers/Requests/RequestsStatsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/UsersProvider";
+import {Skeleton} from "@mui/lab";
+import {useSettings} from "../../Providers/SettingsProvider";
 
 const RequestsStats = ({project}) => {
   const classes = ViewRequestStyles();
   const {token} = useUsers();
-  const {requestsStats, getRequestsStats} = useRequestsStats();
+  const {settings} = useSettings();
+  const {load, requestsStats, getRequestsStats} = useRequestsStats();
 
   useEffect(() => {
     (async () => token && await getRequestsStats(project.id))()
@@ -23,19 +26,25 @@ const RequestsStats = ({project}) => {
         <Grid item xs={4}>
           <Paper elevation={3} className={classes.toolbarContainer}>
             <Typography>Total requests</Typography>
-            <Typography className={'mt-2'} variant={'h5'}>{requestsStats?.create}</Typography>
+            <Typography className={'mt-2'} variant={'h5'}>
+              {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.create}
+            </Typography>
           </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper elevation={3} className={classes.toolbarContainer}>
             <Typography>Removed</Typography>
-            <Typography className={'mt-2'} variant={'h5'}>{requestsStats?.delete}</Typography>
+            <Typography className={'mt-2'} variant={'h5'}>
+              {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.delete}
+            </Typography>
           </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper elevation={3} className={classes.toolbarContainer}>
             <Typography>Filtered</Typography>
-            <Typography className={'mt-2'} variant={'h5'}>{requestsStats?.filter}</Typography>
+            <Typography className={'mt-2'} variant={'h5'}>
+              {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.filter}
+            </Typography>
           </Paper>
         </Grid>
       </Grid>

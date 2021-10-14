@@ -20,6 +20,7 @@ import {LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import RequestsRoutes from "./Components/Navigation/Routes/Requests/RequestsRoutes";
 import ProjectRoutes from "./Components/Navigation/Routes/Projects/ProjectRoutes";
+import {SettingsProvider} from "./Providers/SettingsProvider";
 
 
 const store = createStore(reducer);
@@ -42,15 +43,17 @@ ReactDOM.render(
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Provider store={store}>
         <ThemeWrapper>
-          <AlertsProvider>
-            <UsersProvider store={store}>
-              <ProjectsProvider store={store}>
-                <RequestsProvider store={store}>
-                  <CustomRoute/>
-                </RequestsProvider>
-              </ProjectsProvider>
-            </UsersProvider>
-          </AlertsProvider>
+          <SettingsProvider>
+            <AlertsProvider>
+              <UsersProvider store={store}>
+                <ProjectsProvider store={store}>
+                  <RequestsProvider store={store}>
+                    <CustomRoute/>
+                  </RequestsProvider>
+                </ProjectsProvider>
+              </UsersProvider>
+            </AlertsProvider>
+          </SettingsProvider>
         </ThemeWrapper>
       </Provider>
     </LocalizationProvider>
