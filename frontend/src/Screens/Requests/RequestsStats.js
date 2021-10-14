@@ -4,7 +4,7 @@ import {ViewRequestStyles} from "../../Styles/Blocks";
 import {StatsChart} from "../../Components/Blocks/Requests/Stats/StatsChart";
 import {StatsToolbar} from "../../Components/Blocks/Requests/Stats/StatsToolbar";
 
-export const Stats = () => {
+export const RequestsStats = () => {
   const classes = ViewRequestStyles();
 
   return (

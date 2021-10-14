@@ -4,11 +4,11 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
 import {useHistory} from "react-router-dom";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import {ROUTES} from "../../Utils/Constants";
+import {BREADCRUMB_ROUTES} from "../../Utils/Constants";
 
 
 export const NavigationBreadcrumbs = () => {
-  const breadcrumbs = useBreadcrumbs(ROUTES);
+  const breadcrumbs = useBreadcrumbs(BREADCRUMB_ROUTES);
   const history = useHistory();
 
   const onLink = (url) => history.push(url)

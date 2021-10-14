@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
-import {baseUrl} from "../Utils/Constants";
-import {useUsers} from "./UsersProvider";
-import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../Redux/Requests/actionTypes";
-import {useAlerts} from "./AlertsProvider";
-import {copyText, objectToQuery} from "../Utils/Untils/Common";
+import {baseUrl} from "../../Utils/Constants";
+import {useUsers} from "../UsersProvider";
+import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../../Redux/Requests/actionTypes";
+import {useAlerts} from "../AlertsProvider";
+import {copyText, objectToQuery} from "../../Utils/Untils/Common";
 
 
 const RequestsContext = React.createContext(null);

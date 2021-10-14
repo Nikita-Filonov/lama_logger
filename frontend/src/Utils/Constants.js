@@ -1,10 +1,9 @@
 import {getProjectName} from "./Untils/Routing";
 
 export const baseUrl = 'http://localhost:8000/';
-export const wsUri = 'ws://localhost:8000/'
 
 
-export const ROUTES = [
+export const BREADCRUMB_ROUTES = [
   {path: '/projects/:projectId', breadcrumb: getProjectName},
   {path: '/projects/:projectId/stats', breadcrumb: 'Stats'},
   {path: '/projects/:projectId/requests', breadcrumb: 'Requests'},

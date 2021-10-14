@@ -10,23 +10,16 @@ import reducer from './Redux/Reducers';
 import {createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider} from "./Providers/UsersProvider";
-import Projects from "./Screens/Projects/Projects";
 import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
-import Requests from "./Screens/Requests/Requests";
-import {RequestsProvider} from "./Providers/RequestsProvider";
+import {RequestsProvider} from "./Providers/Requests/RequestsProvider";
 import {AlertsProvider} from "./Providers/AlertsProvider";
-import ProjectSettingsGeneral from "./Screens/Projects/Settings/General/ProjectSettingsGeneral";
-import {ProjectSettingsRoute} from "./Components/Navigation/Routes/Projects/ProjectSettingsRoute";
-import ProjectSettingsMembers from "./Screens/Projects/Settings/Users/ProjectSettingsMembers";
-import ProjectSettingsRoles from "./Screens/Projects/Settings/Users/ProjectSettingsRoles";
 import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
 import ThemeWrapper from "./Providers/ThemeWrapper";
-import {ProjectRoute} from "./Components/Navigation/Routes/Projects/ProjectRoute";
-import {RequestRoute} from "./Components/Navigation/Routes/Requests/RequestRoute";
 import {LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import {Stats} from "./Screens/Requests/Stats";
+import RequestsRoutes from "./Components/Navigation/Routes/Requests/RequestsRoutes";
+import ProjectRoutes from "./Components/Navigation/Routes/Projects/ProjectRoutes";
 
 
 const store = createStore(reducer);
@@ -36,14 +29,8 @@ const CustomRoute = () =>
   <Router>
     <div className={'d-flex'}>
       <Switch>
-        <ProjectRoute exact path="/projects" component={Projects}/>
-        <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
-        <RequestRoute exact path="/projects/:projectId/stats" component={Stats}/>
-        <ProjectSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
-        <ProjectSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
-        <ProjectSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
-        <ProjectSettingsRoute exact path="/projects/:projectId/settings/integrations"
-                              component={ProjectSettingsRoles}/>
+        {ProjectRoutes}
+        {RequestsRoutes}
         <PublicRoute exact path="/login" component={Login}/>
       </Switch>
       <ConfirmAction/>

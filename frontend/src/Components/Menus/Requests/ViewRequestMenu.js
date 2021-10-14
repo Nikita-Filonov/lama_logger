@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {ContentCopy, DeleteOutline, InsertLink, MoreVert, Send} from "@mui/icons-material";
 import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../Styles/Menus";
-import {useRequests} from "../../../Providers/RequestsProvider";
+import {useRequests} from "../../../Providers/Requests/RequestsProvider";
 import {connect} from "react-redux";
 import {useAlerts} from "../../../Providers/AlertsProvider";
 import {CopyToClipboard} from 'react-copy-to-clipboard';

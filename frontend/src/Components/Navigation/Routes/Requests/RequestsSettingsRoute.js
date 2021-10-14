@@ -7,7 +7,7 @@ import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import NavigationBar from "../../NavigationBar";
 import RequestNavigationDrawer from "../../Drawers/Requests/RequestNavigationDrawer";
 
-export const ProjectSettingsRoute = ({component: Component, ...rest}) => {
+export const RequestsSettingsRoute = ({component: Component, ...rest}) => {
   const classes = ViewRequestStyles()
   const token = localStorage.getItem('token');
   const project = localStorage.getItem('project');

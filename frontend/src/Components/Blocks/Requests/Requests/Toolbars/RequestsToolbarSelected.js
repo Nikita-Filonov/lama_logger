@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {ViewRequestStyles} from "../../../../../Styles/Blocks";
 import clsx from "clsx";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
-import {useRequests} from "../../../../../Providers/RequestsProvider";
+import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
 import {setSelectedRequests} from "../../../../../Redux/Requests/requestsActions";
 import {Delete} from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
