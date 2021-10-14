@@ -6,7 +6,7 @@ import RequestsToolbar from "../../Components/Blocks/Requests/Requests/Toolbars/
 import {useParams} from "react-router-dom";
 import RequestsTable from "../../Components/Blocks/Requests/Requests/RequestsTable/RequestsTable";
 import RequestsToolbarSelected from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbarSelected";
-import TimeFilters from "../../Components/Modals/Requests/Filters/TimeFilters";
+import TimeFilters from "../../Components/Modals/Requests/Requests/Filters/TimeFilters";
 import {Container} from "@mui/material";
 import {makeRequestsFilters} from "../../Utils/Untils/Filters";
 import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";

@@ -45,6 +45,7 @@ def get_requests_stats(request, project_id):
     ]
 
     payload = {
+        'total': requests_stats.count(),
         'create': create_count,
         'delete': delete_count,
         'filter': filter_count,
