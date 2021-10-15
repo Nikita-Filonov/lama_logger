@@ -84,6 +84,12 @@ const ProjectSettingsSidebar = ({project}) => {
           <List disablePadding>
             <ListItemLink
               sx={{pl: 4}}
+              to={`/projects/${project.id}/settings/inbound`}
+              title={'Inbound data filters'}
+              selected={route.endsWith('/settings/inbound')}
+            />
+            <ListItemLink
+              sx={{pl: 4}}
               to={`/projects/${project.id}/settings/members`}
               title={'Filters'}
               selected={route.endsWith('/settings/members')}

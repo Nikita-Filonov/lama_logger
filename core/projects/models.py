@@ -165,10 +165,16 @@ class Project(models.Model):
 
 
 class ProjectSettings(models.Model):
+    DEFAULT_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     project = models.ForeignKey(
         Project,
         verbose_name='Project',
         on_delete=models.CASCADE
+    )
+    filter_methods = models.JSONField(
+        verbose_name='Filter methods',
+        default=DEFAULT_METHODS,
+        blank=True
     )
     exclude_methods = models.JSONField(
         verbose_name='Exclude methods',

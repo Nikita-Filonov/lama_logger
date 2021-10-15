@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import {UserOption} from "../../../../Components/Items/Common/UserOption";
 import {useProjects} from "../../../../Providers/ProjectsProvider";
 import Box from "@mui/material/Box";
-import {ButtonSpinner} from "../../../../Components/Blocks/Common/ButtonSpiner";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {useAlerts} from "../../../../Providers/AlertsProvider";
@@ -13,6 +12,7 @@ import {removeProject} from "../../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
 import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
+import {LoadingButton} from "@mui/lab";
 
 
 const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
@@ -105,15 +105,16 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
-          <Button
+          <LoadingButton
             onClick={onSave}
+            loading={request}
+            loadingPosition="start"
             startIcon={<SaveOutlined/>}
+            disabled={disabled}
             variant="text"
-            disabled={disabled || request}
           >
             Save changes
-            {request && <ButtonSpinner/>}
-          </Button>
+          </LoadingButton>
         </Box>
       </Grid>
       <Grid item xs={12} className={'mt-3'}>

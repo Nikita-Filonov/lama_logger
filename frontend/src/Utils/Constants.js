@@ -11,6 +11,7 @@ export const BREADCRUMB_ROUTES = [
   {path: '/projects/:projectId/settings/general', breadcrumb: 'General'},
   {path: '/projects/:projectId/settings/members', breadcrumb: 'Members'},
   {path: '/projects/:projectId/settings/roles', breadcrumb: 'Roles'},
+  {path: '/projects/:projectId/settings/inbound', breadcrumb: 'Inbound Data'},
   {path: '/projects', breadcrumb: 'Projects'},
 ];
 
