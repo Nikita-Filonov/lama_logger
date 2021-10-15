@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {RangeFilters} from "../../../Blocks/Requests/Requests/RequestsFilters/TimeFilters/RangeFilters";
 import {DialogContentText} from "@mui/material";
 import {connect} from "react-redux";
-import {setRequestsStatsFilters} from "../../../../Redux/Requests/requestsActions";
+import {setRequestsStatsFilters} from "../../../../Redux/Requests/Requests/requestsActions";
 
 
 const StatsTimeFilters = ({modal, setModal, requestsStatsFilters, setRequestsStatsFilters}) => {

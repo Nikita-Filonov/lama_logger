@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import {Checkbox, TableCell, TableHead, TableRow, TableSortLabel} from '@mui/material';
 import {visuallyHidden} from "@mui/utils";
 import {connect} from "react-redux";
-import {setSelectedRoles} from "../../../../../../Redux/Projects/projectActions";
+import {setSelectedRoles} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 const headCells = [
   {
@@ -67,7 +67,7 @@ const RolesTableHeader = (props) => {
 }
 
 export const getState = (state) => ({
-  selectedRoles: state.projects.selectedRoles,
+  selectedRoles: state.requestsSettings.selectedRoles,
 })
 
 export default connect(

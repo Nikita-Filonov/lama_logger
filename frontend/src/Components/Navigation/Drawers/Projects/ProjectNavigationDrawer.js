@@ -13,7 +13,7 @@ import {useTheme} from "@mui/material/styles";
 import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
-import {setRequest} from "../../../../Redux/Requests/requestsActions";
+import {setRequest} from "../../../../Redux/Requests/Requests/requestsActions";
 
 const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
   const history = useHistory();

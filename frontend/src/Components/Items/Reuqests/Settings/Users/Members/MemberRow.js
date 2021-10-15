@@ -1,10 +1,10 @@
 import React, {useMemo} from "react";
 import {connect} from "react-redux";
 import {Button, Checkbox, TableCell, TableRow} from '@mui/material';
-import {setSelectedMembers} from "../../../../../../Redux/Projects/projectActions";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
 import RolesSelect from "../../../../../Blocks/Requests/Settings/Users/Members/RolesSelect";
+import {setSelectedMembers} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 
 const MemberRow = (props) => {
@@ -55,7 +55,7 @@ const MemberRow = (props) => {
 
 const getState = (state) => ({
   project: state.projects.project,
-  selectedMembers: state.projects.selectedMembers,
+  selectedMembers: state.requestsSettings.selectedMembers,
 })
 
 export default connect(

@@ -4,9 +4,9 @@ import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import MembersTable from "../../../../Components/Blocks/Requests/Settings/Users/Members/MembersTable";
 import InviteMember from "../../../../Components/Modals/Requests/Settings/Users/InviteMember";
 import {connect} from "react-redux";
-import {setInviteMemberModal} from "../../../../Redux/Projects/projectActions";
 import {MembersHeader} from "../../../../Components/Blocks/Requests/Settings/Users/Members/MembersHeader";
 import MembersToolbar from "../../../../Components/Blocks/Requests/Settings/Users/Members/MembersToolbar";
+import {setInviteMemberModal} from "../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 const ProjectSettingsMembers = ({setInviteMemberModal, selectedMembers}) => {
   const classes = ProjectSettingsStyles();
@@ -23,7 +23,7 @@ const ProjectSettingsMembers = ({setInviteMemberModal, selectedMembers}) => {
 }
 
 const getState = (state) => ({
-  selectedMembers: state.projects.selectedMembers
+  selectedMembers: state.requestsSettings.selectedMembers
 })
 
 export default connect(

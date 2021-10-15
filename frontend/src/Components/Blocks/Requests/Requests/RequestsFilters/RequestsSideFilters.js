@@ -11,7 +11,7 @@ import {
   setRequestsFilters,
   setRequestsFiltersSidebar,
   setRequestsTimeFilterModal
-} from "../../../../../Redux/Requests/requestsActions";
+} from "../../../../../Redux/Requests/Requests/requestsActions";
 
 const RequestsSideFilters = (props) => {
   const {

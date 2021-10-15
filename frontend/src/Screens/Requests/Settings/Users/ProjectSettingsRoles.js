@@ -4,8 +4,8 @@ import {RolesHeader} from "../../../../Components/Blocks/Requests/Settings/Users
 import RolesTable from "../../../../Components/Blocks/Requests/Settings/Users/Roles/RolesTable";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateRole from "../../../../Components/Modals/Requests/Settings/Users/Roles/CreateRole";
-import {setCreateRoleModal} from "../../../../Redux/Projects/projectActions";
 import {connect} from "react-redux";
+import {setCreateRoleModal} from "../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 const ProjectSettingsRoles = ({setCreateRoleModal}) => {
   const classes = ProjectSettingsStyles();

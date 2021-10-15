@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import ViewRequest from "../../../Blocks/Requests/Requests/ViewRequest/ViewReuqest";
-import {setSelectedRequests} from "../../../../Redux/Requests/requestsActions";
+import {setSelectedRequests} from "../../../../Redux/Requests/Requests/requestsActions";
 
 const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) => {
   const classes = RequestsTableStyles()

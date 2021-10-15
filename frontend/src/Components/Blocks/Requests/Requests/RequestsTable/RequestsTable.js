@@ -4,7 +4,7 @@ import {RequestsTableStyles} from "../../../../../Styles/Blocks";
 import RequestRow from "../../../../Items/Reuqests/Requests/RequestRow";
 import RequestsTableHeader from "./RequestsTableHeader";
 import {connect} from "react-redux";
-import {setRequestsPagination} from "../../../../../Redux/Requests/requestsActions";
+import {setRequestsPagination} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {getComparator, stableSort} from "../../../../../Utils/Untils/Sorting";
 
 

@@ -1,4 +1,4 @@
-import {DEFAULT_REQUESTS_FILTERS} from "../../Utils/Constants";
+import {DEFAULT_REQUESTS_FILTERS} from "../../../Utils/Constants";
 
 export const INITIAL_REQUESTS = {
   request: {},

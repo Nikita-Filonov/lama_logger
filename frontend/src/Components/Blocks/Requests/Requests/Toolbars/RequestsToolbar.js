@@ -4,7 +4,7 @@ import clsx from "clsx";
 import RequestsMenu from "../../../../Menus/Requests/Requests/RequestsMenu";
 import {Divider, IconButton, Paper, Tooltip, Typography} from "@mui/material";
 import {connect} from "react-redux";
-import {setRequestsRealtime, setRequestsTimeFilterModal} from "../../../../../Redux/Requests/requestsActions";
+import {setRequestsRealtime, setRequestsTimeFilterModal} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {Search} from "../../../Common/Search";
 import ProjectSelect from "./ProjectSelect";
 import {AccessTime, PauseOutlined, PeopleOutline} from "@mui/icons-material";

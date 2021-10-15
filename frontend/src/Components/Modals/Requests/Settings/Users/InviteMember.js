@@ -12,11 +12,11 @@ import {
   TextField
 } from '@mui/material';
 import {connect} from "react-redux";
-import {setInviteMemberModal} from "../../../../../Redux/Projects/projectActions";
 import FormControl from "@mui/material/FormControl";
 import {useProjects} from "../../../../../Providers/ProjectsProvider";
 import {ButtonSpinner} from "../../../../Blocks/Common/ButtonSpiner";
 import RolesSelect from "../../../../Blocks/Requests/Settings/Users/Members/RolesSelect";
+import {setInviteMemberModal} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 
 const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
@@ -83,7 +83,7 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
 
 const getState = (state) => ({
   project: state.projects.project,
-  inviteMemberModal: state.projects.inviteMemberModal,
+  inviteMemberModal: state.requestsSettings.inviteMemberModal,
 })
 
 export default connect(

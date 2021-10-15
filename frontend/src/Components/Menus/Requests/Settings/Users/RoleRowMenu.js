@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {CreateOutlined, Delete, MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {ProjectMenuStyles} from "../../../../../Styles/Menus";
-import {setCreateRoleModal, setRole} from "../../../../../Redux/Projects/projectActions";
+import {setCreateRoleModal, setRole} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
   const [menu, setMenu] = useState(null);

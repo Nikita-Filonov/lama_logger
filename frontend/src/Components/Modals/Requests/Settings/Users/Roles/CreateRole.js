@@ -14,15 +14,15 @@ import {connect} from "react-redux";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {ButtonSpinner} from "../../../../../Blocks/Common/ButtonSpiner";
 import {ScopesList} from "../../../../../Blocks/Requests/Settings/Users/Roles/ScopesList";
-import {setCreateRoleModal, setRole} from "../../../../../../Redux/Projects/projectActions";
-import {INITIAL_PROJECTS} from "../../../../../../Redux/Projects/initialState";
+import {setCreateRoleModal, setRole} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {INITIAL_REQUESTS_SETTINGS} from "../../../../../../Redux/Requests/Settings/initialState";
 
 
 const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal}) => {
   const {request, createRole, updateRole} = useProjects();
   const onClose = () => {
     setCreateRoleModal(false)
-    setRole(INITIAL_PROJECTS.role)
+    setRole(INITIAL_REQUESTS_SETTINGS.role)
   }
 
   const onSelectScope = (isSelected, permission) => isSelected
@@ -81,9 +81,9 @@ const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal
 
 
 const getState = (state) => ({
-  role: state.projects.role,
+  role: state.requestsSettings.role,
   project: state.projects.project,
-  createRoleModal: state.projects.createRoleModal,
+  createRoleModal: state.requestsSettings.createRoleModal,
 })
 
 export default connect(

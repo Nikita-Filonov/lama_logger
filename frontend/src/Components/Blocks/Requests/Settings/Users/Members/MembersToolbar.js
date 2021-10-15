@@ -7,7 +7,7 @@ import clsx from "clsx";
 import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
-import {setSelectedMembers} from "../../../../../../Redux/Projects/projectActions";
+import {setSelectedMembers} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelectedMembers}) => {
   const classes = ProjectSettingsStyles();
@@ -39,7 +39,7 @@ const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelected
 
 const getState = (state) => ({
   project: state.projects.project,
-  selectedMembers: state.projects.selectedMembers
+  selectedMembers: state.requestsSettings.selectedMembers
 })
 
 export default connect(
