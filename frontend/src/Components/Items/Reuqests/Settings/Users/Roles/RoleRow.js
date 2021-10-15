@@ -4,7 +4,7 @@ import {Checkbox, TableCell, TableRow} from '@mui/material';
 import {setSelectedRoles} from "../../../../../../Redux/Projects/projectActions";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
-import RoleRowMenu from "../../../../../Menus/Projects/Settings/Users/RoleRowMenu";
+import RoleRowMenu from "../../../../../Menus/Requests/Settings/Users/RoleRowMenu";
 
 const RoleRow = (props) => {
   const {role, project, selectedRoles, setSelectedRoles, setConfirmAction} = props;

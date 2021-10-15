@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import {Paper, Table, TableBody, TableContainer} from "@mui/material";
 import {connect} from "react-redux";
 import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
-import RoleRow from "../../../../../Items/Projects/Settings/Users/Roles/RoleRow";
+import RoleRow from "../../../../../Items/Reuqests/Settings/Users/Roles/RoleRow";
 import RolesTableHeader from "./RolesTableHeader";
 import {getComparator, stableSort} from "../../../../../../Utils/Untils/Sorting";
 

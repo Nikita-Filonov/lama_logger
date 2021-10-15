@@ -2,7 +2,7 @@ import React, {useMemo, useState} from "react";
 import {Paper, Table, TableBody, TableContainer} from "@mui/material";
 import {connect} from "react-redux";
 import MembersTableHeader from "./MembersTableHeader";
-import MemberRow from "../../../../../Items/Projects/Settings/Users/Members/MemberRow";
+import MemberRow from "../../../../../Items/Reuqests/Settings/Users/Members/MemberRow";
 import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
 import {getComparator, stableSort} from "../../../../../../Utils/Untils/Sorting";
 

@@ -13,7 +13,7 @@ import {
 import {connect} from "react-redux";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {ButtonSpinner} from "../../../../../Blocks/Common/ButtonSpiner";
-import {ScopesList} from "../../../../../Blocks/Projects/Settings/Users/Roles/ScopesList";
+import {ScopesList} from "../../../../../Blocks/Requests/Settings/Users/Roles/ScopesList";
 import {setCreateRoleModal, setRole} from "../../../../../../Redux/Projects/projectActions";
 import {INITIAL_PROJECTS} from "../../../../../../Redux/Projects/initialState";
 

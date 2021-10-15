@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Box, Link, Tab, Tabs, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequest} from "../../../../../Redux/Requests/requestsActions";
-import ViewRequestMenu from "../../../../Menus/Requests/ViewRequestMenu";
+import ViewRequestMenu from "../../../../Menus/Requests/Requests/ViewRequestMenu";
 import {ViewRequestStyles} from "../../../../../Styles/Blocks";
 import {TabPanel} from "../../../Common/TabPanel";
 import {Headers} from "./Headers";

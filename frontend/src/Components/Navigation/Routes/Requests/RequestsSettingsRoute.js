@@ -2,7 +2,7 @@ import React from 'react'
 import {Redirect, Route} from 'react-router-dom'
 import {Container, Typography} from "@mui/material";
 import clsx from "clsx";
-import ProjectSettingsSidebar from "../../../Blocks/Projects/Settings/ProjectSettingsSidebar";
+import ProjectSettingsSidebar from "../../../Blocks/Requests/Settings/ProjectSettingsSidebar";
 import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import NavigationBar from "../../NavigationBar";
 import RequestNavigationDrawer from "../../Drawers/Requests/RequestNavigationDrawer";

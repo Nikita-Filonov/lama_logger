@@ -5,11 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {ProjectMenuStyles} from "../../../Styles/Menus";
+import {ProjectMenuStyles} from "../../../../Styles/Menus";
 import {connect} from "react-redux";
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import {setRequestsFiltersSidebar} from "../../../Redux/Requests/requestsActions";
+import {setRequestsFiltersSidebar} from "../../../../Redux/Requests/requestsActions";
 import {FilterList, MoreVert} from "@mui/icons-material";
 
 const RequestsMenu = ({setRequestsFiltersSidebar}) => {

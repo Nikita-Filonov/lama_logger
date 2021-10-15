@@ -16,7 +16,7 @@ import {setInviteMemberModal} from "../../../../../Redux/Projects/projectActions
 import FormControl from "@mui/material/FormControl";
 import {useProjects} from "../../../../../Providers/ProjectsProvider";
 import {ButtonSpinner} from "../../../../Blocks/Common/ButtonSpiner";
-import RolesSelect from "../../../../Blocks/Projects/Settings/Users/Members/RolesSelect";
+import RolesSelect from "../../../../Blocks/Requests/Settings/Users/Members/RolesSelect";
 
 
 const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
