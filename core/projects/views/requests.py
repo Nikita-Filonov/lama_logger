@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
+from core.projects.helpers.requests.filters import filter_request
 from core.projects.helpers.utils import to_curl
 from core.projects.models import Project, Request
 from core.projects.serializers.requests import RequestsSerializer, RequestSerializer
@@ -30,6 +31,11 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
 
     def post(self, request, project_id):
         project = Project.objects.get(id=project_id)
+
+        should_create_request = filter_request(project, request.data)
+        if not should_create_request:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
         serializer = RequestSerializer(data=request.data)
         if serializer.is_valid():
             created_request = serializer.save()

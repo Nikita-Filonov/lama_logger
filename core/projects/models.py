@@ -162,3 +162,24 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ProjectSettings(models.Model):
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.CASCADE
+    )
+    exclude_methods = models.JSONField(
+        verbose_name='Exclude methods',
+        default=list,
+        blank=True
+    )
+    exclude_statuses = models.JSONField(
+        verbose_name='Exclude statuses',
+        default=list,
+        blank=True
+    )
+
+    def __str__(self):
+        return self.project.title
