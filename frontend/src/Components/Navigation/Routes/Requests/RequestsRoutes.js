@@ -3,9 +3,9 @@ import Requests from "../../../../Screens/Requests/Requests";
 import {RequestsStatsProvider} from "../../../../Providers/Requests/RequestsStatsProvider";
 import RequestsStats from "../../../../Screens/Requests/RequestsStats";
 import {RequestsSettingsRoute} from "./RequestsSettingsRoute";
-import ProjectSettingsGeneral from "../../../../Screens/Projects/Settings/General/ProjectSettingsGeneral";
-import ProjectSettingsMembers from "../../../../Screens/Projects/Settings/Users/ProjectSettingsMembers";
-import ProjectSettingsRoles from "../../../../Screens/Projects/Settings/Users/ProjectSettingsRoles";
+import ProjectSettingsGeneral from "../../../../Screens/Requests/Settings/General/ProjectSettingsGeneral";
+import ProjectSettingsMembers from "../../../../Screens/Requests/Settings/Users/ProjectSettingsMembers";
+import ProjectSettingsRoles from "../../../../Screens/Requests/Settings/Users/ProjectSettingsRoles";
 import React from "react";
 
 export default [
