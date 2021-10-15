@@ -4,6 +4,7 @@ import {Skeleton} from "@mui/lab";
 import {useSettings} from "../../../../Providers/SettingsProvider";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
 import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import {HelpOutline} from "@mui/icons-material";
 
 export const StatsInfoGrid = () => {
   const classes = ViewRequestStyles();
@@ -14,7 +15,10 @@ export const StatsInfoGrid = () => {
     <Grid container spacing={2} className={'mt-2'}>
       <Grid item xs={3}>
         <Paper elevation={3} className={classes.toolbarContainer}>
-          <Typography>Total requests</Typography>
+          <div className={'d-flex align-items-center'}>
+            <Typography className={'flex-grow-1'}>Total requests</Typography>
+            <HelpOutline fontSize={'small'}/>
+          </div>
           <Typography className={'mt-2'} variant={'h5'}>
             {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.total}
           </Typography>
@@ -22,7 +26,10 @@ export const StatsInfoGrid = () => {
       </Grid>
       <Grid item xs={3}>
         <Paper elevation={3} className={classes.toolbarContainer}>
-          <Typography>Created</Typography>
+          <div className={'d-flex align-items-center'}>
+            <Typography className={'flex-grow-1'}>Created</Typography>
+            <HelpOutline fontSize={'small'}/>
+          </div>
           <Typography className={'mt-2'} variant={'h5'}>
             {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.create}
           </Typography>
@@ -30,7 +37,10 @@ export const StatsInfoGrid = () => {
       </Grid>
       <Grid item xs={3}>
         <Paper elevation={3} className={classes.toolbarContainer}>
-          <Typography>Removed</Typography>
+          <div className={'d-flex align-items-center'}>
+            <Typography className={'flex-grow-1'}>Removed</Typography>
+            <HelpOutline fontSize={'small'}/>
+          </div>
           <Typography className={'mt-2'} variant={'h5'}>
             {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.delete}
           </Typography>
@@ -38,7 +48,10 @@ export const StatsInfoGrid = () => {
       </Grid>
       <Grid item xs={3}>
         <Paper elevation={3} className={classes.toolbarContainer}>
-          <Typography>Filtered</Typography>
+          <div className={'d-flex align-items-center'}>
+            <Typography className={'flex-grow-1'}>Filtered</Typography>
+            <HelpOutline fontSize={'small'}/>
+          </div>
           <Typography className={'mt-2'} variant={'h5'}>
             {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.filter}
           </Typography>
