@@ -13,6 +13,7 @@ export const INITIAL_REQUESTS = {
     page: 0,
     rowsPerPage: localStorage.getItem('rowsPerPageRequests') || 25
   },
+  requestsStatsFilters: {},
   selectedRequests: [],
   requestsFiltersSidebar: true,
   requestsTimeFilterModal: false,

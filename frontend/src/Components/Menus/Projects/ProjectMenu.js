@@ -9,7 +9,6 @@ import Settings from '@mui/icons-material/Settings';
 import {ContentCopyOutlined, CreateOutlined, MoreHoriz} from "@mui/icons-material";
 import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import {Divider} from "@mui/material";
-import {ProjectMenuStyles} from "../../../Styles/Menus";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {setProject} from "../../../Redux/Projects/projectActions";

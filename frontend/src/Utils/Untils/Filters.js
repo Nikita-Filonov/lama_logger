@@ -25,3 +25,11 @@ export const makeRequestsFilters = (filters) => {
     })
   }
 }
+
+export const makeRequestsStatsFilters = (filters) => {
+  return {
+    filters: JSON.stringify({
+      created__range: filters?.time?.range
+    })
+  }
+}

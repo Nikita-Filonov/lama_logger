@@ -6,10 +6,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {RangeFilters} from "../../../Blocks/Requests/Requests/RequestsFilters/TimeFilters/RangeFilters";
 import {DialogContentText} from "@mui/material";
+import {connect} from "react-redux";
+import {setRequestsStatsFilters} from "../../../../Redux/Requests/requestsActions";
 
 
-export const StatsTimeFilters = ({modal, setModal}) => {
-  const [range, setRange] = useState([null, null]);
+const StatsTimeFilters = ({modal, setModal, requestsStatsFilters, setRequestsStatsFilters}) => {
+  const [range, setRange] = useState([requestsStatsFilters?.time?.range[0],
+    requestsStatsFilters?.time?.range[1]]);
 
   const onClose = () => setModal(false);
   const onSelectTime = (index, time) => {
@@ -20,6 +23,7 @@ export const StatsTimeFilters = ({modal, setModal}) => {
 
   const applyFilter = () => {
     onClose();
+    setRequestsStatsFilters({...requestsStatsFilters, time: {range, type: 'range'}})
   }
 
   return (
@@ -36,3 +40,15 @@ export const StatsTimeFilters = ({modal, setModal}) => {
     </Dialog>
   );
 }
+
+
+const getState = (state) => ({
+  requestsStatsFilters: state.requests.requestsStatsFilters,
+})
+
+export default connect(
+  getState,
+  {
+    setRequestsStatsFilters,
+  },
+)(StatsTimeFilters);

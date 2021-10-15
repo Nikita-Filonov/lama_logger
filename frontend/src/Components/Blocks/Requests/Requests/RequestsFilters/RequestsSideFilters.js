@@ -37,7 +37,7 @@ const RequestsSideFilters = (props) => {
   }
 
   return (
-    <Box sx={{width: 200, marginRight: 2}} hidden={false}>
+    <Box sx={{width: 200, marginRight: 2}} hidden={requestsFiltersSidebar}>
       <Paper className={clsx(classes.tableContainer, 'p-1 ps-2')}>
         <div className={'d-flex'}>
           <div className={'flex-grow-1'}/>

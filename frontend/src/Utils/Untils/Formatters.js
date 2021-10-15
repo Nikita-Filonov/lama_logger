@@ -28,8 +28,8 @@ export const bodyTypeDetect = (responseHeaders, body = null) => {
 }
 
 export const getTimeFiltersLabel = (filters) => {
-  const intervalLabels = {prev: 'Last', next: 'Next'}
   if (filters?.type === 'interval') {
+    const intervalLabels = {prev: 'Last', next: 'Next'};
     const {amount, prev, unit} = filters?.interval;
     return `${intervalLabels[prev]} ${amount} ${amount > 1 ? unit : unit.slice(0, -1)}`;
   }
@@ -39,4 +39,5 @@ export const getTimeFiltersLabel = (filters) => {
     const end = moment(filters.range[1]).format('MMM D, HH:mm');
     return `${start} to ${end}`;
   }
+  return 'Time filters'
 }

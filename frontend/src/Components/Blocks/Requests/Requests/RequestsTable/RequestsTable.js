@@ -27,38 +27,34 @@ const RequestsTable = (props) => {
   const onPageChange = (e, page) => setRequestsPagination({...requestsPagination, page})
 
   return (
-    <React.Fragment>
-      {/*{load && <CircularProgress style={comp.spinner}/>}*/}
-      {/*{filteredRequests.length === 0 && !load && <EmptyList text={'No requests here'}/>}*/}
-      <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
-          <RequestsTableHeader
-            order={order}
-            orderBy={orderBy}
-            onRequestSort={onRequestSort}
-          />
-          <TableBody>
-            {stableSort(requests?.results, getComparator(order, orderBy))
-              .map(r => <RequestRow request={r} key={r.request_id}/>)}
-          </TableBody>
+    <TableContainer component={Paper} className={classes.tableContainer}>
+      <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
+        <RequestsTableHeader
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={onRequestSort}
+        />
+        <TableBody>
+          {stableSort(requests?.results, getComparator(order, orderBy))
+            .map(r => <RequestRow request={r} key={r.request_id}/>)}
+        </TableBody>
 
-          <TablePagination
-            size={'small'}
-            rowsPerPageOptions={[25, 50, 100]}
-            colSpan={6}
-            count={requests.count}
-            rowsPerPage={requestsPagination.rowsPerPage}
-            page={requestsPagination.page}
-            labelRowsPerPage={<Typography variant={'body2'} sx={{marginTop: 2}}>Requests per page</Typography>}
-            labelDisplayedRows={({count, from, page, to}) =>
-              <Typography variant={'body2'} sx={{marginTop: 2}}>{from}-{to} of {count}</Typography>
-            }
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            onPageChange={onPageChange}
-          />
-        </Table>
-      </TableContainer>
-    </React.Fragment>
+        <TablePagination
+          size={'small'}
+          rowsPerPageOptions={[25, 50, 100]}
+          colSpan={6}
+          count={requests.count}
+          rowsPerPage={requestsPagination.rowsPerPage}
+          page={requestsPagination.page}
+          labelRowsPerPage={<Typography variant={'body2'} sx={{marginTop: 2}}>Requests per page</Typography>}
+          labelDisplayedRows={({count, from, page, to}) =>
+            <Typography variant={'body2'} sx={{marginTop: 2}}>{from}-{to} of {count}</Typography>
+          }
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          onPageChange={onPageChange}
+        />
+      </Table>
+    </TableContainer>
   )
 }
 
