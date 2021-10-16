@@ -1,4 +1,4 @@
-import Projects from "../../../../Screens/Projects/Projects";
+import {Projects} from "../../../../Screens/Projects/Projects";
 import {ProjectRoute} from "./ProjectRoute";
 import React from "react";
 

@@ -11,10 +11,20 @@ class ProjectsSerializer(serializers.ModelSerializer):
     members = MembersSerializer(many=True, read_only=True)
     roles = RolesSerializer(many=True, read_only=True)
     creator = DefaultUserSerializer(many=False, read_only=True)
+    membersCount = serializers.SerializerMethodField('get_members_count')
+    requestCount = serializers.SerializerMethodField('get_requests_count')
 
     class Meta:
         model = Project
         fields = '__all__'
+
+    @staticmethod
+    def get_members_count(obj: Project):
+        return obj.members.count()
+
+    @staticmethod
+    def get_requests_count(obj: Project):
+        return obj.requests.count()
 
 
 class ProjectSerializer(serializers.ModelSerializer):
