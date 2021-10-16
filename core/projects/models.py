@@ -131,17 +131,17 @@ class ProjectSettings(models.Model):
         verbose_name='Project',
         on_delete=models.CASCADE
     )
-    filter_methods = models.JSONField(
+    filterMethods = models.JSONField(
         verbose_name='Filter methods',
         default=DEFAULT_METHODS,
         blank=True
     )
-    exclude_methods = models.JSONField(
+    excludeMethods = models.JSONField(
         verbose_name='Exclude methods',
         default=list,
         blank=True
     )
-    exclude_statuses = models.JSONField(
+    excludeStatuses = models.JSONField(
         verbose_name='Exclude statuses',
         default=list,
         blank=True
@@ -153,4 +153,6 @@ class ProjectSettings(models.Model):
 
 @receiver(post_save, sender=Project)
 def on_project_create(sender, instance, **kwargs):
-    ProjectSettings.objects.create(project=instance)
+    settings = ProjectSettings.objects.filter(project=instance)
+    if not settings:
+        ProjectSettings.objects.create(project=instance)

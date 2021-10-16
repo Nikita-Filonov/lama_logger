@@ -1,5 +1,12 @@
 import {INITIAL_PROJECTS} from './initialState';
-import {CREATE_PROJECT, DELETE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "./actionTypes";
+import {
+  CREATE_PROJECT,
+  DELETE_PROJECT,
+  SET_PROJECT,
+  SET_PROJECT_SETTINGS,
+  SET_PROJECTS,
+  UPDATE_PROJECT
+} from "./actionTypes";
 
 
 export const projectsReducer = (state = INITIAL_PROJECTS, action = {}) => {
@@ -18,6 +25,8 @@ export const projectsReducer = (state = INITIAL_PROJECTS, action = {}) => {
       }
     case DELETE_PROJECT:
       return {...state, projects: state.projects.filter(p => p.id !== action.payload)}
+    case SET_PROJECT_SETTINGS:
+      return {...state, projectSettings: action.payload};
     default:
       return state;
   }

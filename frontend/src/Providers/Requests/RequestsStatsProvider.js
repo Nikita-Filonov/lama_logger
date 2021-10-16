@@ -10,8 +10,7 @@ const RequestsStatsProvider = ({children}) => {
   const {token} = useUsers()
   const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(false);
-  const [requestsStats, setRequestsStats] = useState({})
-
+  const [requestsStats, setRequestsStats] = useState({});
 
   const getRequestsStats = async (projectId, groupBy = 'hours', filters = {}) => {
     setLoad(true)

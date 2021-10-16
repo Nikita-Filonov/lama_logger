@@ -3,11 +3,10 @@ import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {Autocomplete, Checkbox, Grid, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import Box from "@mui/material/Box";
-import {setConfirmAction} from "../../../../Redux/Users/usersActions";
-import {removeProject} from "../../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
-import Typography from "@mui/material/Typography";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
+import {REQUESTS_METHODS_FILTERS} from "../../../../Utils/Constants";
+import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
 
 const top100Films = [
   {title: 'The Shawshank Redemption', year: 1994},
@@ -59,27 +58,29 @@ const top100Films = [
   {title: 'Interstellar', year: 2014},
 ];
 
-const RequestsInboundDataFilters = () => {
+const RequestsInboundDataFilters = ({projectSettings}) => {
   const classes = ProjectSettingsStyles();
   const history = useHistory();
+  const {updateProjectSettings} = useProjectSettings();
 
   return (
     <div className={classes.contentContainer}>
       <ProjectSettingsHeader title={'Inbound data filters'}/>
       <Grid item xs={12} className={'mt-3'}>
         <Autocomplete
+          value={projectSettings?.excludeMethods?.length > 0 ? projectSettings?.excludeMethods : []}
           size={'small'}
           key={history.location.key}
           multiple
           freeSolo
           className={'w-50'}
-          options={top100Films}
+          options={REQUESTS_METHODS_FILTERS}
           disableCloseOnSelect
-          getOptionLabel={(option) => option.title}
+          getOptionLabel={(option) => option}
           renderOption={(props, option, {selected}) => (
             <li {...props}>
               <Checkbox style={{marginRight: 8}} checked={selected}/>
-              {option.title}
+              {option}
             </li>
           )}
           renderInput={(params) => (
@@ -135,13 +136,10 @@ const RequestsInboundDataFilters = () => {
 
 
 const getState = (state) => ({
-  project: state.projects.project
+  projectSettings: state.projects.projectSettings
 })
 
 export default connect(
   getState,
-  {
-    removeProject,
-    setConfirmAction
-  },
+  null,
 )(RequestsInboundDataFilters);

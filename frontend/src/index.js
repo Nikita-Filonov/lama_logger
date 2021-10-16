@@ -10,13 +10,12 @@ import {Login} from "./Screens/Login/Login";
 import {UsersProvider} from "./Providers/UsersProvider";
 import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
-import {RequestsProvider} from "./Providers/Requests/RequestsProvider";
 import {AlertsProvider} from "./Providers/AlertsProvider";
 import ConfirmAction from "./Components/Modals/Common/ConfirmAction";
 import ThemeWrapper from "./Providers/ThemeWrapper";
 import {LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import RequestsRoutes from "./Components/Navigation/Routes/Requests/RequestsRoutes";
+import {RequestsRoutes} from "./Components/Navigation/Routes/Requests/RequestsRoutes";
 import ProjectRoutes from "./Components/Navigation/Routes/Projects/ProjectRoutes";
 import {SettingsProvider} from "./Providers/SettingsProvider";
 
@@ -24,17 +23,17 @@ import {SettingsProvider} from "./Providers/SettingsProvider";
 const store = createStore(reducer);
 
 const CustomRoute = () =>
-
   <Router>
     <div className={'d-flex'}>
       <Switch>
         {ProjectRoutes}
-        {RequestsRoutes}
         <PublicRoute exact path="/login" component={Login}/>
       </Switch>
+      <RequestsRoutes store={store}/>
       <ConfirmAction/>
     </div>
   </Router>
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -45,9 +44,7 @@ ReactDOM.render(
             <AlertsProvider>
               <UsersProvider store={store}>
                 <ProjectsProvider store={store}>
-                  <RequestsProvider store={store}>
-                    <CustomRoute/>
-                  </RequestsProvider>
+                  <CustomRoute/>
                 </ProjectsProvider>
               </UsersProvider>
             </AlertsProvider>

@@ -45,7 +45,6 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
     }
 
     return creator?.id === project?.creator?.id;
-
   }, [title, short, description, creator])
   const optionLabel = useCallback((option) => option.username ? option.username : option.email, [])
 
