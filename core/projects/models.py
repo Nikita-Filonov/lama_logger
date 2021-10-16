@@ -126,7 +126,7 @@ class Project(models.Model):
 
 class ProjectSettings(models.Model):
     DEFAULT_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
-    project = models.ForeignKey(
+    project = models.OneToOneField(
         Project,
         verbose_name='Project',
         on_delete=models.CASCADE

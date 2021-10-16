@@ -1,14 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {baseUrl} from "../../Utils/Constants";
+import {baseUrl, SUCCESS_CODES} from "../../Utils/Constants";
 import {useUsers} from "../UsersProvider";
 import {SET_PROJECT_SETTINGS} from "../../Redux/Projects/actionTypes";
 import {useSelector} from "react-redux";
+import {useAlerts} from "../AlertsProvider";
 
 
 const ProjectSettingsContext = React.createContext(null);
 
 const ProjectSettingsProvider = ({children, store}) => {
-  const {token} = useUsers()
+  const {token} = useUsers();
+  const {setAlert} = useAlerts();
   const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
@@ -19,6 +21,16 @@ const ProjectSettingsProvider = ({children, store}) => {
   useEffect(() => {
     (async () => token && await getProjectSettings(project.id))()
   }, [token, project.id])
+
+  const checkResponse = async (response, successMessage = {}, errorMessage = null) => {
+    if (SUCCESS_CODES.includes(response.status)) {
+      setAlert(successMessage)
+      response.json().then(async data => await store.dispatch({type: SET_PROJECT_SETTINGS, payload: data}))
+    } else {
+      response.json().then(async data => setAlert(errorMessage || data))
+    }
+    setRequest(false)
+  }
 
   const getProjectSettings = async (projectId) => {
     setLoad(true)
@@ -36,7 +48,7 @@ const ProjectSettingsProvider = ({children, store}) => {
 
   const updateProjectSettings = async (projectId, payload) => {
     setRequest(true);
-    await fetch(projectsApi + `${projectId}/settings/`, {
+    const response = await fetch(projectsApi + `${projectId}/settings/`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Token ${token}`,
@@ -44,11 +56,13 @@ const ProjectSettingsProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: SET_PROJECT_SETTINGS, payload: data});
-        setRequest(false);
-      });
+    if (SUCCESS_CODES.includes(response.status)) {
+      setAlert({message: 'Project settings was updated', level: 'success'})
+      response.json().then(async data => await store.dispatch({type: SET_PROJECT_SETTINGS, payload: data}))
+    } else {
+      setAlert({message: 'Error happened while updating project settings', level: 'error'})
+    }
+    setRequest(false)
   }
 
   return (
