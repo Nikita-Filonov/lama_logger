@@ -13,7 +13,7 @@ import {LoadingButton} from "@mui/lab";
 
 const RequestsInboundDataFilters = ({project, projectSettings}) => {
   const classes = ProjectSettingsStyles();
-  const {request, updateProjectSettings} = useProjectSettings();
+  const {load, request, updateProjectSettings} = useProjectSettings();
   const [excludeMethods, setExcludeMethods] = useState(projectSettings?.excludeMethods);
   const [excludeStatuses, setExcludeStatuses] = useState(projectSettings?.excludeStatuses);
 
@@ -39,7 +39,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
         <Autocomplete
           value={excludeMethods}
           size={'small'}
-          key={excludeMethods}
+          key={load}
           multiple
           freeSolo
           className={'w-50'}
@@ -49,7 +49,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
           getOptionLabel={(option) => option}
           renderOption={(props, option, {selected}) => (
             <li {...props}>
-              <Checkbox style={{marginRight: 8}} checked={selected}/>
+              <Checkbox size={'small'} style={{marginRight: 8}} checked={selected}/>
               {option}
             </li>
           )}
@@ -70,7 +70,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
         <Autocomplete
           value={excludeStatuses}
           size={'small'}
-          key={excludeMethods}
+          key={load}
           multiple
           freeSolo
           className={'w-50'}
@@ -80,7 +80,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
           getOptionLabel={(option) => option}
           renderOption={(props, option, {selected}) => (
             <li {...props}>
-              <Checkbox style={{marginRight: 8}} checked={selected}/>
+              <Checkbox size={'small'} style={{marginRight: 8}} checked={selected}/>
               {option}
               <div className={'flex-grow-1'}/>
               <StatusCodeIndicator statusCode={option}/>

@@ -30,7 +30,7 @@ const ViewRequestDemo = ({request}) => {
     <Box sx={{margin: 1}}>
       <div className={'d-flex justify-content-center align-items-center'}>
         <Typography variant="h6" gutterBottom component="div" className={'mt-3'} style={{fontSize: 17}}>
-          {request.method} request to <Link href={request.request_url} target={'_blank'}>{request.request_url}</Link>
+          {request.method} request to <Link href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
         <ViewRequestMenu request={request}/>
@@ -41,10 +41,10 @@ const ViewRequestDemo = ({request}) => {
         <Tab sx={tabsStyles} label="Body" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={requestTab} index={0}>
-        <Headers headers={request.request_headers}/>
+        <Headers headers={request?.requestHeaders}/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <Body responseHeaders={request.request_headers} body={request.request_body}/>
+        <Body responseHeaders={request?.requestHeaders} body={request?.requestBody}/>
       </TabPanel>
 
       <Typography variant={'subtitle1'} gutterBottom>Response</Typography>
@@ -53,10 +53,10 @@ const ViewRequestDemo = ({request}) => {
         <Tab sx={tabsStyles} label="Body" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={responseTab} index={0}>
-        <Headers headers={request.response_headers}/>
+        <Headers headers={request?.responseHeaders}/>
       </TabPanel>
       <TabPanel value={responseTab} index={1}>
-        <Body responseHeaders={request.response_headers} body={request.response_body}/>
+        <Body responseHeaders={request?.responseHeaders} body={request?.responseBody}/>
       </TabPanel>
 
     </Box>

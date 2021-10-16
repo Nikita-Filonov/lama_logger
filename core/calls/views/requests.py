@@ -82,12 +82,12 @@ class RequestApi(views.APIView):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((IsAuthenticated,))
 @throttle_classes((UserRateThrottle,))
-def request_to_curl(request, project_id, request_id):
-    db_request = Request.objects.get(request_id=request_id)
+def request_to_curl(request, project_id, requestId):
+    db_request = Request.objects.get(requestId=requestId)
     curl_request = {
         'method': db_request.method,
-        'headers': db_request.request_headers,
-        'body': db_request.request_body,
-        'url': db_request.request_url
+        'headers': db_request.requestHeaders,
+        'body': db_request.requestBody,
+        'url': db_request.requestUrl
     }
     return Response({'curl': to_curl(curl_request)})

@@ -19,7 +19,7 @@ export const makeRequestsFilters = (filters) => {
   return {
     filters: JSON.stringify({
       method__in: filters?.methods,
-      response_code__in: codes,
+      statusCode__in: codes,
       created__range: filters?.time?.type === 'range'
         ? filters?.time?.range : getFilterInterval(filters?.time?.interval)
     })

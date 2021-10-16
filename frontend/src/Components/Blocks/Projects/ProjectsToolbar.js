@@ -12,7 +12,7 @@ export const ProjectsToolbar = () => {
   return (
     <Paper
       elevation={3}
-      className={clsx('mt-3 d-flex', classes.toolbarContainer)}
+      className={clsx('mt-3 d-flex align-items-center', classes.toolbarContainer)}
     >
       <Typography variant={'h6'} sx={{ml: 2}}>
         Projects

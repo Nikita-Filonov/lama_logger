@@ -8,7 +8,7 @@ from core.users.models import CustomUser
 
 
 class Request(models.Model):
-    request_id = models.UUIDField(
+    requestId = models.UUIDField(
         verbose_name='Request id',
         default=uuid.uuid4,
         editable=True,
@@ -19,31 +19,31 @@ class Request(models.Model):
         max_length=20,
         default='GET'
     )
-    request_url = models.CharField(
+    requestUrl = models.CharField(
         verbose_name='Request url',
         max_length=500,
         null=False
     )
-    request_headers = models.JSONField(
+    requestHeaders = models.JSONField(
         verbose_name='Request headers',
         default=list,
         blank=True,
         null=True
     )
-    request_body = models.TextField(
+    requestBody = models.TextField(
         verbose_name='Request body',
         blank=True,
         null=True
     )
-    response_code = models.IntegerField(
+    statusCode = models.IntegerField(
         verbose_name='Response status code'
     )
-    response_body = models.TextField(
+    responseBody = models.TextField(
         verbose_name='Response body',
         blank=True,
         null=True
     )
-    response_headers = models.JSONField(
+    responseHeaders = models.JSONField(
         verbose_name='Response headers',
         default=dict,
         blank=True
@@ -61,4 +61,4 @@ class Request(models.Model):
     )
 
     def __str__(self):
-        return self.request_url
+        return self.requestUrl

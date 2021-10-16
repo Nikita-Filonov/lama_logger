@@ -21,7 +21,7 @@ const ViewRequestMenu = ({project, request}) => {
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null);
   const onCurl = async () => {
-    await getRequestAsCurl(project.id, request.request_id)
+    await getRequestAsCurl(project.id, request?.requestId)
     onClose()
   }
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard'})

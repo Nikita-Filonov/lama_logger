@@ -16,7 +16,7 @@ def filter_request(project: Project, payload: dict):
     settings = ProjectSettings.objects.get(project=project)
     stat_payload = {
         'method': payload['method'],
-        'response_code': payload['response_code'],
+        'statusCode': payload['statusCode'],
         'project': project,
         'action': 'filter'
     }
@@ -25,7 +25,7 @@ def filter_request(project: Project, payload: dict):
         track_stat(**stat_payload)
         return
 
-    if payload['response_code'] in settings.excludeStatuses:
+    if payload['statusCode'] in settings.excludeStatuses:
         track_stat(**stat_payload)
         return
 

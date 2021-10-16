@@ -17,13 +17,13 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
   const [open, setOpen] = useState(false)
 
   const isSelected = useMemo(
-    () => selectedRequests.indexOf(request.request_id) !== -1,
+    () => selectedRequests.indexOf(request.requestId) !== -1,
     [selectedRequests]
   );
 
   const onSelect = () => {
     setOpen(!open)
-    history.push(`?requestId=${request.request_id}`)
+    history.push(`?requestId=${request.requestId}`)
   }
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
 
     const query = new URLSearchParams(history.location.search);
     const requestId = query.get('requestId');
-    if (requestId && requestId === request.request_id) {
+    if (requestId && requestId === request.requestId) {
       setOpen(true);
       rowRef.current.scrollIntoView({behavior: 'smooth'});
     }
@@ -51,18 +51,18 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
             size={'small'}
             color={'primary'}
             checked={isSelected}
-            onClick={() => setSelectedRequests({isSelected, requestId: request.request_id})}
+            onClick={() => setSelectedRequests({isSelected, requestId: request?.requestId})}
           />
         </TableCell>
         <TableCell component="th" scope="row" onClick={onSelect}>
           {request.method}
         </TableCell>
         <TableCell align="left" onClick={onSelect}>
-          <Typography className={classes.rowRequestUrlText}>{request.request_url}</Typography>
+          <Typography className={classes.rowRequestUrlText}>{request?.requestUrl}</Typography>
         </TableCell>
         <TableCell align="right" className={'d-flex'} onClick={onSelect}>
-          <StatusCodeIndicator statusCode={request.response_code}/>
-          <Typography>{request.response_code}</Typography>
+          <StatusCodeIndicator statusCode={request?.statusCode}/>
+          <Typography>{request?.statusCode}</Typography>
         </TableCell>
         <TableCell padding="checkbox">
           <IconButton size="small" onClick={onSelect}>

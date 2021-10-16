@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {setProject} from "../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
 import moment from "moment";
+import {common} from "../../../Styles/Blocks";
 
 const Project = ({project, setProject}) => {
   const history = useHistory();
@@ -32,7 +33,7 @@ const Project = ({project, setProject}) => {
           <ResponsiveContainer width="100%" height={120}>
             <BarChart data={project.stats}>
               <CartesianGrid strokeDasharray="3 3"/>
-              {project?.stats?.length > 0 && <YAxis tick={{fill: palette.text.primary, fontSize: 10}} width={15}/>}
+              {project?.stats?.length > 0 && <YAxis tick={{fill: palette.text.primary, fontSize: 10}} width={24}/>}
               {project?.stats?.length > 0 &&
               <XAxis height={10} dataKey="name" tick={{fill: palette.text.primary, fontSize: 10}}/>}
               <Tooltip
@@ -47,11 +48,11 @@ const Project = ({project, setProject}) => {
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
-        <CardActions>
+        <CardActions className={'d-flex'}>
           <Button onClick={onOpenProject} size="small">Open</Button>
           <Button onClick={onOpenSettings} size="small">Settings</Button>
           <div className={'flex-grow-1'}/>
-          <Typography variant={'caption'}>
+          <Typography variant={'caption'} style={common.ellipsisText}>
             Updated {moment.utc(project.lastUpdated).local().startOf('seconds').fromNow()}
           </Typography>
         </CardActions>
