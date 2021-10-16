@@ -1,20 +1,17 @@
 import React, {useState} from 'react';
-import {Avatar, Box, Button, CssBaseline, IconButton, Toolbar, Typography, useTheme} from '@mui/material';
+import {Box, CssBaseline, IconButton, Toolbar, Typography, useTheme} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useUsers} from "../../Providers/UsersProvider";
 import {AppBarStyled, DrawerHeaderStyled} from "../../Styles/Blocks";
 import {connect} from "react-redux";
 import {setTheme} from "../../Redux/Users/usersActions";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import {useHistory} from 'react-router-dom'
 import {NavigationBreadcrumbs} from "./NavigationBreadcrumbs";
+import {AccountNavbarMenu} from "../Menus/AccountNavbarMenu";
 
 
 const NavigationBar = ({drawer, setTheme}) => {
   const {palette} = useTheme();
-  const {onLogout} = useUsers();
-  const history = useHistory();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
@@ -24,11 +21,6 @@ const NavigationBar = ({drawer, setTheme}) => {
     const theme = palette.mode === 'light' ? 'dark' : 'light'
     setTheme(theme)
     localStorage.setItem('theme', theme)
-  }
-
-  const onLogoutPress = async () => {
-    await onLogout()
-    history.push('/login')
   }
 
   return (
@@ -54,8 +46,7 @@ const NavigationBar = ({drawer, setTheme}) => {
           <IconButton className={'me-3'} onClick={onTheme} color="inherit">
             {palette.mode === 'light' ? <Brightness4Icon/> : <Brightness7Icon/>}
           </IconButton>
-          <Avatar className={'me-3'}>N</Avatar>
-          <Button color="inherit" onClick={onLogoutPress}>Logout</Button>
+          <AccountNavbarMenu/>
         </Toolbar>
       </AppBarStyled>
       {React.createElement(drawer, {open: open, onClose: handleDrawerClose})}
