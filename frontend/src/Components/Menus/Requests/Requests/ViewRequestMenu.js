@@ -24,7 +24,7 @@ const ViewRequestMenu = ({project, request}) => {
     await getRequestAsCurl(project.id, request?.requestId)
     onClose()
   }
-  const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard'})
+  const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
 
 
   return (
@@ -41,7 +41,6 @@ const ViewRequestMenu = ({project, request}) => {
         open={Boolean(menu)}
         onClose={onClose}
         onClick={onClose}
-        PaperProps={ProjectMenuStyles.paper}
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
