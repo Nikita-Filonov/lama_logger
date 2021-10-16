@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import {connect} from "react-redux";
 import {setProject} from "../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
+import moment from "moment";
 
 const Project = ({project, setProject}) => {
   const history = useHistory();
@@ -13,8 +14,12 @@ const Project = ({project, setProject}) => {
 
   const onOpenProject = () => {
     setProject(project);
-    history.push(`projects/${project.id}/requests`)
+    history.push(`projects/${project.id}/requests`);
   };
+  const onOpenSettings = () => {
+    setProject(project);
+    history.push(`projects/${project.id}/settings/general`);
+  }
 
   return (
     <Grid item xs={12} sm={6} md={3}>
@@ -44,9 +49,11 @@ const Project = ({project, setProject}) => {
         </CardContent>
         <CardActions>
           <Button onClick={onOpenProject} size="small">Open</Button>
-          <Button size="small">Settings</Button>
+          <Button onClick={onOpenSettings} size="small">Settings</Button>
           <div className={'flex-grow-1'}/>
-          <Typography variant={'caption'}>Updated 2 min ago</Typography>
+          <Typography variant={'caption'}>
+            Updated {moment.utc(project.lastUpdated).local().startOf('seconds').fromNow()}
+          </Typography>
         </CardActions>
       </Card>
     </Grid>

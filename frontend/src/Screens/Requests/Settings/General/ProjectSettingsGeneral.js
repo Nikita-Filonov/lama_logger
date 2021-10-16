@@ -11,8 +11,8 @@ import {useAlerts} from "../../../../Providers/AlertsProvider";
 import {removeProject} from "../../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
 import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
-import Typography from "@mui/material/Typography";
 import {LoadingButton} from "@mui/lab";
+import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 
 
 const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
@@ -20,9 +20,10 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
   const history = useHistory();
   const {setAlert} = useAlerts();
   const {request, updateProject} = useProjects();
-  const [title, setTitle] = useState(project?.title)
+  const [title, setTitle] = useState(project?.title);
+  const [short, setShort] = useState(project?.short);
   const [creator, setCreator] = useState(project?.creator);
-  const [description, setDescription] = useState(project?.description)
+  const [description, setDescription] = useState(project?.description);
 
   useEffect(() => {
     setTitle(project?.title)
@@ -34,16 +35,21 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
     if (title !== project?.title) {
       return false;
     }
+
+    if (short !== project.short) {
+      return false;
+    }
+
     if (description !== project?.description) {
       return false;
     }
 
     return creator?.id === project?.creator?.id;
 
-  }, [title, description, creator])
+  }, [title, short, description, creator])
   const optionLabel = useCallback((option) => option.username ? option.username : option.email, [])
 
-  const onSave = async () => await updateProject(project.id, {title, description, creator: creator?.id})
+  const onSave = async () => await updateProject(project.id, {title, short, description, creator: creator?.id})
   const onArchive = async () => {
     setConfirmAction({
       modal: true,
@@ -62,7 +68,7 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
 
   return (
     <div className={classes.contentContainer}>
-      <Typography variant="subtitle1" gutterBottom>General project settings</Typography>
+      <ProjectSettingsHeader title={'General project settings'}/>
       <Grid item xs={12} className={'mt-3'}>
         <TextField
           value={title}
@@ -71,6 +77,19 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
           variant="standard"
           placeholder={'Project name'}
           className={'w-50'}
+        />
+      </Grid>
+      <Grid item xs={12} className={'mt-3'}>
+        <TextField
+          value={short}
+          onChange={event => setShort(event.target.value)}
+          label="Short name"
+          variant="standard"
+          placeholder={'Short name'}
+          className={'w-50'}
+          inputProps={{maxLength: 10}}
+          helperText={'Short name for your project. For example if project name is Lama Logger, then short name ' +
+          'will be LL'}
         />
       </Grid>
       <Grid item xs={12} className={'mt-3'}>

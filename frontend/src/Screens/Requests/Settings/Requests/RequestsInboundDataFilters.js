@@ -7,6 +7,7 @@ import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {removeProject} from "../../../../Redux/Projects/projectActions";
 import {useHistory} from "react-router-dom";
 import Typography from "@mui/material/Typography";
+import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 
 const top100Films = [
   {title: 'The Shawshank Redemption', year: 1994},
@@ -64,7 +65,7 @@ const RequestsInboundDataFilters = () => {
 
   return (
     <div className={classes.contentContainer}>
-      <Typography variant="subtitle1" gutterBottom>Inbound Data Filters</Typography>
+      <ProjectSettingsHeader title={'Inbound data filters'}/>
       <Grid item xs={12} className={'mt-3'}>
         <Autocomplete
           size={'small'}

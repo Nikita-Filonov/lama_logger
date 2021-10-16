@@ -1,14 +1,11 @@
 import React from 'react'
 import {Redirect, Route} from 'react-router-dom'
-import {Container, Typography} from "@mui/material";
-import clsx from "clsx";
+import {Container} from "@mui/material";
 import ProjectSettingsSidebar from "../../../Blocks/Requests/Settings/ProjectSettingsSidebar";
-import {ViewRequestStyles} from "../../../../Styles/Blocks";
 import NavigationBar from "../../NavigationBar";
 import RequestNavigationDrawer from "../../Drawers/Requests/RequestNavigationDrawer";
 
 export const RequestsSettingsRoute = ({component: Component, ...rest}) => {
-  const classes = ViewRequestStyles()
   const token = localStorage.getItem('token');
   const project = localStorage.getItem('project');
 
@@ -16,10 +13,6 @@ export const RequestsSettingsRoute = ({component: Component, ...rest}) => {
     <React.Fragment>
       <NavigationBar drawer={RequestNavigationDrawer}/>
       <Container maxWidth={'xl'}>
-        <div className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}>
-          <Typography variant={'h6'}>Settings</Typography>
-          <div className={'flex-grow-1'}/>
-        </div>
         <ProjectSettingsSidebar/>
         <div>
           <Route

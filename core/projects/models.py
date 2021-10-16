@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from core.calls.models import Request
 from core.users.models import CustomUser
@@ -109,6 +110,14 @@ class Project(models.Model):
     archived = models.BooleanField(
         verbose_name='Archived',
         default=False
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
+    )
+    lastUpdated = models.DateTimeField(
+        verbose_name='Last updated',
+        auto_now=True
     )
 
     def __str__(self):

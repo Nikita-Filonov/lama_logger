@@ -18,7 +18,7 @@ const Projects = ({projects}) => {
   return (
     <Container maxWidth={'xl'}>
       <ProjectsToolbar/>
-      <div className={'d-flex mt-3'}>
+      <div className={'d-flex mt-3 mb-3'}>
         <Grid
           container
           spacing={2}
