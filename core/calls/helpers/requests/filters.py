@@ -21,11 +21,11 @@ def filter_request(project: Project, payload: dict):
         'action': 'filter'
     }
 
-    if payload['method'] in settings.exclude_methods:
+    if payload['method'] in settings.excludeMethods:
         track_stat(**stat_payload)
         return
 
-    if payload['response_code'] in settings.exclude_statuses:
+    if payload['response_code'] in settings.excludeStatuses:
         track_stat(**stat_payload)
         return
 

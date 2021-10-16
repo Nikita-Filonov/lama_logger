@@ -39,7 +39,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
         <Autocomplete
           value={excludeMethods}
           size={'small'}
-          key={projectSettings?.excludeMethods}
+          key={excludeMethods}
           multiple
           freeSolo
           className={'w-50'}
@@ -70,7 +70,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
         <Autocomplete
           value={excludeStatuses}
           size={'small'}
-          key={projectSettings?.excludeStatuses}
+          key={excludeMethods}
           multiple
           freeSolo
           className={'w-50'}
