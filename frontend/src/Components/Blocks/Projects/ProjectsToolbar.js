@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import clsx from "clsx";
 import {Paper, Typography} from "@mui/material";
-import {Search} from "../../Common/Search";
-import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import {Search} from "../Common/Search";
+import {ViewRequestStyles} from "../../../Styles/Blocks";
 
 
 export const ProjectsToolbar = () => {

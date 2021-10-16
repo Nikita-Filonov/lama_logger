@@ -12,7 +12,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
     roles = RolesSerializer(many=True, read_only=True)
     creator = DefaultUserSerializer(many=False, read_only=True)
     membersCount = serializers.SerializerMethodField('get_members_count')
-    requestCount = serializers.SerializerMethodField('get_requests_count')
+    requestsCount = serializers.SerializerMethodField('get_requests_count')
 
     class Meta:
         model = Project

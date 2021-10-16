@@ -4,8 +4,10 @@ import {useProjects} from "../../../Providers/ProjectsProvider";
 
 
 export const CreateProject = ({modal, setModal}) => {
-  const {createProject} = useProjects()
-  const [title, setTitle] = useState('')
+  const {createProject} = useProjects();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [short, setShort] = useState('')
 
   const onClose = () => setModal(false)
 
@@ -28,8 +30,36 @@ export const CreateProject = ({modal, setModal}) => {
           autoFocus
           margin="dense"
           label="Project title"
+          placeholder={'Lama Logger'}
           fullWidth
           variant="standard"
+          inputProps={{maxLength: 255}}
+        />
+        <TextField
+          value={short}
+          onChange={event => setShort(event.target.value)}
+          autoFocus
+          margin="dense"
+          label="Short name"
+          placeholder={'LL'}
+          fullWidth
+          inputProps={{maxLength: 10}}
+          variant="standard"
+          className={'mt-3'}
+          helperText={'Short name for your project. For example if project name is Lama Logger, then short name ' +
+          'will be LL'}
+        />
+        <TextField
+          multiline
+          value={description}
+          onChange={event => setDescription(event.target.value)}
+          autoFocus
+          margin="dense"
+          label="Description"
+          placeholder={'Some description to your project'}
+          fullWidth
+          variant="standard"
+          className={'mt-3'}
         />
       </DialogContent>
       <DialogActions>
