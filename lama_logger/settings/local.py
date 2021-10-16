@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core.users.apps.UsersConfig',
     'core.projects.apps.ProjectsConfig',
     'core.stats.apps.StatsConfig',
+    'core.calls.apps.CallsConfig'
 ]
 
 MIDDLEWARE = [

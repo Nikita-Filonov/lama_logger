@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('core.users.urls')),
     path('api/v1/', include('core.stats.urls')),
+    path('api/v1/', include('core.calls.urls')),
     path('api/v1/', include('core.projects.urls')),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     path('login/', TemplateView.as_view(template_name='index.html'), name='index'),

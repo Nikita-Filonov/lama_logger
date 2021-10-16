@@ -8,10 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.projects.helpers.requests.filters import filter_request
+from core.calls.helpers.requests.filters import filter_request
 from core.projects.helpers.utils import to_curl
 from core.projects.models import Project, Request
-from core.projects.serializers.requests import RequestsSerializer, RequestSerializer
+from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.stats.tracks.requests import track_request, track_requests
 
 

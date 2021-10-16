@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'core.users.apps.UsersConfig',
     'core.projects.apps.ProjectsConfig',
     'core.stats.apps.StatsConfig',
+    'core.calls.apps.CallsConfig'
 ]
 
 MIDDLEWARE = [
@@ -94,7 +95,6 @@ DATABASES = {
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
