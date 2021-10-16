@@ -5,17 +5,19 @@ import {ViewRequestStyles} from "../../../../../Styles/Blocks";
 import clsx from "clsx";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
-import {setSelectedRequests} from "../../../../../Redux/Requests/Requests/requestsActions";
+import {setRequestsPagination, setSelectedRequests} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {Delete} from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 
-const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests}) => {
+const RequestsToolbarSelected = (props) => {
+  const {project, selectedRequests, setSelectedRequests, requestsPagination, setRequestsPagination} = props;
   const classes = ViewRequestStyles();
   const {deleteRequests} = useRequests();
 
   const onDelete = async () => {
     await deleteRequests(project.id, selectedRequests)
     setSelectedRequests([])
+    setRequestsPagination({...requestsPagination, page: 0})
   }
 
   return (
@@ -41,12 +43,14 @@ const RequestsToolbarSelected = ({project, selectedRequests, setSelectedRequests
 
 const getState = (state) => ({
   project: state.projects.project,
-  selectedRequests: state.requests.selectedRequests
+  selectedRequests: state.requests.selectedRequests,
+  requestsPagination: state.requests.requestsPagination
 })
 
 export default connect(
   getState,
   {
-    setSelectedRequests
+    setSelectedRequests,
+    setRequestsPagination
   },
 )(RequestsToolbarSelected);

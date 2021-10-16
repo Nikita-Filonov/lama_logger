@@ -22,7 +22,7 @@ def track_requests(project: Project, requests: List[Request] = None, action: str
     """
     for request in requests:
         RequestStat.objects.create(
-            response_code=request.response_code,
+            response_code=request.statusCode,
             method=request.method,
             action=action,
             project=project

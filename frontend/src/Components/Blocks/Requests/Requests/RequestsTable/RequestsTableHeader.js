@@ -29,7 +29,7 @@ const RequestsTableHeader = (props) => {
   const rowCount = useMemo(() => requests?.results?.length, [requests?.results])
 
   const onSelectAll = (event) => event.target.checked
-    ? setSelectedRequests(requests?.results?.map(r => r.request_id))
+    ? setSelectedRequests(requests?.results?.map(r => r.requestId))
     : setSelectedRequests([])
 
   return (

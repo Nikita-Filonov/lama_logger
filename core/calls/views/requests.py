@@ -9,9 +9,9 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.calls.helpers.requests.filters import filter_request
+from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.projects.helpers.utils import to_curl
 from core.projects.models import Project, Request
-from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.stats.tracks.requests import track_request, track_requests
 
 
@@ -60,7 +60,7 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
                 status=status.HTTP_400_BAD_REQUEST
             )
         project = Project.objects.get(id=project_id)
-        requests = project.requests.filter(request_id__in=requests)
+        requests = project.requests.filter(requestId__in=requests)
 
         track_requests(project, requests, 'delete')
         requests.delete()
