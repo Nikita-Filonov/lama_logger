@@ -6,8 +6,11 @@ import {Add} from "@mui/icons-material";
 import {ProjectsToolbar} from "../../Components/Blocks/Projects/ProjectsToolbar";
 import {connect} from "react-redux";
 import Project from "../../Components/Items/Projects/Project";
+import {useProjects} from "../../Providers/ProjectsProvider";
+import {ProjectsSkeletons} from "../../Components/Blocks/Projects/ProjectsSkeletons";
 
 const Projects = ({projects}) => {
+  const {load} = useProjects();
   const [createProjectModal, setCreateProjectModal] = useState(false)
 
   const onCreateProject = () => setCreateProjectModal(true);
@@ -23,7 +26,10 @@ const Projects = ({projects}) => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          {projects.map(project => <Project key={project.id} project={project}/>)}
+          {load
+            ? <ProjectsSkeletons/>
+            : projects.map(project => <Project key={project.id} project={project}/>)
+          }
         </Grid>
       </div>
 

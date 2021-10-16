@@ -7,19 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.stats.helper.utils import by_hours, by_days, to_stats_payload
+from core.stats.helper.utils import by_hours, by_days, to_stats_payload, group_types
 from core.stats.models import RequestStat
-
-group_types = {
-    'hours': {
-        'func': by_hours,
-        'format': '%b %d, %H:%M'
-    },
-    'days': {
-        'func': by_days,
-        'format': '%b %d'
-    }
-}
 
 
 @api_view(['GET'])

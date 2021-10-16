@@ -50,3 +50,15 @@ def by_days(entity):
     group_by_date('2022.10.14 12:15.54') -> 2022.10.14 00:00:00
     """
     return entity.created.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+group_types = {
+    'hours': {
+        'func': by_hours,
+        'format': '%b %d, %H:%M'
+    },
+    'days': {
+        'func': by_days,
+        'format': '%b %d'
+    }
+}

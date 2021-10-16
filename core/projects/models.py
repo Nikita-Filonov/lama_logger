@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from core.calls.models import Request
 from core.users.models import CustomUser
@@ -138,3 +140,8 @@ class ProjectSettings(models.Model):
 
     def __str__(self):
         return self.project.title
+
+
+@receiver(post_save, sender=Project)
+def on_project_create(sender, instance, **kwargs):
+    ProjectSettings.objects.create(project=instance)
