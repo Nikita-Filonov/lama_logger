@@ -64,7 +64,7 @@ export const CreateProject = ({modal, setModal}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button disabled={title.length === 0} onClick={onCreate}>Create</Button>
+        <Button disabled={title.length === 0 || short.length === 0} onClick={onCreate}>Create</Button>
       </DialogActions>
     </Dialog>
   )

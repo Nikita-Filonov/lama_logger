@@ -90,6 +90,13 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           <ListItemText primary={'Actions'}/>
         </ListItem>
       </List>
+      <div className={'flex-grow-1'}/>
+      <ListItem button sx={{mb: 2}}>
+        <ListItemIcon>
+          <PeopleOutline/>
+        </ListItemIcon>
+        <ListItemText primary={'Actions'}/>
+      </ListItem>
     </DrawerStyled>
   )
 }

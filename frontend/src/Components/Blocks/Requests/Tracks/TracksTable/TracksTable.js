@@ -1,0 +1,71 @@
+import React, {useState} from "react";
+import {Paper, Table, TableBody, TableContainer, TablePagination, Typography} from "@mui/material";
+import {RequestsTableStyles} from "../../../../../Styles/Blocks";
+import RequestRow from "../../../../Items/Reuqests/Requests/RequestRow";
+import TracksTableHeader from "./TracksTableHeader";
+import {connect} from "react-redux";
+import {setRequestsPagination} from "../../../../../Redux/Requests/Requests/requestsActions";
+import {getComparator, stableSort} from "../../../../../Utils/Untils/Sorting";
+
+
+const TracksTable = (props) => {
+  const {requests, requestsPagination, setRequestsPagination} = props;
+  const classes = RequestsTableStyles();
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('method');
+
+  const onRequestSort = (property) => (event) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    localStorage.setItem('rowsPerPageRequests', event.target.value)
+    setRequestsPagination({...requestsPagination, page: 0, rowsPerPage: parseInt(event.target.value, 10)})
+  };
+  const onPageChange = (e, page) => setRequestsPagination({...requestsPagination, page})
+
+  return (
+    <TableContainer component={Paper} className={classes.tableContainer}>
+      <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
+        <TracksTableHeader
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={onRequestSort}
+        />
+        <TableBody>
+          {stableSort(requests?.results, getComparator(order, orderBy))
+            .map(r => <RequestRow request={r} key={r.request_id}/>)}
+        </TableBody>
+
+        {requests?.results?.length > 0 && <TablePagination
+          size={'small'}
+          rowsPerPageOptions={[25, 50, 100]}
+          colSpan={6}
+          count={requests.count}
+          rowsPerPage={requestsPagination.rowsPerPage}
+          page={requestsPagination.page}
+          labelRowsPerPage={<Typography variant={'body2'} sx={{marginTop: 2}}>Track per page</Typography>}
+          labelDisplayedRows={({count, from, page, to}) =>
+            <Typography variant={'body2'} sx={{marginTop: 2}}>{from}-{to} of {count}</Typography>
+          }
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          onPageChange={onPageChange}
+        />}
+      </Table>
+    </TableContainer>
+  )
+}
+
+const getState = (state) => ({
+  requests: state.requests.requests,
+  requestsPagination: state.requests.requestsPagination
+})
+
+export default connect(
+  getState,
+  {
+    setRequestsPagination
+  },
+)(TracksTable);

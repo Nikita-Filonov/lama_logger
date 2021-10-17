@@ -72,7 +72,7 @@ class RequestApi(views.APIView):
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id, request_id):
-        db_request = Request.objects.get(request_id=request_id)
+        db_request = Request.objects.get(requestId=request_id)
         return Response(RequestsSerializer(db_request, many=False).data)
 
 

@@ -13,6 +13,7 @@ import {ProjectSettingsProvider} from "../../../../Providers/Requests/ProjectSet
 import {RequestsProvider} from "../../../../Providers/Requests/RequestsProvider";
 import {RequestsSend} from "../../../../Screens/Requests/RequestsSend";
 import {RequestsTracks} from "../../../../Screens/Requests/RequestsTracks";
+import {RequestsTracksProvider} from "../../../../Providers/Requests/RequestsTracksProvider";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -20,7 +21,14 @@ export const RequestsRoutes = ({store}) =>
       <Switch>
         <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
         <RequestRoute exact path="/projects/:projectId/requests/send" component={RequestsSend}/>
-        <RequestRoute exact path="/projects/:projectId/tracks" component={RequestsTracks}/>
+        <RequestRoute
+          exact
+          path="/projects/:projectId/tracks"
+          component={props => <RequestsTracksProvider store={store}>
+            <RequestsTracks {...props}/><
+            /RequestsTracksProvider>
+          }
+        />
         <RequestRoute
           exact
           path="/projects/:projectId/stats"
