@@ -77,7 +77,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
           options={[...CODES.success, ...CODES.redirect, ...CODES.error]}
           onChange={(_, value) => setExcludeStatuses(value)}
           disableCloseOnSelect
-          getOptionLabel={(option) => option}
+          getOptionLabel={(option) => option.toString()}
           renderOption={(props, option, {selected}) => (
             <li {...props}>
               <Checkbox size={'small'} style={{marginRight: 8}} checked={selected}/>

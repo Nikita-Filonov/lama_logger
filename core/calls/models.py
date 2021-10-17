@@ -82,16 +82,19 @@ class Track(models.Model):
         null=False
     )
     times = models.PositiveIntegerField(
-        verbose_name='How many times error should happened'
+        verbose_name='How many times error should happened',
+        default=1
     )
-    statusCode = models.PositiveIntegerField(
-        verbose_name='Status code'
+    statusCodes = models.JSONField(
+        verbose_name='Status codes',
+        default=list,
+        blank=False,
+        null=False
     )
-    responseBodyContains = models.CharField(
+    responseBodyContains = models.TextField(
         verbose_name='Response body contains',
-        max_length=255,
         null=True,
-        blank=True
+        blank=True,
     )
     thenAction = models.JSONField(
         verbose_name='Post action when error happened',
@@ -114,6 +117,10 @@ class Track(models.Model):
         verbose_name='Project',
         on_delete=models.CASCADE,
         null=True
+    )
+    timesActual = models.PositiveIntegerField(
+        verbose_name='How many times error actually happens',
+        default=0
     )
 
     def __str__(self):

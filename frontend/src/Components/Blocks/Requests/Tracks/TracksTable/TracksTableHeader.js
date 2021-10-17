@@ -17,9 +17,9 @@ const headCells = [
     label: 'Times',
   },
   {
-    id: 'statusCode',
+    id: 'timesActual',
     align: 'right',
-    label: 'Status code',
+    label: 'Error happened',
   },
 ];
 

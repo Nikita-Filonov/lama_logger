@@ -1,7 +1,8 @@
-import React, {forwardRef} from "react";
+import React, {forwardRef, useState} from "react";
 import {
-  AppBar, Avatar,
-  Button,
+  AppBar,
+  Autocomplete,
+  Checkbox,
   Container,
   Dialog,
   DialogContentText,
@@ -20,15 +21,26 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import {Link as RouterLink} from 'react-router-dom';
 import {connect} from "react-redux";
-import {baseUrl} from "../../../../Utils/Constants";
+import {baseUrl, CODES} from "../../../../Utils/Constants";
+import {StatusCodeIndicator} from "../../../Blocks/Requests/Requests/StatusCodeIndicator";
+import {useRequestsTracks} from "../../../../Providers/Requests/RequestsTracksProvider";
+import {LoadingButton} from "@mui/lab";
 
 const Transition = forwardRef((props, ref) =>
   <Slide direction="up" ref={ref} {...props} />);
 
 
 const CreateTrack = ({modal, setModal, project}) => {
+  const {request, createRequestsTrack} = useRequestsTracks();
+  const [endpoint, setEndpoint] = useState('');
+  const [times, setTimes] = useState(1);
+  const [statusCodes, setStatusCodes] = useState([]);
+  const [responseBodyContains, setResponseBodyContains] = useState('');
 
   const onClose = () => setModal(false);
+  const onCreate = async () => createRequestsTrack(project.id,
+    {endpoint, times, statusCodes, responseBodyContains})
+    .then(() => onClose());
 
   return (
     <Dialog
@@ -50,17 +62,19 @@ const CreateTrack = ({modal, setModal, project}) => {
           <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
             Create new track
           </Typography>
-          <Button autoFocus color="inherit" onClick={onClose}>
+          <LoadingButton color={'inherit'} onClick={onCreate} loading={request}>
             Create
-          </Button>
+          </LoadingButton>
         </Toolbar>
       </AppBar>
-      <Container className={'mt-3'}>
+      <Container className={'mt-5'}>
         <DialogContentText>
           You can create track for certain endpoint. When error will happen on this
           endpoint we will let you know about it.
         </DialogContentText>
         <TextField
+          value={endpoint}
+          onChange={event => setEndpoint(event.target.value)}
           className={'mt-3'}
           variant={'standard'}
           size={'small'}
@@ -69,6 +83,8 @@ const CreateTrack = ({modal, setModal, project}) => {
           placeholder={'https://some.unstable.endpoint.com/api/v1/'}
         />
         <TextField
+          value={times}
+          onChange={event => setTimes(event.target.value)}
           type={'number'}
           className={'mt-3'}
           variant={'standard'}
@@ -81,14 +97,46 @@ const CreateTrack = ({modal, setModal, project}) => {
             'For example if error happened 5 times, we will notify you.'
           }
         />
+        <Autocomplete
+          value={statusCodes}
+          size={'small'}
+          multiple
+          freeSolo
+          options={[...CODES.success, ...CODES.redirect, ...CODES.error]}
+          onChange={(_, value) => setStatusCodes(value)}
+          disableCloseOnSelect
+          getOptionLabel={(option) => option.toString()}
+          renderOption={(props, option, {selected}) => (
+            <li {...props}>
+              <Checkbox size={'small'} style={{marginRight: 8}} checked={selected}/>
+              {option}
+              <div className={'flex-grow-1'}/>
+              <StatusCodeIndicator statusCode={option}/>
+            </li>
+          )}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              className={'mt-3'}
+              label={'What status code do we take for an error?'}
+              placeholder={'401, 500, 502'}
+              size={'small'}
+              variant={'standard'}
+              helperText={'List of status codes. Press "Enter" to add'}
+            />
+          )}
+        />
         <TextField
+          value={responseBodyContains}
+          onChange={event => setResponseBodyContains(event.target.value)}
+          multiline
           className={'mt-3'}
           variant={'standard'}
           size={'small'}
           fullWidth
-          label={'What status code do we take for an error?'}
-          placeholder={'401, 500, 502'}
-          helperText={'List of status codes. Press "Enter" to add'}
+          label={'What response body should contains?'}
+          placeholder={'{"error": "some error"}'}
+          helperText={'Enter pattern which 3'}
         />
         <FormControl variant="standard" className={'mt-3'} fullWidth>
           <InputLabel id="demo-simple-select-standard-label">Where to notify you?</InputLabel>

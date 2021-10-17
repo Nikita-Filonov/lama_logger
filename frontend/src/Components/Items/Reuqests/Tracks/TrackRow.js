@@ -1,7 +1,6 @@
 import React, {useMemo, useRef} from "react";
 import {connect} from "react-redux";
 import {Checkbox, TableCell, TableRow, Typography} from '@mui/material';
-import {StatusCodeIndicator} from "../../../Blocks/Requests/Requests/StatusCodeIndicator";
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import {setSelectedRequests} from "../../../../Redux/Requests/Requests/requestsActions";
 
@@ -32,8 +31,7 @@ const TrackRow = ({track, requests, selectedRequests, setSelectedRequests}) => {
           <Typography className={classes.rowRequestUrlText}>{track?.times}</Typography>
         </TableCell>
         <TableCell align="right" className={'d-flex'}>
-          <StatusCodeIndicator statusCode={track?.statusCode}/>
-          <Typography>{track?.statusCode}</Typography>
+          <Typography>{track?.timesActual}</Typography>
         </TableCell>
       </TableRow>
     </React.Fragment>

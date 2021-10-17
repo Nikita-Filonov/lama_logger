@@ -2,16 +2,19 @@ import React, {useContext, useEffect, useState} from 'react';
 import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../UsersProvider";
 import {queryWithPagination} from "../../Utils/Untils/Common";
-import {SET_TRACKS} from "../../Redux/Requests/Tracks/actionTypes";
+import {CREATE_TRACK, SET_TRACKS} from "../../Redux/Requests/Tracks/actionTypes";
 import {useSelector} from "react-redux";
+import {useAlerts} from "../AlertsProvider";
 
 
 const RequestsTracksContext = React.createContext(null);
 
 const RequestsTracksProvider = ({children, store}) => {
-  const {token} = useUsers()
+  const {token} = useUsers();
+  const {setAlert} = useAlerts();
   const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(false);
+  const [request, setRequest] = useState(false);
 
   const project = useSelector(state => state.projects.project);
 
@@ -34,11 +37,34 @@ const RequestsTracksProvider = ({children, store}) => {
       });
   }
 
+  const createRequestsTrack = async (projectId, payload) => {
+    setRequest(true)
+    const response = await fetch(projectsApi + `${projectId}/tracks/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    if (response.ok) {
+      response.json().then(payload => {
+        store.dispatch({type: CREATE_TRACK, payload});
+        setAlert({message: 'Track successfully created', level: 'success'})
+      })
+    } else {
+      response.json().then(data => setAlert(data))
+    }
+    setRequest(false);
+  }
+
   return (
     <RequestsTracksContext.Provider
       value={{
         load,
+        request,
         getRequestsTracks,
+        createRequestsTrack
       }}
     >
       {children}
