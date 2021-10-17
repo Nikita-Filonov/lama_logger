@@ -11,12 +11,14 @@ import ProjectSettingsRoles from "../../../../Screens/Requests/Settings/Users/Pr
 import RequestsInboundDataFilters from "../../../../Screens/Requests/Settings/Requests/RequestsInboundDataFilters";
 import {ProjectSettingsProvider} from "../../../../Providers/Requests/ProjectSettingsProvider";
 import {RequestsProvider} from "../../../../Providers/Requests/RequestsProvider";
+import {RequestsSend} from "../../../../Screens/Requests/RequestsSend";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
     <ProjectSettingsProvider store={store}>
       <Switch>
         <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
+        <RequestRoute exact path="/projects/:projectId/requests/send" component={RequestsSend}/>
         <RequestRoute
           exact
           path="/projects/:projectId/stats"

@@ -12,8 +12,10 @@ import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import {connect} from "react-redux";
 import {useAlerts} from "../../../../Providers/AlertsProvider";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {useHistory} from "react-router-dom";
 
 const ViewRequestMenu = ({project, request}) => {
+  const history = useHistory();
   const {setAlert} = useAlerts();
   const {getRequestAsCurl} = useRequests();
   const [menu, setMenu] = useState(null);
@@ -25,7 +27,7 @@ const ViewRequestMenu = ({project, request}) => {
     onClose()
   }
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
-
+  const onSend = async () => history.push(`/projects/${project.id}/requests/send`);
 
   return (
     <React.Fragment>
@@ -44,7 +46,7 @@ const ViewRequestMenu = ({project, request}) => {
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
-        <MenuItem>
+        <MenuItem onClick={onSend}>
           <ListItemIcon>
             <Send fontSize="small"/>
           </ListItemIcon>

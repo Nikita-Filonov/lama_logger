@@ -8,6 +8,7 @@ export const BREADCRUMB_ROUTES = [
   {path: '/projects/:projectId/stats', breadcrumb: 'Stats'},
   {path: '/projects/:projectId/requests', breadcrumb: 'Requests'},
   {path: '/projects/:projectId/settings', breadcrumb: 'Settings'},
+  {path: '/projects/:projectId/requests/send', breadcrumb: 'Send'},
   {path: '/projects/:projectId/settings/general', breadcrumb: 'General'},
   {path: '/projects/:projectId/settings/members', breadcrumb: 'Members'},
   {path: '/projects/:projectId/settings/roles', breadcrumb: 'Roles'},

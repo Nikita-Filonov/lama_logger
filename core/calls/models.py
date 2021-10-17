@@ -62,3 +62,21 @@ class Request(models.Model):
 
     def __str__(self):
         return self.requestUrl
+
+
+class CustomRequest(models.Model):
+    requestUrl = models.CharField(
+        verbose_name='Request url',
+        max_length=500,
+        null=False
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    def __str__(self):
+        return self.requestUrl

@@ -3,7 +3,6 @@ import {Box, Link, Tab, Tabs, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequest} from "../../../../../Redux/Requests/Requests/requestsActions";
 import ViewRequestMenu from "../../../../Menus/Requests/Requests/ViewRequestMenu";
-import {ViewRequestStyles} from "../../../../../Styles/Blocks";
 import {TabPanel} from "../../../Common/TabPanel";
 import {Headers} from "./Headers";
 import {Body} from "./Body";
@@ -18,7 +17,6 @@ function a11yProps(index) {
 }
 
 const ViewRequestDemo = ({request}) => {
-  const classes = ViewRequestStyles()
   const [requestTab, setRequestTab] = useState(0);
   const [responseTab, setResponseTab] = useState(0)
 
