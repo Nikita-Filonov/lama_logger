@@ -6,13 +6,14 @@ import TracksTableHeader from "./TracksTableHeader";
 import {connect} from "react-redux";
 import {setRequestsPagination} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {getComparator, stableSort} from "../../../../../Utils/Untils/Sorting";
+import TrackRow from "../../../../Items/Reuqests/Tracks/TrackRow";
 
 
 const TracksTable = (props) => {
-  const {requests, requestsPagination, setRequestsPagination} = props;
+  const {tracks, requestsPagination, setRequestsPagination} = props;
   const classes = RequestsTableStyles();
   const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('method');
+  const [orderBy, setOrderBy] = useState('endpoint');
 
   const onRequestSort = (property) => (event) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -35,15 +36,15 @@ const TracksTable = (props) => {
           onRequestSort={onRequestSort}
         />
         <TableBody>
-          {stableSort(requests?.results, getComparator(order, orderBy))
-            .map(r => <RequestRow request={r} key={r.request_id}/>)}
+          {stableSort(tracks?.results, getComparator(order, orderBy))
+            .map(track => <TrackRow track={track} key={track.id}/>)}
         </TableBody>
 
-        {requests?.results?.length > 0 && <TablePagination
+        {tracks?.results?.length > 0 && <TablePagination
           size={'small'}
           rowsPerPageOptions={[25, 50, 100]}
           colSpan={6}
-          count={requests.count}
+          count={tracks.count}
           rowsPerPage={requestsPagination.rowsPerPage}
           page={requestsPagination.page}
           labelRowsPerPage={<Typography variant={'body2'} sx={{marginTop: 2}}>Track per page</Typography>}
@@ -59,7 +60,7 @@ const TracksTable = (props) => {
 }
 
 const getState = (state) => ({
-  requests: state.requests.requests,
+  tracks: state.tracks.tracks,
   requestsPagination: state.requests.requestsPagination
 })
 

@@ -1,3 +1,8 @@
 export const INITIAL_TRACKS = {
-  tracks: []
+  tracks: {
+    count: 0,
+    next: null,
+    previous: null,
+    results: []
+  }
 }

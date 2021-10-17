@@ -64,7 +64,6 @@ const TracksTableHeader = (props) => {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell padding={'checkbox'}/>
       </TableRow>
     </TableHead>
   )

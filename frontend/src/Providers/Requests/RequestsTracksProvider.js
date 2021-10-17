@@ -16,8 +16,8 @@ const RequestsTracksProvider = ({children, store}) => {
   const project = useSelector(state => state.projects.project);
 
   useEffect(() => {
-    (async () => await getRequestsTracks(project.id, 25))()
-  }, [project.id])
+    (async () => token && await getRequestsTracks(project.id, 25))()
+  }, [token, project.id])
 
   const getRequestsTracks = async (projectId, limit = null, offset = null, filters = {}) => {
     setLoad(state => state)
