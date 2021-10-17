@@ -14,6 +14,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
 import {setRequest} from "../../../../Redux/Requests/Requests/requestsActions";
+import DrawerSelectProject from "../../../Blocks/Common/Drawers/DrawerSelectProject";
 
 const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   const history = useHistory();
@@ -91,12 +92,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
         </ListItem>
       </List>
       <div className={'flex-grow-1'}/>
-      <ListItem button sx={{mb: 2}}>
-        <ListItemIcon>
-          <PeopleOutline/>
-        </ListItemIcon>
-        <ListItemText primary={'Actions'}/>
-      </ListItem>
+      <DrawerSelectProject drawerOpen={open}/>
     </DrawerStyled>
   )
 }

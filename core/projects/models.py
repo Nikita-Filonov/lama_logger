@@ -87,9 +87,9 @@ class Project(models.Model):
     )
     short = models.CharField(
         verbose_name='Short name',
-        null=True,
-        blank=True,
-        max_length=10
+        max_length=2,
+        null=False,
+        blank=False
     )
     members = models.ManyToManyField(
         Member,

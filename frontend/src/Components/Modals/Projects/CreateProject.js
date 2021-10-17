@@ -43,7 +43,7 @@ export const CreateProject = ({modal, setModal}) => {
           label="Short name"
           placeholder={'LL'}
           fullWidth
-          inputProps={{maxLength: 10}}
+          inputProps={{maxLength: 2}}
           variant="standard"
           className={'mt-3'}
           helperText={'Short name for your project. For example if project name is Lama Logger, then short name ' +

@@ -6,7 +6,7 @@ import {makeStyles} from "@mui/styles";
 
 export const common = {
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 70,
     right: 30
   },
