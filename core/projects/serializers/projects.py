@@ -2,6 +2,7 @@ from itertools import groupby
 
 from rest_framework import serializers
 
+from core.calls.models import Request
 from core.projects.models import Project, Member, Role
 from core.projects.permissions.roles import Admin, AccountManager, Editor, Viewer
 from core.projects.serializers.members import MembersSerializer
@@ -21,7 +22,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        exclude = ('requests',)
+        fields = '__all__'
 
     @staticmethod
     def get_members_count(obj: Project):
@@ -29,7 +30,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_requests_count(obj: Project):
-        return obj.requests.count()
+        return Request.objects.filter(project=obj).count()
 
     @staticmethod
     def get_stats(obj: Project):

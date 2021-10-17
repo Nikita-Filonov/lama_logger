@@ -1,6 +1,7 @@
 from typing import List
 
-from core.projects.models import Request, Project
+from core.calls.models import Request
+from core.projects.models import Project
 from core.stats.models import RequestStat
 
 

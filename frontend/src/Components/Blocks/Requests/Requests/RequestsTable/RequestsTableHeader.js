@@ -12,12 +12,12 @@ const headCells = [
     label: 'Method',
   },
   {
-    id: 'request_url',
+    id: 'requestUrl',
     align: 'left',
     label: 'Url',
   },
   {
-    id: 'response_code',
+    id: 'statusCode',
     align: 'right',
     label: 'Status code',
   },

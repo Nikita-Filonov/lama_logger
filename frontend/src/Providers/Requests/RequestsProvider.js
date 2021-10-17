@@ -16,7 +16,7 @@ const RequestsProvider = ({children, store}) => {
 
 
   const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
-    setLoad(true)
+    setLoad(state => state)
     const queryPayload = {
       ...filters,
       limit: limit || localStorage.getItem('rowsPerPageRequests'),

@@ -3,7 +3,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
-from core.calls.models import Request
 from core.users.models import CustomUser
 
 
@@ -100,11 +99,6 @@ class Project(models.Model):
     roles = models.ManyToManyField(
         Role,
         verbose_name='Roles',
-        blank=True
-    )
-    requests = models.ManyToManyField(
-        Request,
-        verbose_name='Requests',
         blank=True
     )
     archived = models.BooleanField(

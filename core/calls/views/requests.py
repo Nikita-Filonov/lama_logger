@@ -9,9 +9,10 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.calls.helpers.requests.filters import filter_request
+from core.calls.models import Request
 from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.projects.helpers.utils import to_curl
-from core.projects.models import Project, Request
+from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
 
 
@@ -21,9 +22,8 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id):
-        filters = json.loads(request.query_params['filters'])
-        project = Project.objects.get(id=project_id)
-        requests = project.requests.filter(**filters).order_by('-created')
+        filters = json.loads(request.query_params.get('filters', '{}'))
+        requests = Request.objects.filter(**filters, project_id=project_id).order_by('-created')
 
         results = self.paginate_queryset(requests, request, view=self)
         serializer = RequestsSerializer(results, many=True)
@@ -36,12 +36,10 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
         if not should_create_request:
             return Response(status=status.HTTP_204_NO_CONTENT)
 
-        serializer = RequestSerializer(data=request.data)
+        context = {'user': request.user, 'project': project}
+        serializer = RequestSerializer(data=request.data, context=context)
         if serializer.is_valid():
             created_request = serializer.save()
-            created_request.user = request.user
-            project.requests.add(created_request)
-
             track_request(project, created_request, 'create')
 
             payload = RequestsSerializer(created_request, many=False).data
@@ -56,11 +54,11 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
         requests = request.data
         if not isinstance(requests, list):
             return Response(
-                {'message': 'You should provide requests ids', 'level': 'danger'},
+                {'message': 'You should provide requests ids', 'level': 'error'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         project = Project.objects.get(id=project_id)
-        requests = project.requests.filter(requestId__in=requests)
+        requests = Request.objects.filter(requestId__in=requests)
 
         track_requests(project, requests, 'delete')
         requests.delete()
@@ -82,8 +80,8 @@ class RequestApi(views.APIView):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((IsAuthenticated,))
 @throttle_classes((UserRateThrottle,))
-def request_to_curl(request, project_id, requestId):
-    db_request = Request.objects.get(requestId=requestId)
+def request_to_curl(request, project_id, request_id):
+    db_request = Request.objects.get(requestId=request_id)
     curl_request = {
         'method': db_request.method,
         'headers': db_request.requestHeaders,

@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here.
 from django.utils import timezone
 
+from core.projects.models import Project
 from core.users.models import CustomUser
 
 
@@ -59,16 +60,47 @@ class Request(models.Model):
         verbose_name='Created',
         default=timezone.now
     )
+    isCustom = models.BooleanField(
+        verbose_name='Is request custom',
+        default=False
+    )
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     def __str__(self):
         return self.requestUrl
 
 
-class CustomRequest(models.Model):
-    requestUrl = models.CharField(
-        verbose_name='Request url',
+class Track(models.Model):
+    endpoint = models.CharField(
+        verbose_name='Endpoint',
         max_length=500,
         null=False
+    )
+    times = models.PositiveIntegerField(
+        verbose_name='How many times error should happened'
+    )
+    statusCode = models.PositiveIntegerField(
+        verbose_name='Status code'
+    )
+    responseBodyContains = models.CharField(
+        verbose_name='Response body contains',
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    thenAction = models.JSONField(
+        verbose_name='Post action when error happened',
+        default=list,
+        blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
     )
     user = models.ForeignKey(
         CustomUser,
@@ -77,6 +109,12 @@ class CustomRequest(models.Model):
         null=True,
         blank=True
     )
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     def __str__(self):
-        return self.requestUrl
+        return f'{self.endpoint}:{self.times}'

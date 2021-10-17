@@ -39,7 +39,7 @@ const RequestsTable = (props) => {
             .map(r => <RequestRow request={r} key={r.request_id}/>)}
         </TableBody>
 
-        <TablePagination
+        {requests?.results?.length > 0 && <TablePagination
           size={'small'}
           rowsPerPageOptions={[25, 50, 100]}
           colSpan={6}
@@ -52,7 +52,7 @@ const RequestsTable = (props) => {
           }
           onRowsPerPageChange={handleChangeRowsPerPage}
           onPageChange={onPageChange}
-        />
+        />}
       </Table>
     </TableContainer>
   )

@@ -28,7 +28,8 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
 
   const onSettings = () => history.push(baseRoute + `/settings/general`)
   const onRequests = () => history.push(baseRoute + '/requests');
-  const onStats = () => history.push(baseRoute + '/stats')
+  const onStats = () => history.push(baseRoute + '/stats');
+  const onTracks = () => history.push(baseRoute + '/tracks');
 
 
   return (
@@ -64,7 +65,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Performance'}/>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={onTracks} selected={/\/projects\/[0-9]+\/tracks/.test(location.pathname)}>
           <ListItemIcon>
             <Dvr/>
           </ListItemIcon>

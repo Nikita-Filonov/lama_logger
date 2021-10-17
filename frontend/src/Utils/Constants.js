@@ -6,6 +6,7 @@ export const baseUrl = 'http://localhost:8000/';
 export const BREADCRUMB_ROUTES = [
   {path: '/projects/:projectId', breadcrumb: getProjectName},
   {path: '/projects/:projectId/stats', breadcrumb: 'Stats'},
+  {path: '/projects/:projectId/tracks', breadcrumb: 'Tracks'},
   {path: '/projects/:projectId/requests', breadcrumb: 'Requests'},
   {path: '/projects/:projectId/settings', breadcrumb: 'Settings'},
   {path: '/projects/:projectId/requests/send', breadcrumb: 'Send'},

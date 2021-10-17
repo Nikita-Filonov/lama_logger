@@ -6,6 +6,7 @@ import ViewRequestMenu from "../../../../Menus/Requests/Requests/ViewRequestMenu
 import {TabPanel} from "../../../Common/TabPanel";
 import {Headers} from "./Headers";
 import {Body} from "./Body";
+import moment from "moment";
 
 const tabsStyles = {minHeight: 28, height: 28}
 
@@ -31,6 +32,9 @@ const ViewRequestDemo = ({request}) => {
           {request.method} request to <Link href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
+        <Typography variant={'body2'} sx={{mr: 2}}>
+          {moment.utc(request.created).local().startOf('seconds').fromNow()}
+        </Typography>
         <ViewRequestMenu request={request}/>
       </div>
       <Typography variant={'subtitle1'} gutterBottom>Request</Typography>
