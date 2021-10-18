@@ -1,21 +1,25 @@
 import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
 import {useProjects} from "../../../Providers/ProjectsProvider";
+import {LoadingButton} from "@mui/lab";
 
 
 export const CreateProject = ({modal, setModal}) => {
-  const {createProject} = useProjects();
+  const {request, createProject} = useProjects();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [short, setShort] = useState('')
 
   const onClose = () => setModal(false)
 
-  const onCreate = async () => {
-    await createProject({title});
-    onClose()
-    setTitle('')
-  }
+  const onCreate = async () => createProject({title, short, description})
+    .then(() => {
+      onClose();
+      setTitle('');
+      setDescription('');
+      setShort('');
+    });
+
 
   return (
     <Dialog open={modal} onClose={onClose}>
@@ -64,7 +68,13 @@ export const CreateProject = ({modal, setModal}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button disabled={title.length === 0 || short.length === 0} onClick={onCreate}>Create</Button>
+        <LoadingButton 
+          loading={request}
+          disabled={title.length === 0 || short.length === 0}
+          onClick={onCreate}
+        >
+          Create
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   )

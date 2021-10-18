@@ -66,7 +66,8 @@ const ProjectsProvider = ({children, store}) => {
   }
 
   const createProject = async (payload) => {
-    await fetch(projectsApi, {
+    setRequest(true)
+    const response = await fetch(projectsApi, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`,
@@ -74,8 +75,14 @@ const ProjectsProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-      .then(response => response.json())
-      .then(async data => store.dispatch({type: CREATE_PROJECT, payload: data}));
+    if (response.ok) {
+      const json = await response.json();
+      store.dispatch({type: CREATE_PROJECT, payload: json});
+      setAlert({message: 'Project successfully created', level: 'success'})
+    } else {
+      setAlert({message: 'Error happened while creating project', level: 'error'})
+    }
+    setRequest(false)
   }
 
   const updateProject = async (projectId, payload, isLazy = false) => {
