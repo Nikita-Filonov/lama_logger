@@ -1,3 +1,6 @@
+import React, {forwardRef} from "react";
+import {Slide} from "@mui/material";
+
 export const objectToQuery = async (object, ignore = ['meta']) =>
   object && '?' + Object.keys(object)
     .map(key => !ignore.includes(key) ? `${key}=${object[key]}&` : '')
@@ -21,3 +24,5 @@ export const copyText = (text) => {
   document.body.removeChild(el);
 }
 
+export const SlideTransition = forwardRef((props, ref) =>
+  <Slide direction="up" ref={ref} {...props} />);

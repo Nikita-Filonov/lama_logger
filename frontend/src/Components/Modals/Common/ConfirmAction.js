@@ -3,6 +3,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import {connect} from "react-redux";
 import {setConfirmAction} from "../../../Redux/Users/usersActions";
 import {common} from "../../../Styles/Blocks";
+import {SlideTransition} from "../../../Utils/Untils/Common";
 
 const ConfirmAction = ({confirmAction, setConfirmAction}) => {
   const onClose = () => setConfirmAction({...confirmAction, modal: false})
@@ -21,6 +22,7 @@ const ConfirmAction = ({confirmAction, setConfirmAction}) => {
         onClose={onClose}
         aria-labelledby="form-dialog-title"
         disableScrollLock={true}
+        TransitionComponent={SlideTransition}
       >
         <DialogTitle id="form-dialog-title">{confirmAction?.title}</DialogTitle>
         <DialogContent>

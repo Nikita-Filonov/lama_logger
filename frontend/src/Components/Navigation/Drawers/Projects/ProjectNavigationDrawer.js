@@ -24,7 +24,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
     history.push('/projects')
     setRequest({})
   }
-  const onProfile = () => history.push('/profile');
+  const onProfile = () => history.push('/user/profile');
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -41,7 +41,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Projects'}/>
         </ListItem>
-        <ListItem button onClick={onProfile} selected={location.pathname === '/profile'}>
+        <ListItem button onClick={onProfile} selected={location.pathname.startsWith('/user')}>
           <ListItemIcon>
             <PersonOutline/>
           </ListItemIcon>

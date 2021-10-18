@@ -124,3 +124,8 @@ class CustomUser(AbstractBaseUser):
     def is_active(self):
         """Is the user active?"""
         return self.active
+
+
+class ApiToken(models.Model):
+    name = None
+    jwt = None

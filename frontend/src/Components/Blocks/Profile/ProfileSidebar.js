@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import List from "@mui/material/List";
 import Box from "@mui/material/Box";
 import {useLocation} from "react-router-dom";
@@ -10,17 +10,20 @@ import {ListItemLink} from "../Common/Drawers/ListItemLink";
 export const ProfileSidebar = () => {
   const classes = ProjectSettingsStyles();
   const location = useLocation();
-  const [collapse, setCollapse] = useState({users: false, requests: false});
-
-  const onCollapse = (key) => setCollapse({...collapse, [key]: !collapse[key]})
 
   return (
     <Box className={classes.sidebarContainer} component="nav">
       <Typography className={'mt-4 mb-2'} variant={'h6'}>User profile settings</Typography>
       <List>
         <ListItemLink
-          selected={location.pathname.endsWith('/profile')}
+          selected={location.pathname.endsWith('/user/profile')}
           title={'Personal info'}
+          to={'/user/profile'}
+        />
+        <ListItemLink
+          selected={location.pathname.endsWith('/user/tokens')}
+          title={'API Tokens'}
+          to={'/user/tokens'}
         />
         <ListItemLink
           title={'Change password'}

@@ -1,5 +1,8 @@
 export const INITIAL_USERS = {
-  user: {},
+  user: {
+    email: '',
+    username: '',
+  },
   theme: localStorage.getItem('theme') || 'light',
   confirmAction: {
     title: null,
