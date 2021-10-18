@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useUsers} from "../../Providers/UsersProvider";
+import {useUsers} from "../../Providers/Users/UsersProvider";
 import {baseUrl} from "../../Utils/Constants";
 import {useHistory, Link as RouterLink} from 'react-router-dom'
 import {Container, CssBaseline, Grid, InputAdornment, TextField, Typography} from '@mui/material';

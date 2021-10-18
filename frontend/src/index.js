@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Switch} from "react-router-dom";
 import reducer from './Redux/Reducers';
 import {createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
-import {UsersProvider} from "./Providers/UsersProvider";
+import {UsersProvider} from "./Providers/Users/UsersProvider";
 import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
 import {ProjectsProvider} from "./Providers/ProjectsProvider";
 import {AlertsProvider} from "./Providers/AlertsProvider";

@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {baseUrl} from "../../Utils/Constants";
-import {useUsers} from "../UsersProvider";
+import {useUsers} from "../Users/UsersProvider";
 import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {copyText, queryWithPagination} from "../../Utils/Untils/Common";

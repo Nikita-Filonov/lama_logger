@@ -127,5 +127,32 @@ class CustomUser(AbstractBaseUser):
 
 
 class ApiToken(models.Model):
-    name = None
-    jwt = None
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='User',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    name = models.CharField(
+        verbose_name='Token name',
+        null=False,
+        max_length=255
+    )
+    token = models.UUIDField(
+        verbose_name='Token',
+        editable=True,
+        unique=True,
+        null=False
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
+    )
+    deleted = models.BooleanField(
+        verbose_name='Deleted',
+        default=False
+    )
+
+    def __str__(self):
+        return f'{self.user.email}:{self.name}'

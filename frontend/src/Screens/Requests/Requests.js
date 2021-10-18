@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import {useRequests} from "../../Providers/Requests/RequestsProvider";
 import {connect} from "react-redux";
-import {useUsers} from "../../Providers/UsersProvider";
+import {useUsers} from "../../Providers/Users/UsersProvider";
 import RequestsToolbar from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
 import RequestsTable from "../../Components/Blocks/Requests/Requests/RequestsTable/RequestsTable";

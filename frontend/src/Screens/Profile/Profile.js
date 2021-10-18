@@ -6,7 +6,7 @@ import {LoadingButton} from "@mui/lab";
 import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
 import {ProjectSettingsStyles} from "../../Styles/Screens";
 import {connect} from "react-redux";
-import {useUsers} from "../../Providers/UsersProvider";
+import {useUsers} from "../../Providers/Users/UsersProvider";
 
 const Profile = ({user}) => {
   const classes = ProjectSettingsStyles();

@@ -4,7 +4,7 @@ import {StatsChart} from "../../Components/Blocks/Requests/Stats/StatsChart";
 import StatsToolbar from "../../Components/Blocks/Requests/Stats/StatsToolbar";
 import {useRequestsStats} from "../../Providers/Requests/RequestsStatsProvider";
 import {connect} from "react-redux";
-import {useUsers} from "../../Providers/UsersProvider";
+import {useUsers} from "../../Providers/Users/UsersProvider";
 import {StatsInfoGrid} from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
 import {makeRequestsStatsFilters} from "../../Utils/Untils/Filters";
 

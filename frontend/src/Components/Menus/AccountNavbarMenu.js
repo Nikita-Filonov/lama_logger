@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import {useUsers} from "../../Providers/UsersProvider";
+import {useUsers} from "../../Providers/Users/UsersProvider";
 import {useHistory} from "react-router-dom";
 import {AccountNavbarMenuProps} from "../../Styles/Blocks";
 

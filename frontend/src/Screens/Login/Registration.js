@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import Link from "@mui/material/Link";
 import {Link as RouterLink, useHistory} from "react-router-dom";
-import {useUsers} from "../../Providers/UsersProvider";
+import {useUsers} from "../../Providers/Users/UsersProvider";
 import {baseUrl} from "../../Utils/Constants";
 import {LoadingButton} from "@mui/lab";
 

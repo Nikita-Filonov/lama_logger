@@ -1,8 +1,7 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {baseUrl} from "../Utils/Constants";
-import {SET_USER} from "../Redux/Users/actionTypes";
-import {useAlerts} from "./AlertsProvider";
-import {setRequest} from "../Redux/Requests/Requests/requestsActions";
+import {baseUrl} from "../../Utils/Constants";
+import {SET_USER} from "../../Redux/Users/actionTypes";
+import {useAlerts} from "../AlertsProvider";
 
 
 const UsersContext = React.createContext(null);

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {baseUrl} from "../../Utils/Constants";
-import {useUsers} from "../UsersProvider";
+import {useUsers} from "../Users/UsersProvider";
 import {SET_PROJECT_SETTINGS} from "../../Redux/Projects/actionTypes";
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";

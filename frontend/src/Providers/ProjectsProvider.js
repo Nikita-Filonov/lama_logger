@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {baseUrl, SUCCESS_CODES} from "../Utils/Constants";
-import {useUsers} from "./UsersProvider";
+import {useUsers} from "./Users/UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
 import {useAlerts} from "./AlertsProvider";
 import {objectToQuery} from "../Utils/Untils/Common";
