@@ -45,6 +45,12 @@ class UserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
+    JOBS = (
+        ('developer', 'developer'),
+        ('quality assurance', 'quality assurance'),
+        ('team lead', 'team lead'),
+        ('product manager', 'product manager')
+    )
     objects = UserManager()
 
     username = models.CharField(
@@ -58,11 +64,17 @@ class CustomUser(AbstractBaseUser):
         verbose_name='Email',
         max_length=70,
         unique=True,
-        null=True,
         validators=[MinLengthValidator(8)],
         error_messages={
             'unique': "User with such email already exists.",
         }
+    )
+    job = models.CharField(
+        verbose_name='Job title',
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=JOBS
     )
     created = models.DateTimeField(
         verbose_name='Created at',

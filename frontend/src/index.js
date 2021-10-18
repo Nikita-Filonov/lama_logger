@@ -18,6 +18,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {RequestsRoutes} from "./Components/Navigation/Routes/Requests/RequestsRoutes";
 import ProjectRoutes from "./Components/Navigation/Routes/Projects/ProjectRoutes";
 import {SettingsProvider} from "./Providers/SettingsProvider";
+import {Registration} from "./Screens/Login/Registration";
 
 
 const store = createStore(reducer);
@@ -28,6 +29,7 @@ const CustomRoute = () =>
       <Switch>
         {ProjectRoutes}
         <PublicRoute exact path="/login" component={Login}/>
+        <PublicRoute exact path="/registration" component={Registration}/>
       </Switch>
       <RequestsRoutes store={store}/>
       <ConfirmAction/>

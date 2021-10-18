@@ -1,18 +1,23 @@
 import React, {useState} from "react";
 import {useUsers} from "../../Providers/UsersProvider";
 import {baseUrl} from "../../Utils/Constants";
-import {useHistory} from 'react-router-dom'
-import {Container, CssBaseline, Grid, TextField, Typography} from '@mui/material';
+import {useHistory, Link as RouterLink} from 'react-router-dom'
+import {Container, CssBaseline, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import Link from "@mui/material/Link";
 
 
 export const Login = () => {
-  const history = useHistory()
-  const {onLogin} = useUsers()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const history = useHistory();
+  const {onLogin} = useUsers();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordSecure, setPasswordSecure] = useState('password');
   const [errors, setErrors] = useState({})
 
+  const onShowPassword = () => setPasswordSecure(passwordSecure === 'password' ? 'text' : 'password')
   const onLoginPress = async () => {
     await fetch(baseUrl + 'api-token-auth/', {
       method: 'POST',
@@ -53,7 +58,7 @@ export const Login = () => {
             helperText={errors?.username}
           />
           <TextField
-            type={'password'}
+            type={passwordSecure}
             value={password}
             onChange={event => setPassword(event.target.value)}
             fullWidth
@@ -63,14 +68,25 @@ export const Login = () => {
             className={'mt-3'}
             error={errors?.password}
             helperText={errors?.password}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">
+                <IconButton size={'small'} onClick={onShowPassword}>
+                  {passwordSecure === 'password' ? <VisibilityOff/> : <Visibility/>}
+                </IconButton>
+              </InputAdornment>,
+            }}
           />
+          <div className={'mt-2 d-flex'}>
+            <Link underline="none" component={RouterLink} to={'/registration'}>Sign up</Link>
+            <div className={'flex-grow-1'}/>
+            <Link underline="none" component={RouterLink} to={'/registration'}>Forgot password?</Link>
+          </div>
           <Button className={'mt-4'} variant="outlined" fullWidth onClick={onLoginPress}>
-            Log in
+            Sign in
           </Button>
         </Grid>
         <Grid item xs={2}/>
       </Grid>
-
     </Container>
   )
 }
