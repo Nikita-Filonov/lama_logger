@@ -14,6 +14,7 @@ import {RequestsProvider} from "../../../../Providers/Requests/RequestsProvider"
 import {RequestsSend} from "../../../../Screens/Requests/RequestsSend";
 import {RequestsTracks} from "../../../../Screens/Requests/RequestsTracks";
 import {RequestsTracksProvider} from "../../../../Providers/Requests/RequestsTracksProvider";
+import IntegrationsSettings from "../../../../Screens/Requests/Settings/Integrations/IntegrationsSettings";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -45,7 +46,7 @@ export const RequestsRoutes = ({store}) =>
         <RequestsSettingsRoute
           exact
           path="/projects/:projectId/settings/integrations"
-          component={ProjectSettingsRoles}
+          component={IntegrationsSettings}
         />
       </Switch>
     </ProjectSettingsProvider>
