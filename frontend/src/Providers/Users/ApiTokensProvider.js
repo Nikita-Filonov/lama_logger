@@ -32,18 +32,24 @@ const ApiTokensProvider = ({children}) => {
       });
   }
 
-  const createToken = async () => {
+  const createToken = async (payload) => {
     setRequest(true)
-    await fetch(tokensApi, {
+    const response = await fetch(tokensApi, {
+      method: 'POST',
       headers: {
         'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify(payload)
     })
-      .then(response => response.json())
-      .then(async payload => {
-        setTokens([...tokens, payload])
-        setRequest(false)
-      });
+    if (response.ok) {
+      const payload = await response.json();
+      setTokens([...tokens, payload]);
+      setAlert({message: 'API Token was successfully created', level: 'success'})
+    } else {
+      setAlert({message: 'Error happened while creating token', level: 'error'})
+    }
+    setRequest(false)
   }
 
   return (
@@ -51,7 +57,8 @@ const ApiTokensProvider = ({children}) => {
       value={{
         load,
         request,
-        tokens
+        tokens,
+        createToken
       }}
     >
       {children}

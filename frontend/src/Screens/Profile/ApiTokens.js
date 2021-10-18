@@ -22,7 +22,7 @@ export const ApiTokens = () => {
         because you will not be able to view it again.
       </Typography>
       <Grid item xs={12} className={'mt-3'}>
-        <List>
+        <List dense>
           {tokens.map(t =>
             <ListItem key={t.id} divider>
               <ListItemText
