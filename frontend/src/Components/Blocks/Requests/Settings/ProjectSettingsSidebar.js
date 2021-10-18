@@ -6,28 +6,12 @@ import Collapse from "@mui/material/Collapse";
 import Box from "@mui/material/Box";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import {Link as RouterLink, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {Typography} from "@mui/material";
+import {ListItemLink} from "../../Common/Drawers/ListItemLink";
 
-function ListItemLink(props) {
-  const {to, open, title, ...other} = props;
-
-  let icon = null;
-  if (open != null) {
-    icon = open ? <ExpandLess/> : <ExpandMore/>;
-  }
-
-  return (
-    <li>
-      <ListItem button component={RouterLink} to={to} {...other}>
-        <ListItemText primary={title}/>
-        {icon}
-      </ListItem>
-    </li>
-  );
-}
 
 const ProjectSettingsSidebar = ({project}) => {
   const classes = ProjectSettingsStyles();

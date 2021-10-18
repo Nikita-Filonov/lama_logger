@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {baseUrl, SUCCESS_CODES} from "../../Utils/Constants";
+import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../UsersProvider";
 import {SET_PROJECT_SETTINGS} from "../../Redux/Projects/actionTypes";
 import {useSelector} from "react-redux";
@@ -14,23 +14,12 @@ const ProjectSettingsProvider = ({children, store}) => {
   const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
-  const [projectSettings, setProjectSettings] = useState({})
 
   const project = useSelector(state => state.projects.project);
 
   useEffect(() => {
-    (async () => token && await getProjectSettings(project.id))()
-  }, [token, project.id])
-
-  const checkResponse = async (response, successMessage = {}, errorMessage = null) => {
-    if (SUCCESS_CODES.includes(response.status)) {
-      setAlert(successMessage)
-      response.json().then(async data => await store.dispatch({type: SET_PROJECT_SETTINGS, payload: data}))
-    } else {
-      response.json().then(async data => setAlert(errorMessage || data))
-    }
-    setRequest(false)
-  }
+    (async () => (token && project?.id) && await getProjectSettings(project.id))()
+  }, [token, project?.id])
 
   const getProjectSettings = async (projectId) => {
     setLoad(true)
@@ -56,9 +45,11 @@ const ProjectSettingsProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-    if (SUCCESS_CODES.includes(response.status)) {
+
+    if (response.ok) {
       setAlert({message: 'Project settings was updated', level: 'success'})
-      response.json().then(async data => await store.dispatch({type: SET_PROJECT_SETTINGS, payload: data}))
+      const payload = await response.json();
+      store.dispatch({type: SET_PROJECT_SETTINGS, payload})
     } else {
       setAlert({message: 'Error happened while updating project settings', level: 'error'})
     }
@@ -70,7 +61,6 @@ const ProjectSettingsProvider = ({children, store}) => {
       value={{
         load,
         request,
-        projectSettings,
         getProjectSettings,
         updateProjectSettings
       }}

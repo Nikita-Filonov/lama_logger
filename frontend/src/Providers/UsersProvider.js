@@ -1,5 +1,6 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {baseUrl} from "../Utils/Constants";
+import {SET_USER} from "../Redux/Users/actionTypes";
 
 
 const UsersContext = React.createContext(null);
@@ -7,9 +8,6 @@ const UsersContext = React.createContext(null);
 const UsersProvider = ({children, store}) => {
   const usersApi = baseUrl + 'api/v1/user/';
   const [token, setToken] = useState(null);
-  const [request, setRequest] = useState(false);
-  const [user, setUser] = useState({})
-  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -37,17 +35,14 @@ const UsersProvider = ({children, store}) => {
       },
     })
       .then(response => response.json())
-      .then(async data => setUser(data));
+      .then(async payload => store.dispatch({type: SET_USER, payload}));
   }, [token]);
 
 
   return (
     <UsersContext.Provider
       value={{
-        load,
-        user,
         token,
-        request,
         onLogin,
         onLogout
       }}

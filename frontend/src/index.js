@@ -16,9 +16,10 @@ import ThemeWrapper from "./Providers/ThemeWrapper";
 import {LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {RequestsRoutes} from "./Components/Navigation/Routes/Requests/RequestsRoutes";
-import ProjectRoutes from "./Components/Navigation/Routes/Projects/ProjectRoutes";
+import {ProjectRoutes} from "./Components/Navigation/Routes/Projects/ProjectRoutes";
 import {SettingsProvider} from "./Providers/SettingsProvider";
 import {Registration} from "./Screens/Login/Registration";
+import {ProfileRoutes} from "./Components/Navigation/Routes/Profile/ProfileRoutes";
 
 
 const store = createStore(reducer);
@@ -27,10 +28,11 @@ const CustomRoute = () =>
   <Router>
     <div className={'d-flex'}>
       <Switch>
-        {ProjectRoutes}
         <PublicRoute exact path="/login" component={Login}/>
         <PublicRoute exact path="/registration" component={Registration}/>
       </Switch>
+      <ProjectRoutes/>
+      <ProfileRoutes/>
       <RequestsRoutes store={store}/>
       <ConfirmAction/>
     </div>

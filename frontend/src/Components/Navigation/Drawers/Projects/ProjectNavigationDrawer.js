@@ -8,7 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ListItemText from "@mui/material/ListItemText";
-import {Api, Logout, Settings} from "@mui/icons-material";
+import {Api, Logout, PersonOutline, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
 import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
@@ -24,6 +24,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
     history.push('/projects')
     setRequest({})
   }
+  const onProfile = () => history.push('/profile');
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -39,6 +40,12 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
             <FormatListBulletedIcon/>
           </ListItemIcon>
           <ListItemText primary={'Projects'}/>
+        </ListItem>
+        <ListItem button onClick={onProfile} selected={location.pathname === '/profile'}>
+          <ListItemIcon>
+            <PersonOutline/>
+          </ListItemIcon>
+          <ListItemText primary={'Profile'}/>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
