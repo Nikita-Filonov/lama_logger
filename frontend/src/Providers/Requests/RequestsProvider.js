@@ -55,7 +55,7 @@ const RequestsProvider = ({children, store}) => {
 
   const deleteRequests = async (projectId, requests) => {
     store.dispatch({type: DELETE_REQUESTS, payload: requests})
-    await fetch(projectsApi + `${projectId}/requests/`, {
+    const response = await fetch(projectsApi + `${projectId}/requests/`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Token ${token}`,
@@ -63,6 +63,12 @@ const RequestsProvider = ({children, store}) => {
       },
       body: JSON.stringify(requests)
     })
+    if (response.ok) {
+      setAlert({message: `${requests?.length} were successfully deleted`, level: 'success'})
+    } else {
+      const payload = await response.json();
+      setAlert(payload)
+    }
   }
 
   return (
