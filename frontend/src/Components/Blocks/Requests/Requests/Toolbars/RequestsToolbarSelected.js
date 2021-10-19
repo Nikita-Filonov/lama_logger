@@ -8,16 +8,32 @@ import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
 import {setRequestsPagination, setSelectedRequests} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {Delete} from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
+import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
 
 const RequestsToolbarSelected = (props) => {
-  const {project, selectedRequests, setSelectedRequests, requestsPagination, setRequestsPagination} = props;
+  const {
+    project,
+    selectedRequests,
+    setSelectedRequests,
+    requestsPagination,
+    setRequestsPagination,
+    setConfirmAction
+  } = props;
   const classes = ViewRequestStyles();
   const {deleteRequests} = useRequests();
 
   const onDelete = async () => {
-    await deleteRequests(project.id, selectedRequests)
-    setSelectedRequests([])
-    setRequestsPagination({...requestsPagination, page: 0})
+    setConfirmAction({
+      modal: true,
+      title: 'Delete requests?',
+      description: 'Are your sure you want to delete selected requests? You will unable to restore them later',
+      confirmButton: 'Delete',
+      action: async () => {
+        await deleteRequests(project.id, selectedRequests)
+        setSelectedRequests([])
+        setRequestsPagination({...requestsPagination, page: 0})
+      }
+    })
   }
 
   return (
@@ -51,6 +67,7 @@ export default connect(
   getState,
   {
     setSelectedRequests,
-    setRequestsPagination
+    setRequestsPagination,
+    setConfirmAction,
   },
 )(RequestsToolbarSelected);
