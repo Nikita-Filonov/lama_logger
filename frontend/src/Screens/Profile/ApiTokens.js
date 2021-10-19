@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import {ProjectSettingsHeader} from "../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography} from "@mui/material";
+import {Grid, List, Typography} from "@mui/material";
 import {ProjectSettingsStyles} from "../../Styles/Screens";
 import {ZoomFab} from "../../Components/Blocks/Common/ZoomFab";
 import {CreateToken} from "../../Components/Modals/Profile/CreateToken";
 import {connect} from "react-redux";
-import {Delete} from "@mui/icons-material";
-import moment from "moment";
 import {useApiTokens} from "../../Providers/Users/ApiTokensProvider";
+import {ApiToken} from "../../Components/Items/Profile/ApiToken";
 
 export const ApiTokens = () => {
   const classes = ProjectSettingsStyles();
@@ -23,19 +22,7 @@ export const ApiTokens = () => {
       </Typography>
       <Grid item xs={12} className={'mt-3'}>
         <List dense>
-          {tokens.map(t =>
-            <ListItem key={t.id} divider>
-              <ListItemText
-                primary={t.name}
-                secondary={moment(t.created).fromNow()}
-              />
-              <ListItemSecondaryAction>
-                <IconButton size={'small'}>
-                  <Delete/>
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          )}
+          {tokens.map(t => <ApiToken key={t.id} token={t}/>)}
         </List>
       </Grid>
       <ZoomFab title={'NEW TOKEN'} action={() => setCreateTokenModal(true)}/>

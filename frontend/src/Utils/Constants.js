@@ -53,3 +53,8 @@ export const REQUESTS_SUCCESSES_FILTERS = [
 export const SIDEBAR_WIDTH = 300;
 
 export const INSTANCES = ['Request', 'Project', 'Member', 'Role'];
+export const AVAILABLE_LANGUAGES = [
+  {language: 'python', image: baseUrl + 'static/images/languages/python.png', label: 'Python'},
+  {language: 'javascript', image: baseUrl + 'static/images/languages/javascript.png', label: 'Javascript'},
+  {language: 'csharp', image: baseUrl + 'static/images/languages/csharp.png', label: 'C#'}
+]

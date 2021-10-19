@@ -51,7 +51,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
           <ListItemIcon>
             <Api/>
           </ListItemIcon>
-          <ListItemText primary={'API'}/>
+          <ListItemText primary={'Integrations'}/>
         </ListItem>
         <ListItem button>
           <ListItemIcon>

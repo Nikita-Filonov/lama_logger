@@ -1,22 +1,12 @@
 import React, {useState} from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  InputAdornment,
-  TextField
-} from '@mui/material';
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
 import {common} from "../../../Styles/Blocks";
 import {SlideTransition, uuid4} from "../../../Utils/Untils/Common";
 import {useApiTokens} from "../../../Providers/Users/ApiTokensProvider";
 import {LoadingButton} from "@mui/lab";
-import IconButton from "@mui/material/IconButton";
-import {ContentCopy} from "@mui/icons-material";
 import {useAlerts} from "../../../Providers/AlertsProvider";
 import {CopyToClipboard} from "react-copy-to-clipboard";
+import {ApiTokenReadyModal} from "../../Blocks/Profile/ApiTokens/ApiTokenReadyModal";
 
 export const CreateToken = ({modal, setModal}) => {
   const {setAlert} = useAlerts();
@@ -44,7 +34,7 @@ export const CreateToken = ({modal, setModal}) => {
     <div>
       <Dialog
         fullWidth
-        maxWidth={'xs'}
+        maxWidth={token ? 'md' : 'xs'}
         open={modal}
         aria-labelledby="form-dialog-title"
         disableScrollLock={true}
@@ -57,25 +47,7 @@ export const CreateToken = ({modal, setModal}) => {
             because you will not be able to view it again.
           </DialogContentText>
           {token
-            ? <TextField
-              value={token}
-              fullWidth
-              size={'small'}
-              label={'Your token'}
-              className={'mt-3'}
-              variant={'standard'}
-              helperText={'Copy your token'}
-              InputProps={{
-                readOnly: true,
-                endAdornment: <InputAdornment position="end">
-                  <CopyToClipboard text={token} onCopy={onCopy}>
-                    <IconButton size={'small'}>
-                      <ContentCopy fontSize={'small'}/>
-                    </IconButton>
-                  </CopyToClipboard>
-                </InputAdornment>,
-              }}
-            />
+            ? <ApiTokenReadyModal token={token} onCopy={onCopy}/>
             : <TextField
               value={name}
               onChange={event => setName(event.target.value)}
