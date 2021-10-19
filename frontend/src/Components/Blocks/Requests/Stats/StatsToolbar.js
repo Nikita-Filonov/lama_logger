@@ -8,7 +8,7 @@ import ProjectSelect from "../Requests/Toolbars/ProjectSelect";
 import StatsTimeFilters from "../../../Modals/Requests/Stats/StatsTimeFilters";
 import {connect} from "react-redux";
 import {setRequestsStatsFilters} from "../../../../Redux/Requests/Requests/requestsActions";
-import {getTimeFiltersLabel} from "../../../../Utils/Untils/Formatters";
+import {getTimeFiltersLabel} from "../../../../Utils/Utils/Formatters";
 
 const StatsToolbar = ({requestsStatsFilters, setRequestsStatsFilters}) => {
   const classes = ViewRequestStyles();

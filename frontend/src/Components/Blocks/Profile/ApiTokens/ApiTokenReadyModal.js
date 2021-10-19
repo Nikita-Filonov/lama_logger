@@ -1,12 +1,14 @@
 import React, {useState} from "react";
-import {Avatar, Button, Grid, InputAdornment, TextField, useTheme} from "@mui/material";
+import {Button, Grid, InputAdornment, TextField, useTheme} from "@mui/material";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import IconButton from "@mui/material/IconButton";
 import {ContentCopy} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import {darcula, a11yLight} from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import {a11yLight, darcula} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import {AVAILABLE_LANGUAGES} from "../../../../Utils/Constants";
+import Link from "@mui/material/Link";
+import {Link as RouterLink} from 'react-router-dom';
 
 
 export const ApiTokenReadyModal = ({token, onCopy}) => {
@@ -35,7 +37,8 @@ export const ApiTokenReadyModal = ({token, onCopy}) => {
         }}
       />
       <Typography variant={'body2'} color={'inherit'} className={'mt-3'}>
-        Now you are ready to integrate Lama Logger in your code. Go to integration section
+        Now you are ready to integrate Lama Logger in your code. Go to{' '}
+        <Link component={RouterLink} to={'/integrations'}>integration</Link> section
       </Typography>
       <Grid container spacing={2} className={'mt-3'}>
         <Grid item xs={2} justify="center">
@@ -46,7 +49,7 @@ export const ApiTokenReadyModal = ({token, onCopy}) => {
               fullWidth
               onClick={() => setLangSelected(l.language)}
               className={'justify-content-start'}
-              startIcon={<Avatar src={l.image} sx={{width: 24, height: 24}}/>}
+              startIcon={<img src={l.image} style={{width: 24, height: 24}} alt={l.language}/>}
             >
               {l.label}
             </Button>

@@ -10,7 +10,7 @@ import ProjectSelect from "./ProjectSelect";
 import {AccessTime, PauseOutlined, PeopleOutline} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
-import {getTimeFiltersLabel} from "../../../../../Utils/Untils/Formatters";
+import {getTimeFiltersLabel} from "../../../../../Utils/Utils/Formatters";
 
 
 const RequestsToolbar = (props) => {

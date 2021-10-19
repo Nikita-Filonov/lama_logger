@@ -5,7 +5,7 @@ import {common} from "../../../../Styles/Blocks";
 import ListItem from "@mui/material/ListItem";
 import {connect} from "react-redux";
 import {setProject} from "../../../../Redux/Projects/projectActions";
-import {generateProjectPath} from "../../../../Utils/Untils/Routing";
+import {generateProjectPath} from "../../../../Utils/Utils/Routing";
 import {useHistory} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import {Settings} from "@mui/icons-material";

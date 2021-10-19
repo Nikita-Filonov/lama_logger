@@ -3,7 +3,7 @@ import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../Users/UsersProvider";
 import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
-import {copyText, queryWithPagination} from "../../Utils/Untils/Common";
+import {copyText, queryWithPagination} from "../../Utils/Utils/Common";
 
 
 const RequestsContext = React.createContext(null);

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../Users/UsersProvider";
-import {objectToQuery} from "../../Utils/Untils/Common";
+import {objectToQuery} from "../../Utils/Utils/Common";
 
 
 const RequestsStatsContext = React.createContext(null);

@@ -8,7 +8,7 @@ import RequestsTable from "../../Components/Blocks/Requests/Requests/RequestsTab
 import RequestsToolbarSelected from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbarSelected";
 import TimeFilters from "../../Components/Modals/Requests/Requests/Filters/TimeFilters";
 import {Container} from "@mui/material";
-import {makeRequestsFilters} from "../../Utils/Untils/Filters";
+import {makeRequestsFilters} from "../../Utils/Utils/Filters";
 import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";
 import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/RequestsTableSkeletons";
 

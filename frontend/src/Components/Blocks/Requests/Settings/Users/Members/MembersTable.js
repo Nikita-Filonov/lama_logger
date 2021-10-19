@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import MembersTableHeader from "./MembersTableHeader";
 import MemberRow from "../../../../../Items/Reuqests/Settings/Users/Members/MemberRow";
 import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
-import {getComparator, stableSort} from "../../../../../../Utils/Untils/Sorting";
+import {getComparator, stableSort} from "../../../../../../Utils/Utils/Sorting";
 
 const MembersTable = ({project}) => {
   const classes = ProjectSettingsStyles();

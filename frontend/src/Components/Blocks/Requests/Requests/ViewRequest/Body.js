@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import {Typography, useTheme} from "@mui/material";
 import ReactJson from "react-json-view";
-import {bodyTypeDetect} from "../../../../../Utils/Untils/Formatters";
+import {bodyTypeDetect} from "../../../../../Utils/Utils/Formatters";
 
 export const Body = ({body, responseHeaders}) => {
   const {palette} = useTheme();

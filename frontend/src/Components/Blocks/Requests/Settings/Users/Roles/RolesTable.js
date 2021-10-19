@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {ProjectSettingsStyles} from "../../../../../../Styles/Screens";
 import RoleRow from "../../../../../Items/Reuqests/Settings/Users/Roles/RoleRow";
 import RolesTableHeader from "./RolesTableHeader";
-import {getComparator, stableSort} from "../../../../../../Utils/Untils/Sorting";
+import {getComparator, stableSort} from "../../../../../../Utils/Utils/Sorting";
 
 const RolesTable = ({project}) => {
   const classes = ProjectSettingsStyles();

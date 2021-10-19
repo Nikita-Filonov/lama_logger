@@ -1,4 +1,5 @@
-import {getProjectName} from "./Untils/Routing";
+import python from './../Utils/Integrations/Templates/python.json'
+import {getProjectName, getSdkLanguage} from "./Utils/Routing";
 
 export const baseUrl = 'http://localhost:8000/';
 
@@ -15,6 +16,11 @@ export const BREADCRUMB_ROUTES = [
   {path: '/projects/:projectId/settings/roles', breadcrumb: 'Roles'},
   {path: '/projects/:projectId/settings/inbound', breadcrumb: 'Inbound Data'},
   {path: '/projects', breadcrumb: 'Projects'},
+  {path: '/user', breadcrumb: 'User'},
+  {path: '/user/profile', breadcrumb: 'Profile'},
+  {path: '/user/tokens', breadcrumb: 'Tokens'},
+  {path: '/integrations', breadcrumb: 'Integrations'},
+  {path: '/integrations/:language', breadcrumb: getSdkLanguage},
 ];
 
 export const SUCCESS_CODES = [200, 201, 204];
@@ -54,7 +60,22 @@ export const SIDEBAR_WIDTH = 300;
 
 export const INSTANCES = ['Request', 'Project', 'Member', 'Role'];
 export const AVAILABLE_LANGUAGES = [
-  {language: 'python', image: baseUrl + 'static/images/languages/python.png', label: 'Python'},
-  {language: 'javascript', image: baseUrl + 'static/images/languages/javascript.png', label: 'Javascript'},
-  {language: 'csharp', image: baseUrl + 'static/images/languages/csharp.png', label: 'C#'}
+  {
+    language: 'python',
+    image: baseUrl + 'static/images/languages/python.png',
+    label: 'Python',
+    template: python
+  },
+  {
+    language: 'javascript',
+    image: baseUrl + 'static/images/languages/javascript.png',
+    label: 'Javascript',
+    template: python
+  },
+  {
+    language: 'csharp',
+    image: baseUrl + 'static/images/languages/csharp.png',
+    label: 'C#',
+    template: python
+  }
 ]

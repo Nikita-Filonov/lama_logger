@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
 import {common} from "../../../Styles/Blocks";
-import {SlideTransition, uuid4} from "../../../Utils/Untils/Common";
+import {SlideTransition, uuid4} from "../../../Utils/Utils/Common";
 import {useApiTokens} from "../../../Providers/Users/ApiTokensProvider";
 import {LoadingButton} from "@mui/lab";
 import {useAlerts} from "../../../Providers/AlertsProvider";

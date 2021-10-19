@@ -3,7 +3,7 @@ import {baseUrl, SUCCESS_CODES} from "../Utils/Constants";
 import {useUsers} from "./Users/UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
 import {useAlerts} from "./AlertsProvider";
-import {objectToQuery} from "../Utils/Untils/Common";
+import {objectToQuery} from "../Utils/Utils/Common";
 
 
 const ProjectsContext = React.createContext(null);

@@ -6,7 +6,7 @@ import {useRequestsStats} from "../../Providers/Requests/RequestsStatsProvider";
 import {connect} from "react-redux";
 import {useUsers} from "../../Providers/Users/UsersProvider";
 import {StatsInfoGrid} from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
-import {makeRequestsStatsFilters} from "../../Utils/Untils/Filters";
+import {makeRequestsStatsFilters} from "../../Utils/Utils/Filters";
 
 const RequestsStats = ({project, requestsStatsFilters}) => {
   const {token} = useUsers();

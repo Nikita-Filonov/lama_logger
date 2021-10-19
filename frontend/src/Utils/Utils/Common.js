@@ -8,6 +8,8 @@ export const uuid4 = async () => {
   });
 }
 
+export const capitalize = s => (s && s[0].toUpperCase() + s.slice(1)) || ""
+
 export const objectToQuery = async (object, ignore = ['meta']) =>
   object && '?' + Object.keys(object)
     .map(key => !ignore.includes(key) ? `${key}=${object[key]}&` : '')

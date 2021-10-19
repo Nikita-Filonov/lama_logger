@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../Users/UsersProvider";
-import {queryWithPagination} from "../../Utils/Untils/Common";
+import {queryWithPagination} from "../../Utils/Utils/Common";
 import {CREATE_TRACK, SET_TRACKS} from "../../Redux/Requests/Tracks/actionTypes";
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";

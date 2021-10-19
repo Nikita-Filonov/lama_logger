@@ -3,7 +3,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import {connect} from "react-redux";
 import {setConfirmAction} from "../../../Redux/Users/usersActions";
 import {common} from "../../../Styles/Blocks";
-import {SlideTransition} from "../../../Utils/Untils/Common";
+import {SlideTransition} from "../../../Utils/Utils/Common";
 
 const ConfirmAction = ({confirmAction, setConfirmAction}) => {
   const onClose = () => setConfirmAction({...confirmAction, modal: false})

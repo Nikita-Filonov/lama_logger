@@ -5,7 +5,7 @@ import RequestRow from "../../../../Items/Reuqests/Requests/RequestRow";
 import TracksTableHeader from "./TracksTableHeader";
 import {connect} from "react-redux";
 import {setRequestsPagination} from "../../../../../Redux/Requests/Requests/requestsActions";
-import {getComparator, stableSort} from "../../../../../Utils/Untils/Sorting";
+import {getComparator, stableSort} from "../../../../../Utils/Utils/Sorting";
 import TrackRow from "../../../../Items/Reuqests/Tracks/TrackRow";
 
 

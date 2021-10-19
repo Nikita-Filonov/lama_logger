@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import {common} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import {Settings} from "@mui/icons-material";
-import {generateProjectPath} from "../../../../../Utils/Untils/Routing";
+import {generateProjectPath} from "../../../../../Utils/Utils/Routing";
 
 const ProjectSelect = ({project, projects, setProject}) => {
   const history = useHistory();
