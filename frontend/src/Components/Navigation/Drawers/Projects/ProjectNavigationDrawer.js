@@ -25,6 +25,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
     setRequest({})
   }
   const onProfile = () => history.push('/user/profile');
+  const onIntegrations = () => history.push('/integrations')
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -47,7 +48,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Profile'}/>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={onIntegrations} selected={location.pathname.startsWith('/integrations')}>
           <ListItemIcon>
             <Api/>
           </ListItemIcon>

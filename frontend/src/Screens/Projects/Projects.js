@@ -11,13 +11,19 @@ import {ProjectsSkeletons} from "../../Components/Blocks/Projects/ProjectsSkelet
 
 const Projects = ({projects}) => {
   const {load} = useProjects();
+  const [search, setSearch] = useState('')
   const [createProjectModal, setCreateProjectModal] = useState(false)
 
   const onCreateProject = () => setCreateProjectModal(true);
 
   return (
     <Container maxWidth={'xl'}>
-      <ProjectsToolbar/>
+      <ProjectsToolbar
+        search={search}
+        setSearch={setSearch}
+        placeholder={'Search by project name'}
+        title={'Projects'}
+      />
       <div className={'d-flex mt-3 mb-3'}>
         <Grid
           container

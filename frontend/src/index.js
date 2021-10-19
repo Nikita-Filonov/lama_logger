@@ -20,6 +20,7 @@ import {ProjectRoutes} from "./Components/Navigation/Routes/Projects/ProjectRout
 import {SettingsProvider} from "./Providers/SettingsProvider";
 import {Registration} from "./Screens/Login/Registration";
 import {ProfileRoutes} from "./Components/Navigation/Routes/Profile/ProfileRoutes";
+import {IntegrationsRoutes} from "./Components/Navigation/Routes/Integrations/IntegrationsRoutes";
 
 
 const store = createStore(reducer);
@@ -33,6 +34,7 @@ const CustomRoute = () =>
       </Switch>
       <ProjectRoutes/>
       <ProfileRoutes/>
+      <IntegrationsRoutes/>
       <RequestsRoutes store={store}/>
       <ConfirmAction/>
     </div>

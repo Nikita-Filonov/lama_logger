@@ -7,10 +7,11 @@ import {CreateToken} from "../../Components/Modals/Profile/CreateToken";
 import {connect} from "react-redux";
 import {useApiTokens} from "../../Providers/Users/ApiTokensProvider";
 import ApiToken from "../../Components/Items/Profile/ApiToken";
+import {ApiTokensSkeletons} from "../../Components/Blocks/Profile/ApiTokens/ApiTokensSkeletons";
 
 export const ApiTokens = () => {
   const classes = ProjectSettingsStyles();
-  const {tokens} = useApiTokens();
+  const {load, tokens} = useApiTokens();
   const [createTokenModal, setCreateTokenModal] = useState(false);
 
   return (
@@ -21,9 +22,12 @@ export const ApiTokens = () => {
         because you will not be able to view it again.
       </Typography>
       <Grid item xs={12} className={'mt-3'}>
-        <List dense>
-          {tokens.map(t => <ApiToken key={t.id} token={t}/>)}
-        </List>
+        {load
+          ? <ApiTokensSkeletons/>
+          : <List dense>
+            {tokens.map(t => <ApiToken key={t.id} token={t}/>)}
+          </List>
+        }
       </Grid>
       <ZoomFab title={'NEW TOKEN'} action={() => setCreateTokenModal(true)}/>
       <CreateToken modal={createTokenModal} setModal={setCreateTokenModal}/>
