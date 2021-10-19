@@ -1,5 +1,6 @@
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
@@ -34,3 +35,22 @@ class TokensApi(views.APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+@api_view(['DELETE'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def delete_token(request, token_id):
+    token = ApiToken.objects.get(id=token_id)
+    if token.user == request.user:
+        token.delete()
+        return Response(
+            {'message': 'Token successfully deleted', 'level': 'success'},
+            status=status.HTTP_200_OK
+        )
+
+    return Response(
+        {'message': 'You can not delete this token', 'level': 'warning'},
+        status=status.HTTP_403_FORBIDDEN
+    )

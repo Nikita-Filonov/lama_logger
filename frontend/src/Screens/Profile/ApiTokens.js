@@ -6,7 +6,7 @@ import {ZoomFab} from "../../Components/Blocks/Common/ZoomFab";
 import {CreateToken} from "../../Components/Modals/Profile/CreateToken";
 import {connect} from "react-redux";
 import {useApiTokens} from "../../Providers/Users/ApiTokensProvider";
-import {ApiToken} from "../../Components/Items/Profile/ApiToken";
+import ApiToken from "../../Components/Items/Profile/ApiToken";
 
 export const ApiTokens = () => {
   const classes = ProjectSettingsStyles();

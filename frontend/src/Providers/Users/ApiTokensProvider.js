@@ -52,13 +52,30 @@ const ApiTokensProvider = ({children}) => {
     setRequest(false)
   }
 
+  const deleteToken = async (apiTokenId) => {
+    const response = await fetch(tokensApi + `${apiTokenId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Token ${token}`,
+      },
+    })
+    if (response.ok) {
+      setTokens(tokens.filter(t => t.id !== apiTokenId))
+      const payload = await response.json();
+      setAlert(payload);
+    } else {
+      setAlert({message: 'Error happened while deleting api token'});
+    }
+  }
+
   return (
     <ApiTokensContext.Provider
       value={{
         load,
         request,
         tokens,
-        createToken
+        createToken,
+        deleteToken
       }}
     >
       {children}

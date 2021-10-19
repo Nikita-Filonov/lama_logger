@@ -5,6 +5,7 @@ export const INITIAL_USERS = {
   },
   theme: localStorage.getItem('theme') || 'light',
   confirmAction: {
+    modal: false,
     title: null,
     description: null,
     confirmButton: null,
