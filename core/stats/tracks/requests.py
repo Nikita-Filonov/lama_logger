@@ -10,7 +10,7 @@ def track_request(project: Project, request: Request = None, action: str = 'crea
     Used to track action for single request
     """
     RequestStat.objects.create(
-        response_code=request.statusCode,
+        statusCode=request.statusCode,
         method=request.method,
         action=action,
         project=project
@@ -23,7 +23,7 @@ def track_requests(project: Project, requests: List[Request] = None, action: str
     """
     for request in requests:
         RequestStat.objects.create(
-            response_code=request.statusCode,
+            statusCode=request.statusCode,
             method=request.method,
             action=action,
             project=project

@@ -11,7 +11,7 @@ class RequestStat(models.Model):
         ('delete', 'delete'),
         ('filter', 'filter')
     )
-    response_code = models.PositiveIntegerField(
+    statusCode = models.PositiveIntegerField(
         verbose_name='Status code',
         null=False
     )
