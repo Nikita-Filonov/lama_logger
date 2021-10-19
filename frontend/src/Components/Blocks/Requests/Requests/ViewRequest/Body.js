@@ -11,7 +11,7 @@ export const Body = ({body, responseHeaders}) => {
   switch (bodyTypeDetect(responseHeaders, body)) {
     case 'html': {
       return <div style={{backgroundColor: backgroundText, padding: 10}}>
-        <Typography>{body}</Typography>
+        <iframe srcDoc={JSON.parse(body)} width={'100%'} height={300}/>
       </div>
     }
     case 'json':
