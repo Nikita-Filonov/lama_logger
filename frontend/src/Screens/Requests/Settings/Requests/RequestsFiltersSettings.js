@@ -2,13 +2,17 @@ import React, {useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {Autocomplete, Checkbox, Grid, InputAdornment, TextField} from "@mui/material";
-import {CODES, REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../Utils/Constants";
-import {StatusCodeIndicator} from "../../../../Components/Blocks/Requests/Requests/StatusCodeIndicator";
+import {Autocomplete, Checkbox, Grid, TextField} from "@mui/material";
+import {
+  REQUESTS_METHODS_FILTERS,
+  REQUESTS_STATUS_CODES_FILTERS,
+  REQUESTS_STATUS_CODES_TYPES
+} from "../../../../Utils/Constants";
 import Box from "@mui/material/Box";
 import {LoadingButton} from "@mui/lab";
 import {SaveOutlined} from "@mui/icons-material";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
+import {StatusCodesAutocomplete} from "../../../../Components/Blocks/Requests/Settings/Requests/Filters/StatusCodesAutocomplete";
 
 
 const RequestsFiltersSettings = ({project, projectSettings}) => {
@@ -67,48 +71,14 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
           )}
         />
       </Grid>
-      {REQUESTS_SUCCESSES_FILTERS.map((successes, index) =>
+      {REQUESTS_STATUS_CODES_TYPES.map((codes, index) =>
         <Grid item xs={12} className={'mt-3'} key={index}>
-          <Autocomplete
-            value={filterStatusCodes[successes.value]}
-            size={'small'}
-            key={load}
-            multiple
-            freeSolo
-            className={'w-50'}
-            options={CODES[successes.value]}
-            onChange={(_, value) =>
-              onChangeCodes(successes.value, value)}
-            disableCloseOnSelect
-            getOptionLabel={(option) => option.toString()}
-            renderOption={(props, option, {selected}) => (
-              <li {...props}>
-                <Checkbox size={'small'} style={{marginRight: 8}} checked={selected}/>
-                {option}
-              </li>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={`Status codes "${successes.value}"`}
-                placeholder="Select from list or type custom"
-                size={'small'}
-                variant={'standard'}
-                helperText={`Select "${successes.value}" status codes which you want 
-                to see in requests filters section`}
-                InputProps={{
-                  ...params.InputProps,
-                  startAdornment: (
-                    <React.Fragment>
-                      <InputAdornment position="start">
-                        <StatusCodeIndicator statusCode={successes?.code}/>
-                      </InputAdornment>
-                      {params.InputProps.startAdornment}
-                    </React.Fragment>
-                  ),
-                }}
-              />
-            )}
+          <StatusCodesAutocomplete
+            type={codes.value}
+            load={load}
+            value={filterStatusCodes[codes.value]}
+            options={REQUESTS_STATUS_CODES_FILTERS[codes.value]}
+            onChange={onChangeCodes}
           />
         </Grid>
       )}

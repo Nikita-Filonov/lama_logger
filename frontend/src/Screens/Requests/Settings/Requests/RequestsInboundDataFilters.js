@@ -4,7 +4,7 @@ import {Autocomplete, Checkbox, Grid, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import Box from "@mui/material/Box";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {CODES, REQUESTS_METHODS_FILTERS} from "../../../../Utils/Constants";
+import {REQUESTS_STATUS_CODES_FILTERS, REQUESTS_METHODS_FILTERS} from "../../../../Utils/Constants";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
 import {StatusCodeIndicator} from "../../../../Components/Blocks/Requests/Requests/StatusCodeIndicator";
 import {SaveOutlined} from "@mui/icons-material";
@@ -74,7 +74,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
           multiple
           freeSolo
           className={'w-50'}
-          options={[...CODES.success, ...CODES.redirect, ...CODES.error]}
+          options={Object.values(REQUESTS_STATUS_CODES_FILTERS).flat()}
           onChange={(_, value) => setExcludeStatuses(value)}
           disableCloseOnSelect
           getOptionLabel={(option) => option.toString()}

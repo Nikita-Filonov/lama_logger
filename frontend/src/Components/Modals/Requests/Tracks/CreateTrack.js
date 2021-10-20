@@ -21,7 +21,7 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import {Link as RouterLink} from 'react-router-dom';
 import {connect} from "react-redux";
-import {baseUrl, CODES} from "../../../../Utils/Constants";
+import {baseUrl, REQUESTS_STATUS_CODES_FILTERS} from "../../../../Utils/Constants";
 import {StatusCodeIndicator} from "../../../Blocks/Requests/Requests/StatusCodeIndicator";
 import {useRequestsTracks} from "../../../../Providers/Requests/RequestsTracksProvider";
 import {LoadingButton} from "@mui/lab";
@@ -102,7 +102,7 @@ const CreateTrack = ({modal, setModal, project}) => {
           size={'small'}
           multiple
           freeSolo
-          options={[...CODES.success, ...CODES.redirect, ...CODES.error]}
+          options={Object.values(REQUESTS_STATUS_CODES_FILTERS).flat()}
           onChange={(_, value) => setStatusCodes(value)}
           disableCloseOnSelect
           getOptionLabel={(option) => option.toString()}

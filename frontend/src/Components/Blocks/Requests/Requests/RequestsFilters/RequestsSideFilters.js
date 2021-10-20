@@ -2,10 +2,8 @@ import React from "react";
 import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import {AccessTime, Close, MoreHoriz, Settings} from "@mui/icons-material";
+import {AccessTime, Close, Settings} from "@mui/icons-material";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
-import {REQUESTS_SUCCESSES_FILTERS} from "../../../../../Utils/Constants";
-import {StatusCodeIndicator} from "../StatusCodeIndicator";
 import {
   setRequestsFilters,
   setRequestsFiltersSidebar,
@@ -13,6 +11,7 @@ import {
 } from "../../../../../Redux/Requests/Requests/requestsActions";
 import {useHistory} from "react-router-dom";
 import clsx from "clsx";
+import RequestsSideStatusCodesFilters from "./StatusCodesFilters/RequestsSideStatusCodesFilters";
 
 const RequestsSideFilters = (props) => {
   const {
@@ -39,18 +38,6 @@ const RequestsSideFilters = (props) => {
       selectedMethods = requestsFilters[filter].filter(m => m !== event.value)
     }
     setRequestsFilters({...requestsFilters, [filter]: [...selectedMethods]})
-  }
-
-  const onStatusCodes = (event) => {
-    let selectedStatusCodes = requestsFilters.statusCodes;
-    const settingsCodes = projectSettings.filterStatusCodes;
-
-    if (event?.checked) {
-      selectedStatusCodes[event.value] = settingsCodes[event.value];
-    } else {
-      delete selectedStatusCodes[event.value];
-    }
-    setRequestsFilters({...requestsFilters, statusCodes: {...selectedStatusCodes}})
   }
 
   return (
@@ -85,30 +72,7 @@ const RequestsSideFilters = (props) => {
           )}
         </FormGroup>
         <Divider/>
-        <FormGroup>
-          <Typography variant={'subtitle2'} className={'mt-2'}>Status codes</Typography>
-          {REQUESTS_SUCCESSES_FILTERS.map((successes, index) =>
-            <div className={'d-flex align-items-center'}>
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    size={'small'}
-                    color={'primary'}
-                    value={successes?.value}
-                    checked={Object.keys(requestsFilters?.statusCodes)?.indexOf(successes?.value) !== -1}
-                    onClick={event => onStatusCodes(event.target, 'statusCodes')}
-                  />
-                }
-                label={<StatusCodeIndicator statusCode={successes?.code}/>}
-              />
-              <div className={'flex-grow-1'}/>
-              <IconButton size={'small'}>
-                <MoreHoriz fontSize={'small'}/>
-              </IconButton>
-            </div>
-          )}
-        </FormGroup>
+        <RequestsSideStatusCodesFilters/>
         <Divider/>
         <Typography variant={'subtitle2'} className={'mt-2'}>Time</Typography>
         <Button
