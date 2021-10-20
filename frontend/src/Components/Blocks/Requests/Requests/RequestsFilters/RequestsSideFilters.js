@@ -2,10 +2,9 @@ import React from "react";
 import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import clsx from "clsx";
 import {AccessTime, Close, MoreHoriz, Settings} from "@mui/icons-material";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
-import {REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../../Utils/Constants";
+import {REQUESTS_SUCCESSES_FILTERS} from "../../../../../Utils/Constants";
 import {StatusCodeIndicator} from "../StatusCodeIndicator";
 import {
   setRequestsFilters,
@@ -13,10 +12,12 @@ import {
   setRequestsTimeFilterModal
 } from "../../../../../Redux/Requests/Requests/requestsActions";
 import {useHistory} from "react-router-dom";
+import clsx from "clsx";
 
 const RequestsSideFilters = (props) => {
   const {
     project,
+    projectSettings,
     requestsFiltersSidebar,
     setRequestsFiltersSidebar,
     requestsFilters,
@@ -41,8 +42,8 @@ const RequestsSideFilters = (props) => {
   }
 
   return (
-    <Box sx={{width: 200, marginRight: 2}} hidden={requestsFiltersSidebar}>
-      <Paper className={clsx(classes.tableContainer, 'p-1 ps-2')}>
+    <Box sx={{width: 200, mr: 2}} hidden={requestsFiltersSidebar}>
+      <Paper className={clsx('p-1 ps-2', classes.sideBarFiltersContainer, classes.tableContainer)}>
         <div className={'d-flex'}>
           <IconButton size={'small'} onClick={onSettings}>
             <Settings fontSize={'small'}/>
@@ -55,7 +56,7 @@ const RequestsSideFilters = (props) => {
         <Divider/>
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Methods</Typography>
-          {REQUESTS_METHODS_FILTERS.map((method, index) =>
+          {projectSettings?.filterMethods?.map((method, index) =>
             <FormControlLabel
               key={index}
               control={
@@ -117,6 +118,7 @@ const RequestsSideFilters = (props) => {
 
 const getState = (state) => ({
   project: state.projects.project,
+  projectSettings: state.projects.projectSettings,
   requestsFilters: state.requests.requestsFilters,
   requestsFiltersSidebar: state.requests.requestsFiltersSidebar
 })

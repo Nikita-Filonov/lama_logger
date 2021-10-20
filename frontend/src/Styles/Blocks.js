@@ -113,6 +113,10 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 10,
     right: 0
+  },
+  sideBarFiltersContainer: {
+    overflow: "hidden",
+    overflowY: "scroll",
   }
 }));
 
