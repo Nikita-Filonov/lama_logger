@@ -1,5 +1,4 @@
 import moment from "moment";
-import {CODES} from "../Constants";
 
 const getFilterInterval = ({amount, unit, prev}) => {
   const now = moment(Date.now());
@@ -21,12 +20,12 @@ export const makeRequestsSearch = (search) => {
 }
 
 export const makeRequestsFilters = (filters) => {
-  const codes = filters?.successes?.map(success => CODES[success]).flat();
-
+  const statusCodes = Object.values(filters?.statusCodes).flat()
+    .sort((a, b) => a - b)
   return {
     filters: JSON.stringify({
       method__in: filters?.methods,
-      statusCode__in: codes,
+      statusCode__in: statusCodes,
       created__range: filters?.time?.type === 'range'
         ? filters?.time?.range : getFilterInterval(filters?.time?.interval)
     })

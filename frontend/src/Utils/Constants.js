@@ -42,7 +42,7 @@ export const UNITS = [
 
 export const DEFAULT_REQUESTS_FILTERS = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  successes: ['success', 'redirect', 'error'],
+  statusCodes: CODES,
   time: {
     type: 'interval',
     interval: {amount: 5, unit: 'hours', prev: 'prev'},

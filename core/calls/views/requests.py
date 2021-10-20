@@ -51,6 +51,7 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
     def get(self, request, project_id):
         filters = json.loads(request.query_params.get('filters', '{}'))
         search = json.loads(request.query_params.get('search', '{}'))
+
         requests = Request.objects.filter(**filters,
                                           project_id=project_id,
                                           requestUrl__icontains=search.get('requestUrl', '')).order_by('-created')

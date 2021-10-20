@@ -31,7 +31,7 @@ const RequestsSideFilters = (props) => {
   const onRequestTimeFilter = () => setRequestsTimeFilterModal(true);
   const onSettings = () => history.push(`/projects/${project.id}/settings/filters`);
 
-  const onMethod = (event, filter = 'methods') => {
+  const onFilter = (event, filter = 'methods') => {
     let selectedMethods;
     if (event?.checked) {
       selectedMethods = [...requestsFilters[filter], event.value]
@@ -39,6 +39,18 @@ const RequestsSideFilters = (props) => {
       selectedMethods = requestsFilters[filter].filter(m => m !== event.value)
     }
     setRequestsFilters({...requestsFilters, [filter]: [...selectedMethods]})
+  }
+
+  const onStatusCodes = (event) => {
+    let selectedStatusCodes = requestsFilters.statusCodes;
+    const settingsCodes = projectSettings.filterStatusCodes;
+
+    if (event?.checked) {
+      selectedStatusCodes[event.value] = settingsCodes[event.value];
+    } else {
+      delete selectedStatusCodes[event.value];
+    }
+    setRequestsFilters({...requestsFilters, statusCodes: {...selectedStatusCodes}})
   }
 
   return (
@@ -62,7 +74,7 @@ const RequestsSideFilters = (props) => {
               control={
                 <Checkbox
                   checked={requestsFilters.methods.indexOf(method) !== -1}
-                  onClick={event => onMethod(event.target, 'methods')}
+                  onClick={event => onFilter(event.target, 'methods')}
                   value={method}
                   size={'small'}
                   color={'primary'}
@@ -84,8 +96,8 @@ const RequestsSideFilters = (props) => {
                     size={'small'}
                     color={'primary'}
                     value={successes?.value}
-                    checked={requestsFilters.successes.indexOf(successes?.value) !== -1}
-                    onClick={event => onMethod(event.target, 'successes')}
+                    checked={Object.keys(requestsFilters?.statusCodes)?.indexOf(successes?.value) !== -1}
+                    onClick={event => onStatusCodes(event.target, 'statusCodes')}
                   />
                 }
                 label={<StatusCodeIndicator statusCode={successes?.code}/>}
