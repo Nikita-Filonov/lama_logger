@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES
 from core.users.models import CustomUser
 
 
@@ -119,7 +120,6 @@ class Project(models.Model):
 
 
 class ProjectSettings(models.Model):
-    DEFAULT_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     project = models.OneToOneField(
         Project,
         verbose_name='Project',
@@ -129,6 +129,11 @@ class ProjectSettings(models.Model):
         verbose_name='Filter methods',
         default=DEFAULT_METHODS,
         blank=True
+    )
+    filterStatusCodes = models.JSONField(
+        verbose_name='Filter status codes',
+        blank=True,
+        default=DEFAULT_STATUS_CODES
     )
     excludeMethods = models.JSONField(
         verbose_name='Exclude methods',
