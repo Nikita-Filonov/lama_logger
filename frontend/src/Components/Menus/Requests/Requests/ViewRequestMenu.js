@@ -13,11 +13,12 @@ import {connect} from "react-redux";
 import {useAlerts} from "../../../../Providers/AlertsProvider";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {useHistory} from "react-router-dom";
+import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 
-const ViewRequestMenu = ({project, request}) => {
+const ViewRequestMenu = ({project, request, setConfirmAction}) => {
   const history = useHistory();
   const {setAlert} = useAlerts();
-  const {getRequestAsCurl} = useRequests();
+  const {getRequestAsCurl, deleteRequest} = useRequests();
   const [menu, setMenu] = useState(null);
 
   const onOpen = (event) => setMenu(event.currentTarget);
@@ -28,6 +29,15 @@ const ViewRequestMenu = ({project, request}) => {
   }
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
   const onSend = async () => history.push(`/projects/${project.id}/requests/send`);
+  const onDelete = async () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Delete request?',
+      description: 'Are you sure you want to delete request? You will not be able to restore it later',
+      confirmButton: 'Delete',
+      action: async () => await deleteRequest(project.id, request?.requestId)
+    })
+  }
 
   return (
     <React.Fragment>
@@ -67,7 +77,7 @@ const ViewRequestMenu = ({project, request}) => {
           </MenuItem>
         </CopyToClipboard>
         <Divider/>
-        <MenuItem>
+        <MenuItem onClick={onDelete}>
           <ListItemIcon>
             <DeleteOutline fontSize="small"/>
           </ListItemIcon>
@@ -84,5 +94,7 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    setConfirmAction
+  },
 )(ViewRequestMenu);

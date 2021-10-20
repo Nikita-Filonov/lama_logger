@@ -71,6 +71,19 @@ const RequestsProvider = ({children, store}) => {
     }
   }
 
+  const deleteRequest = async (projectId, requestId) => {
+    const response = await fetch(projectsApi + `${projectId}/requests/${requestId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+    })
+    const payload = await response.json();
+    setAlert(payload)
+    response.ok && store.dispatch({type: DELETE_REQUESTS, payload: [requestId]})
+  }
+
   return (
     <RequestsContext.Provider
       value={{
@@ -78,7 +91,8 @@ const RequestsProvider = ({children, store}) => {
         getRequest,
         getRequests,
         getRequestAsCurl,
-        deleteRequests
+        deleteRequests,
+        deleteRequest
       }}
     >
       {children}

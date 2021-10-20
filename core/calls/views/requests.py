@@ -81,6 +81,18 @@ class RequestApi(views.APIView):
         db_request = Request.objects.get(requestId=request_id)
         return Response(RequestsSerializer(db_request, many=False).data)
 
+    def delete(self, request, project_id, request_id):
+        try:
+            request = Request.objects.get(requestId=request_id)
+        except Request.DoesNotExist:
+            return Response(
+                {'message': 'Request does not exists', 'level': 'error'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        request.delete()
+        return Response({'message': 'Request was successfully deleted', 'level': 'success'})
+
 
 @api_view(['GET'])
 @authentication_classes((TokenAuthentication,))
