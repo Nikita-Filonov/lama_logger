@@ -3,7 +3,7 @@ import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Pape
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
 import clsx from "clsx";
-import {AccessTime, Close} from "@mui/icons-material";
+import {AccessTime, Close, MoreHoriz, Settings} from "@mui/icons-material";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
 import {REQUESTS_METHODS_FILTERS, REQUESTS_SUCCESSES_FILTERS} from "../../../../../Utils/Constants";
 import {StatusCodeIndicator} from "../StatusCodeIndicator";
@@ -12,19 +12,23 @@ import {
   setRequestsFiltersSidebar,
   setRequestsTimeFilterModal
 } from "../../../../../Redux/Requests/Requests/requestsActions";
+import {useHistory} from "react-router-dom";
 
 const RequestsSideFilters = (props) => {
   const {
+    project,
     requestsFiltersSidebar,
     setRequestsFiltersSidebar,
     requestsFilters,
     setRequestsFilters,
     setRequestsTimeFilterModal
   } = props;
+  const history = useHistory();
   const classes = RequestsTableStyles();
 
   const onClose = () => setRequestsFiltersSidebar(true);
   const onRequestTimeFilter = () => setRequestsTimeFilterModal(true);
+  const onSettings = () => history.push(`/projects/${project.id}/settings/filters`);
 
   const onMethod = (event, filter = 'methods') => {
     let selectedMethods;
@@ -40,6 +44,9 @@ const RequestsSideFilters = (props) => {
     <Box sx={{width: 200, marginRight: 2}} hidden={requestsFiltersSidebar}>
       <Paper className={clsx(classes.tableContainer, 'p-1 ps-2')}>
         <div className={'d-flex'}>
+          <IconButton size={'small'} onClick={onSettings}>
+            <Settings fontSize={'small'}/>
+          </IconButton>
           <div className={'flex-grow-1'}/>
           <IconButton size={'small'} onClick={onClose}>
             <Close fontSize={'small'}/>
@@ -68,19 +75,25 @@ const RequestsSideFilters = (props) => {
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Status codes</Typography>
           {REQUESTS_SUCCESSES_FILTERS.map((successes, index) =>
-            <FormControlLabel
-              key={index}
-              control={
-                <Checkbox
-                  size={'small'}
-                  color={'primary'}
-                  value={successes?.value}
-                  checked={requestsFilters.successes.indexOf(successes?.value) !== -1}
-                  onClick={event => onMethod(event.target, 'successes')}
-                />
-              }
-              label={<StatusCodeIndicator statusCode={successes?.code}/>}
-            />
+            <div className={'d-flex align-items-center'}>
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    size={'small'}
+                    color={'primary'}
+                    value={successes?.value}
+                    checked={requestsFilters.successes.indexOf(successes?.value) !== -1}
+                    onClick={event => onMethod(event.target, 'successes')}
+                  />
+                }
+                label={<StatusCodeIndicator statusCode={successes?.code}/>}
+              />
+              <div className={'flex-grow-1'}/>
+              <IconButton size={'small'}>
+                <MoreHoriz fontSize={'small'}/>
+              </IconButton>
+            </div>
           )}
         </FormGroup>
         <Divider/>
@@ -103,6 +116,7 @@ const RequestsSideFilters = (props) => {
 
 
 const getState = (state) => ({
+  project: state.projects.project,
   requestsFilters: state.requests.requestsFilters,
   requestsFiltersSidebar: state.requests.requestsFiltersSidebar
 })

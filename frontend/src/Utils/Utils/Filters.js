@@ -12,6 +12,13 @@ const getFilterInterval = ({amount, unit, prev}) => {
   return prev === 'prev' ? [formattedInterval, formattedNow] : [formattedNow, formattedInterval];
 }
 
+export const makeRequestsSearch = (search) => {
+  return {
+    search: JSON.stringify({
+      requestUrl: search
+    })
+  }
+}
 
 export const makeRequestsFilters = (filters) => {
   const codes = filters?.successes?.map(success => CODES[success]).flat();

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {common, RequestsToolbarStyles, ViewRequestStyles} from "../../../../../Styles/Blocks";
 import clsx from "clsx";
 import RequestsMenu from "../../../../Menus/Requests/Requests/RequestsMenu";
@@ -11,15 +11,39 @@ import {AccessTime, PauseOutlined, PeopleOutline} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import {getTimeFiltersLabel} from "../../../../../Utils/Utils/Formatters";
+import {makeRequestsFilters, makeRequestsSearch} from "../../../../../Utils/Utils/Filters";
+import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
+import {useUsers} from "../../../../../Providers/Users/UsersProvider";
 
 
 const RequestsToolbar = (props) => {
-  const {setRequestsTimeFilterModal, requestsFilters, requestsRealtime, setRequestsRealtime} = props;
+  const {
+    project,
+    requestsPagination,
+    setRequestsTimeFilterModal,
+    requestsFilters,
+    requestsRealtime,
+    setRequestsRealtime
+  } = props;
   const classes = ViewRequestStyles();
-  const [search, setSearch] = useState('')
+  const {token} = useUsers();
+  const {getRequests} = useRequests();
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const timeoutSearch = setTimeout(async () => token &&
+      await getRequests(
+        project.id,
+        requestsPagination.rowsPerPage,
+        requestsPagination.rowsPerPage * requestsPagination.page,
+        {...makeRequestsFilters(requestsFilters), ...makeRequestsSearch(search)}
+      ), 700
+    );
+    return () => clearTimeout(timeoutSearch);
+  }, [token, search]);
 
   const timeFiltersLabel = useMemo(() => getTimeFiltersLabel(requestsFilters?.time), [requestsFilters?.time])
-  const onTimeFilters = () => setRequestsTimeFilterModal(true)
+  const onTimeFilters = () => setRequestsTimeFilterModal(true);
 
   return (
     <Paper
@@ -46,7 +70,7 @@ const RequestsToolbar = (props) => {
       <Search
         search={search}
         setSearch={setSearch}
-        placeholder={'Search by url, code, method'}
+        placeholder={'Search by url'}
       />
       <RequestsMenu/>
     </Paper>
@@ -54,8 +78,10 @@ const RequestsToolbar = (props) => {
 }
 
 const getState = (state) => ({
+  project: state.projects.project,
   requestsFilters: state.requests.requestsFilters,
   requestsRealtime: state.requests.requestsRealtime,
+  requestsPagination: state.requests.requestsPagination
 })
 
 export default connect(

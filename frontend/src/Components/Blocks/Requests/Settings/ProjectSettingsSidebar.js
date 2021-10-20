@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -11,12 +11,18 @@ import {connect} from "react-redux";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {Typography} from "@mui/material";
 import {ListItemLink} from "../../Common/Drawers/ListItemLink";
+import {getMatchesRequestsSettingsRoute} from "../../../../Utils/Utils/Routing";
 
 
 const ProjectSettingsSidebar = ({project}) => {
   const classes = ProjectSettingsStyles();
   const location = useLocation();
   const [collapse, setCollapse] = useState({users: false, requests: false});
+
+  useEffect(() => {
+    const collapseKey = getMatchesRequestsSettingsRoute(location.pathname);
+    onCollapse(collapseKey);
+  }, [location])
 
   const onCollapse = (key) => setCollapse({...collapse, [key]: !collapse[key]})
 
@@ -63,9 +69,9 @@ const ProjectSettingsSidebar = ({project}) => {
             />
             <ListItemLink
               sx={{pl: 4}}
-              to={`/projects/${project.id}/settings/members`}
+              to={`/projects/${project.id}/settings/filters`}
               title={'Filters'}
-              selected={location.pathname.endsWith('/settings/members')}
+              selected={location.pathname.endsWith('/settings/filters')}
             />
             <ListItemLink
               sx={{pl: 4}}

@@ -29,7 +29,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({theme, search}) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -40,9 +40,12 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     [theme.breakpoints.up('sm')]: {
       width: '20ch',
       '&:focus': {
-        width: '30ch',
+        width: search?.length > 0 ? '25ch' : '30ch',
       },
     },
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
 }));
 
@@ -55,6 +58,7 @@ export const Search = ({search, setSearch, placeholder}) => {
         <SearchIcon/>
       </SearchIconWrapper>
       <StyledInputBase
+        search={search}
         value={search}
         onChange={event => setSearch(event.target.value)}
         placeholder={placeholder}

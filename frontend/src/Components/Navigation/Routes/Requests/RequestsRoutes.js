@@ -15,6 +15,7 @@ import {RequestsSend} from "../../../../Screens/Requests/RequestsSend";
 import {RequestsTracks} from "../../../../Screens/Requests/RequestsTracks";
 import {RequestsTracksProvider} from "../../../../Providers/Requests/RequestsTracksProvider";
 import IntegrationsSettings from "../../../../Screens/Requests/Settings/Integrations/IntegrationsSettings";
+import RequestsFiltersSettings from "../../../../Screens/Requests/Settings/Requests/RequestsFiltersSettings";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -38,16 +39,11 @@ export const RequestsRoutes = ({store}) =>
         <RequestsSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
         <RequestsSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
         <RequestsSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
-        <RequestsSettingsRoute
-          exact
-          path="/projects/:projectId/settings/inbound"
-          component={RequestsInboundDataFilters}
-        />
-        <RequestsSettingsRoute
-          exact
-          path="/projects/:projectId/settings/integrations"
-          component={IntegrationsSettings}
-        />
+        <RequestsSettingsRoute exact path="/projects/:projectId/settings/inbound"
+                               component={RequestsInboundDataFilters}/>
+        <RequestsSettingsRoute exact path="/projects/:projectId/settings/integrations"
+                               component={IntegrationsSettings}/>
+        <RequestsSettingsRoute exact path="/projects/:projectId/settings/filters" component={RequestsFiltersSettings}/>
       </Switch>
     </ProjectSettingsProvider>
   </RequestsProvider>
