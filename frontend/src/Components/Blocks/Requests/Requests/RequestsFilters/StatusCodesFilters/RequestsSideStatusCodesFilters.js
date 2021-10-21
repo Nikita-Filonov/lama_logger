@@ -1,17 +1,26 @@
 import React, {useState} from "react";
-import {Checkbox, FormControlLabel, FormGroup, IconButton, Popover, Typography} from "@mui/material";
+import {Box, Checkbox, FormControlLabel, FormGroup, IconButton, Popover, Typography} from "@mui/material";
 import {REQUESTS_STATUS_CODES_TYPES} from "../../../../../../Utils/Constants";
 import {StatusCodeIndicator} from "../../StatusCodeIndicator";
 import {MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {setRequestsFilters} from "../../../../../../Redux/Requests/Requests/requestsActions";
+import {StatusCodesAutocomplete} from "../../../Settings/Requests/Filters/StatusCodesAutocomplete";
 
 
 const RequestsSideStatusCodesFilters = (props) => {
   const {requestsFilters, projectSettings, setRequestsFilters} = props;
   const [statusCodesMenu, setStatusCodesMenu] = useState(null);
+  const [selectedCodes, setSelectedCodes] = useState({type: 'success', value: [], options: []})
 
-  const onOpenMenu = (event) => setStatusCodesMenu(event.currentTarget);
+  const onOpenMenu = (event, type) => {
+    setStatusCodesMenu(event.currentTarget);
+    setSelectedCodes({
+      type,
+      options: projectSettings?.filterStatusCodes[type],
+      value: requestsFilters?.statusCodes[type]
+    })
+  };
   const onCloseMenu = () => setStatusCodesMenu(null);
 
   const onStatusCodes = (event) => {
@@ -24,6 +33,14 @@ const RequestsSideStatusCodesFilters = (props) => {
       delete selectedStatusCodes[event.value];
     }
     setRequestsFilters({...requestsFilters, statusCodes: {...selectedStatusCodes}})
+  }
+
+  const onChangesStatusCodes = (type, newValue) => {
+    setRequestsFilters({
+      ...requestsFilters,
+      statusCodes: {...requestsFilters?.statusCodes, [type]: newValue.map(Number)}
+    })
+    setSelectedCodes({...selectedCodes, value: newValue})
   }
 
   return (
@@ -45,20 +62,29 @@ const RequestsSideStatusCodesFilters = (props) => {
             label={<StatusCodeIndicator statusCode={codes?.code}/>}
           />
           <div className={'flex-grow-1'}/>
-          <IconButton size={'small'} onClick={onOpenMenu}>
+          <IconButton size={'small'} onClick={event => onOpenMenu(event, codes?.value)}>
             <MoreHoriz fontSize={'small'}/>
           </IconButton>
         </div>
       )}
 
       <Popover
+        disableScrollLock={false}
         onClose={onCloseMenu}
         open={Boolean(statusCodesMenu)}
         anchorEl={statusCodesMenu}
         anchorOrigin={{vertical: 'top', horizontal: 'right'}}
         transformOrigin={{vertical: 'bottom', horizontal: 'left'}}
       >
-        The content of the Popover.
+        <Box sx={{p: 2, maxWidth: 400}}>
+          <StatusCodesAutocomplete
+            type={selectedCodes.type}
+            load={requestsFilters}
+            value={selectedCodes.value}
+            options={selectedCodes.options}
+            onChange={onChangesStatusCodes}
+          />
+        </Box>
       </Popover>
     </FormGroup>
   )

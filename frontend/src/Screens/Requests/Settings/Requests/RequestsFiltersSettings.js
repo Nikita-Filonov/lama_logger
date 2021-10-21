@@ -34,7 +34,7 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
     return filterStatusCodes === projectSettings?.filterStatusCodes;
   }, [filterMethods, filterStatusCodes, projectSettings]);
 
-  const onChangeCodes = (type, newValue) => setFilterStatusCodes({...filterStatusCodes, [type]: newValue})
+  const onChangeCodes = (type, newValue) => setFilterStatusCodes({...filterStatusCodes, [type]: newValue.map(Number)})
 
   const onSave = async () => await updateProjectSettings(project.id, {filterMethods, filterStatusCodes})
 
@@ -79,6 +79,7 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
             value={filterStatusCodes[codes.value]}
             options={REQUESTS_STATUS_CODES_FILTERS[codes.value]}
             onChange={onChangeCodes}
+            className={'w-50'}
           />
         </Grid>
       )}

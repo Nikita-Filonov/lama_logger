@@ -4,15 +4,16 @@ import {Autocomplete, Checkbox, InputAdornment, TextField} from "@mui/material";
 import {StatusCodeIndicator} from "../../../Requests/StatusCodeIndicator";
 
 
-export const StatusCodesAutocomplete = ({load, type = 'success', value, options, onChange}) => {
+export const StatusCodesAutocomplete = ({load, type = 'success', value, options, onChange, className}) => {
   return (
     <Autocomplete
+      ListboxProps={{style: {maxHeight: '15rem'}}}
       value={value}
       size={'small'}
       key={load}
       multiple
       freeSolo
-      className={'w-50'}
+      className={className}
       options={options}
       onChange={(_, value) => onChange(type, value)}
       disableCloseOnSelect

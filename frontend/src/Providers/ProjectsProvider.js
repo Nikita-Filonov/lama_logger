@@ -23,7 +23,6 @@ const ProjectsProvider = ({children, store}) => {
 
   const updateProjectState = async (data) => {
     store.dispatch({type: SET_PROJECT, payload: data})
-    localStorage.setItem('project', JSON.stringify(data))
     store.dispatch({type: UPDATE_PROJECT, payload: data});
   }
 
