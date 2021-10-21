@@ -1,7 +1,7 @@
 import python from './../Utils/Integrations/Templates/python.json'
 import {getProjectName, getSdkLanguage} from "./Utils/Routing";
 
-export const baseUrl = 'http://localhost:8000/';
+export const baseUrl = 'https://lama-logger.herokuapp.com/login/';
 
 
 export const BREADCRUMB_ROUTES = [
@@ -23,7 +23,6 @@ export const BREADCRUMB_ROUTES = [
   {path: '/integrations/:language', breadcrumb: getSdkLanguage},
 ];
 
-export const SUCCESS_CODES = [200, 201, 204];
 export const UNITS = [
   {label: 'Seconds', unit: 'seconds'},
   {label: 'Minutes', unit: 'minutes'},
