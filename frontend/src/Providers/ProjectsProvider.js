@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {baseUrl, SUCCESS_CODES} from "../Utils/Constants";
+import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./Users/UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
 import {useAlerts} from "./AlertsProvider";
@@ -27,11 +27,12 @@ const ProjectsProvider = ({children, store}) => {
   }
 
   const checkResponse = async (response, successMessage = {}, errorMessage = null) => {
-    if (SUCCESS_CODES.includes(response.status)) {
+    const payload = await response.json();
+    if (response.ok) {
       setAlert(successMessage)
-      response.json().then(async data => await updateProjectState(data))
+      await updateProjectState(payload)
     } else {
-      response.json().then(async data => setAlert(errorMessage || data))
+      setAlert(errorMessage || payload)
     }
     setRequest(false)
   }
@@ -86,7 +87,7 @@ const ProjectsProvider = ({children, store}) => {
 
   const updateProject = async (projectId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
-    await fetch(projectsApi + `${projectId}/`, {
+    const response = await fetch(projectsApi + `${projectId}/`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Token ${token}`,
@@ -94,11 +95,7 @@ const ProjectsProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-      .then(response => response.json())
-      .then(async data => {
-        !isLazy && await updateProjectState(data)
-        setRequest(false)
-      });
+    !isLazy && await checkResponse(response, {message: 'Project successfully updated', level: 'success'})
   }
 
   const inviteMember = async (projectId, payload) => {

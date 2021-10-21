@@ -11,6 +11,7 @@ const MemberRow = (props) => {
   const {member, project, selectedMembers, setSelectedMembers, setConfirmAction} = props;
   const {updateMember, deleteMembers} = useProjects();
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
+  const username = useMemo(() => member?.user?.username ? member?.user?.username : member?.user?.email, [member])
 
   const onDelete = async () => {
     setConfirmAction({
@@ -41,7 +42,7 @@ const MemberRow = (props) => {
         />
       </TableCell>
       <TableCell component="th" scope="row">
-        {member?.user?.username}
+        {username}
       </TableCell>
       <TableCell align="left">
         <RolesSelect member={member} onSelectRole={onSelectRole} sx={{width: 300, display: 'flex'}}/>

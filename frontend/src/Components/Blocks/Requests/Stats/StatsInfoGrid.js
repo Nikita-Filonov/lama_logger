@@ -3,7 +3,7 @@ import {Grid, Paper, Typography} from "@mui/material";
 import {Skeleton} from "@mui/lab";
 import {useSettings} from "../../../../Providers/SettingsProvider";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
-import {ViewRequestStyles} from "../../../../Styles/Blocks";
+import {StatsChartStyles, ViewRequestStyles} from "../../../../Styles/Blocks";
 import {HelpOutline} from "@mui/icons-material";
 
 export const StatsInfoGrid = () => {
@@ -14,7 +14,7 @@ export const StatsInfoGrid = () => {
   return (
     <Grid container spacing={2} className={'mt-2'}>
       <Grid item xs={3}>
-        <Paper elevation={3} className={classes.toolbarContainer}>
+        <Paper elevation={3} style={StatsChartStyles.gridContainer}>
           <div className={'d-flex align-items-center'}>
             <Typography className={'flex-grow-1'}>Total requests</Typography>
             <HelpOutline fontSize={'small'}/>
@@ -25,7 +25,7 @@ export const StatsInfoGrid = () => {
         </Paper>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className={classes.toolbarContainer}>
+        <Paper elevation={3} style={StatsChartStyles.gridContainer}>
           <div className={'d-flex align-items-center'}>
             <Typography className={'flex-grow-1'}>Created</Typography>
             <HelpOutline fontSize={'small'}/>
@@ -36,7 +36,7 @@ export const StatsInfoGrid = () => {
         </Paper>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className={classes.toolbarContainer}>
+        <Paper elevation={3} style={StatsChartStyles.gridContainer}>
           <div className={'d-flex align-items-center'}>
             <Typography className={'flex-grow-1'}>Removed</Typography>
             <HelpOutline fontSize={'small'}/>
@@ -47,7 +47,7 @@ export const StatsInfoGrid = () => {
         </Paper>
       </Grid>
       <Grid item xs={3}>
-        <Paper elevation={3} className={classes.toolbarContainer}>
+        <Paper elevation={3} style={StatsChartStyles.gridContainer}>
           <div className={'d-flex align-items-center'}>
             <Typography className={'flex-grow-1'}>Filtered</Typography>
             <HelpOutline fontSize={'small'}/>

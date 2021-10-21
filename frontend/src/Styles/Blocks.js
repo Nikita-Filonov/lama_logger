@@ -167,6 +167,9 @@ export const StatsChartStyles = {
     right: 10,
     left: 0,
     bottom: 10
+  },
+  gridContainer: {
+    padding: 10,
   }
 }
 

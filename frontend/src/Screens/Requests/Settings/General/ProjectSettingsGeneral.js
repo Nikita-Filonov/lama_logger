@@ -76,6 +76,7 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
           variant="standard"
           placeholder={'Project name'}
           className={'w-50'}
+          inputProps={{maxLength: 255}}
         />
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
@@ -86,7 +87,7 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
           variant="standard"
           placeholder={'Short name'}
           className={'w-50'}
-          inputProps={{maxLength: 10}}
+          inputProps={{maxLength: 2}}
           helperText={'Short name for your project. For example if project name is Lama Logger, then short name ' +
           'will be LL'}
         />
@@ -105,11 +106,12 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
       <Grid item xs={12} className={'mt-3'}>
         <Autocomplete
           className={'w-50'}
-          closeIcon={null}
+          autoHighlight
+          disableClearable
           options={project?.members?.map(member => member.user)}
           defaultValue={project?.creator}
-          getOptionLabel={(option, state) => optionLabel(option)}
-          renderOption={(option, state) => <UserOption label={optionLabel(option)}/>}
+          getOptionLabel={(option, _) => optionLabel(option)}
+          renderOption={(props, option) => <UserOption props={props} label={optionLabel(option)}/>}
           onChange={(event, value) => setCreator(value)}
           renderInput={(params) =>
             <TextField

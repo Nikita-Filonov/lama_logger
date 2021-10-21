@@ -32,7 +32,11 @@ class ProjectsApi(views.APIView):
             )
 
         return Response(
-            serializer.errors,
+            {
+                'message': 'Error happened while creating project',
+                'level': 'error',
+                'data': serializer.errors
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
@@ -54,4 +58,11 @@ class ProjectApi(views.APIView):
             project = serializer.save()
             return Response(ProjectsSerializer(project, many=False).data)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {
+                'message': 'Error happened while updating project',
+                'level': 'error',
+                'data': serializer.errors
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
