@@ -10,6 +10,7 @@ from rest_framework.throttling import UserRateThrottle
 from core.calls.models import Track
 from core.calls.serializers.tracks import TrackSerializer, TracksSerializer
 from core.projects.models import Project
+from utils.exeptions import BadRequest
 
 
 class TracksApi(views.APIView, LimitOffsetPagination):
@@ -35,11 +36,4 @@ class TracksApi(views.APIView, LimitOffsetPagination):
             payload = TracksSerializer(track, many=False).data
             return Response(payload, status=status.HTTP_201_CREATED)
 
-        return Response(
-            {
-                'message': 'Error happened while creating track',
-                'level': 'error',
-                'data': serializer.errors
-            },
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        raise BadRequest('Error happened while creating track')
