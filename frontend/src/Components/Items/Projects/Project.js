@@ -15,11 +15,11 @@ const Project = ({project, setProject}) => {
 
   const onOpenProject = () => {
     setProject(project);
-    history.push(`projects/${project.id}/requests`);
+    history.push(`/projects/${project.id}/requests`);
   };
   const onOpenSettings = () => {
     setProject(project);
-    history.push(`projects/${project.id}/settings/general`);
+    history.push(`/projects/${project.id}/settings/general`);
   }
 
   return (

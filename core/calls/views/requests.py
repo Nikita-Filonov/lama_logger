@@ -15,6 +15,7 @@ from core.calls.serializers.requests import RequestsSerializer, RequestSerialize
 from core.projects.helpers.utils import to_curl
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
+from utils.exeptions import BadRequest
 
 
 @api_view(['POST'])
@@ -37,10 +38,7 @@ def create_request(request, project_id):
         payload = RequestsSerializer(created_request, many=False).data
         return Response(payload, status=status.HTTP_201_CREATED)
 
-    return Response(
-        serializer.errors,
-        status=status.HTTP_400_BAD_REQUEST
-    )
+    raise BadRequest('Error happened while creating request')
 
 
 class RequestsApi(views.APIView, LimitOffsetPagination):
@@ -63,10 +61,8 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
     def delete(self, request, project_id):
         requests = request.data
         if not isinstance(requests, list):
-            return Response(
-                {'message': 'You should provide requests ids', 'level': 'error'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            raise BadRequest('You should provide requests ids')
+
         project = Project.objects.get(id=project_id)
         requests = Request.objects.filter(requestId__in=requests)
 
