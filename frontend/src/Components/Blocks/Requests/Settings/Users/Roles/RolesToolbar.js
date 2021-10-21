@@ -5,30 +5,27 @@ import {IconButton, Paper} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import clsx from "clsx";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
-import {useProjects} from "../../../../../../Providers/ProjectsProvider";
-import {setSelectedMembers} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {setSelectedRoles} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {ViewRequestStyles} from "../../../../../../Styles/Blocks";
 
-const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelectedMembers}) => {
+const RolesToolbar = ({project, selectedRoles, setConfirmAction, setSelectedRoles}) => {
   const classes = ViewRequestStyles();
-  const {deleteMembers} = useProjects();
 
   const onDelete = async () => setConfirmAction({
     modal: true,
-    title: 'Delete members?',
-    description: 'Are you sure you want to delete members? ' +
+    title: 'Delete roles?',
+    description: 'Are you sure you want to delete this roles? ' +
       'You will not be able to undo this action',
     confirmButton: 'Delete',
     action: async () => {
-      await deleteMembers(project.id, {members: selectedMembers})
-      setSelectedMembers([])
+      setSelectedRoles([])
     }
   })
 
 
   return (
     <Paper elevation={3} className={clsx('mt-4 d-flex align-items-center', classes.toolbarContainer)}>
-      <Typography variant="subtitle1">Selected {selectedMembers.length}</Typography>
+      <Typography variant="subtitle1">Selected {selectedRoles.length}</Typography>
       <div className={'flex-grow-1'}/>
       <IconButton size={'small'} onClick={onDelete}>
         <Delete/>
@@ -39,13 +36,13 @@ const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelected
 
 const getState = (state) => ({
   project: state.projects.project,
-  selectedMembers: state.requestsSettings.selectedMembers
+  selectedRoles: state.requestsSettings.selectedRoles
 })
 
 export default connect(
   getState,
   {
     setConfirmAction,
-    setSelectedMembers
+    setSelectedRoles
   },
-)(MembersToolbar);
+)(RolesToolbar);
