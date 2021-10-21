@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {REQUESTS_STATUS_CODES_TYPES} from "../../../../../../Utils/Constants";
 import {Autocomplete, Checkbox, InputAdornment, TextField} from "@mui/material";
 import {StatusCodeIndicator} from "../../../Requests/StatusCodeIndicator";
+import {isDigit} from "../../../../../../Utils/Utils/Common";
+import {useAlerts} from "../../../../../../Providers/AlertsProvider";
 
 
 export const StatusCodesAutocomplete = ({load, type = 'success', value, options, onChange, className}) => {
+  const {setAlert} = useAlerts();
+  const isValuesValid = useCallback((values) => values?.every(c => isDigit(c)));
+
   return (
     <Autocomplete
       ListboxProps={{style: {maxHeight: '15rem'}}}
@@ -15,7 +20,11 @@ export const StatusCodesAutocomplete = ({load, type = 'success', value, options,
       freeSolo
       className={className}
       options={options}
-      onChange={(_, value) => onChange(type, value)}
+      onChange={(_, value) =>
+        isValuesValid(value)
+          ? onChange(type, value)
+          : setAlert({message: 'You entered not valid digit', level: 'warning'})
+      }
       disableCloseOnSelect
       getOptionLabel={(option) => option.toString()}
       renderOption={(props, option, {selected}) => (

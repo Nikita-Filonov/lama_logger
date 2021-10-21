@@ -22,7 +22,7 @@ const ProjectSettingsSidebar = ({project}) => {
   useEffect(() => {
     const collapseKey = getMatchesRequestsSettingsRoute(location.pathname);
     onCollapse(collapseKey);
-  }, [location])
+  }, [])
 
   const onCollapse = (key) => setCollapse({...collapse, [key]: !collapse[key]})
 

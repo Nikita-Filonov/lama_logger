@@ -35,7 +35,6 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
   }, [filterMethods, filterStatusCodes, projectSettings]);
 
   const onChangeCodes = (type, newValue) => setFilterStatusCodes({...filterStatusCodes, [type]: newValue.map(Number)})
-
   const onSave = async () => await updateProjectSettings(project.id, {filterMethods, filterStatusCodes})
 
   return (
