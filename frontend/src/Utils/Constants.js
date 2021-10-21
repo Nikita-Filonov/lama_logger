@@ -1,7 +1,7 @@
 import python from './../Utils/Integrations/Templates/python.json'
 import {getProjectName, getSdkLanguage} from "./Utils/Routing";
 
-export const baseUrl = 'https://lama-logger.herokuapp.com/login/';
+export const baseUrl = 'https://lama-logger.herokuapp.com/';
 
 
 export const BREADCRUMB_ROUTES = [
