@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import {Button, Menu, Paper, useTheme} from "@mui/material";
 import {StatsChartStyles} from "../../../../Styles/Blocks";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
@@ -22,36 +22,35 @@ export const StatsChart = ({groupBy, setGroupBy}) => {
 
   return (
     <Paper elevation={3} className={'mt-4'}>
-      <ResponsiveContainer width="99%" aspect={3.5}>
-        {load
-          ? <Spinner top={'60%'}/>
-          : <BarChart
-            width={window.innerWidth / 1.085}
-            data={requestsStats?.data}
-            margin={StatsChartStyles.lineChartMargin}
-            style={{
+      {load
+        ? <Spinner top={'60%'}/>
+        : <BarChart
+          width={window.innerWidth / 1.087}
+          height={window.innerHeight / 1.8}
+          data={requestsStats?.data}
+          margin={StatsChartStyles.lineChartMargin}
+          style={{
+            backgroundColor: palette.mode === 'dark' ? '#3C3C3C' : '#FFFFFF',
+            borderRadius: 10
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3"/>
+          <XAxis dataKey="name" tick={{fill: palette.text.primary, fontSize: 14}}/>
+          <YAxis tick={{fill: palette.text.primary, fontSize: 14}} width={35}/>
+          <Tooltip
+            contentStyle={{
               backgroundColor: palette.mode === 'dark' ? '#3C3C3C' : '#FFFFFF',
-              borderRadius: 10
+              borderColor: palette.mode === 'dark' ? '#2B2B2B' : '#BDBDBD',
+              borderRadius: 3,
             }}
-          >
-            <CartesianGrid strokeDasharray="3 3"/>
-            <XAxis dataKey="name" tick={{fill: palette.text.primary, fontSize: 14}}/>
-            <YAxis tick={{fill: palette.text.primary, fontSize: 14}}/>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: palette.mode === 'dark' ? '#3C3C3C' : '#FFFFFF',
-                borderColor: palette.mode === 'dark' ? '#2B2B2B' : '#BDBDBD',
-                borderRadius: 3,
-              }}
-              cursor={false}
-            />
-            <Legend/>
-            <Bar dataKey="Create" stackId="Create" fill="#8884d8"/>
-            <Bar dataKey="Delete" stackId="Create" fill="#82ca9d"/>
-            <Bar dataKey="Filter" stackId="Create" fill="#FFEB67"/>
-          </BarChart>
-        }
-      </ResponsiveContainer>
+            cursor={false}
+          />
+          <Legend height={5}/>
+          <Bar dataKey="Create" stackId="Create" fill="#8884d8"/>
+          <Bar dataKey="Delete" stackId="Create" fill="#82ca9d"/>
+          <Bar dataKey="Filter" stackId="Create" fill="#FFEB67"/>
+        </BarChart>
+      }
       {!load && <div className={'d-flex'}>
         <div className={'flex-grow-1'}/>
         <Button
