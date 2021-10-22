@@ -7,6 +7,7 @@ import {TabPanel} from "../../../Common/TabPanel";
 import {Headers} from "./Headers";
 import {Body} from "./Body";
 import moment from "moment";
+import {AccessTime} from "@mui/icons-material";
 
 const tabsStyles = {minHeight: 28, height: 28}
 
@@ -61,6 +62,10 @@ const ViewRequestDemo = ({request}) => {
         <Body responseHeaders={request?.responseHeaders} body={request?.responseBody}/>
       </TabPanel>
 
+      <div className={'d-flex align-items-center'}>
+        <AccessTime fontSize={'small'}/>
+        <Typography sx={{ml: 1}} variant={'subtitle1'}>Duration {request?.duration} sec</Typography>
+      </div>
     </Box>
   )
 }

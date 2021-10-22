@@ -19,12 +19,8 @@ const ProjectSelect = ({project, projects, setProject}) => {
   const onClose = () => setMenu(null);
 
 
-  const onSelectProject = (event) => {
-    if (!event?.target?.value) {
-      return;
-    }
-
-    const selectedProject = projects.find(p => p.id === event.target.value)
+  const onSelectProject = (projectId) => {
+    const selectedProject = projects.find(p => p.id === projectId);
     setProject(selectedProject);
     const path = generateProjectPath(history.location.pathname, selectedProject.id)
     history.push(path);
@@ -55,16 +51,15 @@ const ProjectSelect = ({project, projects, setProject}) => {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
-        onClick={onSelectProject}
       >
         {projects.map(p => <MenuItem
           value={p.id}
           key={p.id}
           sx={{maxWidth: 300}}
-          onClick={onSelectProject}
+          onClick={() => onSelectProject(p.id)}
           selected={project.id === p.id}
         >
-          <Typography style={common.ellipsisText}>{p.title}</Typography>
+          <Typography onClick={() => onSelectProject(p.id)} style={common.ellipsisText}>{p.title}</Typography>
           <div className={'flex-grow-1'}/>
           <IconButton size={'small'}><Settings fontSize={'small'}/></IconButton>
         </MenuItem>)}

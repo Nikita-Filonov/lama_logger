@@ -49,6 +49,12 @@ class Request(models.Model):
         default=dict,
         blank=True
     )
+    duration = models.FloatField(
+        verbose_name='Duration in seconds',
+        default=0.0,
+        null=True,
+        blank=True
+    )
     user = models.ForeignKey(
         CustomUser,
         verbose_name='User',
