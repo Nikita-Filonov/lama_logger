@@ -1,5 +1,15 @@
 import React from "react";
-import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  Paper,
+  TextField,
+  Typography
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
 import {AccessTime, Close, Settings} from "@mui/icons-material";
@@ -53,6 +63,13 @@ const RequestsSideFilters = (props) => {
           </IconButton>
         </div>
         <Divider/>
+        <TextField
+          label={'Domain or url'}
+          variant={'standard'}
+          size={'small'}
+          placeholder={'some.domain.com'}
+          className={'mt-2'}
+        />
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Methods</Typography>
           {projectSettings?.filterMethods?.map((method, index) =>

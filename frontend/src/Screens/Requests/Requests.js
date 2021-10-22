@@ -34,7 +34,7 @@ const Requests = (props) => {
   useEffect(() => {
     clearInterval(requestsInterval.current)
 
-    if (requestsRealtime && token) {
+    if (requestsRealtime?.enabled && token) {
       requestsInterval.current = setInterval(async () => {
         await getRequests(
           projectId,
@@ -42,7 +42,7 @@ const Requests = (props) => {
           requestsPagination.rowsPerPage * requestsPagination.page,
           makeRequestsFilters(requestsFilters)
         )
-      }, 10000);
+      }, requestsRealtime.normalizedAmount * 1000);
     }
 
     return () => {

@@ -75,6 +75,12 @@ const ProjectSettingsSidebar = ({project}) => {
             />
             <ListItemLink
               sx={{pl: 4}}
+              to={`/projects/${project.id}/settings/realtime`}
+              title={'Realtime updates'}
+              selected={location.pathname.endsWith('/settings/realtime')}
+            />
+            <ListItemLink
+              sx={{pl: 4}}
               to={`/projects/${project.id}/settings/roles`}
               title={'Auto deletion'}
               selected={location.pathname.endsWith('/settings/roles')}

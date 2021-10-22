@@ -1,4 +1,4 @@
-import {DEFAULT_REQUESTS_FILTERS} from "../../../Utils/Constants";
+import {DEFAULT_REALTIME_SETTINGS, DEFAULT_REQUESTS_FILTERS} from "../../../Utils/Constants";
 
 export const INITIAL_REQUESTS = {
   request: {},
@@ -17,5 +17,5 @@ export const INITIAL_REQUESTS = {
   selectedRequests: [],
   requestsFiltersSidebar: true,
   requestsTimeFilterModal: false,
-  requestsRealtime: JSON.parse(localStorage.getItem('requestsRealtime'))
+  requestsRealtime: JSON.parse(localStorage.getItem('requestsRealtime')) || DEFAULT_REALTIME_SETTINGS
 }

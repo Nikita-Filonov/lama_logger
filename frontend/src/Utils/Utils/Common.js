@@ -9,7 +9,27 @@ export const uuid4 = async () => {
 }
 
 export const isDigit = (str) => /^\d+$/.test(str);
-export const capitalize = s => (s && s[0].toUpperCase() + s.slice(1)) || ""
+export const capitalize = s => (s && s[0].toUpperCase() + s.slice(1)) || "";
+export const normalizeAmount = async (unit, amount) => {
+  if (unit === 'seconds') {
+    return amount;
+  }
+
+  if (unit === 'minutes') {
+    return amount * 60;
+  }
+  if (unit === 'hours') {
+    return amount * 60 * 60;
+  }
+  if (unit === 'days') {
+    return amount * 60 * 60 * 24;
+  }
+  if (unit === 'months') {
+    return amount * 60 * 60 * 24 * 30
+  }
+
+  return amount;
+}
 
 export const objectToQuery = async (object, ignore = ['meta']) =>
   object && '?' + Object.keys(object)

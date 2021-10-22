@@ -50,6 +50,12 @@ export const DEFAULT_REQUESTS_FILTERS = {
     range: {start: null, end: null}
   }
 }
+export const DEFAULT_REALTIME_SETTINGS = {
+  unit: 'seconds',
+  amount: 10,
+  normalizedAmount: 10,
+  enabled: false
+}
 
 
 export const REQUESTS_STATUS_CODES_TYPES = [

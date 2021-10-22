@@ -16,6 +16,7 @@ import {RequestsTracks} from "../../../../Screens/Requests/RequestsTracks";
 import {RequestsTracksProvider} from "../../../../Providers/Requests/RequestsTracksProvider";
 import IntegrationsSettings from "../../../../Screens/Requests/Settings/Integrations/IntegrationsSettings";
 import RequestsFiltersSettings from "../../../../Screens/Requests/Settings/Requests/RequestsFiltersSettings";
+import RequestsRealtimeSettings from "../../../../Screens/Requests/Settings/Requests/RequestsRealtimeSettings";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -44,6 +45,8 @@ export const RequestsRoutes = ({store}) =>
         <RequestsSettingsRoute exact path="/projects/:projectId/settings/integrations"
                                component={IntegrationsSettings}/>
         <RequestsSettingsRoute exact path="/projects/:projectId/settings/filters" component={RequestsFiltersSettings}/>
+        <RequestsSettingsRoute exact path="/projects/:projectId/settings/realtime"
+                               component={RequestsRealtimeSettings}/>
       </Switch>
     </ProjectSettingsProvider>
   </RequestsProvider>

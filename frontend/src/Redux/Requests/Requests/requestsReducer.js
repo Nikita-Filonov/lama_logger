@@ -49,7 +49,7 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     case SET_REQUESTS_TIME_FILTER_MODAL:
       return {...state, requestsTimeFilterModal: action.payload}
     case SET_REQUESTS_REALTIME: {
-      localStorage.setItem('requestsRealtime', action.payload);
+      localStorage.setItem('requestsRealtime', JSON.stringify(action.payload));
       return {...state, requestsRealtime: action.payload}
     }
     case SET_REQUESTS_STATS_FILTERS:

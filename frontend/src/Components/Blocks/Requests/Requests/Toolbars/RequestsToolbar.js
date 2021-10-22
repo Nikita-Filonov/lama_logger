@@ -44,6 +44,7 @@ const RequestsToolbar = (props) => {
 
   const timeFiltersLabel = useMemo(() => getTimeFiltersLabel(requestsFilters?.time), [requestsFilters?.time])
   const onTimeFilters = () => setRequestsTimeFilterModal(true);
+  const onRealtime = () => setRequestsRealtime({...requestsRealtime, enabled: !requestsRealtime?.enabled});
 
   return (
     <Paper
@@ -62,8 +63,8 @@ const RequestsToolbar = (props) => {
       </Button>
       <Divider orientation={'vertical'} flexItem style={RequestsToolbarStyles.buttonsDivider}/>
       <Tooltip title={(requestsRealtime ? 'Disable' : 'Enable') + ' realtime updates'}>
-        <IconButton onClick={() => setRequestsRealtime(!requestsRealtime)}>
-          {requestsRealtime ? <PauseOutlined/> : <PlayArrowOutlinedIcon/>}
+        <IconButton onClick={onRealtime}>
+          {requestsRealtime?.enabled ? <PauseOutlined/> : <PlayArrowOutlinedIcon/>}
         </IconButton>
       </Tooltip>
       <div className={'flex-grow-1'}/>
