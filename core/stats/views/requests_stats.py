@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.stats.helper.utils import by_hours, by_days, to_stats_payload, group_types
+from core.stats.helper.utils import to_stats_payload, group_types
 from core.stats.models import RequestStat
 
 
