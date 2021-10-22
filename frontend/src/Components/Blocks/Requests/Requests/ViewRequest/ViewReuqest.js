@@ -64,7 +64,7 @@ const ViewRequestDemo = ({request}) => {
 
       <div className={'d-flex align-items-center'}>
         <AccessTime fontSize={'small'}/>
-        <Typography sx={{ml: 1}} variant={'subtitle1'}>Duration {request?.duration} sec</Typography>
+        <Typography sx={{ml: 1}} variant={'subtitle1'}>Duration {request?.duration * 1000} milliseconds</Typography>
       </div>
     </Box>
   )
