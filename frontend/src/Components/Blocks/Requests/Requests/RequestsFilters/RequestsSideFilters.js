@@ -70,6 +70,20 @@ const RequestsSideFilters = (props) => {
           placeholder={'some.domain.com'}
           className={'mt-2'}
         />
+        <TextField
+          label={'Headers'}
+          variant={'standard'}
+          size={'small'}
+          placeholder={'application/json'}
+          className={'mt-2'}
+        />
+        <TextField
+          label={'Body'}
+          variant={'standard'}
+          size={'small'}
+          placeholder={'{"id": 1}'}
+          className={'mt-2'}
+        />
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Methods</Typography>
           {projectSettings?.filterMethods?.map((method, index) =>
