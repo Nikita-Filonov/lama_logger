@@ -17,12 +17,12 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
       }
     }
     case MOVE_SERVICE: {
-      const {activityIdFrom, activityIdTo, indexTo, service} = action.payload;
+      const {activityIdFrom, activityIdTo, indexTo, indexFrom, service} = action.payload;
       let activities = [...state.activities];
-      activities = activities.map(a => a.id === activityIdFrom
-        ? {...a, services: a.services.filter(s => s.id !== service.id)}
-        : a
-      )
+
+      const oldActivity = activities.find(a => a.id === activityIdFrom)
+      oldActivity.services.splice(indexFrom, 1);
+
       const newActivity = activities.find(a => a.id === activityIdTo)
       newActivity.services.splice(indexTo, 0, service);
 

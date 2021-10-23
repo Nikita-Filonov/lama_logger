@@ -20,10 +20,11 @@ const RequestsTracks = ({activities, moveService}) => {
     let activitiesCopy = [...activities];
     const activityIdFrom = parseInt(result.source.droppableId);
     const activityIdTo = parseInt(result.destination.droppableId);
-    const sourceActivity = activitiesCopy.find(a => a.id === activityIdFrom);
-    const service = sourceActivity.services[result.source.index];
     const indexTo = result.destination.index;
-    moveService({activityIdFrom, activityIdTo, indexTo, service})
+    const indexFrom = result.source.index;
+    const service = activitiesCopy.find(a => a.id === activityIdFrom).services[indexFrom];
+
+    moveService({activityIdFrom, activityIdTo, indexTo, indexFrom, service})
   };
 
   return (
