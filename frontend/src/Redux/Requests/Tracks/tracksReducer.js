@@ -20,11 +20,11 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
       const {activityIdFrom, activityIdTo, indexTo, indexFrom, service} = action.payload;
       let activities = [...state.activities];
 
-      const oldActivity = activities.find(a => a.id === activityIdFrom)
-      oldActivity.services.splice(indexFrom, 1);
+      const fromActivity = activities.find(a => a.id === activityIdFrom)
+      fromActivity.services.splice(indexFrom, 1);
 
-      const newActivity = activities.find(a => a.id === activityIdTo)
-      newActivity.services.splice(indexTo, 0, service);
+      const toActivity = activities.find(a => a.id === activityIdTo)
+      toActivity.services.splice(indexTo, 0, service);
 
       return {...state, activities: [...activities]};
     }
