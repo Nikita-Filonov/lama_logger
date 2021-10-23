@@ -18,14 +18,6 @@ class TracksApi(views.APIView, LimitOffsetPagination):
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
-    def get(self, request, project_id):
-        filters = json.loads(request.query_params.get('filters', '{}'))
-        tracks = Track.objects.filter(**filters, project_id=project_id).order_by('-created')
-
-        results = self.paginate_queryset(tracks, request, view=self)
-        serializer = TracksSerializer(results, many=True)
-        return self.get_paginated_response(serializer.data)
-
     def post(self, request, project_id):
         project = Project.objects.get(id=project_id)
         context = {'user': request.user, 'project': project}

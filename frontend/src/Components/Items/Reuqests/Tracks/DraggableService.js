@@ -4,10 +4,17 @@ import {Card, CardActions, CardContent, Chip, List, ListItem, ListItemText, useT
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {Add, DragHandle} from "@mui/icons-material";
+import {connect} from "react-redux";
+import {setCreateTrackModal, setService} from "../../../../Redux/Requests/Tracks/tracksActions";
 
 
-export const DraggableService = ({service, index}) => {
+const DraggableService = ({service, index, setService, setCreateTrackModal}) => {
   const {palette} = useTheme();
+
+  const onCreateTrack = () => {
+    setCreateTrackModal(true);
+    setService(service)
+  }
 
   return (
     <Draggable draggableId={service.id?.toString()} index={index}>
@@ -39,7 +46,7 @@ export const DraggableService = ({service, index}) => {
           </List>
         </CardContent>
         <CardActions>
-          <Button size="small" startIcon={<Add/>}>NEW TRACK</Button>
+          <Button size="small" startIcon={<Add/>} onClick={onCreateTrack}>NEW TRACK</Button>
           <div className={'flex-grow-1'}/>
           <DragHandle/>
         </CardActions>
@@ -47,3 +54,11 @@ export const DraggableService = ({service, index}) => {
     </Draggable>
   );
 };
+
+export default connect(
+  null,
+  {
+    setService,
+    setCreateTrackModal
+  },
+)(DraggableService);

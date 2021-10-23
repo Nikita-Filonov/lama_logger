@@ -23,29 +23,30 @@ import {Link as RouterLink} from 'react-router-dom';
 import {connect} from "react-redux";
 import {baseUrl, REQUESTS_STATUS_CODES_FILTERS} from "../../../../Utils/Constants";
 import {StatusCodeIndicator} from "../../../Blocks/Requests/Requests/StatusCodeIndicator";
-import {useRequestsTracks} from "../../../../Providers/Requests/RequestsTracksProvider";
 import {LoadingButton} from "@mui/lab";
+import {useTracks} from "../../../../Providers/Requests/Tracks/TracksProvider";
+import {setCreateTrackModal} from "../../../../Redux/Requests/Tracks/tracksActions";
 
 const Transition = forwardRef((props, ref) =>
   <Slide direction="up" ref={ref} {...props} />);
 
 
-const CreateTrack = ({modal, setModal, project}) => {
-  const {request, createRequestsTrack} = useRequestsTracks();
+const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) => {
+  const {request, createTrack} = useTracks();
   const [endpoint, setEndpoint] = useState('');
   const [times, setTimes] = useState(1);
   const [statusCodes, setStatusCodes] = useState([]);
   const [responseBodyContains, setResponseBodyContains] = useState('');
 
-  const onClose = () => setModal(false);
-  const onCreate = async () => createRequestsTrack(project.id,
+  const onClose = () => setCreateTrackModal(false);
+  const onCreate = async () => createTrack(project.id,
     {endpoint, times, statusCodes, responseBodyContains})
     .then(() => onClose());
 
   return (
     <Dialog
       fullScreen
-      open={modal}
+      open={createTrackModal}
       onClose={onClose}
       TransitionComponent={Transition}
     >
@@ -60,7 +61,7 @@ const CreateTrack = ({modal, setModal, project}) => {
             <CloseIcon/>
           </IconButton>
           <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
-            Create new track
+            Create new track for {service?.title}
           </Typography>
           <LoadingButton color={'inherit'} onClick={onCreate} loading={request}>
             Create
@@ -160,9 +161,13 @@ const CreateTrack = ({modal, setModal, project}) => {
 
 const getState = (state) => ({
   project: state.projects.project,
+  service: state.tracks.service,
+  createTrackModal: state.tracks.createTrackModal
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setCreateTrackModal
+  },
 )(CreateTrack);

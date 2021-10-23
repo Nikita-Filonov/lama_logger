@@ -1,3 +1,5 @@
 export const INITIAL_TRACKS = {
-  activities: []
+  activities: [],
+  service: {},
+  createTrackModal: false
 }

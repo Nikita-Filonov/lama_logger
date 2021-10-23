@@ -1,6 +1,6 @@
 import React from "react";
 import {Droppable} from "react-beautiful-dnd";
-import {DraggableService} from "./DraggableService";
+import DraggableService from "./DraggableService";
 import {Grid, Typography} from "@mui/material";
 
 

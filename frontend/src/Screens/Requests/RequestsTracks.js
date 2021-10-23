@@ -6,11 +6,11 @@ import {common} from "../../Styles/Blocks";
 import {DraggableServiceColumn} from "../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
 import {connect} from "react-redux";
 import CreateService from "../../Components/Modals/Requests/Tracks/CreateService";
-import {moveService} from "../../Redux/Requests/Tracks/tracksActions";
+import {moveService, setCreateTrackModal} from "../../Redux/Requests/Tracks/tracksActions";
+import CreateTrack from "../../Components/Modals/Requests/Tracks/CreateTrack";
 
 
 const RequestsTracks = ({activities, moveService}) => {
-  const [createTrackModal, setCreateTrackModal] = useState(false);
   const [createServiceModal, setCreateServiceModal] = useState(false);
 
 
@@ -50,7 +50,7 @@ const RequestsTracks = ({activities, moveService}) => {
         <Add sx={{mr: 1}}/>
         NEW SERVICE
       </Fab>
-      {/*<CreateTrack modal={createTrackModal} setModal={setCreateTrackModal}/>*/}
+      <CreateTrack/>
       <CreateService modal={createServiceModal} setModal={setCreateServiceModal}/>
     </Container>
   )
@@ -64,6 +64,6 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    moveService
+    moveService,
   },
 )(RequestsTracks);

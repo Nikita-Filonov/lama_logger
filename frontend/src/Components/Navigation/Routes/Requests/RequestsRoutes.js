@@ -17,6 +17,7 @@ import IntegrationsSettings from "../../../../Screens/Requests/Settings/Integrat
 import RequestsFiltersSettings from "../../../../Screens/Requests/Settings/Requests/RequestsFiltersSettings";
 import RequestsRealtimeSettings from "../../../../Screens/Requests/Settings/Requests/RequestsRealtimeSettings";
 import {ServicesProvider} from "../../../../Providers/Requests/Tracks/ServicesProvider";
+import {TracksProvider} from "../../../../Providers/Requests/Tracks/TracksProvider";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -28,7 +29,9 @@ export const RequestsRoutes = ({store}) =>
           exact
           path="/projects/:projectId/tracks"
           component={props => <ServicesProvider store={store}>
-            <RequestsTracks {...props}/>
+            <TracksProvider store={store}>
+              <RequestsTracks {...props}/>
+            </TracksProvider>
           </ServicesProvider>
           }
         />

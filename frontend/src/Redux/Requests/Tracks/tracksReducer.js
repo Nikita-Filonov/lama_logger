@@ -1,5 +1,5 @@
 import {INITIAL_TRACKS} from './initialState';
-import {CREATE_SERVICE, MOVE_SERVICE, SET_ACTIVITIES} from "./actionTypes";
+import {CREATE_SERVICE, MOVE_SERVICE, SET_ACTIVITIES, SET_CREATE_TRACK_MODAL, SET_SERVICE} from "./actionTypes";
 
 
 export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
@@ -28,6 +28,10 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
 
       return {...state, activities: [...activities]};
     }
+    case SET_CREATE_TRACK_MODAL:
+      return {...state, createTrackModal: action.payload};
+    case SET_SERVICE:
+      return {...state, service: action.payload};
     default:
       return state;
   }

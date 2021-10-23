@@ -43,12 +43,6 @@ class Track(models.Model):
         null=True,
         blank=True
     )
-    project = models.ForeignKey(
-        Project,
-        verbose_name='Project',
-        on_delete=models.CASCADE,
-        null=True
-    )
     timesActual = models.PositiveIntegerField(
         verbose_name='How many times error actually happens',
         default=0
