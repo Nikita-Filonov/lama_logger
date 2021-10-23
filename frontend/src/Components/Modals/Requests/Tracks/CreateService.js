@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField
+} from '@mui/material';
 import {LoadingButton} from "@mui/lab";
 import {connect} from "react-redux";
 import {useServices} from "../../../../Providers/Requests/Tracks/ServicesProvider";
@@ -28,15 +37,20 @@ const CreateService = ({modal, setModal, project, activities}) => {
       <DialogTitle>Create service</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          You can create project and connect sdk to log your requests/responses
+          Services used to keep structure of tracks. And also they helps to understand
+          which service are broken/ok.
+
+          You can create services like in your project architecture. For example: "Users frontend",
+          "Dashboard fronted", "Users backend", "Dashboard backend" etc.
+
         </DialogContentText>
         <TextField
           value={title}
           onChange={event => setTitle(event.target.value)}
           autoFocus
           margin="dense"
-          label="Project title"
-          placeholder={'Lama Logger'}
+          label="Service title"
+          placeholder={'Users backend'}
           fullWidth
           variant="standard"
           inputProps={{maxLength: 255}}
@@ -48,10 +62,28 @@ const CreateService = ({modal, setModal, project, activities}) => {
           autoFocus
           margin="dense"
           label="Description"
-          placeholder={'Some description to your project'}
+          placeholder={'Users API and identity'}
           fullWidth
           variant="standard"
           className={'mt-3'}
+        />
+        <Autocomplete
+          className={'mt-3'}
+          fullWidth
+          autoHighlight
+          disableClearable
+          options={activities}
+          defaultValue={activity}
+          getOptionLabel={(option, _) => option?.title}
+          onChange={(event, value) => setActivity(value)}
+          renderInput={(params) =>
+            <TextField
+              {...params}
+              fullWidth
+              label={'Select an activity'}
+              variant={'standard'}
+            />
+          }
         />
       </DialogContent>
       <DialogActions>

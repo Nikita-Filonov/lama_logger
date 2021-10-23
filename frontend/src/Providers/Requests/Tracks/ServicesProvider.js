@@ -3,12 +3,14 @@ import {useSelector} from "react-redux";
 import {CREATE_SERVICE, SET_ACTIVITIES} from "../../../Redux/Requests/Tracks/actionTypes";
 import {useUsers} from "../../Users/UsersProvider";
 import {baseUrl} from "../../../Utils/Constants";
+import {useAlerts} from "../../AlertsProvider";
 
 
 const ServicesContext = React.createContext(null);
 
 const ServicesProvider = ({children, store}) => {
   const {token} = useUsers();
+  const {setAlert} = useAlerts();
   const projectsApi = baseUrl + 'api/v1/projects/';
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
@@ -35,7 +37,7 @@ const ServicesProvider = ({children, store}) => {
 
   const createService = async (projectId, activityId, payload) => {
     setRequest(true)
-    await fetch(projectsApi + `${projectId}/activities/${activityId}/services/`, {
+    const response = await fetch(projectsApi + `${projectId}/activities/${activityId}/services/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`,
@@ -43,11 +45,14 @@ const ServicesProvider = ({children, store}) => {
       },
       body: JSON.stringify(payload)
     })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: CREATE_SERVICE, payload: {activityId, service: data}});
-        setRequest(false);
-      });
+    const data = await response.json();
+    if (response.ok) {
+      store.dispatch({type: CREATE_SERVICE, payload: {activityId, service: data}});
+      setAlert({message: 'Service was successfully created', level: 'success'})
+    } else {
+      setAlert(data)
+    }
+    setRequest(false)
   }
 
   return (

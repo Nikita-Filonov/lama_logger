@@ -10,6 +10,7 @@ import {moveService} from "../../Redux/Requests/Tracks/tracksActions";
 
 
 const RequestsTracks = ({activities, moveService}) => {
+  const [createTrackModal, setCreateTrackModal] = useState(false);
   const [createServiceModal, setCreateServiceModal] = useState(false);
 
 
@@ -49,6 +50,7 @@ const RequestsTracks = ({activities, moveService}) => {
         <Add sx={{mr: 1}}/>
         NEW SERVICE
       </Fab>
+      {/*<CreateTrack modal={createTrackModal} setModal={setCreateTrackModal}/>*/}
       <CreateService modal={createServiceModal} setModal={setCreateServiceModal}/>
     </Container>
   )
