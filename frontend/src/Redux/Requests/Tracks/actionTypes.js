@@ -1,2 +1,1 @@
-export const SET_TRACKS = 'SET_TRACKS';
-export const CREATE_TRACK = 'CREATE_TRACK';
+export const SET_ACTIVITIES = 'SET_ACTIVITIES';

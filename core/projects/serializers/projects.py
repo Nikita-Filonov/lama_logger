@@ -9,6 +9,7 @@ from core.projects.serializers.members import MembersSerializer
 from core.projects.serializers.roles import RolesSerializer
 from core.stats.helper.utils import group_types, filter_action
 from core.stats.models import RequestStat
+from core.tracks.models import ServiceActivity
 from core.users.serializers.users import DefaultUserSerializer
 
 
@@ -68,5 +69,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         member = Member.objects.create(user=self.context)
         member.roles.set(roles)
         project.members.add(member)
+
+        for activity in ['Frontend', 'Backend']:
+            ServiceActivity.objects.create(title=activity, project=project)
 
         return project

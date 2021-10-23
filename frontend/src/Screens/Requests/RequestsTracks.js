@@ -1,39 +1,83 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, Fab, Grid} from "@mui/material";
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {ServiceCard} from "../../Components/Items/Reuqests/Tracks/ServiceCard";
+import {DragDropContext} from "react-beautiful-dnd";
 import {Add} from "@mui/icons-material";
 import {common} from "../../Styles/Blocks";
+import styled from "@emotion/styled";
+import {DraggableServiceColumn} from "../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
+import {connect} from "react-redux";
 
-const itemsFromBackend = [
-  {id: 1, content: "First task"},
-  {id: 2, content: "Second task"},
-  {id: 3, content: "Third task"},
-  {id: 4, content: "Fourth task"},
-  {id: 5, content: "Fifth task"}
-];
+const DragDropContextContainer = styled.div`
+  padding: 20px;
+  border: 4px solid indianred;
+  border-radius: 6px;
+`;
 
-const columnsFromBackend = {
-  1: {
-    name: "Requested",
-    items: itemsFromBackend
-  },
-  2: {
-    name: "To do",
-    items: []
-  },
-  3: {
-    name: "In Progress",
-    items: []
-  },
+const ListGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 8px;
+`;
+
+const getItems = (count, prefix) =>
+  Array.from({length: count}, (v, k) => k).map((k) => {
+    const randomId = Math.floor(Math.random() * 1000);
+    return {
+      id: `item-${randomId}`,
+      prefix,
+      content: `item ${randomId}`
+    };
+  });
+
+const removeFromList = (list, index) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(index, 1);
+  return [removed, result];
 };
 
-export const RequestsTracks = () => {
-  const [createTrackModal, setCreateTrackModal] = useState(false);
-  const [columns, setColumns] = useState(columnsFromBackend);
+const addToList = (list, index, element) => {
+  const result = Array.from(list);
+  result.splice(index, 0, element);
+  return result;
+};
 
-  const onDragEnd = (result, columns, setColumns) => {
-    console.log(result)
+const lists = ["todo", "inProgress", "done"];
+
+const generateLists = () =>
+  lists.reduce(
+    (acc, listKey) => ({...acc, [listKey]: getItems(10, listKey)}),
+    {}
+  );
+
+const RequestsTracks = ({activities}) => {
+  const [createTrackModal, setCreateTrackModal] = useState(false);
+  const [elements, setElements] = React.useState(generateLists());
+
+  useEffect(() => {
+    setElements(generateLists());
+    console.log('Elements', generateLists())
+  }, []);
+
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+    const listCopy = {...elements};
+
+    const sourceList = listCopy[result.source.droppableId];
+    const [removedElement, newSourceList] = removeFromList(
+      sourceList,
+      result.source.index
+    );
+    listCopy[result.source.droppableId] = newSourceList;
+    const destinationList = listCopy[result.destination.droppableId];
+    listCopy[result.destination.droppableId] = addToList(
+      destinationList,
+      result.destination.index,
+      removedElement
+    );
+
+    setElements(listCopy);
   };
 
   return (
@@ -47,64 +91,13 @@ export const RequestsTracks = () => {
       {/*  NEW TRACK*/}
       {/*</Fab>*/}
       {/*<CreateTrack modal={createTrackModal} setModal={setCreateTrackModal}/>*/}
-      <Grid container spacing={2}>
-        <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
-          {Object.entries(columns).map(([columnId, column], index) => {
-            return (
-              <Grid item xs={4}>
-                <h2>{column.name}sadasd</h2>
-                <div style={{margin: 8}}>
-                  <Droppable droppableId={columnId} key={columnId}>
-                    {(provided, snapshot) => {
-                      return (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          style={{
-                            background: snapshot.isDraggingOver
-                              ? "lightgrey"
-                              : 'white',
-                          }}
-                        >
-                          {column.items.map((item, index) => {
-                            return (
-                              <Draggable
-                                key={item.id}
-                                draggableId={item.id.toString()}
-                                index={index}
-                              >
-                                {(provided, snapshot) => {
-                                  return (
-                                    <div
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      style={{
-                                        userSelect: "none",
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        color: "white",
-                                        ...provided.draggableProps.style
-                                      }}
-                                    >
-                                      <ServiceCard/>
-                                    </div>
-                                  );
-                                }}
-                              </Draggable>
-                            );
-                          })}
-                          {provided.placeholder}
-                        </div>
-                      );
-                    }}
-                  </Droppable>
-                </div>
-              </Grid>
-            );
-          })}
-        </DragDropContext>
-      </Grid>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Grid container spacing={2} className={'mt-3'}>
+          {activities.map((activity) => (
+            <DraggableServiceColumn activity={activity} key={activity.id}/>
+          ))}
+        </Grid>
+      </DragDropContext>
       <Fab variant="extended" color={'primary'} style={common.fab} onClick={() => setCreateTrackModal(true)}>
         <Add sx={{mr: 1}}/>
         NEW SERVICE
@@ -112,3 +105,13 @@ export const RequestsTracks = () => {
     </Container>
   )
 }
+
+
+const getState = (state) => ({
+  activities: state.tracks.activities,
+})
+
+export default connect(
+  getState,
+  null,
+)(RequestsTracks);

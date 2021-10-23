@@ -1,7 +1,9 @@
 from django.db import models
-
 # Create your models here.
+from django.utils import timezone
+
 from core.projects.models import Project
+from core.users.models import CustomUser
 
 
 class Track(models.Model):
@@ -57,13 +59,6 @@ class Track(models.Model):
 
 
 class Service(models.Model):
-    project = models.ForeignKey(
-        Project,
-        verbose_name='Project',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
     title = models.CharField(
         verbose_name='Service title',
         max_length=255,
@@ -81,6 +76,36 @@ class Service(models.Model):
     index = models.PositiveIntegerField(
         verbose_name='Index on board',
         default=0
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
+    )
+
+    def __str__(self):
+        return f'{self.title}'
+
+
+class ServiceActivity(models.Model):
+    title = models.CharField(
+        verbose_name='Title',
+        max_length=255,
+        null=False
+    )
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    services = models.ManyToManyField(
+        Service,
+        verbose_name='Services'
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
     )
 
     def __str__(self):
