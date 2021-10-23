@@ -1,17 +1,18 @@
 import {Draggable} from "react-beautiful-dnd";
 import React from "react";
-import {Card, CardActions, CardContent, Chip, List, ListItem, ListItemText} from "@mui/material";
+import {Card, CardActions, CardContent, Chip, List, ListItem, ListItemText, useTheme} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {Add, DragHandle} from "@mui/icons-material";
 
 
 export const DraggableService = ({service, index}) => {
+  const {palette} = useTheme();
 
   return (
     <Draggable draggableId={service.id?.toString()} index={index}>
       {(provided, snapshot) => <Card
-        sx={{mb: 1.5}}
+        sx={{mb: 1.5, backgroundColor: snapshot.isDragging && (palette.mode === 'dark' ? '#535353' : '#DDDDDD')}}
         ref={provided.innerRef}
         snapshot={snapshot}
         {...provided.draggableProps}
