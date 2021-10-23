@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
-import {Button, Menu, Paper, useTheme} from "@mui/material";
+import {Button, Menu, Paper, Typography, useTheme} from "@mui/material";
 import {StatsChartStyles} from "../../../../Styles/Blocks";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
 import MenuItem from "@mui/material/MenuItem";
@@ -22,11 +22,12 @@ export const StatsChart = ({groupBy, setGroupBy}) => {
 
   return (
     <Paper elevation={3} className={'mt-4'}>
+      <Typography variant={'subtitle1'} className={'ms-2'}>General stats</Typography>
       {load
         ? <Spinner top={'60%'}/>
         : <BarChart
-          width={window.innerWidth / 1.087}
-          height={window.innerHeight / 1.8}
+          width={window.innerWidth / 2.2}
+          height={window.innerHeight / 2.6}
           data={requestsStats?.data}
           margin={StatsChartStyles.lineChartMargin}
           style={{
@@ -82,3 +83,4 @@ export const StatsChart = ({groupBy, setGroupBy}) => {
     </Paper>
   )
 }
+

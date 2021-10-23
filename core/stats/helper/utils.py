@@ -1,19 +1,39 @@
-from typing import List
+from itertools import groupby
+from typing import List, Dict, Union
 
 from core.stats.models import RequestStat
 
 
-def to_stats_payload(grouped_stats):
+def to_stats_payload(requests_stats, group_type) -> \
+        Dict[str, Union[list, List[Dict[str, Union[bool, str, List[int]]]]]]:
     """
     Common reason why we need this method - itertools.groupby let us
     read iterable object only once. So we have to save this object
     in some variable, in our case "stats", and this we can filter.
     """
-    stats = list(grouped_stats)
+    labels, created, filtered, removed = [groupby(requests_stats, key=group_type['func']) for _ in range(4)]
     return {
-        'Create': filter_action('create', stats),
-        'Delete': filter_action('delete', stats),
-        'Filter': filter_action('filter', stats),
+        'labels': [created.strftime(group_type['format']) for created, _ in labels],
+        'datasets': [
+            {
+                'spanGaps': True,
+                'label': 'Created',
+                'data': [filter_action('create', list(stats)) for _, stats in created],
+                'backgroundColor': 'rgb(255, 99, 132)',
+            },
+            {
+                'spanGaps': True,
+                'label': 'Filtered',
+                'data': [filter_action('filter', list(stats)) for _, stats in filtered],
+                'backgroundColor': 'rgb(54, 162, 235)',
+            },
+            {
+                'spanGaps': True,
+                'label': 'Removed',
+                'data': [filter_action('delete', list(stats)) for _, stats in removed],
+                'backgroundColor': 'rgb(75, 192, 192)',
+            },
+        ]
     }
 
 
