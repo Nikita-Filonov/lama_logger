@@ -7,13 +7,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.calls.models import Track
-from core.calls.serializers.tracks import TrackSerializer, TracksSerializer
 from core.projects.models import Project
+from core.tracks.models import Track
+from core.tracks.serializers.tracks import TracksSerializer, TrackSerializer
 from utils.exeptions import BadRequest
 
 
-class TracksApi(views.APIView, LimitOffsetPagination):
+class ServicesApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]

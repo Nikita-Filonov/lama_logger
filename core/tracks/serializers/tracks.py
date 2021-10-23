@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.calls.models import Track
+from core.tracks.models import Track
 
 
 class TracksSerializer(serializers.ModelSerializer):
