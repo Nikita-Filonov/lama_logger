@@ -71,7 +71,9 @@ class Service(models.Model):
     )
     tracks = models.ManyToManyField(
         Track,
-        verbose_name='Tracks'
+        verbose_name='Tracks',
+        null=True,
+        blank=True
     )
     index = models.PositiveIntegerField(
         verbose_name='Index on board',

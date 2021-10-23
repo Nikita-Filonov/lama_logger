@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {SET_ACTIVITIES} from "../../../Redux/Requests/Tracks/actionTypes";
+import {CREATE_SERVICE, SET_ACTIVITIES} from "../../../Redux/Requests/Tracks/actionTypes";
 import {useUsers} from "../../Users/UsersProvider";
 import {baseUrl} from "../../../Utils/Constants";
 
@@ -33,11 +33,29 @@ const ServicesProvider = ({children, store}) => {
       });
   }
 
+  const createService = async (projectId, activityId, payload) => {
+    setRequest(true)
+    await fetch(projectsApi + `${projectId}/activities/${activityId}/services/`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => response.json())
+      .then(async data => {
+        store.dispatch({type: CREATE_SERVICE, payload: {activityId, service: data}});
+        setRequest(false);
+      });
+  }
+
   return (
     <ServicesContext.Provider
       value={{
         load,
         request,
+        createService
       }}
     >
       {children}

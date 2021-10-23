@@ -7,12 +7,12 @@ import {Grid, Typography} from "@mui/material";
 export const DraggableServiceColumn = ({activity}) => {
   return (
     <Grid item xs>
-      <Typography>{activity?.title}</Typography>
+      <Typography sx={{mb: 1}} variant={'subtitle1'}>{activity?.title}</Typography>
       <Droppable droppableId={`${activity.id}`}>
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {activity?.services?.map((item, index) => (
-              <DraggableService key={item.id} item={item} index={index}/>
+            {activity?.services?.map((service, index) => (
+              <DraggableService key={service.id} service={service} index={index}/>
             ))}
             {provided.placeholder}
           </div>

@@ -3,21 +3,9 @@ import {Container, Fab, Grid} from "@mui/material";
 import {DragDropContext} from "react-beautiful-dnd";
 import {Add} from "@mui/icons-material";
 import {common} from "../../Styles/Blocks";
-import styled from "@emotion/styled";
 import {DraggableServiceColumn} from "../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
 import {connect} from "react-redux";
-
-const DragDropContextContainer = styled.div`
-  padding: 20px;
-  border: 4px solid indianred;
-  border-radius: 6px;
-`;
-
-const ListGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 8px;
-`;
+import CreateService from "../../Components/Modals/Requests/Tracks/CreateService";
 
 const getItems = (count, prefix) =>
   Array.from({length: count}, (v, k) => k).map((k) => {
@@ -50,7 +38,7 @@ const generateLists = () =>
   );
 
 const RequestsTracks = ({activities}) => {
-  const [createTrackModal, setCreateTrackModal] = useState(false);
+  const [createServiceModal, setCreateServiceModal] = useState(false);
   const [elements, setElements] = React.useState(generateLists());
 
   useEffect(() => {
@@ -98,10 +86,11 @@ const RequestsTracks = ({activities}) => {
           ))}
         </Grid>
       </DragDropContext>
-      <Fab variant="extended" color={'primary'} style={common.fab} onClick={() => setCreateTrackModal(true)}>
+      <Fab variant="extended" color={'primary'} style={common.fab} onClick={() => setCreateServiceModal(true)}>
         <Add sx={{mr: 1}}/>
         NEW SERVICE
       </Fab>
+      <CreateService modal={createServiceModal} setModal={setCreateServiceModal}/>
     </Container>
   )
 }
