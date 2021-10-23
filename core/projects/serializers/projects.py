@@ -37,15 +37,18 @@ class ProjectsSerializer(serializers.ModelSerializer):
         requests_stats = RequestStat.objects.filter(project=obj).order_by('created')
 
         group_type = group_types['days']
-        grouped_stats_payload = [
-            {
-                'name': created.strftime(group_type['format']),
-                'Created': filter_action('create', list(grouped_stats)),
-            }
-            for created, grouped_stats in groupby(requests_stats, key=group_type['func'])
-        ]
-
-        return grouped_stats_payload
+        labels, created = [groupby(requests_stats, key=group_type['func']) for _ in range(2)]
+        return {
+            'labels': [created.strftime(group_type['format']) for created, _ in labels],
+            'datasets': [
+                {
+                    'spanGaps': True,
+                    'label': 'Created',
+                    'data': [filter_action('create', list(stats)) for _, stats in created],
+                    'backgroundColor': '#4169E1',
+                },
+            ]
+        }
 
 
 class ProjectSerializer(serializers.ModelSerializer):
