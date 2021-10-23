@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Container, Fab, Grid} from "@mui/material";
 import {DragDropContext} from "react-beautiful-dnd";
 import {Add} from "@mui/icons-material";
@@ -6,66 +6,24 @@ import {common} from "../../Styles/Blocks";
 import {DraggableServiceColumn} from "../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
 import {connect} from "react-redux";
 import CreateService from "../../Components/Modals/Requests/Tracks/CreateService";
+import {moveService} from "../../Redux/Requests/Tracks/tracksActions";
 
-const getItems = (count, prefix) =>
-  Array.from({length: count}, (v, k) => k).map((k) => {
-    const randomId = Math.floor(Math.random() * 1000);
-    return {
-      id: `item-${randomId}`,
-      prefix,
-      content: `item ${randomId}`
-    };
-  });
 
-const removeFromList = (list, index) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(index, 1);
-  return [removed, result];
-};
-
-const addToList = (list, index, element) => {
-  const result = Array.from(list);
-  result.splice(index, 0, element);
-  return result;
-};
-
-const lists = ["todo", "inProgress", "done"];
-
-const generateLists = () =>
-  lists.reduce(
-    (acc, listKey) => ({...acc, [listKey]: getItems(10, listKey)}),
-    {}
-  );
-
-const RequestsTracks = ({activities}) => {
+const RequestsTracks = ({activities, moveService}) => {
   const [createServiceModal, setCreateServiceModal] = useState(false);
-  const [elements, setElements] = React.useState(generateLists());
 
-  useEffect(() => {
-    setElements(generateLists());
-    console.log('Elements', generateLists())
-  }, []);
 
-  const onDragEnd = (result) => {
+  const onDragEnd = async (result) => {
     if (!result.destination) {
       return;
     }
-    const listCopy = {...elements};
-
-    const sourceList = listCopy[result.source.droppableId];
-    const [removedElement, newSourceList] = removeFromList(
-      sourceList,
-      result.source.index
-    );
-    listCopy[result.source.droppableId] = newSourceList;
-    const destinationList = listCopy[result.destination.droppableId];
-    listCopy[result.destination.droppableId] = addToList(
-      destinationList,
-      result.destination.index,
-      removedElement
-    );
-
-    setElements(listCopy);
+    let activitiesCopy = [...activities];
+    const activityIdFrom = parseInt(result.source.droppableId);
+    const activityIdTo = parseInt(result.destination.droppableId);
+    const sourceActivity = activitiesCopy.find(a => a.id === activityIdFrom);
+    const service = sourceActivity.services[result.source.index];
+    const indexTo = result.destination.index;
+    moveService({activityIdFrom, activityIdTo, indexTo, service})
   };
 
   return (
@@ -102,5 +60,7 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    moveService
+  },
 )(RequestsTracks);

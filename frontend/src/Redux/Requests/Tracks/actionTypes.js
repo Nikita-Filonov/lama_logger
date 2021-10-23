@@ -1,2 +1,3 @@
 export const SET_ACTIVITIES = 'SET_ACTIVITIES';
 export const CREATE_SERVICE = 'CREATE_SERVICE';
+export const MOVE_SERVICE = 'MOVE_SERVICE';
