@@ -5,7 +5,8 @@ import './Styles/main.css'
 import {Provider} from 'react-redux'
 import {BrowserRouter as Router, Switch} from "react-router-dom";
 import reducer from './Redux/Reducers';
-import {createStore} from "redux";
+import thunk from 'redux-thunk'
+import {applyMiddleware, createStore} from "redux";
 import {Login} from "./Screens/Login/Login";
 import {UsersProvider} from "./Providers/Users/UsersProvider";
 import {PublicRoute} from "./Components/Navigation/Routes/Common/PublicRoute";
@@ -23,7 +24,7 @@ import {ProfileRoutes} from "./Components/Navigation/Routes/Profile/ProfileRoute
 import {IntegrationsRoutes} from "./Components/Navigation/Routes/Integrations/IntegrationsRoutes";
 
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 const CustomRoute = () =>
   <Router>

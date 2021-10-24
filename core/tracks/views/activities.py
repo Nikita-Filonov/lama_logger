@@ -1,5 +1,8 @@
+from typing import List, Dict
+
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, authentication_classes, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
@@ -16,7 +19,7 @@ class ServiceActivitiesApi(views.APIView):
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id):
-        activities = ServiceActivity.objects.filter(project_id=project_id).order_by('-created')
+        activities = ServiceActivity.objects.filter(project_id=project_id).order_by('index')
         serializer = ServiceActivitiesSerializer(activities, many=True)
         return Response(serializer.data)
 
@@ -29,3 +32,17 @@ class ServiceActivitiesApi(views.APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         raise BadRequest('Error happened while creating activity', data=serializer.errors)
+
+
+@api_view(['PATCH'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def move_activities(request, project_id):
+    new_indexes: List[Dict[str, int]] = request.data
+    for index in new_indexes:
+        activity = ServiceActivity.objects.get(id=index['id'])
+        activity.index = index['index']
+        activity.save()
+
+    return Response(status=status.HTTP_204_NO_CONTENT)

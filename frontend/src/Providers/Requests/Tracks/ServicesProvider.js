@@ -55,6 +55,23 @@ const ServicesProvider = ({children, store}) => {
     setRequest(false)
   }
 
+  const moveActivities = async (projectId, payload) => {
+    const response = await fetch(projectsApi + `${projectId}/activities/move/`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    if (response.ok) {
+      setAlert({message: 'Activities positions was moved', level: 'success'})
+    } else {
+      const error = await response.json();
+      setAlert(error)
+    }
+  }
+
   const createService = async (projectId, activityId, payload) => {
     setRequest(true)
     const response = await fetch(projectsApi + `${projectId}/activities/${activityId}/services/`, {
@@ -81,7 +98,8 @@ const ServicesProvider = ({children, store}) => {
         load,
         request,
         createService,
-        createActivity
+        createActivity,
+        moveActivities
       }}
     >
       {children}

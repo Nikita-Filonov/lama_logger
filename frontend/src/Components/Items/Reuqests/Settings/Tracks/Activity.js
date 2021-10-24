@@ -15,7 +15,7 @@ export const Activity = ({activity, index}) => {
     <Droppable droppableId={`${activity.id}`}>
       {(provided, _) =>
         <div {...provided.droppableProps} ref={provided.innerRef}>
-          <Draggable draggableId={activity.id?.toString()} index={index} onDragStart={() => alert(111)}>
+          <Draggable draggableId={activity.id?.toString()} index={index}>
             {(provided, snapshot) =>
               <React.Fragment>
                 <ListItem
@@ -40,6 +40,8 @@ export const Activity = ({activity, index}) => {
                         <Chip label={`${service?.tracks?.length} tracks`} variant="outlined" sx={{mr: 2}}/>
                       </ListItem>
                     )}
+                    {activity?.services?.length === 0 &&
+                    <ListItem sx={{pl: 4}}><ListItemText primary={'There is no services'}/></ListItem>}
                   </List>
                 </Collapse>
               </React.Fragment>

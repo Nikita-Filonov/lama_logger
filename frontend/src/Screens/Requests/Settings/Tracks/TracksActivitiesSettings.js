@@ -8,11 +8,14 @@ import {DragDropContext} from "react-beautiful-dnd";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateActivity from "../../../../Components/Modals/Requests/Settings/Tracks/CreateActivity";
 import {moveActivity} from "../../../../Redux/Requests/Tracks/tracksActions";
+import {useServices} from "../../../../Providers/Requests/Tracks/ServicesProvider";
 
 
 const TracksActivitiesSettings = ({activities, project, moveActivity}) => {
   const classes = ProjectSettingsStyles();
+  const {moveActivities} = useServices();
   const [createActivityModal, setCreateActivityModal] = useState(false);
+
 
   const onDragEnd = async (result) => {
     if (!result.destination) {
@@ -20,9 +23,11 @@ const TracksActivitiesSettings = ({activities, project, moveActivity}) => {
     }
     const indexFrom = result.source.index;
     const indexTo = result.destination.index;
-    // const activityIdFrom = parseInt(result.draggableId);
-    // const activityIdTo = parseInt(result.destination.droppableId);
+
     moveActivity({indexFrom, indexTo})
+      .then(async newState =>
+        await moveActivities(project.id, newState.tracks.activities.map((a, index) => ({id: a.id, index})))
+      );
   }
 
   return (

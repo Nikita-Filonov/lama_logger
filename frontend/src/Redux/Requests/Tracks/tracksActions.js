@@ -11,10 +11,13 @@ export const setService = (state) => ({
   payload: state
 })
 
-export const moveActivity = (state) => ({
-  type: MOVE_ACTIVITY,
-  payload: state
-})
+export const moveActivity = (state) => (dispatch, getState) => {
+  dispatch({
+    type: MOVE_ACTIVITY,
+    payload: state
+  })
+  return Promise.resolve(getState());
+}
 
 export const setCreateTrackModal = (state) => ({
   type: SET_CREATE_TRACK_MODAL,
