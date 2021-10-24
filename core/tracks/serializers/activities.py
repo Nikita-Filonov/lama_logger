@@ -1,3 +1,4 @@
+from django.db.models import Max
 from rest_framework import serializers
 
 from core.tracks.models import ServiceActivity
@@ -18,7 +19,13 @@ class ServiceActivitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
+        project = self.context.get('project')
+        max_index = ServiceActivity.objects.filter(project=project).aggregate(Max('index'))['index__max']
+
+        new_index = 1 if max_index == 0 else max_index + 1
+
         return ServiceActivity.objects.create(
             **validated_data,
-            project=self.context.get('project')
+            project=self.context.get('project'),
+            index=new_index
         )

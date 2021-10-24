@@ -1,3 +1,5 @@
+from typing import Optional, Union
+
 from rest_framework.exceptions import APIException
 
 ERROR = 'error'
@@ -13,9 +15,10 @@ class BadRequest(APIException):
     message = 'Bad request'
     level = 'error'
 
-    def __init__(self, message: str, level: str = ERROR):
+    def __init__(self, message: str, level: str = ERROR, data: Optional[Union[dict, str]] = None):
         self.message = message
         self.level = level
+        self.data = data
 
 
 class NotFound(APIException):
@@ -25,9 +28,10 @@ class NotFound(APIException):
     message = 'Not found'
     level = 'error'
 
-    def __init__(self, message: str, level: str = ERROR):
+    def __init__(self, message: str, level: str = ERROR, data: Optional[Union[dict, str]] = None):
         self.message = message
         self.level = level
+        self.data = data
 
 
 COMMON_STATUSES = [401, 405, 500, 404]

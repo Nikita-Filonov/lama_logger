@@ -1,4 +1,4 @@
-import {MOVE_SERVICE, SET_CREATE_TRACK_MODAL, SET_SERVICE} from "./actionTypes";
+import {MOVE_ACTIVITY, MOVE_SERVICE, SET_CREATE_TRACK_MODAL, SET_SERVICE} from "./actionTypes";
 
 
 export const moveService = (state) => ({
@@ -8,6 +8,11 @@ export const moveService = (state) => ({
 
 export const setService = (state) => ({
   type: SET_SERVICE,
+  payload: state
+})
+
+export const moveActivity = (state) => ({
+  type: MOVE_ACTIVITY,
   payload: state
 })
 

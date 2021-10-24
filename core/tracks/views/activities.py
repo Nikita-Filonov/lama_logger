@@ -6,7 +6,7 @@ from rest_framework.throttling import UserRateThrottle
 
 from core.projects.models import Project
 from core.tracks.models import ServiceActivity
-from core.tracks.serializers.activities import ServiceActivitiesSerializer
+from core.tracks.serializers.activities import ServiceActivitiesSerializer, ServiceActivitySerializer
 from utils.exeptions import BadRequest
 
 
@@ -22,10 +22,10 @@ class ServiceActivitiesApi(views.APIView):
 
     def post(self, request, project_id):
         project = Project.objects.get(id=project_id)
-        serializer = ServiceActivitiesSerializer(data=request.data, context={'project': project})
+        serializer = ServiceActivitySerializer(data=request.data, context={'project': project})
         if serializer.is_valid():
             activity = serializer.save()
             serializer = ServiceActivitiesSerializer(activity, many=False)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        raise BadRequest('Error happened while creating activity')
+        raise BadRequest('Error happened while creating activity', data=serializer.errors)

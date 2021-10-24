@@ -97,12 +97,17 @@ class ServiceActivity(models.Model):
     )
     services = models.ManyToManyField(
         Service,
-        verbose_name='Services'
+        verbose_name='Services',
+        blank=True
     )
     created = models.DateTimeField(
         verbose_name='Created',
         default=timezone.now
     )
+    index = models.PositiveIntegerField(
+        verbose_name='Index',
+        default=0
+    )
 
     def __str__(self):
-        return f'{self.project.title}:{self.title}'
+        return f'{self.title}'

@@ -11,7 +11,10 @@ const CreateActivity = ({project, modal, setModal}) => {
   const [title, setTitle] = useState('');
   const onClose = () => setModal(false)
 
-  const onCreate = async () => createActivity(project.id, {title}).then(() => onClose());
+  const onCreate = async () => createActivity(project.id, {title}).then(() => {
+    onClose();
+    setTitle('');
+  });
 
   return (
     <Dialog

@@ -1,5 +1,6 @@
 export const SET_ACTIVITIES = 'SET_ACTIVITIES';
 export const CREATE_ACTIVITY = 'CREATE_ACTIVITY';
+export const MOVE_ACTIVITY = 'MOVE_ACTIVITY';
 export const CREATE_SERVICE = 'CREATE_SERVICE';
 export const MOVE_SERVICE = 'MOVE_SERVICE';
 export const SET_SERVICE = 'SET_SERVICE';

@@ -3,6 +3,7 @@ import {
   CREATE_ACTIVITY,
   CREATE_SERVICE,
   CREATE_TRACK,
+  MOVE_ACTIVITY,
   MOVE_SERVICE,
   SET_ACTIVITIES,
   SET_CREATE_TRACK_MODAL,
@@ -17,6 +18,14 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
     }
     case CREATE_ACTIVITY: {
       return {...state, activities: [...state.activities, action.payload]};
+    }
+    case MOVE_ACTIVITY: {
+      const {indexFrom, indexTo} = action.payload;
+      const activities = [...state.activities];
+
+      const [removed] = activities.splice(indexFrom, 1);
+      activities.splice(indexTo, 0, removed);
+      return {...state, activities};
     }
     case CREATE_SERVICE: {
       const {activityId} = action.payload;

@@ -7,11 +7,23 @@ import {Activity} from "../../../../Components/Items/Reuqests/Settings/Tracks/Ac
 import {DragDropContext} from "react-beautiful-dnd";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateActivity from "../../../../Components/Modals/Requests/Settings/Tracks/CreateActivity";
+import {moveActivity} from "../../../../Redux/Requests/Tracks/tracksActions";
 
 
-const TracksActivitiesSettings = ({activities, project, projectSettings}) => {
+const TracksActivitiesSettings = ({activities, project, moveActivity}) => {
   const classes = ProjectSettingsStyles();
   const [createActivityModal, setCreateActivityModal] = useState(false);
+
+  const onDragEnd = async (result) => {
+    if (!result.destination) {
+      return;
+    }
+    const indexFrom = result.source.index;
+    const indexTo = result.destination.index;
+    // const activityIdFrom = parseInt(result.draggableId);
+    // const activityIdTo = parseInt(result.destination.droppableId);
+    moveActivity({indexFrom, indexTo})
+  }
 
   return (
     <div className={classes.contentContainer}>
@@ -21,9 +33,13 @@ const TracksActivitiesSettings = ({activities, project, projectSettings}) => {
         to split your tracks into "Backend" and "Frontend", but you can setup your
         own flow with your services.
       </Typography>
-      <DragDropContext>
+      <DragDropContext onDragEnd={onDragEnd}>
         <List>
-          {activities.map((activity, index) => <Activity key={activity.id} activity={activity} index={index}/>)}
+          {activities
+            .map((activity, index) =>
+              <Activity key={activity.id} activity={activity} index={index}/>
+            )
+          }
         </List>
       </DragDropContext>
       <ZoomFab title={'New activity'} action={() => setCreateActivityModal(true)}/>
@@ -36,10 +52,11 @@ const TracksActivitiesSettings = ({activities, project, projectSettings}) => {
 const getState = (state) => ({
   activities: state.tracks.activities,
   project: state.projects.project,
-  projectSettings: state.projects.projectSettings
 })
 
 export default connect(
   getState,
-  null,
+  {
+    moveActivity
+  },
 )(TracksActivitiesSettings);
