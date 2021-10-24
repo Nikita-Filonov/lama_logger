@@ -12,6 +12,7 @@ import {
 import {LoadingButton} from "@mui/lab";
 import {connect} from "react-redux";
 import {useServices} from "../../../../Providers/Requests/Tracks/ServicesProvider";
+import {SlideTransition} from "../../../../Utils/Utils/Common";
 
 
 const CreateService = ({modal, setModal, project, activities}) => {
@@ -33,7 +34,7 @@ const CreateService = ({modal, setModal, project, activities}) => {
 
 
   return (
-    <Dialog open={modal} onClose={onClose}>
+    <Dialog open={modal} onClose={onClose} TransitionComponent={SlideTransition}>
       <DialogTitle>Create service</DialogTitle>
       <DialogContent>
         <DialogContentText>

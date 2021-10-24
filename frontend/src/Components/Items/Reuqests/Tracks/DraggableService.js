@@ -31,18 +31,12 @@ const DraggableService = ({service, index, setService, setCreateTrackModal}) => 
             {service?.title}
           </Typography>
           <List dense>
-            <ListItem button disableGutters>
-              <Chip color="error" label={'5XX'} size={'small'}/>
-              <ListItemText sx={{ml: 1}} primary={'some track'}/>
-            </ListItem>
-            <ListItem button disableGutters>
-              <Chip color="error" label={'4XX'} size={'small'}/>
-              <ListItemText sx={{ml: 1}} primary={'some track'}/>
-            </ListItem>
-            <ListItem button disableGutters>
-              <Chip color="success" label={'200 OK'} size={'small'}/>
-              <ListItemText sx={{ml: 1}} primary={'some track'}/>
-            </ListItem>
+            {service?.tracks?.map(track =>
+              <ListItem button disableGutters key={track.id}>
+                <Chip color="error" label={'5XX'} size={'small'}/>
+                <ListItemText sx={{ml: 1}} primary={'some track'}/>
+              </ListItem>
+            )}
           </List>
         </CardContent>
         <CardActions>

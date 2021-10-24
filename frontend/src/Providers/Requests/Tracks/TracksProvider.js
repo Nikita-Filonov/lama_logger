@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import {useUsers} from "../../Users/UsersProvider";
 import {baseUrl} from "../../../Utils/Constants";
 import {useAlerts} from "../../AlertsProvider";
+import {CREATE_TRACK} from "../../../Redux/Requests/Tracks/actionTypes";
 
 
 const TracksContext = React.createContext(null);
@@ -13,9 +14,9 @@ const TracksProvider = ({children, store}) => {
   const [request, setRequest] = useState(false);
 
 
-  const createTrack = async (projectId, payload) => {
+  const createTrack = async (projectId, serviceId, payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/tracks/`, {
+    const response = await fetch(projectsApi + `${projectId}/activities/services/${serviceId}/tracks/`, {
       method: 'POST',
       headers: {
         'Authorization': `Token ${token}`,
@@ -26,7 +27,7 @@ const TracksProvider = ({children, store}) => {
     const data = await response.json();
     if (response.ok) {
       setAlert({message: 'Track successfully created', level: 'success'})
-
+      store.dispatch({type: CREATE_TRACK, payload: {serviceId, track: data}})
     } else {
       setAlert(data)
     }

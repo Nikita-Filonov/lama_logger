@@ -6,7 +6,7 @@ from core.tracks.models import Track
 class TracksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Track
-        exclude = ('user', 'project')
+        exclude = ('user',)
 
 
 class TrackSerializer(serializers.ModelSerializer):
@@ -15,8 +15,4 @@ class TrackSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return Track.objects.create(
-            **validated_data,
-            user=self.context.get('user'),
-            project=self.context.get('project')
-        )
+        return Track.objects.create(**validated_data, user=self.context.get('user'))

@@ -1,4 +1,4 @@
-import React, {forwardRef, useState} from "react";
+import React, {useState} from "react";
 import {
   AppBar,
   Autocomplete,
@@ -11,7 +11,6 @@ import {
   InputLabel,
   Link,
   Select,
-  Slide,
   TextField,
   Toolbar,
   Typography
@@ -26,9 +25,7 @@ import {StatusCodeIndicator} from "../../../Blocks/Requests/Requests/StatusCodeI
 import {LoadingButton} from "@mui/lab";
 import {useTracks} from "../../../../Providers/Requests/Tracks/TracksProvider";
 import {setCreateTrackModal} from "../../../../Redux/Requests/Tracks/tracksActions";
-
-const Transition = forwardRef((props, ref) =>
-  <Slide direction="up" ref={ref} {...props} />);
+import {SlideTransition} from "../../../../Utils/Utils/Common";
 
 
 const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) => {
@@ -39,7 +36,7 @@ const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) 
   const [responseBodyContains, setResponseBodyContains] = useState('');
 
   const onClose = () => setCreateTrackModal(false);
-  const onCreate = async () => createTrack(project.id,
+  const onCreate = async () => createTrack(project?.id, service?.id,
     {endpoint, times, statusCodes, responseBodyContains})
     .then(() => onClose());
 
@@ -48,7 +45,7 @@ const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) 
       fullScreen
       open={createTrackModal}
       onClose={onClose}
-      TransitionComponent={Transition}
+      TransitionComponent={SlideTransition}
     >
       <AppBar sx={{position: 'relative'}}>
         <Toolbar>
