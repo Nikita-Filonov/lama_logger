@@ -17,7 +17,7 @@ import {getMatchesRequestsSettingsRoute} from "../../../../Utils/Utils/Routing";
 const ProjectSettingsSidebar = ({project}) => {
   const classes = ProjectSettingsStyles();
   const location = useLocation();
-  const [collapse, setCollapse] = useState({users: false, requests: false});
+  const [collapse, setCollapse] = useState({users: false, requests: false, tracks: false});
 
   useEffect(() => {
     const collapseKey = getMatchesRequestsSettingsRoute(location.pathname);
@@ -84,6 +84,20 @@ const ProjectSettingsSidebar = ({project}) => {
               to={`/projects/${project.id}/settings/roles`}
               title={'Auto deletion'}
               selected={location.pathname.endsWith('/settings/roles')}
+            />
+          </List>
+        </Collapse>
+        <ListItem button onClick={() => onCollapse('tracks')}>
+          <ListItemText primary={'Tracks'}/>
+          {collapse.tracks ? <ExpandLess/> : <ExpandMore/>}
+        </ListItem>
+        <Collapse component="li" in={collapse.tracks} timeout="auto" unmountOnExit>
+          <List disablePadding>
+            <ListItemLink
+              sx={{pl: 4}}
+              to={`/projects/${project.id}/settings/activities`}
+              title={'Activities'}
+              selected={location.pathname.endsWith('/settings/activities')}
             />
           </List>
         </Collapse>
