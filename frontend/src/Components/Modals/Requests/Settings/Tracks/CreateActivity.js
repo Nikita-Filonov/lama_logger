@@ -1,0 +1,61 @@
+import React, {useState} from "react";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
+import {connect} from "react-redux";
+import {SlideTransition} from "../../../../../Utils/Utils/Common";
+import {LoadingButton} from "@mui/lab";
+import {useServices} from "../../../../../Providers/Requests/Tracks/ServicesProvider";
+
+
+const CreateActivity = ({project, modal, setModal}) => {
+  const {request, createActivity} = useServices();
+  const [title, setTitle] = useState('');
+  const onClose = () => setModal(false)
+
+  const onCreate = async () => createActivity(project.id, {title}).then(() => onClose());
+
+  return (
+    <Dialog
+      open={modal}
+      onClose={onClose}
+      fullWidth
+      maxWidth={'sm'}
+      TransitionComponent={SlideTransition}
+    >
+      <DialogTitle>Create activity</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Create your own activity
+        </DialogContentText>
+        <TextField
+          value={title}
+          onChange={event => setTitle(event.target.value)}
+          autoFocus
+          margin="dense"
+          label="Title"
+          placeholder={'Users frontend'}
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <LoadingButton
+          loading={request}
+          onClick={onCreate}
+        >
+          Create
+        </LoadingButton>
+      </DialogActions>
+    </Dialog>
+  )
+}
+
+
+const getState = (state) => ({
+  project: state.projects.project
+})
+
+export default connect(
+  getState,
+  null,
+)(CreateActivity);

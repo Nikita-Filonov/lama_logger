@@ -12,6 +12,6 @@ def exception_handler(exc, context):
         return Response(exception, status=exc.status_code)
 
     if isinstance(exc, APIException):
-        return Response({'message': exc.message, 'level': exc.level}, status=exc.status_code)
+        return Response({'message': exc.message, 'level': exc.level, 'data': str(exc)}, status=exc.status_code)
 
     return Response({})

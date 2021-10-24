@@ -1,5 +1,6 @@
 import {INITIAL_TRACKS} from './initialState';
 import {
+  CREATE_ACTIVITY,
   CREATE_SERVICE,
   CREATE_TRACK,
   MOVE_SERVICE,
@@ -12,7 +13,10 @@ import {
 export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
   switch (action.type) {
     case SET_ACTIVITIES: {
-      return {...state, activities: action.payload}
+      return {...state, activities: action.payload};
+    }
+    case CREATE_ACTIVITY: {
+      return {...state, activities: [...state.activities, action.payload]};
     }
     case CREATE_SERVICE: {
       const {activityId} = action.payload;

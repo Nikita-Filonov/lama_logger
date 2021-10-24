@@ -16,3 +16,9 @@ class ServiceActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceActivity
         fields = '__all__'
+
+    def create(self, validated_data):
+        return ServiceActivity.objects.create(
+            **validated_data,
+            project=self.context.get('project')
+        )
