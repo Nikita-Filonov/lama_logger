@@ -1,10 +1,11 @@
+from django.conf import settings
 from rest_framework.response import Response
 
 from utils.exeptions import COMMON_STATUSES, COMMON_EXCEPTIONS, APIException
 
 
 def exception_handler(exc, context):
-    if not hasattr(exc, 'status_code'):
+    if not hasattr(exc, 'status_code') and not settings.DEBUG:
         return Response({**COMMON_EXCEPTIONS[500], 'data': str(exc)}, status=500)
 
     if exc.status_code in COMMON_STATUSES:

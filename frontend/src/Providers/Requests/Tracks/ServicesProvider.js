@@ -92,6 +92,26 @@ const ServicesProvider = ({children, store}) => {
     setRequest(false)
   }
 
+  const moveServices = async (projectId, payload) => {
+    setRequest(true)
+    const endpoint = projectsApi + `${projectId}/activities/services/move/`;
+    const response = await fetch(endpoint, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    if (response.ok) {
+      setAlert({message: 'Service positions was moved', level: 'success'});
+    } else {
+      const data = await response.json();
+      setAlert(data);
+    }
+    setRequest(false)
+  }
+
   return (
     <ServicesContext.Provider
       value={{
@@ -99,7 +119,8 @@ const ServicesProvider = ({children, store}) => {
         request,
         createService,
         createActivity,
-        moveActivities
+        moveActivities,
+        moveServices
       }}
     >
       {children}

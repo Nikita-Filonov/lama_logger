@@ -6,11 +6,13 @@ import {common} from "../../Styles/Blocks";
 import {DraggableServiceColumn} from "../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
 import {connect} from "react-redux";
 import CreateService from "../../Components/Modals/Requests/Tracks/CreateService";
-import {moveService, setCreateTrackModal} from "../../Redux/Requests/Tracks/tracksActions";
+import {moveService} from "../../Redux/Requests/Tracks/tracksActions";
 import CreateTrack from "../../Components/Modals/Requests/Tracks/CreateTrack";
+import {useServices} from "../../Providers/Requests/Tracks/ServicesProvider";
 
 
-const RequestsTracks = ({activities, moveService}) => {
+const RequestsTracks = ({project, activities, moveService}) => {
+  const {moveServices} = useServices();
   const [createServiceModal, setCreateServiceModal] = useState(false);
 
 
@@ -26,6 +28,15 @@ const RequestsTracks = ({activities, moveService}) => {
     const service = activitiesCopy.find(a => a.id === activityIdFrom).services[indexFrom];
 
     moveService({activityIdFrom, activityIdTo, indexTo, indexFrom, service})
+      .then(async newState => {
+        const payload = newState.tracks.activities.map(a =>
+          ({
+            activityId: a.id,
+            services: a.services.map(s => ({id: s.id, index: s.index}))
+          })
+        )
+        await moveServices(project.id, payload);
+      });
   };
 
   return (
@@ -58,6 +69,7 @@ const RequestsTracks = ({activities, moveService}) => {
 
 
 const getState = (state) => ({
+  project: state.projects.project,
   activities: state.tracks.activities,
 })
 

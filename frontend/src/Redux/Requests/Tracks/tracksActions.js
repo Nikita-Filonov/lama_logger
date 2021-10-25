@@ -1,10 +1,14 @@
 import {MOVE_ACTIVITY, MOVE_SERVICE, SET_CREATE_TRACK_MODAL, SET_SERVICE} from "./actionTypes";
 
 
-export const moveService = (state) => ({
-  type: MOVE_SERVICE,
-  payload: state
-})
+export const moveService = (state) => (dispatch, getState) => {
+  dispatch({
+    type: MOVE_SERVICE,
+    payload: state
+  })
+
+  return Promise.resolve(getState());
+}
 
 export const setService = (state) => ({
   type: SET_SERVICE,
