@@ -1,88 +1,75 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
-import {Grid, TextField} from "@mui/material";
+import {Avatar, Grid, InputAdornment, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import {useProjects} from "../../../../Providers/ProjectsProvider";
 import Box from "@mui/material/Box";
-import {setConfirmAction} from "../../../../Redux/Users/usersActions";
-import {useAlerts} from "../../../../Providers/AlertsProvider";
-import {removeProject} from "../../../../Redux/Projects/projectActions";
-import {useHistory} from "react-router-dom";
 import {SaveOutlined} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
+import {baseUrl} from "../../../../Utils/Constants";
 
 
-const NotificationsSettings = ({project, setConfirmAction, removeProject}) => {
+const NotificationsSettings = ({project}) => {
   const classes = ProjectSettingsStyles();
-  const history = useHistory();
-  const {setAlert} = useAlerts();
   const {request, updateProject} = useProjects();
-  const [title, setTitle] = useState(project?.title);
-  const [short, setShort] = useState(project?.short);
-  const [creator, setCreator] = useState(project?.creator);
-  const [description, setDescription] = useState(project?.description);
+  const [telegramChannel, setTelegramChannel] = useState(project?.telegramChannel);
+  const [slackChannel, setSlackChannel] = useState(project?.slackChannel)
 
   useEffect(() => {
-    setTitle(project?.title)
-    setCreator(project.creator)
-    setDescription(project?.description)
+    setTelegramChannel(project?.telegramChannel)
+    setSlackChannel(project?.slackChannel)
   }, [project])
 
   const disabled = useMemo(() => {
-    if (title !== project?.title) {
+    if (telegramChannel !== project?.telegramChannel) {
       return false;
     }
 
-    if (short !== project.short) {
-      return false;
-    }
+    return slackChannel === project?.slackChannel;
+  }, [telegramChannel, slackChannel, project?.telegramChannel, project?.slackChannel])
 
-    if (description !== project?.description) {
-      return false;
-    }
-
-    return creator?.id === project?.creator?.id;
-  }, [title, short, description, creator])
-
-  const onSave = async () => await updateProject(project.id, {title, short, description, creator: creator?.id})
+  const onSave = async () => await updateProject(project.id, {telegramChannel, slackChannel})
 
   return (
     <div className={classes.contentContainer}>
-      <ProjectSettingsHeader title={'General project settings'}/>
+      <ProjectSettingsHeader title={'Notifications settings'}/>
       <Grid item xs={12} className={'mt-3'}>
         <TextField
-          value={title}
-          onChange={event => setTitle(event.target.value)}
+          value={telegramChannel}
+          onChange={event => setTelegramChannel(event.target.value)}
           label="Telegram channel or group"
           variant="standard"
-          placeholder={'Project name'}
+          placeholder={'e2e'}
           className={'w-50'}
           inputProps={{maxLength: 255}}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Avatar style={{width: 22, height: 22}} src={baseUrl + 'static/images/integrations/telegram.png'}/>
+              </InputAdornment>
+            ),
+          }}
         />
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
         <TextField
-          value={short}
-          onChange={event => setShort(event.target.value)}
+          value={slackChannel}
+          onChange={event => setSlackChannel(event.target.value)}
           label="Slack channel"
           variant="standard"
-          placeholder={'Slack channel'}
+          placeholder={'e2e'}
           className={'w-50'}
           inputProps={{maxLength: 255}}
           helperText={'Short name for your project. For example if project name is Lama Logger, then short name ' +
           'will be LL'}
-        />
-      </Grid>
-      <Grid item xs={12} className={'mt-3'}>
-        <TextField
-          multiline
-          value={description}
-          onChange={event => setDescription(event.target.value)}
-          label="Project description"
-          variant="standard"
-          placeholder={'Project description'}
-          className={'w-50'}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Avatar style={{width: 22, height: 22}} src={baseUrl + 'static/images/integrations/slack.png'}/>
+              </InputAdornment>
+            ),
+          }}
         />
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
@@ -105,13 +92,11 @@ const NotificationsSettings = ({project, setConfirmAction, removeProject}) => {
 
 
 const getState = (state) => ({
-  project: state.projects.project
-})
+    project: state.projects.project
+  }
+)
 
 export default connect(
   getState,
-  {
-    removeProject,
-    setConfirmAction
-  },
+  null,
 )(NotificationsSettings);
