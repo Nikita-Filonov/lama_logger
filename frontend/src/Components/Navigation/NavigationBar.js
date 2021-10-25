@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, CssBaseline, IconButton, Toolbar, Typography, useTheme} from '@mui/material';
+import {Box, CssBaseline, IconButton, Toolbar, Typography, useTheme, Zoom} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBarStyled, DrawerHeaderStyled} from "../../Styles/Blocks";
 import {connect} from "react-redux";
@@ -13,11 +13,14 @@ import {AccountNavbarMenu} from "../Menus/AccountNavbarMenu";
 const NavigationBar = ({drawer, setTheme}) => {
   const {palette} = useTheme();
   const [open, setOpen] = useState(false);
+  const [themeButton, setThemeButton] = useState(true);
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
-  const onTheme = () => {
+  const onTheme = async () => {
+    setThemeButton(false);
+    await setTimeout(() => setThemeButton(true), 200)
     const theme = palette.mode === 'light' ? 'dark' : 'light'
     setTheme(theme)
     localStorage.setItem('theme', theme)
@@ -44,7 +47,9 @@ const NavigationBar = ({drawer, setTheme}) => {
             <NavigationBreadcrumbs/>
           </Typography>
           <IconButton className={'me-3'} onClick={onTheme} color="inherit">
-            {palette.mode === 'light' ? <Brightness4Icon/> : <Brightness7Icon/>}
+            <Zoom in={themeButton}>
+              {palette.mode === 'light' ? <Brightness4Icon/> : <Brightness7Icon/>}
+            </Zoom>
           </IconButton>
           <AccountNavbarMenu/>
         </Toolbar>

@@ -25,7 +25,7 @@ export const ApiTokens = () => {
         {load
           ? <ApiTokensSkeletons/>
           : <List dense>
-            {tokens.map(t => <ApiToken key={t.id} token={t}/>)}
+            {tokens.map(token => <ApiToken key={token.id} token={token}/>)}
           </List>
         }
       </Grid>
