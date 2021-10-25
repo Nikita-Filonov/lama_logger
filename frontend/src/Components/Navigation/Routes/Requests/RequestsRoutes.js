@@ -19,6 +19,7 @@ import RequestsRealtimeSettings from "../../../../Screens/Requests/Settings/Requ
 import {ServicesProvider} from "../../../../Providers/Requests/Tracks/ServicesProvider";
 import {TracksProvider} from "../../../../Providers/Requests/Tracks/TracksProvider";
 import TracksActivitiesSettings from "../../../../Screens/Requests/Settings/Tracks/TracksActivitiesSettings";
+import NotificationsSettings from "../../../../Screens/Requests/Settings/Notifications/NotificationsSettings";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -54,6 +55,8 @@ export const RequestsRoutes = ({store}) =>
                                  component={RequestsRealtimeSettings}/>
           <RequestsSettingsRoute exact path="/projects/:projectId/settings/activities"
                                  component={TracksActivitiesSettings}/>
+          <RequestsSettingsRoute exact path="/projects/:projectId/settings/notifications"
+                                 component={NotificationsSettings}/>
         </Switch>
       </ProjectSettingsProvider>
     </ServicesProvider>

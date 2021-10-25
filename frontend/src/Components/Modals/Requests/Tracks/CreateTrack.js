@@ -66,7 +66,17 @@ const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) 
         </Toolbar>
       </AppBar>
       <Container className={'mt-5'}>
-        <DialogContentText>
+        <FormControl variant="standard" fullWidth>
+          <InputLabel id="demo-simple-select-standard-label">Select track type</InputLabel>
+          <Select
+            label="Select track type"
+          >
+            <MenuItem value={10}>API track</MenuItem>
+            <MenuItem value={20}>Performance track</MenuItem>
+            <MenuItem value={30}>Errors tracks</MenuItem>
+          </Select>
+        </FormControl>
+        <DialogContentText className={'mt-3'}>
           You can create track for certain endpoint. When error will happen on this
           endpoint we will let you know about it.
         </DialogContentText>

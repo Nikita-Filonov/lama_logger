@@ -29,11 +29,16 @@ const ProjectSettingsSidebar = ({project}) => {
   return (
     <Box className={classes.sidebarContainer} component="nav">
       <Typography className={'mt-4 mb-2'} variant={'h6'}>Settings</Typography>
-      <List>
+      <List className={classes.sidebarListContainer}>
         <ListItemLink
           selected={location.pathname.endsWith('/settings/general')}
           to={`/projects/${project.id}/settings/general`}
           title={'General'}
+        />
+        <ListItemLink
+          selected={location.pathname.endsWith('/settings/notifications')}
+          to={`/projects/${project.id}/settings/notifications`}
+          title={'Notifications'}
         />
         <ListItem button onClick={() => onCollapse('users')}>
           <ListItemText primary={'Users'}/>

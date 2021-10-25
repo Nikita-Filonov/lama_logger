@@ -114,6 +114,23 @@ class Project(models.Model):
         verbose_name='Last updated',
         auto_now=True
     )
+    telegramChannel = models.CharField(
+        verbose_name='Telegram channel',
+        null=True,
+        blank=True,
+        max_length=255
+    )
+    telegramChannelId = models.BigIntegerField(
+        verbose_name='Telegram channel id',
+        null=True,
+        blank=True,
+    )
+    slackChannel = models.CharField(
+        verbose_name='Slack channel',
+        null=True,
+        blank=True,
+        max_length=255
+    )
 
     def __str__(self):
         return self.title

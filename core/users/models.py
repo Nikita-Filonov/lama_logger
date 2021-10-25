@@ -76,6 +76,17 @@ class CustomUser(AbstractBaseUser):
         blank=True,
         choices=JOBS
     )
+    telegram_id = models.BigIntegerField(
+        verbose_name='User telegram id',
+        null=True,
+        blank=True,
+    )
+    telegram_username = models.CharField(
+        verbose_name='User telegram username',
+        null=True,
+        blank=True,
+        max_length=255
+    )
     created = models.DateTimeField(
         verbose_name='Created at',
         default=timezone.now,

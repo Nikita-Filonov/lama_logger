@@ -15,6 +15,10 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
     paddingTop: 0,
     marginTop: 10
   },
+  sidebarListContainer: {
+    maxHeight: window.innerHeight / 1.3,
+    overflow: 'auto'
+  },
   membersTableContainer: {
     height: window.innerHeight / 1.3,
     maxHeight: window.innerHeight / 1.3
