@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import {Chip, ListItem, ListItemIcon, ListItemText} from "@mui/material";
+import {Chip, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText} from "@mui/material";
 import List from "@mui/material/List";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import {DragHandle} from "@mui/icons-material";
 import {Draggable, Droppable} from "react-beautiful-dnd";
+import ActivityMenu from "../../../../Menus/Requests/Settings/Tracks/Activities/ActivityMenu";
 
 
 export const Activity = ({activity, index}) => {
@@ -30,7 +31,10 @@ export const Activity = ({activity, index}) => {
                   </ListItemIcon>
                   <ListItemText primary={activity.title}/>
                   <Chip label={`${activity?.services?.length} services`} variant="outlined" sx={{mr: 2}}/>
-                  {collapse ? <ExpandLess/> : <ExpandMore/>}
+                  {collapse ? <ExpandLess sx={{mr: 2}}/> : <ExpandMore sx={{mr: 2}}/>}
+                  <ListItemSecondaryAction>
+                    <ActivityMenu activity={activity}/>
+                  </ListItemSecondaryAction>
                 </ListItem>
                 <Collapse component="li" in={!snapshot.isDragging && collapse} timeout="auto" unmountOnExit>
                   <List disablePadding>

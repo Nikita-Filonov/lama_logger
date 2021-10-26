@@ -3,6 +3,7 @@ import {
   CREATE_ACTIVITY,
   CREATE_SERVICE,
   CREATE_TRACK,
+  DELETE_ACTIVITY,
   MOVE_ACTIVITY,
   MOVE_SERVICE,
   SET_ACTIVITIES,
@@ -26,6 +27,11 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
       const [removed] = activities.splice(indexFrom, 1);
       activities.splice(indexTo, 0, removed);
       return {...state, activities};
+    }
+    case DELETE_ACTIVITY: {
+      const {activityId} = action.payload;
+
+      return {...state, activities: state.activities.filter(a => a.id !== activityId)};
     }
     case CREATE_SERVICE: {
       const {activityId} = action.payload;

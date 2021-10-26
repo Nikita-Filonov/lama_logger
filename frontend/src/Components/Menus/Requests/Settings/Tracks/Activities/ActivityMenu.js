@@ -7,23 +7,35 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {CreateOutlined, Delete, MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
-import {setCreateRoleModal, setRole} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
+import {useServices} from "../../../../../../Providers/Requests/Tracks/ServicesProvider";
 
-const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
+
+const ActivityMenu = ({project, activity, setConfirmAction}) => {
+  const {deleteActivity} = useServices();
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null)
 
   const onEdit = () => {
-    setRole({...role, editMode: true})
-    setCreateRoleModal(true)
+
+  }
+
+  const onDelete = () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Delete activity',
+      description: 'Are you sure you want to delete activity? You will be unable to under this action',
+      action: async () => await deleteActivity(project.id, activity.id),
+      confirmButton: 'Delete'
+    })
   }
 
   return (
     <React.Fragment>
       <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
-        <Tooltip title="Project options">
-          <IconButton onClick={onOpen} size="small" sx={{ml: 2}}>
+        <Tooltip title="Activity options">
+          <IconButton onClick={onOpen}>
             <MoreHoriz/>
           </IconButton>
         </Tooltip>
@@ -42,7 +54,7 @@ const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
           </ListItemIcon>
           Edit
         </MenuItem>
-        <MenuItem sx={{color: 'red'}}>
+        <MenuItem sx={{color: 'red'}} onClick={onDelete}>
           <ListItemIcon>
             <Delete fontSize="small" sx={{color: 'red'}}/>
           </ListItemIcon>
@@ -53,10 +65,13 @@ const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
   );
 }
 
+const getState = (state) => ({
+  project: state.projects.project,
+})
+
 export default connect(
-  null,
+  getState,
   {
-    setRole,
-    setCreateRoleModal
+    setConfirmAction
   },
-)(RoleRowMenu);
+)(ActivityMenu);

@@ -1,6 +1,7 @@
 from django.db.models import Max
 from rest_framework import serializers
 
+from core.tracks.helpers.utils import to_max_index
 from core.tracks.models import Service, ServiceActivity
 from core.tracks.serializers.tracks import TracksSerializer
 
@@ -22,7 +23,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         activity: ServiceActivity = self.context['activity']
         max_index = activity.services.all().aggregate(Max('index'))['index__max']
 
-        new_index = 1 if max_index == 0 else max_index + 1
+        new_index = to_max_index(max_index)
 
         service = Service.objects.create(**validated_data, index=new_index)
         activity.services.add(service)

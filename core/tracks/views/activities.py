@@ -10,7 +10,7 @@ from rest_framework.throttling import UserRateThrottle
 from core.projects.models import Project
 from core.tracks.models import ServiceActivity
 from core.tracks.serializers.activities import ServiceActivitiesSerializer, ServiceActivitySerializer
-from utils.exeptions import BadRequest
+from utils.exeptions import BadRequest, NotFound
 
 
 class ServiceActivitiesApi(views.APIView):
@@ -32,6 +32,21 @@ class ServiceActivitiesApi(views.APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         raise BadRequest('Error happened while creating activity', data=serializer.errors)
+
+
+class ServiceActivityApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    def delete(self, request, project_id, activity_id):
+        try:
+            activity = ServiceActivity.objects.get(id=activity_id)
+            activity.delete()
+        except ServiceActivity.DoesNotExist:
+            raise NotFound('Activity not found')
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['PATCH'])

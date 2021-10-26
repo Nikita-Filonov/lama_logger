@@ -9,6 +9,7 @@ const client = async (
 ) => {
   const token = localStorage.getItem('token');
   let error = false;
+  let json;
 
   const headers = withAuth
     ? {'Content-Type': 'application/json', 'Authorization': `Token ${token}`}
@@ -25,6 +26,7 @@ const client = async (
   if (body) {
     config.body = JSON.stringify(body)
   }
+
   const response = await fetch(`${baseUrl}${endpoint}`, config);
 
   if (response.status === 401) {
@@ -32,7 +34,12 @@ const client = async (
     return
   }
 
-  const json = await response.json();
+  try {
+    json = await response.json();
+  } catch {
+    json = null;
+  }
+
   if (!response.ok) {
     error = true;
   }

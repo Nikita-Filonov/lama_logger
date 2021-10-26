@@ -9,10 +9,12 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material';
-import {LoadingButton} from "@mui/lab";
+import {Alert, LoadingButton} from "@mui/lab";
 import {connect} from "react-redux";
 import {useServices} from "../../../../Providers/Requests/Tracks/ServicesProvider";
 import {SlideTransition} from "../../../../Utils/Utils/Common";
+import Link from "@mui/material/Link";
+import {Link as RouterLink} from 'react-router-dom';
 
 
 const CreateService = ({modal, setModal, project, activities}) => {
@@ -45,6 +47,11 @@ const CreateService = ({modal, setModal, project, activities}) => {
           "Dashboard fronted", "Users backend", "Dashboard backend" etc.
 
         </DialogContentText>
+        {!activity && <Alert severity="warning" sx={{mb: 1, mt: 1}}>
+          You currently have no activities. Go to{' '}
+          <Link component={RouterLink} underline={'none'} to={`/projects/${project.id}/settings/activities`}>
+            Activities</Link> section to setup new one
+        </Alert>}
         <TextField
           value={title}
           onChange={event => setTitle(event.target.value)}
@@ -91,7 +98,7 @@ const CreateService = ({modal, setModal, project, activities}) => {
         <Button onClick={onClose}>Cancel</Button>
         <LoadingButton
           loading={request}
-          disabled={title.length === 0}
+          disabled={title.length === 0 || !activity}
           onClick={onCreate}
         >
           Create

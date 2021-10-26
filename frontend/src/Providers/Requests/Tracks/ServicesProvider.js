@@ -1,9 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {CREATE_ACTIVITY, CREATE_SERVICE, SET_ACTIVITIES} from "../../../Redux/Requests/Tracks/actionTypes";
+import {
+  CREATE_ACTIVITY,
+  CREATE_SERVICE,
+  DELETE_ACTIVITY,
+  SET_ACTIVITIES
+} from "../../../Redux/Requests/Tracks/actionTypes";
 import {useUsers} from "../../Users/UsersProvider";
-import {baseUrl} from "../../../Utils/Constants";
 import {useAlerts} from "../../AlertsProvider";
+import {get, remove} from "../../../Utils/Api/Fetch";
 
 
 const ServicesContext = React.createContext(null);
@@ -11,7 +16,7 @@ const ServicesContext = React.createContext(null);
 const ServicesProvider = ({children, store}) => {
   const {token} = useUsers();
   const {setAlert} = useAlerts();
-  const projectsApi = baseUrl + 'api/v1/projects/';
+  const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
 
@@ -23,16 +28,9 @@ const ServicesProvider = ({children, store}) => {
 
   const getActivities = async (projectId) => {
     setLoad(true)
-    await fetch(projectsApi + `${projectId}/activities/`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: SET_ACTIVITIES, payload: data});
-        setLoad(false);
-      });
+    const {json} = await get(projectsApi + `${projectId}/activities/`);
+    store.dispatch({type: SET_ACTIVITIES, payload: json});
+    setLoad(false);
   }
 
   const createActivity = async (projectId, payload) => {
@@ -70,6 +68,12 @@ const ServicesProvider = ({children, store}) => {
       const error = await response.json();
       setAlert(error)
     }
+  }
+
+  const deleteActivity = async (projectId, activityId) => {
+    const {json, error} = await remove(projectsApi + `${projectId}/activities/${activityId}/`);
+    !error && store.dispatch({type: DELETE_ACTIVITY, payload: {activityId}});
+    setAlert(error ? json : {message: 'Activity successfully deleted', level: 'success'})
   }
 
   const createService = async (projectId, activityId, payload) => {
@@ -120,6 +124,7 @@ const ServicesProvider = ({children, store}) => {
         createService,
         createActivity,
         moveActivities,
+        deleteActivity,
         moveServices
       }}
     >
