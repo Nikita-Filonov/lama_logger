@@ -8,7 +8,7 @@ import {
 } from "../../../Redux/Requests/Tracks/actionTypes";
 import {useUsers} from "../../Users/UsersProvider";
 import {useAlerts} from "../../AlertsProvider";
-import {get, remove} from "../../../Utils/Api/Fetch";
+import {get, patch, post, remove} from "../../../Utils/Api/Fetch";
 
 
 const ServicesContext = React.createContext(null);
@@ -35,39 +35,15 @@ const ServicesProvider = ({children, store}) => {
 
   const createActivity = async (projectId, payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/activities/`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    const json = await response.json();
-    if (response.ok) {
-      store.dispatch({type: CREATE_ACTIVITY, payload: json});
-      setAlert({message: 'Activity was successfully created', level: 'success'});
-    } else {
-      setAlert(json);
-    }
+    const {json, error} = await post(projectsApi + `${projectId}/activities/`, payload);
+    !error && store.dispatch({type: CREATE_ACTIVITY, payload: json});
+    setAlert(error ? json : {message: 'Activity was successfully created', level: 'success'});
     setRequest(false)
   }
 
   const moveActivities = async (projectId, payload) => {
-    const response = await fetch(projectsApi + `${projectId}/activities/move/`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    if (response.ok) {
-      setAlert({message: 'Activities positions was moved', level: 'success'})
-    } else {
-      const error = await response.json();
-      setAlert(error)
-    }
+    const {json, error} = await patch(projectsApi + `${projectId}/activities/move/`, payload);
+    setAlert(error ? json : {message: 'Activities positions was moved', level: 'success'});
   }
 
   const deleteActivity = async (projectId, activityId) => {
@@ -78,41 +54,16 @@ const ServicesProvider = ({children, store}) => {
 
   const createService = async (projectId, activityId, payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/activities/${activityId}/services/`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    const data = await response.json();
-    if (response.ok) {
-      store.dispatch({type: CREATE_SERVICE, payload: {activityId, service: data}});
-      setAlert({message: 'Service was successfully created', level: 'success'})
-    } else {
-      setAlert(data)
-    }
+    const {json, error} = await post(projectsApi + `${projectId}/activities/${activityId}/services/`, payload);
+    !error && store.dispatch({type: CREATE_SERVICE, payload: {activityId, service: json}});
+    setAlert(error ? json : {message: 'Service was successfully created', level: 'success'})
     setRequest(false)
   }
 
   const moveServices = async (projectId, payload) => {
     setRequest(true)
-    const endpoint = projectsApi + `${projectId}/activities/services/move/`;
-    const response = await fetch(endpoint, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    if (response.ok) {
-      setAlert({message: 'Service positions was moved', level: 'success'});
-    } else {
-      const data = await response.json();
-      setAlert(data);
-    }
+    const {json, error} = await patch(projectsApi + `${projectId}/activities/services/move/`, payload);
+    setAlert(error ? json : {message: 'Service positions was moved', level: 'success'});
     setRequest(false)
   }
 
