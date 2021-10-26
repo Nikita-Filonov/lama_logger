@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from core.projects.helpers.utils import query_to_dict
 from core.projects.models import Project
 from core.projects.serializers.projects import ProjectsSerializer, ProjectSerializer
+from utils.exeptions import NotFound, BadRequest
 
 
 class ProjectsApi(views.APIView):
@@ -31,14 +32,7 @@ class ProjectsApi(views.APIView):
                 status=status.HTTP_201_CREATED
             )
 
-        return Response(
-            {
-                'message': 'Error happened while creating project',
-                'level': 'error',
-                'data': serializer.errors
-            },
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        raise BadRequest(message='Error happened while creating project', data=serializer.errors)
 
 
 class ProjectApi(views.APIView):
@@ -46,9 +40,12 @@ class ProjectApi(views.APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, project_id):
-        projects = Project.objects.get(id=project_id)
+        try:
+            projects = Project.objects.get(id=project_id)
 
-        return Response(ProjectsSerializer(projects, many=False).data)
+            return Response(ProjectsSerializer(projects, many=False).data)
+        except Project.DoesNotExist as error:
+            raise NotFound(message='Project not found', data=error)
 
     def patch(self, request, project_id):
         project = Project.objects.get(id=project_id)

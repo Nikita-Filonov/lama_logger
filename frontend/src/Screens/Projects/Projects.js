@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container, Fab, Grid} from '@mui/material';
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {common} from "../../Styles/Blocks";
@@ -8,11 +8,21 @@ import {connect} from "react-redux";
 import Project from "../../Components/Items/Projects/Project";
 import {useProjects} from "../../Providers/ProjectsProvider";
 import {ProjectsSkeletons} from "../../Components/Blocks/Projects/ProjectsSkeletons";
+import {useAlerts} from "../../Providers/AlertsProvider";
+import {get} from '../../Utils/Api/Fetch';
 
 const Projects = ({projects}) => {
   const {load} = useProjects();
-  const [search, setSearch] = useState('')
-  const [createProjectModal, setCreateProjectModal] = useState(false)
+  const {setAlert} = useAlerts();
+  const [search, setSearch] = useState('');
+  const [createProjectModal, setCreateProjectModal] = useState(false);
+
+  useEffect(() => (async () => {
+    const {json, error} = await get('api/v1/projects/1/');
+    console.log(json);
+    // error && setAlert(json)
+  })(), [])
+
 
   const onCreateProject = () => setCreateProjectModal(true);
 

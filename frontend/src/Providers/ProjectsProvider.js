@@ -1,9 +1,9 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {baseUrl} from "../Utils/Constants";
 import {useUsers} from "./Users/UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
 import {useAlerts} from "./AlertsProvider";
 import {objectToQuery} from "../Utils/Utils/Common";
+import {get, patch, post, remove} from "../Utils/Api/Fetch";
 
 
 const ProjectsContext = React.createContext(null);
@@ -11,14 +11,12 @@ const ProjectsContext = React.createContext(null);
 const ProjectsProvider = ({children, store}) => {
   const {token} = useUsers();
   const {setAlert} = useAlerts();
-  const projectsApi = baseUrl + 'api/v1/projects/';
+  const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(true);
-  const [request, setRequest] = useState(false)
+  const [request, setRequest] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      token && await getProjects()
-    })();
+    (async () => token && await getProjects())();
   }, [token]);
 
   const updateProjectState = async (data) => {
@@ -26,101 +24,53 @@ const ProjectsProvider = ({children, store}) => {
     store.dispatch({type: UPDATE_PROJECT, payload: data});
   }
 
-  const checkResponse = async (response, successMessage = {}, errorMessage = null) => {
-    const payload = await response.json();
-    if (response.ok) {
+  const checkResponse = async ({json, error}, successMessage = {}, errorMessage = null) => {
+    if (!error) {
       setAlert(successMessage)
-      await updateProjectState(payload)
+      await updateProjectState(json)
     } else {
-      setAlert(errorMessage || payload)
+      setAlert(errorMessage || json)
     }
     setRequest(false)
   }
 
   const getProjects = useCallback(async (query = {archived: 'False'}) => {
     setLoad(true)
-    await fetch(projectsApi + await objectToQuery(query), {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: SET_PROJECTS, payload: data});
-        setLoad(false);
-      });
+    const {json} = await get(projectsApi + await objectToQuery(query));
+    store.dispatch({type: SET_PROJECTS, payload: json});
+    setLoad(false);
   }, [token]);
 
   const getProject = async (projectId) => {
     setLoad(true)
-    await fetch(projectsApi + `${projectId}/`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: SET_PROJECT, payload: data});
-        setLoad(false);
-      });
+    const {json} = await get(projectsApi + `${projectId}/`);
+    store.dispatch({type: SET_PROJECT, payload: json});
+    setLoad(false);
   }
 
   const createProject = async (payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    if (response.ok) {
-      const json = await response.json();
-      store.dispatch({type: CREATE_PROJECT, payload: json});
-      setAlert({message: 'Project successfully created', level: 'success'})
-    } else {
-      setAlert({message: 'Error happened while creating project', level: 'error'})
-    }
+    const {json, error} = await post(projectsApi, payload);
+    !error && store.dispatch({type: CREATE_PROJECT, payload: json});
+    setAlert(error ? json : {message: 'Project successfully created', level: 'success'});
     setRequest(false)
   }
 
   const updateProject = async (projectId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await patch(projectsApi + `${projectId}/`, payload)
     !isLazy && await checkResponse(response, {message: 'Project successfully updated', level: 'success'})
   }
 
   const inviteMember = async (projectId, payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/members/`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await post(projectsApi + `${projectId}/members/`, payload);
     await checkResponse(response, {message: 'Member was invited to project', level: 'success'})
   }
 
   const updateMember = async (projectId, memberId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/members/${memberId}/`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await patch(projectsApi + `${projectId}/members/${memberId}/`, payload);
     await checkResponse(
       response,
       {message: 'Member was updated', level: 'success'},
@@ -130,40 +80,19 @@ const ProjectsProvider = ({children, store}) => {
 
   const deleteMembers = async (projectId, payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/members/`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await remove(projectsApi + `${projectId}/members/`, payload);
     await checkResponse(response, {message: 'Members were deleted', level: 'success'})
   }
 
   const createRole = async (projectId, payload) => {
     setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/roles/`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await post(projectsApi + `${projectId}/roles/`, payload);
     await checkResponse(response, {message: 'Role was created', level: 'success'})
   }
 
   const updateRole = async (projectId, roleId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
-    const response = await fetch(projectsApi + `${projectId}/roles/${roleId}/`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
+    const response = await patch(projectsApi + `${projectId}/roles/${roleId}/`, payload);
     await checkResponse(
       response,
       {message: 'Role was updated', level: 'success'},
