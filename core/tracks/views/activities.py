@@ -39,6 +39,16 @@ class ServiceActivityApi(views.APIView):
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
 
+    def patch(self, request, project_id, activity_id):
+        activity = ServiceActivity.objects.get(id=activity_id)
+        serializer = ServiceActivitySerializer(activity, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            activity = serializer.save()
+            return Response(ServiceActivitiesSerializer(activity, many=False).data)
+
+        raise BadRequest(message='Error happened while updating activity', data=serializer.errors)
+
     def delete(self, request, project_id, activity_id):
         try:
             activity = ServiceActivity.objects.get(id=activity_id)

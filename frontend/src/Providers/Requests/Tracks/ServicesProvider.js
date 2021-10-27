@@ -4,7 +4,8 @@ import {
   CREATE_ACTIVITY,
   CREATE_SERVICE,
   DELETE_ACTIVITY,
-  SET_ACTIVITIES
+  SET_ACTIVITIES,
+  UPDATE_ACTIVITY
 } from "../../../Redux/Requests/Tracks/actionTypes";
 import {useUsers} from "../../Users/UsersProvider";
 import {useAlerts} from "../../AlertsProvider";
@@ -52,6 +53,14 @@ const ServicesProvider = ({children, store}) => {
     setAlert(error ? json : {message: 'Activity successfully deleted', level: 'success'})
   }
 
+  const updateActivity = async (projectId, activityId, payload) => {
+    setRequest(true);
+    const {json, error} = await patch(projectsApi + `${projectId}/activities/${activityId}/`, payload);
+    !error && store.dispatch({type: UPDATE_ACTIVITY, payload: json});
+    setAlert(error ? json : {message: 'Activity successfully updated', level: 'success'});
+    setRequest(false);
+  }
+
   const createService = async (projectId, activityId, payload) => {
     setRequest(true)
     const {json, error} = await post(projectsApi + `${projectId}/activities/${activityId}/services/`, payload);
@@ -76,6 +85,7 @@ const ServicesProvider = ({children, store}) => {
         createActivity,
         moveActivities,
         deleteActivity,
+        updateActivity,
         moveServices
       }}
     >

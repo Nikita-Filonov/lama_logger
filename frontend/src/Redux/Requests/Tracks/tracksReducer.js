@@ -7,8 +7,10 @@ import {
   MOVE_ACTIVITY,
   MOVE_SERVICE,
   SET_ACTIVITIES,
+  SET_ACTIVITY,
+  SET_CHANGE_ACTIVITY_MODAL,
   SET_CREATE_TRACK_MODAL,
-  SET_SERVICE
+  SET_SERVICE, UPDATE_ACTIVITY
 } from "./actionTypes";
 
 
@@ -16,6 +18,9 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
   switch (action.type) {
     case SET_ACTIVITIES: {
       return {...state, activities: action.payload};
+    }
+    case SET_ACTIVITY: {
+      return {...state, activity: action.payload};
     }
     case CREATE_ACTIVITY: {
       return {...state, activities: [...state.activities, action.payload]};
@@ -42,6 +47,9 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
         )
       }
     }
+    case UPDATE_ACTIVITY: {
+      return {...state, activities: state.activities.map(a => a.id === action.payload.id ? action.payload : a)}
+    }
     case MOVE_SERVICE: {
       const {activityIdFrom, activityIdTo, indexTo, indexFrom, service} = action.payload;
       let activities = [...state.activities];
@@ -56,6 +64,9 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
     }
     case SET_CREATE_TRACK_MODAL:
       return {...state, createTrackModal: action.payload};
+    case SET_CHANGE_ACTIVITY_MODAL: {
+      return {...state, changeActivityModal: action.payload};
+    }
     case SET_SERVICE:
       return {...state, service: action.payload};
     case CREATE_TRACK:

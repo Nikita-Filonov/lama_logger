@@ -9,16 +9,19 @@ import {CreateOutlined, Delete, MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
 import {useServices} from "../../../../../../Providers/Requests/Tracks/ServicesProvider";
+import {setActivity, setChangeActivityModal} from "../../../../../../Redux/Requests/Tracks/tracksActions";
 
 
-const ActivityMenu = ({project, activity, setConfirmAction}) => {
+const ActivityMenu = (props) => {
+  const {project, activity, setConfirmAction, setActivity, setChangeActivityModal} = props;
   const {deleteActivity} = useServices();
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null)
 
   const onEdit = () => {
-
+    setActivity(activity);
+    setChangeActivityModal(true);
   }
 
   const onDelete = () => {
@@ -72,6 +75,8 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setConfirmAction
+    setActivity,
+    setConfirmAction,
+    setChangeActivityModal
   },
 )(ActivityMenu);

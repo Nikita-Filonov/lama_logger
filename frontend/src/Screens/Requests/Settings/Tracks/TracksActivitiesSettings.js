@@ -9,6 +9,7 @@ import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateActivity from "../../../../Components/Modals/Requests/Settings/Tracks/CreateActivity";
 import {moveActivity} from "../../../../Redux/Requests/Tracks/tracksActions";
 import {useServices} from "../../../../Providers/Requests/Tracks/ServicesProvider";
+import ChangeActivity from "../../../../Components/Modals/Requests/Settings/Tracks/ChangeActivity";
 
 
 const TracksActivitiesSettings = ({activities, project, moveActivity}) => {
@@ -48,6 +49,7 @@ const TracksActivitiesSettings = ({activities, project, moveActivity}) => {
         </List>
       </DragDropContext>
       <ZoomFab title={'New activity'} action={() => setCreateActivityModal(true)}/>
+      <ChangeActivity/>
       <CreateActivity modal={createActivityModal} setModal={setCreateActivityModal}/>
     </div>
   )
