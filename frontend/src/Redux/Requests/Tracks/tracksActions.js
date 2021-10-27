@@ -4,7 +4,8 @@ import {
   SET_ACTIVITY,
   SET_CHANGE_ACTIVITY_MODAL,
   SET_CREATE_TRACK_MODAL,
-  SET_SERVICE
+  SET_SERVICE,
+  SET_TRACK
 } from "./actionTypes";
 
 
@@ -42,5 +43,10 @@ export const setActivity = (state) => ({
 
 export const setChangeActivityModal = (state) => ({
   type: SET_CHANGE_ACTIVITY_MODAL,
+  payload: state
+})
+
+export const setTrack = (state) => ({
+  type: SET_TRACK,
   payload: state
 })

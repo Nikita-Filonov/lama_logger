@@ -5,15 +5,23 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {Add, DragHandle} from "@mui/icons-material";
 import {connect} from "react-redux";
-import {setCreateTrackModal, setService} from "../../../../Redux/Requests/Tracks/tracksActions";
+import {setCreateTrackModal, setService, setTrack} from "../../../../Redux/Requests/Tracks/tracksActions";
+import {useHistory} from "react-router-dom";
 
 
-const DraggableService = ({service, index, setService, setCreateTrackModal}) => {
+const DraggableService = (props) => {
+  const {service, index, setService, setCreateTrackModal, project, setTrack} = props;
   const {palette} = useTheme();
+  const history = useHistory();
 
   const onCreateTrack = () => {
     setCreateTrackModal(true);
     setService(service)
+  }
+
+  const onTrack = (track) => {
+    setTrack(track);
+    history.push(`/projects/${project.id}/tracks/${track.id}`);
   }
 
   return (
@@ -32,7 +40,7 @@ const DraggableService = ({service, index, setService, setCreateTrackModal}) => 
           </Typography>
           <List dense>
             {service?.tracks?.map(track =>
-              <ListItem button disableGutters key={track.id}>
+              <ListItem button disableGutters key={track.id} onClick={() => onTrack(track)}>
                 <Chip color="error" label={'5XX'} size={'small'}/>
                 <ListItemText sx={{ml: 1}} primary={'some track'}/>
               </ListItem>
@@ -49,9 +57,14 @@ const DraggableService = ({service, index, setService, setCreateTrackModal}) => 
   );
 };
 
+const getState = (state) => ({
+  project: state.projects.project
+})
+
 export default connect(
-  null,
+  getState,
   {
+    setTrack,
     setService,
     setCreateTrackModal
   },

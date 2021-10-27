@@ -12,7 +12,7 @@ import RequestsInboundDataFilters from "../../../../Screens/Requests/Settings/Re
 import {ProjectSettingsProvider} from "../../../../Providers/Requests/ProjectSettingsProvider";
 import {RequestsProvider} from "../../../../Providers/Requests/RequestsProvider";
 import {RequestsSend} from "../../../../Screens/Requests/RequestsSend";
-import RequestsTracks from "../../../../Screens/Requests/RequestsTracks";
+import RequestsTracks from "../../../../Screens/Requests/Tracks/RequestsTracks";
 import IntegrationsSettings from "../../../../Screens/Requests/Settings/Integrations/IntegrationsSettings";
 import RequestsFiltersSettings from "../../../../Screens/Requests/Settings/Requests/RequestsFiltersSettings";
 import RequestsRealtimeSettings from "../../../../Screens/Requests/Settings/Requests/RequestsRealtimeSettings";
@@ -20,6 +20,7 @@ import {ServicesProvider} from "../../../../Providers/Requests/Tracks/ServicesPr
 import {TracksProvider} from "../../../../Providers/Requests/Tracks/TracksProvider";
 import TracksActivitiesSettings from "../../../../Screens/Requests/Settings/Tracks/TracksActivitiesSettings";
 import NotificationsSettings from "../../../../Screens/Requests/Settings/Notifications/NotificationsSettings";
+import ViewTrack from "../../../../Screens/Requests/Tracks/ViewTrack";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -34,6 +35,15 @@ export const RequestsRoutes = ({store}) =>
             component={props =>
               <TracksProvider store={store}>
                 <RequestsTracks {...props}/>
+              </TracksProvider>
+            }
+          />
+          <RequestRoute
+            exact
+            path="/projects/:projectId/tracks/:trackId"
+            component={props =>
+              <TracksProvider store={store}>
+                <ViewTrack {...props}/>
               </TracksProvider>
             }
           />

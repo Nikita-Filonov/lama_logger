@@ -2,13 +2,13 @@ import React, {useState} from "react";
 import {Container, Fab, Grid} from "@mui/material";
 import {DragDropContext} from "react-beautiful-dnd";
 import {Add} from "@mui/icons-material";
-import {common} from "../../Styles/Blocks";
-import {DraggableServiceColumn} from "../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
+import {common} from "../../../Styles/Blocks";
+import {DraggableServiceColumn} from "../../../Components/Items/Reuqests/Tracks/DraggableServiceColumn";
 import {connect} from "react-redux";
-import CreateService from "../../Components/Modals/Requests/Tracks/CreateService";
-import {moveService} from "../../Redux/Requests/Tracks/tracksActions";
-import CreateTrack from "../../Components/Modals/Requests/Tracks/CreateTrack";
-import {useServices} from "../../Providers/Requests/Tracks/ServicesProvider";
+import CreateService from "../../../Components/Modals/Requests/Tracks/CreateService";
+import {moveService} from "../../../Redux/Requests/Tracks/tracksActions";
+import CreateTrack from "../../../Components/Modals/Requests/Tracks/CreateTrack";
+import {useServices} from "../../../Providers/Requests/Tracks/ServicesProvider";
 
 
 const RequestsTracks = ({project, activities, moveService}) => {
@@ -41,15 +41,6 @@ const RequestsTracks = ({project, activities, moveService}) => {
 
   return (
     <Container maxWidth={'xl'}>
-      {/*<TracksToolbar/>*/}
-      {/*<div className={'mt-3'}>*/}
-      {/*  <TracksTable/>*/}
-      {/*</div>*/}
-      {/*<Fab variant="extended" color={'primary'} style={common.fab} onClick={() => setCreateTrackModal(true)}>*/}
-      {/*  <Add sx={{mr: 1}}/>*/}
-      {/*  NEW TRACK*/}
-      {/*</Fab>*/}
-      {/*<CreateTrack modal={createTrackModal} setModal={setCreateTrackModal}/>*/}
       <DragDropContext onDragEnd={onDragEnd}>
         <Grid container spacing={2} className={'mt-3'}>
           {activities.map((activity) => (
