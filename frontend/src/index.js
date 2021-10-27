@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Styles/main.css'
+import './Styles/main.css';
 import {Provider} from 'react-redux'
 import {BrowserRouter as Router, Switch} from "react-router-dom";
 import reducer from './Redux/Reducers';
