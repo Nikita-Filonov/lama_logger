@@ -1,27 +1,15 @@
-import React, {useContext, useState} from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
-import {Slide} from "@mui/material";
+import React, {useContext, useRef} from 'react';
+import {IconButton} from "@mui/material";
+import {SnackbarProvider} from "notistack";
+import {Close} from "@mui/icons-material";
 
 const AlertsContext = React.createContext(null);
 
-const SlideTransition = (props) => <Slide {...props} direction="up"/>;
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-
 const AlertsProvider = ({children}) => {
-  const [alert, setAlert] = useState({})
+  const alertRef = useRef(null);
 
-  const onClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setAlert({});
-  };
-
+  const setAlert = ({message, level}) => alertRef.current.enqueueSnackbar(message, {variant: level});
+  const onClose = (key) => alertRef.current.closeSnackbar(key);
 
   return (
     <AlertsContext.Provider
@@ -29,22 +17,18 @@ const AlertsProvider = ({children}) => {
         setAlert
       }}
     >
-      {children}
-      <Snackbar
+      <SnackbarProvider
+        ref={alertRef}
+        maxSnack={5}
+        autoHideDuration={4000}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
         }}
-        autoHideDuration={4000}
-        open={Boolean(alert?.message)}
-        onClose={onClose}
-        TransitionComponent={SlideTransition}
-        key={SlideTransition.name}
+        action={key => <IconButton onClick={() => onClose(key)}><Close/></IconButton>}
       >
-        <Alert onClose={onClose} severity={alert?.level || 'success'} sx={{width: '100%'}}>
-          {alert?.message}
-        </Alert>
-      </Snackbar>
+        {children}
+      </SnackbarProvider>
     </AlertsContext.Provider>
   );
 };

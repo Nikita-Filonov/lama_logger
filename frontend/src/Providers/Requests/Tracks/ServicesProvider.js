@@ -8,8 +8,8 @@ import {
   UPDATE_ACTIVITY
 } from "../../../Redux/Requests/Tracks/actionTypes";
 import {useUsers} from "../../Users/UsersProvider";
-import {useAlerts} from "../../AlertsProvider";
 import {get, patch, post, remove} from "../../../Utils/Api/Fetch";
+import {useAlerts} from "../../AlertsProvider";
 
 
 const ServicesContext = React.createContext(null);
