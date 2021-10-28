@@ -11,8 +11,9 @@ import {
 } from "../../../../../Redux/Requests/Requests/requestsActions";
 import {useHistory} from "react-router-dom";
 import clsx from "clsx";
-import RequestsSideStatusCodesFilters from "./StatusCodesFilters/RequestsSideStatusCodesFilters";
-import RequestsSideDomainFilters from "./DomainFilters/RequestsSideDomainFilters";
+import RequestsSideStatusCodesFilters from "./RequestsSideStatusCodesFilters";
+import RequestsSideDomainFilters from "./RequestsSideDomainFilters";
+import RequestsSideBodyFilters from "./RequestsSideBodyFilters";
 
 const RequestsSideFilters = (props) => {
   const {
@@ -55,6 +56,9 @@ const RequestsSideFilters = (props) => {
         </div>
         <Divider/>
         <RequestsSideDomainFilters/>
+        <Divider sx={{marginTop: 1.5, marginBottom: 1.5}}/>
+        <RequestsSideBodyFilters/>
+        <Divider sx={{marginTop: 1.5, marginBottom: 1.5}}/>
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Methods</Typography>
           {projectSettings?.filterMethods?.map((method, index) =>

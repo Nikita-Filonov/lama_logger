@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {Box, Checkbox, FormControlLabel, FormGroup, IconButton, Popover, Typography} from "@mui/material";
-import {REQUESTS_STATUS_CODES_TYPES} from "../../../../../../Utils/Constants";
-import {StatusCodeIndicator} from "../../StatusCodeIndicator";
+import {REQUESTS_STATUS_CODES_TYPES} from "../../../../../Utils/Constants";
+import {StatusCodeIndicator} from "../StatusCodeIndicator";
 import {MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
-import {setRequestsFilters} from "../../../../../../Redux/Requests/Requests/requestsActions";
-import {StatusCodesAutocomplete} from "../../../Settings/Requests/Filters/StatusCodesAutocomplete";
+import {setRequestsFilters} from "../../../../../Redux/Requests/Requests/requestsActions";
+import {StatusCodesAutocomplete} from "../../Settings/Requests/Filters/StatusCodesAutocomplete";
 
 
 const RequestsSideStatusCodesFilters = (props) => {
