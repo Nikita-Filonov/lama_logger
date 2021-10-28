@@ -152,6 +152,11 @@ class ProjectSettings(models.Model):
         blank=True,
         default=DEFAULT_STATUS_CODES
     )
+    filterHeaders = models.JSONField(
+        verbose_name='Filter headers',
+        blank=True,
+        default=None
+    )
     excludeMethods = models.JSONField(
         verbose_name='Exclude methods',
         default=list,

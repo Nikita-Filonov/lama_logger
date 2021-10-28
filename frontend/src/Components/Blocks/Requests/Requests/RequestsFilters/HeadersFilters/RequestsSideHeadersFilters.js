@@ -31,23 +31,21 @@ const RequestsSideHeadersFilters = ({requestsFilters, setRequestsFilters}) => {
     <React.Fragment>
       <Typography variant={'subtitle2'} className={'mt-2'}>Headers</Typography>
       <List dense>
-        {requestsFilters?.headers
-          .sort((a, b) => a.id > b.id ? 1 : ((b.id > a.id) ? -1 : 0))
-          .map((header, index) =>
-            <ListItem divider disableGutters key={header.id}>
-              <ListItemText
-                style={{...common.ellipsisText, maxWidth: 90}}
-                primary={Object.keys(header)[0] ? Object.keys(header)[0] : '<Empty>'}
-              />
-              <ListItemSecondaryAction>
-                <Tooltip title={'Remove filter'} placement={'right'}>
-                  <IconButton size={'small'} onClick={() => onRemoveHeader(index)}>
-                    <Close fontSize={'small'}/>
-                  </IconButton>
-                </Tooltip>
-              </ListItemSecondaryAction>
-            </ListItem>
-          )}
+        {requestsFilters?.headers.map((header, index) =>
+          <ListItem divider disableGutters key={header.id}>
+            <ListItemText
+              style={{...common.ellipsisText, maxWidth: 90}}
+              primary={header?.key ? header?.key : '<Empty>'}
+            />
+            <ListItemSecondaryAction>
+              <Tooltip title={'Remove filter'} placement={'right'}>
+                <IconButton size={'small'} onClick={() => onRemoveHeader(index)}>
+                  <Close fontSize={'small'}/>
+                </IconButton>
+              </Tooltip>
+            </ListItemSecondaryAction>
+          </ListItem>
+        )}
       </List>
       <Button
         size={'small'}
