@@ -3,6 +3,7 @@ import {Container} from "@mui/material";
 import {connect} from "react-redux";
 import {setTrack} from "../../../Redux/Requests/Tracks/tracksActions";
 import Graph from "react-graph-vis";
+import {ViewTrackToolbar} from "../../../Components/Blocks/Tracks/Toolbar/ViewTrackToolbar";
 
 function randomColor() {
   const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
@@ -77,11 +78,12 @@ const ViewTrack = ({project, track, setTrack}) => {
 
   return (
     <Container maxWidth={'xl'}>
+      <ViewTrackToolbar/>
       <Graph
         graph={state.graph}
         options={options}
         events={state.events}
-        style={{height: "640px"}}
+        style={{marginTop: 15, height: window.innerHeight / 1.3}}
       />
 
     </Container>

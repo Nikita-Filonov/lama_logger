@@ -19,43 +19,17 @@ class TrackRequest(models.Model):
         default=uuid.uuid4,
         editable=True,
     )
-    method = models.CharField(
-        verbose_name='Method',
-        max_length=20,
-        default='GET'
+    success = models.BooleanField(
+        verbose_name='Is success',
+        default=True
     )
-    requestUrl = models.CharField(
-        verbose_name='Request url',
-        max_length=500,
-        null=False
-    )
-    requestHeaders = models.JSONField(
-        verbose_name='Request headers',
-        default=list,
-        blank=True,
-        null=True
-    )
-    requestBody = models.TextField(
-        verbose_name='Request body',
-        blank=True,
-        null=True
-    )
-    statusCode = models.IntegerField(
-        verbose_name='Response status code'
-    )
-    responseBody = models.TextField(
-        verbose_name='Response body',
-        blank=True,
-        null=True
-    )
-    responseHeaders = models.JSONField(
-        verbose_name='Response headers',
-        default=dict,
+    errorMessage = models.TextField(
+        verbose_name='Error message',
+        null=True,
         blank=True
     )
-    duration = models.FloatField(
-        verbose_name='Duration in seconds',
-        default=0.0,
+    additionalInfo = models.TextField(
+        verbose_name='Additional info',
         null=True,
         blank=True
     )
@@ -65,7 +39,7 @@ class TrackRequest(models.Model):
     )
 
     def __str__(self):
-        return self.requestUrl
+        return str(self.requestId)
 
 
 class Track(models.Model):
