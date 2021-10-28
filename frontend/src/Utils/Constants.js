@@ -51,7 +51,7 @@ export const DEFAULT_REQUESTS_FILTERS = {
     range: {start: null, end: null}
   },
   domain: null,
-  headers: null,
+  headers: [],
   body: {responseBody: null, requestBody: null}
 }
 export const DEFAULT_REALTIME_SETTINGS = {

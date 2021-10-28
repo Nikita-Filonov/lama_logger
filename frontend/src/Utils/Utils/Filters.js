@@ -25,7 +25,7 @@ export const makeRequestsFilters = (filters) => {
   const body = filters?.body;
   const headers = filters?.headers;
 
-  const headersFilters = headers ? {requestHeaders__contains: headers, responseHeaders__contains: headers} : {};
+  // const headersFilters = headers ? {requestHeaders__contains: headers, responseHeaders__contains: headers} : {};
   const bodyFilters = (body?.responseBody || body?.requestBody) ? {
     responseBody__contains: body?.responseBody,
     requestBody__contains: body?.requestBody
@@ -40,7 +40,7 @@ export const makeRequestsFilters = (filters) => {
         ? filters?.time?.range : getFilterInterval(filters?.time?.interval),
       ...bodyFilters,
       ...domainFilters,
-      ...headersFilters,
+      // ...headersFilters,
     })
   }
 }

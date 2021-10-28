@@ -14,6 +14,7 @@ import clsx from "clsx";
 import RequestsSideStatusCodesFilters from "./RequestsSideStatusCodesFilters";
 import RequestsSideDomainFilters from "./RequestsSideDomainFilters";
 import RequestsSideBodyFilters from "./RequestsSideBodyFilters";
+import RequestsSideHeadersFilters from "./HeadersFilters/RequestsSideHeadersFilters";
 
 const RequestsSideFilters = (props) => {
   const {
@@ -58,6 +59,8 @@ const RequestsSideFilters = (props) => {
         <RequestsSideDomainFilters/>
         <Divider sx={{marginTop: 1.5, marginBottom: 1.5}}/>
         <RequestsSideBodyFilters/>
+        <Divider sx={{marginTop: 1.5, marginBottom: 1.5}}/>
+        <RequestsSideHeadersFilters/>
         <Divider sx={{marginTop: 1.5, marginBottom: 1.5}}/>
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Methods</Typography>
