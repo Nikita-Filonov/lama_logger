@@ -8,5 +8,25 @@ DEFAULT_STATUS_CODES = {
               503, 504, 505, 506, 507, 508, 509, 510, 511]
 }
 DEFAULT_HEADERS = {
-
+    'keys': [
+        'Content-Type',
+        'Authorization',
+        'Accept',
+        'User-Agent',
+        'Host'
+    ],
+    'values': [
+        'application/json',
+        'application/javascript',
+        'application/zip',
+        'application/gzip',
+        'application/xml',
+        'image/png',
+        'image/jpeg',
+        'multipart/form-data',
+        'text/html',
+        'text/javascript',
+        'Token <value>',
+        'Bearer <value>'
+    ]
 }

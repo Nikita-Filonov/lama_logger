@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
-from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES
+from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES, DEFAULT_HEADERS
 from core.users.models import CustomUser
 
 
@@ -155,7 +155,7 @@ class ProjectSettings(models.Model):
     filterHeaders = models.JSONField(
         verbose_name='Filter headers',
         blank=True,
-        default=None
+        default=DEFAULT_HEADERS
     )
     excludeMethods = models.JSONField(
         verbose_name='Exclude methods',
