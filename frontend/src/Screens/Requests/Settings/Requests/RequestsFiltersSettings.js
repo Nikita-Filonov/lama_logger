@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {Autocomplete, Button, Checkbox, Grid, IconButton, TextField, Typography} from "@mui/material";
+import {Autocomplete, Checkbox, Grid, TextField, Typography} from "@mui/material";
 import {
   REQUESTS_METHODS_FILTERS,
   REQUESTS_STATUS_CODES_FILTERS,
@@ -10,9 +10,11 @@ import {
 } from "../../../../Utils/Constants";
 import Box from "@mui/material/Box";
 import {LoadingButton} from "@mui/lab";
-import {Add, Close, SaveOutlined} from "@mui/icons-material";
+import {SaveOutlined} from "@mui/icons-material";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
 import {StatusCodesAutocomplete} from "../../../../Components/Blocks/Requests/Settings/Requests/Filters/StatusCodesAutocomplete";
+import HeadersFiltersSettings
+  from "../../../../Components/Blocks/Requests/Settings/Requests/Filters/HeadersFiltersSettings";
 
 
 const RequestsFiltersSettings = ({project, projectSettings}) => {
@@ -25,6 +27,7 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
   useEffect(() => {
     setFilterMethods(projectSettings?.filterMethods);
     setFilterStatusCodes(projectSettings?.filterStatusCodes);
+    setFilterHeaders(projectSettings?.filterHeaders);
   }, [projectSettings])
 
   const disabled = useMemo(() => {
@@ -37,12 +40,20 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
     }
 
     return filterStatusCodes === projectSettings?.filterStatusCodes;
-  }, [filterMethods, filterStatusCodes, projectSettings]);
+  }, [filterMethods, filterStatusCodes, filterHeaders, projectSettings]);
 
   const onChangeCodes = (type, newValue) => setFilterStatusCodes({...filterStatusCodes, [type]: newValue.map(Number)});
-  const onSave = async () => await updateProjectSettings(project.id, {filterMethods, filterStatusCodes});
-  const onChangeHeader = async (type = 'key', index, value) =>
-    setFilterHeaders(filterHeaders?.headers?.map((header, i) => i === index ? {...header, [type]: value} : header));
+  const onSave = async () => await updateProjectSettings(project.id, {filterMethods, filterStatusCodes, filterHeaders});
+  const onRemoveHeader = (type = 'keys', index) => {
+    const copyHeaders = [...filterHeaders[type]];
+    copyHeaders.splice(index, 1);
+    setFilterHeaders({...filterHeaders, [type]: [...copyHeaders]});
+  }
+  const onChangeHeader = async (type = 'keys', index, value) =>
+    setFilterHeaders({
+      ...filterHeaders,
+      [type]: filterHeaders[type]?.map((header, i) => i === index ? value : header)
+    });
 
 
   return (
@@ -93,70 +104,13 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
         </Grid>
       )}
 
-      <Typography className={'mt-3'}>Headers</Typography>
-      <Typography variant={'body2'}>Setup headers, so you will be able to choose headers filters quickly</Typography>
-      <Grid container xs={10} className={'mt-3'} spacing={2}>
-        <Grid item xs={5}>
-          <Typography>Keys</Typography>
-          {filterHeaders?.keys?.map((headerKey, index) =>
-            <div key={index} className={'d-flex justify-content-center align-items-center mt-2'}>
-              <TextField
-                fullWidth
-                value={headerKey}
-                variant={'standard'}
-                size={'small'}
-                placeholder={'Key'}
-                label={'Key'}
-                className={'me-1'}
-              />
-              <IconButton size={'small'} sx={{mt: 2}}>
-                <Close fontSize={'small'}/>
-              </IconButton>
-            </div>
-          )}
-          <Button
-            fullWidth
-            startIcon={<Add/>}
-            sx={{mt: 2}}
-            size={'small'}
-            color={'inherit'}
-            className={'justify-content-start'}
-          >
-            New key
-          </Button>
-        </Grid>
-        <Grid item xs={5}>
-          <Typography>Values</Typography>
-          {filterHeaders?.values?.map((headerValue, index) =>
-            <div key={index} className={'d-flex justify-content-center align-items-center mt-2'}>
-              <TextField
-                fullWidth
-                value={headerValue}
-                variant={'standard'}
-                size={'small'}
-                placeholder={'Key'}
-                label={'Key'}
-                className={'me-2'}
-              />
-              <IconButton size={'small'} sx={{mt: 2}}>
-                <Close fontSize={'small'}/>
-              </IconButton>
-            </div>
-          )}
-          <Button
-            fullWidth
-            startIcon={<Add/>}
-            sx={{mt: 2}}
-            size={'small'}
-            color={'inherit'}
-            className={'justify-content-start'}
-          >
-            New value
-          </Button>
-        </Grid>
-      </Grid>
+      <HeadersFiltersSettings
+        filterHeaders={filterHeaders}
+        onRemoveHeader={onRemoveHeader}
+        onChangeHeader={onChangeHeader}
+      />
 
-      <Grid item xs={12} className={'mt-3'}>
+      <Grid item xs={12} className={'mt-3'} sx={{mb: 6}}>
         <Box className={'position-relative'}>
           <LoadingButton
             onClick={onSave}

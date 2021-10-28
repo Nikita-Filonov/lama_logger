@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {Box, Button, IconButton, Popover, TextField, Typography} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 import {connect} from "react-redux";
@@ -78,4 +78,4 @@ export default connect(
   {
     setRequestsFilters,
   },
-)(HeadersPopover);
+)(memo(HeadersPopover));

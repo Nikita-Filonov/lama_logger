@@ -63,9 +63,8 @@ const RequestsSideHeadersFilters = ({requestsFilters, setRequestsFilters}) => {
 }
 
 const getState = (state) => ({
-    requestsFilters: state.requests.requestsFilters,
-  }
-)
+  requestsFilters: state.requests.requestsFilters,
+})
 
 export default connect(
   getState,
