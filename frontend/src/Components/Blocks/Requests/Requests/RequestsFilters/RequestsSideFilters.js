@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  FormGroup,
-  IconButton,
-  Paper,
-  TextField,
-  Typography
-} from "@mui/material";
+import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
 import {AccessTime, Close, Settings} from "@mui/icons-material";
@@ -22,6 +12,7 @@ import {
 import {useHistory} from "react-router-dom";
 import clsx from "clsx";
 import RequestsSideStatusCodesFilters from "./StatusCodesFilters/RequestsSideStatusCodesFilters";
+import RequestsSideDomainFilters from "./DomainFilters/RequestsSideDomainFilters";
 
 const RequestsSideFilters = (props) => {
   const {
@@ -63,27 +54,7 @@ const RequestsSideFilters = (props) => {
           </IconButton>
         </div>
         <Divider/>
-        <TextField
-          label={'Domain or url'}
-          variant={'standard'}
-          size={'small'}
-          placeholder={'some.domain.com'}
-          className={'mt-2'}
-        />
-        <TextField
-          label={'Headers'}
-          variant={'standard'}
-          size={'small'}
-          placeholder={'application/json'}
-          className={'mt-2'}
-        />
-        <TextField
-          label={'Body'}
-          variant={'standard'}
-          size={'small'}
-          placeholder={'{"id": 1}'}
-          className={'mt-2'}
-        />
+        <RequestsSideDomainFilters/>
         <FormGroup>
           <Typography variant={'subtitle2'} className={'mt-2'}>Methods</Typography>
           {projectSettings?.filterMethods?.map((method, index) =>

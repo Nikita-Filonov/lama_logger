@@ -21,13 +21,26 @@ export const makeRequestsSearch = (search) => {
 
 export const makeRequestsFilters = (filters) => {
   const statusCodes = Object.values(filters?.statusCodes).flat()
-    .sort((a, b) => a - b)
+    .sort((a, b) => a - b);
+  const body = filters?.body;
+  const headers = filters?.headers;
+
+  const headersFilters = headers ? {requestHeaders__contains: headers, responseHeaders__contains: headers} : {};
+  const bodyFilters = (body?.responseBody || body?.requestBody) ? {
+    responseBody__contains: body?.responseBody,
+    requestBody__contains: body?.requestBody
+  } : {};
+  const domainFilters = filters?.domain ? {requestUrl__icontains: filters?.domain} : {};
+
   return {
     filters: JSON.stringify({
       method__in: filters?.methods,
       statusCode__in: statusCodes,
       created__range: filters?.time?.type === 'range'
-        ? filters?.time?.range : getFilterInterval(filters?.time?.interval)
+        ? filters?.time?.range : getFilterInterval(filters?.time?.interval),
+      ...bodyFilters,
+      ...domainFilters,
+      ...headersFilters,
     })
   }
 }

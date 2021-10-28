@@ -49,7 +49,10 @@ export const DEFAULT_REQUESTS_FILTERS = {
     type: 'interval',
     interval: {amount: 5, unit: 'hours', prev: 'prev'},
     range: {start: null, end: null}
-  }
+  },
+  domain: null,
+  headers: null,
+  body: {responseBody: null, requestBody: null}
 }
 export const DEFAULT_REALTIME_SETTINGS = {
   unit: 'seconds',
