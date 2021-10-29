@@ -45,7 +45,7 @@ const RequestsSideFilters = (props) => {
 
   return (
     <Box sx={{width: 200, mr: 2}} hidden={requestsFiltersSidebar}>
-      <Paper className={clsx('p-1 ps-2', classes.sideBarFiltersContainer, classes.tableContainer)}>
+      <Paper className={clsx('p-1 ps-2 pb-4', classes.sideBarFiltersContainer, classes.tableContainer)}>
         <div className={'d-flex'}>
           <IconButton size={'small'} onClick={onSettings}>
             <Settings fontSize={'small'}/>
