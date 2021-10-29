@@ -23,9 +23,16 @@ export const makeRequestsFilters = (filters) => {
   const statusCodes = Object.values(filters?.statusCodes).flat()
     .sort((a, b) => a - b);
   const body = filters?.body;
-  const headers = filters?.headers;
+  const headers = {};
+  for (let i = 0; i < filters?.headers?.length; i++) {
+    const key = filters?.headers[i].key;
+    const value = filters?.headers[i].value;
+    if (key && value){
+      headers[key] = value;
+    }
+  }
 
-  // const headersFilters = headers ? {requestHeaders__contains: headers, responseHeaders__contains: headers} : {};
+  const headersFilters = {requestHeaders__contains: headers};
   const bodyFilters = (body?.responseBody || body?.requestBody) ? {
     responseBody__contains: body?.responseBody,
     requestBody__contains: body?.requestBody
@@ -40,7 +47,7 @@ export const makeRequestsFilters = (filters) => {
         ? filters?.time?.range : getFilterInterval(filters?.time?.interval),
       ...bodyFilters,
       ...domainFilters,
-      // ...headersFilters,
+      ...headersFilters,
     })
   }
 }
