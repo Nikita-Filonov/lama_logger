@@ -1,10 +1,12 @@
-import React, {memo} from "react";
+import React, {memo, useCallback} from "react";
 import {Box, Button, IconButton, Popover, TextField, Typography} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {setRequestsFilters} from "../../../../../../Redux/Requests/Requests/requestsActions";
+import {Autocomplete} from "@mui/lab";
 
-const HeadersPopover = ({menu, onClose, requestsFilters, setRequestsFilters}) => {
+const HeadersPopover = (props) => {
+  const {menu, onClose, requestsFilters, projectSettings, setRequestsFilters} = props;
 
   const onNewHeader = () => setRequestsFilters({
     ...requestsFilters,
@@ -17,12 +19,12 @@ const HeadersPopover = ({menu, onClose, requestsFilters, setRequestsFilters}) =>
     setRequestsFilters({...requestsFilters, headers: [...copyHeaders]});
   }
 
-  const onChangeHeader = async (type = 'key', index, value) => {
+  const onChangeHeader = useCallback(async (type = 'key', index, value) => {
     setRequestsFilters({
       ...requestsFilters,
       headers: requestsFilters?.headers?.map((header, i) => i === index ? {...header, [type]: value} : header)
-    });
-  }
+    })
+  }, [requestsFilters?.headers])
 
 
   return (
@@ -38,23 +40,29 @@ const HeadersPopover = ({menu, onClose, requestsFilters, setRequestsFilters}) =>
         <Typography>Headers filters</Typography>
         {requestsFilters?.headers.map((header, index) =>
           <div key={index} className={'d-flex justify-content-center align-items-center mt-2'}>
-            <TextField
+            <Autocomplete
+              fullWidth
+              freeSolo
+              disableClearable
               value={header?.key}
-              variant={'standard'}
-              size={'small'}
-              placeholder={'Key'}
-              label={'Key'}
-              className={'me-1'}
-              onChange={async event => await onChangeHeader('key', index, event.target.value)}
+              options={projectSettings?.filterHeaders?.keys}
+              onSelect={async (event, _) => await onChangeHeader('key', index, event.target.value)}
+              onChange={async (_, value) => await onChangeHeader('key', index, value)}
+              renderInput={(params) => (
+                <TextField{...params} label={'Key'} variant="standard" placeholder={'Key'} className={'me-1'}/>
+              )}
             />
-            <TextField
+            <Autocomplete
+              fullWidth
+              freeSolo
+              disableClearable
               value={header?.value}
-              variant={'standard'}
-              size={'small'}
-              placeholder={'Value'}
-              label={'Value'}
-              className={'ms-1'}
-              onChange={async event => await onChangeHeader('value', index, event.target.value)}
+              options={projectSettings?.filterHeaders?.values}
+              onSelect={async (event, _) => await onChangeHeader('value', index, event.target.value)}
+              onChange={async (_, value) => await onChangeHeader('value', index, value)}
+              renderInput={(params) => (
+                <TextField{...params} label={'Value'} variant="standard" placeholder={'Value'} className={'ms-1'}/>
+              )}
             />
             <IconButton size={'small'} sx={{mt: 2}} onClick={() => onRemoveHeader(index)}>
               <Close fontSize={'small'}/>
@@ -70,6 +78,7 @@ const HeadersPopover = ({menu, onClose, requestsFilters, setRequestsFilters}) =>
 }
 
 const getState = (state) => ({
+  projectSettings: state.projects.projectSettings,
   requestsFilters: state.requests.requestsFilters,
 })
 
