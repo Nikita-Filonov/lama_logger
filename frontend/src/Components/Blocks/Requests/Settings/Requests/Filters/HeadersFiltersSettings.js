@@ -2,7 +2,7 @@ import React, {memo} from "react";
 import {Button, Grid, IconButton, TextField, Typography} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 
-const HeadersFiltersSettings = ({filterHeaders, onRemoveHeader, onChangeHeader}) => {
+const HeadersFiltersSettings = ({filterHeaders, onNewHeader, onRemoveHeader, onChangeHeader}) => {
   return (
     <React.Fragment>
       <Typography className={'mt-3'}>Headers</Typography>
@@ -34,6 +34,7 @@ const HeadersFiltersSettings = ({filterHeaders, onRemoveHeader, onChangeHeader})
             size={'small'}
             color={'inherit'}
             className={'justify-content-start'}
+            onClick={async () => await onNewHeader('keys')}
           >
             New key
           </Button>
@@ -64,6 +65,7 @@ const HeadersFiltersSettings = ({filterHeaders, onRemoveHeader, onChangeHeader})
             size={'small'}
             color={'inherit'}
             className={'justify-content-start'}
+            onClick={async () => await onNewHeader('values')}
           >
             New value
           </Button>

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
@@ -49,12 +49,15 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
     copyHeaders.splice(index, 1);
     setFilterHeaders({...filterHeaders, [type]: [...copyHeaders]});
   }
-  const onChangeHeader = async (type = 'keys', index, value) =>
-    setFilterHeaders({
-      ...filterHeaders,
-      [type]: filterHeaders[type]?.map((header, i) => i === index ? value : header)
-    });
-
+  const onChangeHeader = useCallback(async (type = 'keys', index, value) =>
+      setFilterHeaders({
+        ...filterHeaders,
+        [type]: filterHeaders[type]?.map((header, i) => i === index ? value : header)
+      }), [filterHeaders]);
+  const onNewHeader = async (type = 'keys') => setFilterHeaders({
+    ...filterHeaders,
+    [type]: [...filterHeaders[type], '']
+  });
 
   return (
     <div className={classes.contentContainer}>
@@ -106,6 +109,7 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
 
       <HeadersFiltersSettings
         filterHeaders={filterHeaders}
+        onNewHeader={onNewHeader}
         onRemoveHeader={onRemoveHeader}
         onChangeHeader={onChangeHeader}
       />
