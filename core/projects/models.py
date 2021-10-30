@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django_celery_beat.models import PeriodicTask
 
 from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES, DEFAULT_HEADERS
 from core.users.models import CustomUser
@@ -166,6 +167,28 @@ class ProjectSettings(models.Model):
         verbose_name='Exclude statuses',
         default=list,
         blank=True
+    )
+
+    def __str__(self):
+        return self.project.title
+
+
+class ProjectTask(models.Model):
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.CASCADE,
+        blank=True
+    )
+    task = models.ForeignKey(
+        PeriodicTask,
+        verbose_name='Task',
+        on_delete=models.CASCADE,
+        blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
     )
 
     def __str__(self):

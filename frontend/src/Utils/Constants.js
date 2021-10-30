@@ -91,3 +91,7 @@ export const AVAILABLE_LANGUAGES = [
     template: python
   }
 ]
+
+export const AVAILABLE_TASKS = [
+  {task: 'core.projects.tasks.cleaners.clear_requests', label: 'Clear requests'}
+]

@@ -1,6 +1,7 @@
 import ast
-
 from shlex import quote
+
+from django_celery_beat.models import IntervalSchedule
 
 
 def query_to_dict(query: dict, parse: bool = False, ignore=None) -> dict:
@@ -57,3 +58,23 @@ def to_curl(request, compressed=False, verify=True):
             flat_parts.append(quote(v))
 
     return ' '.join(flat_parts)
+
+
+def get_interval(every, period='seconds') -> IntervalSchedule:
+    """
+    :param period:
+    :param every:
+    :return:
+    """
+    interval = IntervalSchedule.objects.filter(
+        every=every,
+        period=period
+    )
+    if interval:
+        return interval[0]
+
+    interval = IntervalSchedule.objects.create(
+        every=every,
+        period=period
+    )
+    return interval

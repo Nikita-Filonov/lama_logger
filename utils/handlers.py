@@ -15,4 +15,4 @@ def exception_handler(exc, context):
     if isinstance(exc, APIException):
         return Response({'message': exc.message, 'level': exc.level, 'data': exc.data}, status=exc.status_code)
 
-    return Response({})
+    return
