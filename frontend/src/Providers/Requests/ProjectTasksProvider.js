@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {get, post} from "../../Utils/Api/Fetch";
+import {get, patch, post} from "../../Utils/Api/Fetch";
 import {useUsers} from "../Users/UsersProvider";
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";
@@ -29,11 +29,19 @@ const ProjectTasksProvider = ({children}) => {
   }
 
   const createTask = async (projectId, payload) => {
-    setRequest(true)
+    setRequest(true);
     const {json, error} = await post(projectsApi + `${projectId}/tasks/`, payload);
     !error && setTasks([...tasks, json])
     setAlert(error ? json : {message: 'Task successfully created', level: 'success'});
-    setRequest(false)
+    setRequest(false);
+  }
+
+  const updateTask = async (projectId, taskId, payload) => {
+    setRequest(true);
+    const {json, error} = await patch(projectsApi + `${projectId}/tasks/`, payload);
+    !error && setTasks(tasks.map(task => task.id === taskId ? json : task))
+    setAlert(error ? json : {message: 'Task successfully updated', level: 'success'});
+    setRequest(false);
   }
 
   return (
@@ -42,7 +50,8 @@ const ProjectTasksProvider = ({children}) => {
         load,
         tasks,
         getTasks,
-        createTask
+        createTask,
+        updateTask
       }}
     >
       {children}
