@@ -84,12 +84,6 @@ const ProjectSettingsSidebar = ({project}) => {
               title={'Realtime updates'}
               selected={location.pathname.endsWith('/settings/realtime')}
             />
-            <ListItemLink
-              sx={{pl: 4}}
-              to={`/projects/${project.id}/settings/roles`}
-              title={'Auto deletion'}
-              selected={location.pathname.endsWith('/settings/roles')}
-            />
           </List>
         </Collapse>
         <ListItem button onClick={() => onCollapse('tracks')}>
@@ -110,6 +104,11 @@ const ProjectSettingsSidebar = ({project}) => {
           to={`/projects/${project.id}/settings/integrations`}
           title={'Integrations'}
           selected={location.pathname.endsWith('/settings/integrations')}
+        />
+        <ListItemLink
+          to={`/projects/${project.id}/settings/tasks`}
+          title={'Periodic tasks'}
+          selected={location.pathname.endsWith('/settings/tasks')}
         />
       </List>
     </Box>
