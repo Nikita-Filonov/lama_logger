@@ -5,7 +5,7 @@ import {ProjectSettingsHeader} from "../../../Components/Blocks/Requests/Setting
 import {ZoomFab} from "../../../Components/Blocks/Common/ZoomFab";
 import CreatePeriodicTask from "../../../Components/Modals/Requests/Settings/PeriodicTasks/CreatePeriodicTask";
 import {useProjectTasks} from "../../../Providers/Requests/ProjectTasksProvider";
-import {PeriodicTask} from "../../../Components/Items/Reuqests/Settings/PeriodicTasks/PeriodicTask";
+import PeriodicTask from "../../../Components/Items/Reuqests/Settings/PeriodicTasks/PeriodicTask";
 import {ApiTokensSkeletons} from "../../../Components/Blocks/Profile/ApiTokens/ApiTokensSkeletons";
 
 

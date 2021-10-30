@@ -38,7 +38,8 @@ const ProjectTasksProvider = ({children}) => {
 
   const updateTask = async (projectId, taskId, payload) => {
     setRequest(true);
-    const {json, error} = await patch(projectsApi + `${projectId}/tasks/`, payload);
+    const {json, error} = await patch(projectsApi + `${projectId}/tasks/${taskId}/`, payload);
+    console.log(json, error, taskId)
     !error && setTasks(tasks.map(task => task.id === taskId ? json : task))
     setAlert(error ? json : {message: 'Task successfully updated', level: 'success'});
     setRequest(false);

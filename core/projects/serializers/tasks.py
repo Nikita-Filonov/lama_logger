@@ -2,8 +2,13 @@ from django.utils.functional import empty
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from rest_framework import serializers
 
-from core.projects.helpers.validators import validate_task
+from core.projects.helpers.validators import validate_create_task, validate_update_task
 from core.projects.models import ProjectTask
+
+TASK_VALIDATORS = {
+    'POST': validate_create_task,
+    'PATCH': validate_update_task
+}
 
 
 class IntervalsSerializer(serializers.ModelSerializer):
@@ -37,7 +42,7 @@ class ProjectTaskSerializer(serializers.ModelSerializer):
         task = data.get('task', None)
 
         if task:
-            data['task'] = validate_task(task)
+            data['task'] = TASK_VALIDATORS[self.context['request'].method](task)
 
         value = super().run_validation(data)
         return value

@@ -21,9 +21,26 @@ class ProjectTasksApi(views.APIView):
 
     def post(self, request, project_id):
         project = Project.objects.get(id=project_id)
-        serializer = ProjectTaskSerializer(data=request.data, context={'project': project})
+        context = {'project': project, 'request': request}
+        serializer = ProjectTaskSerializer(data=request.data, context=context)
         if serializer.is_valid():
             project_task = serializer.save()
             return Response(ProjectTasksSerializer(project_task, many=False).data)
 
         raise BadRequest(message='Error happened while creating task', data=serializer.errors)
+
+
+class ProjectTaskApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    def patch(self, request, project_id, task_id):
+        task = ProjectTask.objects.get(id=task_id)
+        context = {'request': request}
+        serializer = ProjectTaskSerializer(task, data=request.data, partial=True, context=context)
+        if serializer.is_valid():
+            project_task = serializer.save()
+            return Response(ProjectTasksSerializer(project_task, many=False).data)
+
+        raise BadRequest(message='Error happened while updating task', data=serializer.errors)
