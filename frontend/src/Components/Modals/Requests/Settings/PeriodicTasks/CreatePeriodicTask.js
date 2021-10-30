@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   Button,
   Dialog,
@@ -18,43 +18,37 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import {AVAILABLE_TASKS, UNITS} from "../../../../../Utils/Constants";
 import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
+import {setCreateTaskModal, setPeriodicTask} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {INITIAL_REQUESTS_SETTINGS} from "../../../../../Redux/Requests/Settings/initialState";
 
-const CreatePeriodicTask = ({project, modal, setModal}) => {
-  const {request, createTask} = useProjectTasks();
-  const [task, setTask] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [every, setEvery] = useState(5);
-  const [period, setPeriod] = useState('hours');
-  const onClose = () => setModal(false)
+const CreatePeriodicTask = (props) => {
+  const {project, periodicTask, setPeriodicTask, createTaskModal, setCreateTaskModal} = props;
+  const {request, createTask, updateTask} = useProjectTasks();
 
-  const onCreate = async () => createTask(project.id, {
-    task: {
-      name,
-      task,
-      description,
-      interval: {every, period}
-    }
-  }).then(() => {
-    onClose();
-  });
+  const onClose = () => {
+    setCreateTaskModal(false);
+    setPeriodicTask(INITIAL_REQUESTS_SETTINGS.periodicTask);
+  }
+
+  const onCreate = async () => (periodicTask.editMode
+      ? updateTask(project.id, periodicTask.taskId, {task: periodicTask})
+      : createTask(project.id, {task: periodicTask})
+  ).then(() => onClose());
 
   return (
     <Dialog
-      open={modal}
+      open={createTaskModal}
       onClose={onClose}
       fullWidth
       maxWidth={'sm'}
       TransitionComponent={SlideTransition}
     >
-      <DialogTitle>Create periodic task</DialogTitle>
+      <DialogTitle>{periodicTask.editMode ? 'Update' : 'Create'} periodic task</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          Create your own periodic task
-        </DialogContentText>
+        {!periodicTask.editMode && <DialogContentText>Create your own periodic task</DialogContentText>}
         <TextField
-          value={name}
-          onChange={event => setName(event.target.value)}
+          value={periodicTask.name}
+          onChange={event => setPeriodicTask({...periodicTask, name: event.target.value})}
           autoFocus
           label="Name"
           placeholder={'Clear requests every 5 hours'}
@@ -65,8 +59,8 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
         />
         <TextField
           multiline
-          value={description}
-          onChange={event => setDescription(event.target.value)}
+          value={periodicTask.description}
+          onChange={event => setPeriodicTask({...periodicTask, description: event.target.value})}
           label="Description"
           placeholder={'Needed to clear outdated requests every 5 hours'}
           fullWidth
@@ -76,7 +70,10 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
         />
         <FormControl fullWidth variant="standard" size={'small'} className={'mt-3'}>
           <InputLabel>Select task</InputLabel>
-          <Select value={task} onChange={event => setTask(event.target.value)}>
+          <Select
+            value={periodicTask.task}
+            onChange={event => setPeriodicTask({...periodicTask, task: event.target.value})}
+          >
             {AVAILABLE_TASKS.map((task, index) =>
               <MenuItem key={index} value={task.task}>{task.label}</MenuItem>
             )}
@@ -85,8 +82,11 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
         <Typography className={'mt-3'}>Interval setup</Typography>
         <div className={'w-100 d-flex mt-1'}>
           <TextField
-            value={every}
-            onChange={event => setEvery(parseInt(event.target.value))}
+            value={periodicTask.interval.every}
+            onChange={event => setPeriodicTask({
+              ...periodicTask,
+              interval: {...periodicTask.interval, every: parseInt(event.target.value)}
+            })}
             type={'number'}
             fullWidth
             variant={'standard'}
@@ -94,7 +94,13 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
           />
           <FormControl variant="standard" sx={{marginLeft: 3, minWidth: 120}}>
             <InputLabel id="demo-simple-select-standard-label">Period</InputLabel>
-            <Select value={period} onChange={event => setPeriod(event.target.value)}>
+            <Select
+              value={periodicTask.interval.period}
+              onChange={event => setPeriodicTask({
+                ...periodicTask,
+                interval: {...periodicTask.interval, period: event.target.value}
+              })}
+            >
               {UNITS
                 .filter(int => !['seconds', 'minutes'].includes(int.unit))
                 .map(int =>
@@ -110,9 +116,13 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
         <LoadingButton
           loading={request}
           onClick={onCreate}
-          disabled={name.length === 0 || task.length === 0 || !every}
+          disabled={
+            periodicTask.name.length === 0 ||
+            periodicTask.task.length === 0 ||
+            !periodicTask.interval.every
+          }
         >
-          Create
+          {periodicTask.editMode ? 'Update' : 'Create'}
         </LoadingButton>
       </DialogActions>
     </Dialog>
@@ -121,10 +131,15 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
 
 
 const getState = (state) => ({
-  project: state.projects.project
+  project: state.projects.project,
+  periodicTask: state.requestsSettings.periodicTask,
+  createTaskModal: state.requestsSettings.createTaskModal
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setPeriodicTask,
+    setCreateTaskModal
+  },
 )(CreatePeriodicTask);

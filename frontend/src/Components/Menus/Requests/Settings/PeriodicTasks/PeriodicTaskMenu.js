@@ -9,18 +9,19 @@ import {CreateOutlined, Delete, MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
 import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
+import {setCreateTaskModal, setPeriodicTask} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 
 const PeriodicTaskMenu = (props) => {
-  const {project, task, setConfirmAction} = props;
+  const {project, task, setConfirmAction, setCreateTaskModal, setPeriodicTask} = props;
   const {deleteTask} = useProjectTasks();
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null)
 
   const onEdit = () => {
-    // setActivity(activity);
-    // setChangeActivityModal(true);
+    setPeriodicTask({...task.task, editMode: true, taskId: task.id});
+    setCreateTaskModal(true);
   }
 
   const onDelete = () => {
@@ -36,7 +37,7 @@ const PeriodicTaskMenu = (props) => {
   return (
     <React.Fragment>
       <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
-        <Tooltip title="Activity options">
+        <Tooltip title="Task options">
           <IconButton onClick={onOpen}>
             <MoreHoriz/>
           </IconButton>
@@ -74,6 +75,8 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setConfirmAction
+    setPeriodicTask,
+    setConfirmAction,
+    setCreateTaskModal
   },
 )(PeriodicTaskMenu);

@@ -1,7 +1,9 @@
 import {INITIAL_REQUESTS_SETTINGS} from './initialState';
 import {
   SET_CREATE_ROLE_MODAL,
+  SET_CREATE_TASK_MODAL,
   SET_INVITE_MEMBER_MODAL,
+  SET_PERIODIC_TASK,
   SET_ROLE,
   SET_SELECTED_MEMBERS,
   SET_SELECTED_ROLES,
@@ -39,11 +41,15 @@ export const requestsSettingsReducer = (state = INITIAL_REQUESTS_SETTINGS, actio
       }
     }
     case SET_INVITE_MEMBER_MODAL:
-      return {...state, inviteMemberModal: action.payload}
+      return {...state, inviteMemberModal: action.payload};
     case SET_CREATE_ROLE_MODAL:
-      return {...state, createRoleModal: action.payload}
+      return {...state, createRoleModal: action.payload};
+    case SET_CREATE_TASK_MODAL:
+      return {...state, createTaskModal: action.payload};
     case SET_ROLE:
       return {...state, role: action.payload};
+    case SET_PERIODIC_TASK:
+      return {...state, periodicTask: action.payload};
     default:
       return state;
   }

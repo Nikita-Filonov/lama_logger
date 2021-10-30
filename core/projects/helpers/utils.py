@@ -60,7 +60,7 @@ def to_curl(request, compressed=False, verify=True):
     return ' '.join(flat_parts)
 
 
-def get_interval(every, period='hours') -> IntervalSchedule:
+def get_interval(every, period='hours', **kwargs) -> IntervalSchedule:
     """
     :param period:
     :param every:

@@ -1,4 +1,4 @@
-import React, {memo, useState} from "react";
+import React, {memo} from "react";
 import {List, Typography} from "@mui/material";
 import {ProjectSettingsStyles} from "../../../Styles/Screens";
 import {ProjectSettingsHeader} from "../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
@@ -7,13 +7,13 @@ import CreatePeriodicTask from "../../../Components/Modals/Requests/Settings/Per
 import {useProjectTasks} from "../../../Providers/Requests/ProjectTasksProvider";
 import PeriodicTask from "../../../Components/Items/Reuqests/Settings/PeriodicTasks/PeriodicTask";
 import {ApiTokensSkeletons} from "../../../Components/Blocks/Profile/ApiTokens/ApiTokensSkeletons";
+import {connect} from "react-redux";
+import {setCreateTaskModal} from "../../../Redux/Requests/Settings/requestsSettingsActions";
 
 
-const PeriodicTasksSettings = () => {
+const PeriodicTasksSettings = ({setCreateTaskModal}) => {
   const classes = ProjectSettingsStyles();
   const {load, tasks} = useProjectTasks();
-  const [createPeriodicTaskModal, setCreatePeriodicTaskModal] = useState(false);
-
 
   return (
     <div className={classes.contentContainer}>
@@ -27,10 +27,15 @@ const PeriodicTasksSettings = () => {
           {tasks.map(task => <PeriodicTask key={task.id} task={task}/>)}
         </List>
       }
-      <ZoomFab title={'New task'} action={() => setCreatePeriodicTaskModal(true)}/>
-      <CreatePeriodicTask modal={createPeriodicTaskModal} setModal={setCreatePeriodicTaskModal}/>
+      <ZoomFab title={'New task'} action={() => setCreateTaskModal(true)}/>
+      <CreatePeriodicTask/>
     </div>
   )
 }
 
-export default memo(PeriodicTasksSettings);
+export default connect(
+  null,
+  {
+    setCreateTaskModal
+  },
+)(memo(PeriodicTasksSettings));
