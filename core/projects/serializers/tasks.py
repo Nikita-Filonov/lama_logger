@@ -1,12 +1,20 @@
 from django.utils.functional import empty
-from django_celery_beat.models import PeriodicTask
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from rest_framework import serializers
 
 from core.projects.helpers.validators import validate_task
 from core.projects.models import ProjectTask
 
 
+class IntervalsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IntervalSchedule
+        fields = '__all__'
+
+
 class TasksSerializer(serializers.ModelSerializer):
+    interval = IntervalsSerializer(many=False, read_only=True)
+
     class Meta:
         model = PeriodicTask
         exclude = ('crontab', 'solar', 'clocked', 'priority', 'routing_key', 'args', 'queue', 'one_off')

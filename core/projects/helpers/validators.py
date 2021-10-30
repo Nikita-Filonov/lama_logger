@@ -7,16 +7,20 @@ from utils.exeptions import BadRequest
 
 
 def validate_task(task) -> int:
+    name = task.get('name')
     if not task.get('task'):
         raise BadRequest('You should provide task')
 
-    if not task.get('name'):
+    if not name:
         raise BadRequest('You should provide name')
 
     if not task.get('interval'):
         raise BadRequest('You should provide interval')
 
     interval = get_interval(**task.pop('interval'))
+
+    if PeriodicTask.objects.filter(name=name):
+        raise BadRequest(f'Task with name "{name}" already exists')
 
     try:
         periodic_task = PeriodicTask.objects.create(

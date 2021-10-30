@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {useServices} from "../../../../../Providers/Requests/Tracks/ServicesProvider";
 import {
   Button,
   Dialog,
@@ -18,9 +17,10 @@ import {connect} from "react-redux";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import {AVAILABLE_TASKS, UNITS} from "../../../../../Utils/Constants";
+import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
 
 const CreatePeriodicTask = ({project, modal, setModal}) => {
-  const {request, createActivity} = useServices();
+  const {request, createTask} = useProjectTasks();
   const [task, setTask] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -28,7 +28,14 @@ const CreatePeriodicTask = ({project, modal, setModal}) => {
   const [period, setPeriod] = useState('hours');
   const onClose = () => setModal(false)
 
-  const onCreate = async () => createActivity(project.id).then(() => {
+  const onCreate = async () => createTask(project.id, {
+    task: {
+      name,
+      task,
+      description,
+      interval: {every, period}
+    }
+  }).then(() => {
     onClose();
   });
 

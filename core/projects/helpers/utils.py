@@ -60,21 +60,12 @@ def to_curl(request, compressed=False, verify=True):
     return ' '.join(flat_parts)
 
 
-def get_interval(every, period='seconds') -> IntervalSchedule:
+def get_interval(every, period='hours') -> IntervalSchedule:
     """
     :param period:
     :param every:
     :return:
     """
-    interval = IntervalSchedule.objects.filter(
-        every=every,
-        period=period
-    )
-    if interval:
-        return interval[0]
-
-    interval = IntervalSchedule.objects.create(
-        every=every,
-        period=period
-    )
+    defaults = {'every': every, 'period': period}
+    interval, _ = IntervalSchedule.objects.get_or_create(defaults=defaults, **defaults)
     return interval
