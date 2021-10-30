@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from "react";
+import React, {memo, useCallback, useEffect, useState} from "react";
 import {Box, Button, IconButton, Popover, TextField, Typography} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 import {connect} from "react-redux";
@@ -7,25 +7,24 @@ import {Autocomplete} from "@mui/lab";
 
 const HeadersPopover = (props) => {
   const {menu, onClose, requestsFilters, projectSettings, setRequestsFilters} = props;
+  const [headers, setHeaders] = useState(requestsFilters?.headers);
 
-  const onNewHeader = () => setRequestsFilters({
-    ...requestsFilters,
-    headers: [...requestsFilters?.headers, {key: '', value: ''}]
-  })
+  useEffect(() => setHeaders(requestsFilters?.headers), [menu])
 
+  useEffect(() => {
+    const timeout = setTimeout(async () => setRequestsFilters({...requestsFilters, headers}), 700);
+    return () => clearTimeout(timeout);
+  }, [headers])
+
+  const onNewHeader = () => setHeaders([...headers, {key: '', value: ''}])
   const onRemoveHeader = (index) => {
-    const copyHeaders = [...requestsFilters?.headers];
+    const copyHeaders = [...headers];
     copyHeaders.splice(index, 1);
-    setRequestsFilters({...requestsFilters, headers: [...copyHeaders]});
+    setHeaders(copyHeaders);
   }
-
   const onChangeHeader = useCallback(async (type = 'key', index, value) => {
-    setRequestsFilters({
-      ...requestsFilters,
-      headers: requestsFilters?.headers?.map((header, i) => i === index ? {...header, [type]: value} : header)
-    })
-  }, [requestsFilters?.headers])
-
+    setHeaders(headers?.map((header, i) => i === index ? {...header, [type]: value} : header))
+  }, [headers])
 
   return (
     <Popover
@@ -38,7 +37,7 @@ const HeadersPopover = (props) => {
     >
       <Box sx={{p: 2, minWidth: 400, maxWidth: 400, maxHeight: 500}}>
         <Typography>Headers filters</Typography>
-        {requestsFilters?.headers.map((header, index) =>
+        {headers?.map((header, index) =>
           <div key={index} className={'d-flex justify-content-center align-items-center mt-2'}>
             <Autocomplete
               fullWidth
