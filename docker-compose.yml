@@ -21,3 +21,22 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  lama_logger_celery:
+    build: .
+    container_name: 'lama_logger_celery'
+    command: celery -A lama_logger worker --loglevel=INFO
+    volumes:
+      - .:/code
+    links:
+      - lama_logger_redis
+    depends_on:
+      - lama_logger_web
+      - lama_logger_redis
+  lama_logger_celery_beat:
+    build: .
+    command: celery -A lama_logger beat -l info -S django
+    volumes:
+      - .:/code
+    depends_on:
+      - lama_logger_web
+      - lama_logger_redis

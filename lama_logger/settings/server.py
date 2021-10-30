@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'core.projects.apps.ProjectsConfig',
     'core.stats.apps.StatsConfig',
     'core.calls.apps.CallsConfig',
-    'core.tracks.apps.TracksConfig'
+    'core.tracks.apps.TracksConfig',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -96,6 +97,15 @@ DATABASES = {
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL')],
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -179,3 +189,13 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + f'{REDIS_PORT}' + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://timer_redis:6379/0'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60 * 60

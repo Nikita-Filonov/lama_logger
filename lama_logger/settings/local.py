@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'core.projects.apps.ProjectsConfig',
     'core.stats.apps.StatsConfig',
     'core.calls.apps.CallsConfig',
-    'core.tracks.apps.TracksConfig'
+    'core.tracks.apps.TracksConfig',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -96,6 +97,15 @@ DATABASES = {
         'HOST': 'lama_logger_db',
         'PORT': 5432,
     }
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],
+        },
+    },
 }
 
 # Password validation
@@ -177,3 +187,13 @@ CORS_ALLOW_METHODS = [
 ]
 
 SLACK_TOKEN = 'xapp-1-A02HM9HS7HV-2614006264082-4c991a855e37e6885445702646a06c795ee5ea3abed47a7c65c396ab96d6c0c4'
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + f'{REDIS_PORT}' + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://lama_logger_redis:6379/0'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60 * 60
