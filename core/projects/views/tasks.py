@@ -1,4 +1,4 @@
-from rest_framework import views
+from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -6,7 +6,7 @@ from rest_framework.throttling import UserRateThrottle
 
 from core.projects.models import ProjectTask, Project
 from core.projects.serializers.tasks import ProjectTasksSerializer, ProjectTaskSerializer
-from utils.exeptions import BadRequest
+from utils.exeptions import BadRequest, NotFound
 
 
 class ProjectTasksApi(views.APIView):
@@ -25,7 +25,10 @@ class ProjectTasksApi(views.APIView):
         serializer = ProjectTaskSerializer(data=request.data, context=context)
         if serializer.is_valid():
             project_task = serializer.save()
-            return Response(ProjectTasksSerializer(project_task, many=False).data)
+            return Response(
+                ProjectTasksSerializer(project_task, many=False).data,
+                status=status.HTTP_201_CREATED
+            )
 
         raise BadRequest(message='Error happened while creating task', data=serializer.errors)
 
@@ -44,3 +47,12 @@ class ProjectTaskApi(views.APIView):
             return Response(ProjectTasksSerializer(project_task, many=False).data)
 
         raise BadRequest(message='Error happened while updating task', data=serializer.errors)
+
+    def delete(self, request, project_id, task_id):
+        try:
+            task = ProjectTask.objects.get(id=task_id)
+            task.task.delete()
+            task.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except ProjectTask.DoesNotExist:
+            raise NotFound(f'Task with id "{task_id}" not found')

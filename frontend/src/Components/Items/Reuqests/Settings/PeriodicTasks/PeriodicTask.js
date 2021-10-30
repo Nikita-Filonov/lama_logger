@@ -30,7 +30,7 @@ const PeriodicTask = ({task, project}) => {
         <AccessAlarm/>
       </ListItemIcon>
       <ListItemSecondaryAction>
-        <PeriodicTaskMenu/>
+        <PeriodicTaskMenu task={task}/>
       </ListItemSecondaryAction>
     </ListItem>
   )

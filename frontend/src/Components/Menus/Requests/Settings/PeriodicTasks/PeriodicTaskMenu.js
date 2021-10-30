@@ -7,27 +7,28 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {CreateOutlined, Delete, MoreHoriz} from "@mui/icons-material";
 import {connect} from "react-redux";
-import {useServices} from "../../../../../Providers/Requests/Tracks/ServicesProvider";
+import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
+import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
 
 
 const PeriodicTaskMenu = (props) => {
-  const {project, activity, setConfirmAction, setActivity, setChangeActivityModal} = props;
-  const {deleteActivity} = useServices();
+  const {project, task, setConfirmAction} = props;
+  const {deleteTask} = useProjectTasks();
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null)
 
   const onEdit = () => {
-    setActivity(activity);
-    setChangeActivityModal(true);
+    // setActivity(activity);
+    // setChangeActivityModal(true);
   }
 
   const onDelete = () => {
     setConfirmAction({
       modal: true,
-      title: 'Delete activity',
-      description: 'Are you sure you want to delete activity? You will be unable to under this action',
-      action: async () => await deleteActivity(project.id, activity.id),
+      title: 'Delete task',
+      description: 'Are you sure you want to delete task? You will be unable to under this action',
+      action: async () => await deleteTask(project.id, task.id),
       confirmButton: 'Delete'
     })
   }
@@ -72,5 +73,7 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    setConfirmAction
+  },
 )(PeriodicTaskMenu);
