@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import {common, RequestsToolbarStyles, ViewRequestStyles} from "../../../../../Styles/Blocks";
 import clsx from "clsx";
 import RequestsMenu from "../../../../Menus/Requests/Requests/RequestsMenu";
@@ -10,6 +10,9 @@ import {AccessTime, PauseOutlined, PeopleOutline} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import {getTimeFiltersLabel} from "../../../../../Utils/Utils/Formatters";
+import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
+import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import ViewListIcon from '@mui/icons-material/ViewList';
 
 
 const RequestsToolbar = (props) => {
@@ -20,7 +23,9 @@ const RequestsToolbar = (props) => {
     setRequestsRealtime
   } = props;
   const classes = ViewRequestStyles();
+  const [view, setView] = useState('list');
 
+  const onView = (_, nextView) => setView(nextView);
   const timeFiltersLabel = useMemo(() => getTimeFiltersLabel(requestsFilters?.time), [requestsFilters?.time])
   const onTimeFilters = () => setRequestsTimeFilterModal(true);
   const onRealtime = () => setRequestsRealtime({...requestsRealtime, enabled: !requestsRealtime?.enabled});
@@ -47,6 +52,20 @@ const RequestsToolbar = (props) => {
         </IconButton>
       </Tooltip>
       <div className={'flex-grow-1'}/>
+      <ToggleButtonGroup
+        orientation="horizontal"
+        value={view}
+        exclusive
+        onChange={onView}
+        sx={{mr: 2}}
+      >
+        <ToggleButton value="list" aria-label="list">
+          <ViewListIcon/>
+        </ToggleButton>
+        <ToggleButton value="quilt" aria-label="quilt">
+          <ViewQuiltIcon/>
+        </ToggleButton>
+      </ToggleButtonGroup>
       <RequestsMenu/>
     </Paper>
   )
