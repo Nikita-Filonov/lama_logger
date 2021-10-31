@@ -2,7 +2,7 @@ import React from "react";
 import {Grid, IconButton, TextField} from "@mui/material";
 import {Close} from "@mui/icons-material";
 
-export const TrackPattern = ({pattern}) => {
+export const TrackPattern = ({index, pattern, onRemove}) => {
   return (
     <Grid container xs={12} spacing={2}>
       <Grid item xs={6}>
@@ -29,7 +29,7 @@ export const TrackPattern = ({pattern}) => {
             label={'Regex expression'}
             className={'me-2'}
           />
-          <IconButton size={'small'} sx={{mt: 2}}>
+          <IconButton size={'small'} sx={{mt: 2}} onClick={async () => await onRemove(index)}>
             <Close fontSize={'small'}/>
           </IconButton>
         </div>

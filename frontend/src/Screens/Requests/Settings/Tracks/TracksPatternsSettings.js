@@ -3,18 +3,26 @@ import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 import {Grid, Typography} from "@mui/material";
-import {moveActivity} from "../../../../Redux/Requests/Tracks/tracksActions";
 import {TrackPattern} from "../../../../Components/Items/Reuqests/Settings/Tracks/TrackPattern";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateTrackPattern from "../../../../Components/Modals/Requests/Settings/Tracks/CreateTrackPattern";
+import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
 
 
-const TracksPatternsSettings = ({projectSettings, project, moveActivity}) => {
+const TracksPatternsSettings = ({projectSettings, project}) => {
   const classes = ProjectSettingsStyles();
+  const {updateProjectSettings} = useProjectSettings();
   const [trackPatterns, setTrackPatterns] = useState(projectSettings?.trackPatterns);
   const [createPatternModal, setCreateTrackModal] = useState(false);
 
-  useEffect(() => setTrackPatterns(projectSettings?.trackPatterns), [projectSettings?.trackPatterns])
+  useEffect(() => setTrackPatterns(projectSettings?.trackPatterns), [projectSettings?.trackPatterns]);
+
+  const onRemove = async (index) => {
+    const copyTrackPatterns = [...trackPatterns];
+    copyTrackPatterns.splice(index, 1);
+    setTrackPatterns(copyTrackPatterns);
+    await updateProjectSettings(project.id, {trackPatterns: copyTrackPatterns});
+  }
 
   return (
     <div className={classes.contentContainer}>
@@ -30,7 +38,14 @@ const TracksPatternsSettings = ({projectSettings, project, moveActivity}) => {
           <Typography>Regex expression</Typography>
         </Grid>
       </Grid>
-      {trackPatterns?.map((pattern, index) => <TrackPattern key={index} pattern={pattern}/>)}
+      {trackPatterns?.map((pattern, index) =>
+        <TrackPattern
+          key={index}
+          index={index}
+          pattern={pattern}
+          onRemove={onRemove}
+        />
+      )}
       <ZoomFab title={'New pattern'} action={() => setCreateTrackModal(true)}/>
       <CreateTrackPattern
         modal={createPatternModal}
@@ -43,13 +58,11 @@ const TracksPatternsSettings = ({projectSettings, project, moveActivity}) => {
 
 
 const getState = (state) => ({
-  activities: state.tracks.activities,
+  project: state.projects.project,
   projectSettings: state.projects.projectSettings,
 })
 
 export default connect(
   getState,
-  {
-    moveActivity
-  },
+  null,
 )(TracksPatternsSettings);

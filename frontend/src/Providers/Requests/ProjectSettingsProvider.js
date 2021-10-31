@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../Users/UsersProvider";
 import {SET_PROJECT_SETTINGS} from "../../Redux/Projects/actionTypes";
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";
+import {get, patch} from "../../Utils/Api/Fetch";
 
 
 const ProjectSettingsContext = React.createContext(null);
@@ -11,7 +11,7 @@ const ProjectSettingsContext = React.createContext(null);
 const ProjectSettingsProvider = ({children, store}) => {
   const {token} = useUsers();
   const {setAlert} = useAlerts();
-  const projectsApi = baseUrl + 'api/v1/projects/';
+  const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
 
@@ -23,36 +23,16 @@ const ProjectSettingsProvider = ({children, store}) => {
 
   const getProjectSettings = async (projectId) => {
     setLoad(true)
-    await fetch(projectsApi + `${projectId}/settings/`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: SET_PROJECT_SETTINGS, payload: data});
-        setLoad(false);
-      });
+    const {json} = await get(projectsApi + `${projectId}/settings/`);
+    store.dispatch({type: SET_PROJECT_SETTINGS, payload: json});
+    setLoad(false);
   }
 
   const updateProjectSettings = async (projectId, payload) => {
     setRequest(true);
-    const response = await fetch(projectsApi + `${projectId}/settings/`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-
-    if (response.ok) {
-      setAlert({message: 'Project settings was updated', level: 'success'})
-      const payload = await response.json();
-      store.dispatch({type: SET_PROJECT_SETTINGS, payload})
-    } else {
-      setAlert({message: 'Error happened while updating project settings', level: 'error'})
-    }
+    const {json, error} = await patch(projectsApi + `${projectId}/settings/`, payload);
+    !error && store.dispatch({type: SET_PROJECT_SETTINGS, payload: json});
+    setAlert(error ? json : {message: 'Project settings was updated', level: 'success'})
     setRequest(false)
   }
 
