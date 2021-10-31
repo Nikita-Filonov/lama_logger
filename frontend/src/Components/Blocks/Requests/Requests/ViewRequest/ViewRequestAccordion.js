@@ -36,7 +36,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
         <Typography variant={'body2'} sx={{mr: 2}}>
           {moment.utc(request.created).local().startOf('seconds').fromNow()}
         </Typography>
-        <ViewRequestMenu request={request}/>
+        {viewMode.requests === 'accordion' && <ViewRequestMenu request={request}/>}
       </div>
       <Typography variant={'subtitle1'} gutterBottom>Request</Typography>
       <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
