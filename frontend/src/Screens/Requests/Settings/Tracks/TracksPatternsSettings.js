@@ -6,11 +6,13 @@ import {Grid, Typography} from "@mui/material";
 import {moveActivity} from "../../../../Redux/Requests/Tracks/tracksActions";
 import {TrackPattern} from "../../../../Components/Items/Reuqests/Settings/Tracks/TrackPattern";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
+import CreateTrackPattern from "../../../../Components/Modals/Requests/Settings/Tracks/CreateTrackPattern";
 
 
 const TracksPatternsSettings = ({projectSettings, project, moveActivity}) => {
   const classes = ProjectSettingsStyles();
   const [trackPatterns, setTrackPatterns] = useState(projectSettings?.trackPatterns);
+  const [createPatternModal, setCreateTrackModal] = useState(false);
 
   useEffect(() => setTrackPatterns(projectSettings?.trackPatterns), [projectSettings?.trackPatterns])
 
@@ -29,7 +31,12 @@ const TracksPatternsSettings = ({projectSettings, project, moveActivity}) => {
         </Grid>
       </Grid>
       {trackPatterns?.map((pattern, index) => <TrackPattern key={index} pattern={pattern}/>)}
-      <ZoomFab title={'New pattern'}/>
+      <ZoomFab title={'New pattern'} action={() => setCreateTrackModal(true)}/>
+      <CreateTrackPattern
+        modal={createPatternModal}
+        setModal={setCreateTrackModal}
+        trackPatterns={trackPatterns}
+      />
     </div>
   )
 }
