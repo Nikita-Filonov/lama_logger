@@ -12,7 +12,7 @@ import {Container, Grid} from "@mui/material";
 import {makeRequestsFilters} from "../../Utils/Utils/Filters";
 import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";
 import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/RequestsTableSkeletons";
-import {ViewRequestSidePanel} from "../../Components/Blocks/Requests/Requests/ViewRequest/ViewRequestSidePanel";
+import ViewRequestSidePanel from "../../Components/Blocks/Requests/Requests/ViewRequest/ViewRequestSidePanel";
 import {RequestsTableStyles} from "../../Styles/Blocks";
 
 
