@@ -1,90 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import {Container} from "@mui/material";
 import {connect} from "react-redux";
 import {setTrack} from "../../../Redux/Requests/Tracks/tracksActions";
-import Graph from "react-graph-vis";
 import {ViewTrackToolbar} from "../../../Components/Blocks/Tracks/Toolbar/ViewTrackToolbar";
 
-function randomColor() {
-  const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-  const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-  const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-  return `#${red}${green}${blue}`;
-}
-
-const options = {
-  layout: {
-    hierarchical: false
-  },
-  edges: {
-    color: "#000000"
-  }
-};
-
 const ViewTrack = ({project, track, setTrack}) => {
-  const createNode = (x, y) => {
-    const color = randomColor();
-    setState(({graph: {nodes, edges}, counter, ...rest}) => {
-      const id = counter + 5;
-      const from = Math.floor(Math.random() * (counter - 1)) + 1;
-      return {
-        graph: {
-          nodes: [
-            ...nodes,
-            {id, label: `Node ${id}`, color, x, y}
-          ],
-          edges: [
-            ...edges,
-            {from, to: id}
-          ]
-        },
-        counter: id,
-        ...rest
-      }
-    });
-  }
-  const [state, setState] = useState({
-    counter: 5,
-    graph: {
-      nodes: [
-        {id: 1, label: "Node 1", color: "#e04141"},
-        {id: 2, label: "Node 2", color: "#e09c41"},
-        {id: 3, label: "Node 3", color: "#e0df41"},
-        {id: 4, label: "Node 4", color: "#7be041"},
-        {id: 5, label: "Node 5", color: "#41e0c9"}
-      ],
-      edges: [
-        {from: 1, to: 2},
-        {from: 1, to: 3},
-        {from: 2, to: 4},
-        {from: 2, to: 5}
-      ]
-    },
-    events: {
-      select: ({nodes, edges}) => {
-        console.log("Selected nodes:");
-        console.log(nodes);
-        console.log("Selected edges:");
-        console.log(edges);
-      },
-      doubleClick: ({pointer: {canvas}}) => {
-        createNode(canvas.x, canvas.y);
-      },
-      selectNode(node: Node) {
-        console.log(node, 111111)
-      }
-    }
-  })
 
   return (
     <Container maxWidth={'xl'}>
       <ViewTrackToolbar/>
-      <Graph
-        graph={state.graph}
-        options={options}
-        events={state.events}
-        style={{marginTop: 15, height: window.innerHeight / 1.3}}
-      />
+
 
     </Container>
   )
