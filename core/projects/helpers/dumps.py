@@ -1,3 +1,5 @@
+import json
+
 DEFAULT_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 DEFAULT_STATUS_CODES = {
     'success': [100, 101, 200, 201, 202, 203, 204, 205, 206, 208, 226],
@@ -31,8 +33,17 @@ DEFAULT_HEADERS = {
     ]
 }
 
-DEFAULT_PATTERNS = {
-    '{int}': r'[0-9]+',
-    '{uuid}': r'\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b',
-    '{str}': r'([^>]*)'
-}
+DEFAULT_PATTERNS = [
+    {
+        'pattern': '{int}',
+        'regex': r'[0-9]+'
+    },
+    {
+        'pattern': '{uuid}',
+        'regex': r'\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b'
+    },
+    {
+        'pattern': '{str}',
+        'regex': r'([^>]*)'
+    }
+]

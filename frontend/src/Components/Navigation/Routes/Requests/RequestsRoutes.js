@@ -23,6 +23,7 @@ import NotificationsSettings from "../../../../Screens/Requests/Settings/Notific
 import ViewTrack from "../../../../Screens/Requests/Tracks/ViewTrack";
 import PeriodicTasksSettings from "../../../../Screens/Requests/Settings/PeriodicTasksSettings";
 import {ProjectTasksProvider} from "../../../../Providers/Requests/ProjectTasksProvider";
+import TracksPatternsSettings from "../../../../Screens/Requests/Settings/Tracks/TracksPatternsSettings";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -67,6 +68,8 @@ export const RequestsRoutes = ({store}) =>
                                  component={RequestsRealtimeSettings}/>
           <RequestsSettingsRoute exact path="/projects/:projectId/settings/activities"
                                  component={TracksActivitiesSettings}/>
+          <RequestsSettingsRoute exact path="/projects/:projectId/settings/patterns"
+                                 component={TracksPatternsSettings}/>
           <RequestsSettingsRoute exact path="/projects/:projectId/settings/notifications"
                                  component={NotificationsSettings}/>
           <RequestsSettingsRoute

@@ -33,8 +33,8 @@ def normalize_endpoint(text: str, patterns: Dict[str, str] = None):
 
 def get_settings_patterns(project_id: int) -> Dict[str, str]:
     """Returning project patterns settings"""
-    settings = ProjectSettings.objects.get(project_id=project_id)
-    return settings.trackPatterns
+    track_patterns: List[Dict[str, str]] = ProjectSettings.objects.get(project_id=project_id).trackPatterns
+    return {pattern['pattern']: pattern['regex'] for pattern in track_patterns}
 
 
 def get_tracks_patterns(project_id: int) -> List[Dict[str, Any]]:

@@ -98,6 +98,12 @@ const ProjectSettingsSidebar = ({project}) => {
               title={'Activities'}
               selected={location.pathname.endsWith('/settings/activities')}
             />
+            <ListItemLink
+              sx={{pl: 4}}
+              to={`/projects/${project.id}/settings/patterns`}
+              title={'Tracks patterns'}
+              selected={location.pathname.endsWith('/settings/patterns')}
+            />
           </List>
         </Collapse>
         <ListItemLink
