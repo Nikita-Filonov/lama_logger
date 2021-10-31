@@ -15,6 +15,7 @@ from core.calls.serializers.requests import RequestsSerializer, RequestSerialize
 from core.projects.helpers.utils import to_curl
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
+from core.tracks.helpers.analyzers.analyze_request import analyze_request
 from utils.exeptions import BadRequest
 
 
@@ -25,6 +26,7 @@ from utils.exeptions import BadRequest
 def create_request(request, project_id):
     project = Project.objects.get(id=project_id)
 
+    analyze_request(request.data)
     should_create_request = filter_request(project, request.data)
     if not should_create_request:
         return Response(status=status.HTTP_204_NO_CONTENT)

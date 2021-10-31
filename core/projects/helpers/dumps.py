@@ -30,3 +30,9 @@ DEFAULT_HEADERS = {
         'Bearer <value>'
     ]
 }
+
+DEFAULT_PATTERNS = {
+    '{int}': r'[0-9]+',
+    '{uuid}': r'\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b',
+    '{str}': r'([^>]*)'
+}

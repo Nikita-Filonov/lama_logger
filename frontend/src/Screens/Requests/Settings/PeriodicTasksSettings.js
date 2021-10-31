@@ -37,5 +37,6 @@ export default connect(
   null,
   {
     setCreateTaskModal
-  },
+  }
+  ,
 )(memo(PeriodicTasksSettings));

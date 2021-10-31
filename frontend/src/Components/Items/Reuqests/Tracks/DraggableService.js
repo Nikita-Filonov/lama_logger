@@ -42,7 +42,7 @@ const DraggableService = (props) => {
             {service?.tracks?.map(track =>
               <ListItem button disableGutters key={track.id} onClick={() => onTrack(track)}>
                 <Chip color="error" label={'5XX'} size={'small'}/>
-                <ListItemText sx={{ml: 1}} primary={'some track'}/>
+                <ListItemText sx={{ml: 1}} primary={track.endpoint}/>
               </ListItem>
             )}
           </List>

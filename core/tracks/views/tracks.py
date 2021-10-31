@@ -24,4 +24,4 @@ class TracksApi(views.APIView):
             payload = TracksSerializer(track, many=False).data
             return Response(payload, status=status.HTTP_201_CREATED)
 
-        raise BadRequest('Error happened while creating track')
+        raise BadRequest('Error happened while creating track', data=serializer.errors)

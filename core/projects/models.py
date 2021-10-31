@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django_celery_beat.models import PeriodicTask
 
-from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES, DEFAULT_HEADERS
+from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES, DEFAULT_HEADERS, DEFAULT_PATTERNS
 from core.users.models import CustomUser
 
 
@@ -167,6 +167,11 @@ class ProjectSettings(models.Model):
         verbose_name='Exclude statuses',
         default=list,
         blank=True
+    )
+    trackPatterns = models.JSONField(
+        verbose_name='Track patterns',
+        blank=True,
+        default=DEFAULT_PATTERNS
     )
 
     def __str__(self):
