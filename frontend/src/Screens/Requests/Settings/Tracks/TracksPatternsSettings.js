@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
@@ -7,13 +7,18 @@ import {TrackPattern} from "../../../../Components/Items/Reuqests/Settings/Track
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateTrackPattern from "../../../../Components/Modals/Requests/Settings/Tracks/CreateTrackPattern";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
+import Box from "@mui/material/Box";
+import {LoadingButton} from "@mui/lab";
+import {SaveOutlined} from "@mui/icons-material";
 
 
 const TracksPatternsSettings = ({projectSettings, project}) => {
   const classes = ProjectSettingsStyles();
-  const {updateProjectSettings} = useProjectSettings();
+  const {request, updateProjectSettings} = useProjectSettings();
   const [trackPatterns, setTrackPatterns] = useState(projectSettings?.trackPatterns);
   const [createPatternModal, setCreateTrackModal] = useState(false);
+
+  const disabled = useMemo(() => trackPatterns === projectSettings?.trackPatterns, [trackPatterns])
 
   useEffect(() => setTrackPatterns(projectSettings?.trackPatterns), [projectSettings?.trackPatterns]);
 
@@ -23,6 +28,10 @@ const TracksPatternsSettings = ({projectSettings, project}) => {
     setTrackPatterns(copyTrackPatterns);
     await updateProjectSettings(project.id, {trackPatterns: copyTrackPatterns});
   }
+  const onChange = async (type = 'pattern', index, value) =>
+    setTrackPatterns(trackPatterns.map((p, i) => i === index ? {...p, [type]: value} : p));
+  const onSave = async () => await updateProjectSettings(project.id, {trackPatterns});
+
 
   return (
     <div className={classes.contentContainer}>
@@ -43,6 +52,7 @@ const TracksPatternsSettings = ({projectSettings, project}) => {
           key={index}
           index={index}
           pattern={pattern}
+          onChange={onChange}
           onRemove={onRemove}
         />
       )}
@@ -52,6 +62,20 @@ const TracksPatternsSettings = ({projectSettings, project}) => {
         setModal={setCreateTrackModal}
         trackPatterns={trackPatterns}
       />
+      <Grid item xs={12} className={'mt-3'}>
+        <Box className={'position-relative'}>
+          <LoadingButton
+            loadingPosition="start"
+            startIcon={<SaveOutlined/>}
+            disabled={disabled}
+            variant="text"
+            onClick={onSave}
+            loading={request}
+          >
+            Save changes
+          </LoadingButton>
+        </Box>
+      </Grid>
     </div>
   )
 }
