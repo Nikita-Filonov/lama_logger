@@ -10,5 +10,9 @@ export const INITIAL_USERS = {
     description: null,
     confirmButton: null,
     action: null
+  },
+  viewMode: JSON.parse(localStorage.getItem('viewMode')) || {
+    requests: 'accordion',
+    trackRequests: 'accordion'
   }
 }

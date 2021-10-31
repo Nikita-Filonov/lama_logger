@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import {common, RequestsToolbarStyles, ViewRequestStyles} from "../../../../../Styles/Blocks";
 import clsx from "clsx";
 import RequestsMenu from "../../../../Menus/Requests/Requests/RequestsMenu";
@@ -13,19 +13,21 @@ import {getTimeFiltersLabel} from "../../../../../Utils/Utils/Formatters";
 import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import {setViewMode} from "../../../../../Redux/Users/usersActions";
 
 
 const RequestsToolbar = (props) => {
   const {
+    viewMode,
+    setViewMode,
     setRequestsTimeFilterModal,
     requestsFilters,
     requestsRealtime,
     setRequestsRealtime
   } = props;
   const classes = ViewRequestStyles();
-  const [view, setView] = useState('list');
 
-  const onView = (_, nextView) => setView(nextView);
+  const onView = (_, nextView) => nextView && setViewMode({...viewMode, requests: nextView});
   const timeFiltersLabel = useMemo(() => getTimeFiltersLabel(requestsFilters?.time), [requestsFilters?.time])
   const onTimeFilters = () => setRequestsTimeFilterModal(true);
   const onRealtime = () => setRequestsRealtime({...requestsRealtime, enabled: !requestsRealtime?.enabled});
@@ -54,16 +56,20 @@ const RequestsToolbar = (props) => {
       <div className={'flex-grow-1'}/>
       <ToggleButtonGroup
         orientation="horizontal"
-        value={view}
+        value={viewMode?.requests}
         exclusive
         onChange={onView}
         sx={{mr: 2}}
       >
-        <ToggleButton value="list" aria-label="list">
-          <ViewListIcon/>
+        <ToggleButton value="accordion" aria-label="accordion">
+          <Tooltip title={'Accordion view'}>
+            <ViewListIcon/>
+          </Tooltip>
         </ToggleButton>
-        <ToggleButton value="quilt" aria-label="quilt">
-          <ViewQuiltIcon/>
+        <ToggleButton value="side" aria-label="side">
+          <Tooltip title={'Side panel view'}>
+            <ViewQuiltIcon/>
+          </Tooltip>
         </ToggleButton>
       </ToggleButtonGroup>
       <RequestsMenu/>
@@ -72,6 +78,7 @@ const RequestsToolbar = (props) => {
 }
 
 const getState = (state) => ({
+  viewMode: state.users.viewMode,
   requestsFilters: state.requests.requestsFilters,
   requestsRealtime: state.requests.requestsRealtime,
 })
@@ -79,6 +86,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
+    setViewMode,
     setRequestsRealtime,
     setRequestsTimeFilterModal
   },
