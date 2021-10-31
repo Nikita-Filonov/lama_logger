@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {memo, useState} from "react";
 import {Box, Link, Tab, Tabs, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequest} from "../../../../../Redux/Requests/Requests/requestsActions";
@@ -18,7 +18,7 @@ function a11yProps(index) {
   };
 }
 
-const ViewRequestDemo = ({request}) => {
+const ViewRequestAccordion = ({request, viewMode}) => {
   const [requestTab, setRequestTab] = useState(0);
   const [responseTab, setResponseTab] = useState(0)
 
@@ -27,10 +27,10 @@ const ViewRequestDemo = ({request}) => {
 
 
   return (
-    <Box sx={{margin: 1}}>
+    <Box sx={viewMode.requests === 'accordion' ? {m: 1} : {pl: 2, pr: 1, pb: 2}}>
       <div className={'d-flex justify-content-center align-items-center'}>
         <Typography variant="h6" gutterBottom component="div" className={'mt-3'} style={{fontSize: 17}}>
-          {request.method} request to <Link href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
+          {request?.method} request to <Link href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
         <Typography variant={'body2'} sx={{mr: 2}}>
@@ -70,10 +70,13 @@ const ViewRequestDemo = ({request}) => {
   )
 }
 
+const getState = (state) => ({
+  viewMode: state.users.viewMode,
+})
 
 export default connect(
-  null,
+  getState,
   {
     setRequest,
   },
-)(ViewRequestDemo);
+)(memo(ViewRequestAccordion));

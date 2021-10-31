@@ -1,7 +1,7 @@
 import {DEFAULT_REALTIME_SETTINGS, DEFAULT_REQUESTS_FILTERS} from "../../../Utils/Constants";
 
 export const INITIAL_REQUESTS = {
-  request: {},
+  request: JSON.parse(localStorage.getItem('request')) || {},
   requests: {
     count: 0,
     next: null,

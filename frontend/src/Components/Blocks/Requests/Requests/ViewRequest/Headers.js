@@ -16,7 +16,7 @@ export const Headers = ({headers}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(headers).map((key, index) => (
+          {Object.keys(headers || {})?.map((key, index) => (
             <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
               <TableCell component="th" scope="row">{key}</TableCell>
               <TableCell align="left" style={{

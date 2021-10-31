@@ -7,10 +7,11 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
-import ViewRequest from "../../../Blocks/Requests/Requests/ViewRequest/ViewReuqest";
-import {setSelectedRequests} from "../../../../Redux/Requests/Requests/requestsActions";
+import ViewRequestAccordion from "../../../Blocks/Requests/Requests/ViewRequest/ViewRequestAccordion";
+import {setRequest, setSelectedRequests} from "../../../../Redux/Requests/Requests/requestsActions";
 
-const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) => {
+const RequestRow = (props) => {
+  const {request, requests, storeRequest, setRequest, viewMode, selectedRequests, setSelectedRequests} = props;
   const classes = RequestsTableStyles()
   const rowRef = useRef(null)
   const history = useHistory();
@@ -22,8 +23,9 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
   );
 
   const onSelect = () => {
-    setOpen(!open)
-    history.push(`?requestId=${request.requestId}`)
+    viewMode.requests === 'accordion' && setOpen(!open);
+    setRequest(request);
+    history.push(`?requestId=${request.requestId}`);
   }
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
       <TableRow
         sx={{'&:last-child td, &:last-child th': {border: 0}}}
         ref={rowRef}
-        selected={isSelected}
+        selected={isSelected || request?.requestId === storeRequest?.requestId}
       >
         <TableCell padding="checkbox">
           <Checkbox
@@ -64,31 +66,35 @@ const RequestRow = ({request, requests, selectedRequests, setSelectedRequests}) 
           <StatusCodeIndicator statusCode={request?.statusCode}/>
           <Typography>{request?.statusCode}</Typography>
         </TableCell>
-        <TableCell padding="checkbox">
+        {viewMode?.requests === 'accordion' && <TableCell padding="checkbox">
           <IconButton size="small" onClick={onSelect}>
             {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
           </IconButton>
-        </TableCell>
+        </TableCell>}
       </TableRow>
-      <TableRow>
+
+      {viewMode?.requests === 'accordion' && <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <ViewRequest request={request}/>
+            <ViewRequestAccordion request={request}/>
           </Collapse>
         </TableCell>
-      </TableRow>
+      </TableRow>}
     </React.Fragment>
   )
 }
 
 const getState = (state) => ({
+  viewMode: state.users.viewMode,
   requests: state.requests.requests,
+  storeRequest: state.requests.request,
   selectedRequests: state.requests.selectedRequests
 })
 
 export default connect(
   getState,
   {
+    setRequest,
     setSelectedRequests
   },
 )(RequestRow);

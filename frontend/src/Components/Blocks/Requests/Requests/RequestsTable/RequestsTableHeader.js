@@ -24,7 +24,7 @@ const headCells = [
 ];
 
 const RequestsTableHeader = (props) => {
-  const {order, orderBy, onRequestSort, requests, selectedRequests, setSelectedRequests} = props;
+  const {order, orderBy, onRequestSort, viewMode, requests, selectedRequests, setSelectedRequests} = props;
   const numSelected = useMemo(() => selectedRequests.length, [selectedRequests])
   const rowCount = useMemo(() => requests?.results?.length, [requests?.results])
 
@@ -64,13 +64,14 @@ const RequestsTableHeader = (props) => {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell padding={'checkbox'}/>
+        {viewMode?.requests === 'accordion' && <TableCell padding={'checkbox'}/>}
       </TableRow>
     </TableHead>
   )
 }
 
 const getState = (state) => ({
+  viewMode: state.users.viewMode,
   requests: state.requests.requests,
   selectedRequests: state.requests.selectedRequests
 })
