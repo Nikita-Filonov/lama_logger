@@ -15,7 +15,7 @@ export const projectsReducer = (state = INITIAL_PROJECTS, action = {}) => {
       return {...state, projects: action.payload}
     case SET_PROJECT:
       localStorage.setItem('project', JSON.stringify(action.payload));
-      return {...state, project: action.payload}
+      return {...state, project: {...action.payload}};
     case CREATE_PROJECT:
       return {...state, projects: [...state.projects, action.payload]}
     case UPDATE_PROJECT:

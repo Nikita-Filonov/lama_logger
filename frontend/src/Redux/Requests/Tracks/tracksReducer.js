@@ -12,6 +12,7 @@ import {
   SET_CREATE_TRACK_MODAL,
   SET_SERVICE,
   SET_TRACK,
+  SET_TRACK_REQUESTS,
   UPDATE_ACTIVITY
 } from "./actionTypes";
 
@@ -73,7 +74,7 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
       return {...state, service: action.payload};
     case SET_TRACK: {
       localStorage.setItem('track', JSON.stringify(action.payload));
-      return {...state, track: action.payload};
+      return {...state, track: {...action.payload}};
     }
     case CREATE_TRACK:
       const {serviceId, track} = action.payload;
@@ -93,6 +94,8 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
       )
 
       return {...state, activities: [...activities]}
+    case SET_TRACK_REQUESTS:
+      return {...state, trackRequests: action.payload};
     default:
       return state;
   }
