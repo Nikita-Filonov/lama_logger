@@ -112,7 +112,7 @@ class Track(models.Model):
     )
 
     def __str__(self):
-        return f'{self.endpoint}:{self.times}'
+        return f'{self.endpoint}:{self.timesActual}'
 
 
 class Service(models.Model):

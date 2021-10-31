@@ -26,7 +26,7 @@ from utils.exeptions import BadRequest
 def create_request(request, project_id):
     project = Project.objects.get(id=project_id)
 
-    analyze_request(request.data)
+    analyze_request(project_id, request.data)
     should_create_request = filter_request(project, request.data)
     if not should_create_request:
         return Response(status=status.HTTP_204_NO_CONTENT)
