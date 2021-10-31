@@ -6,12 +6,17 @@ from core.tracks.models import TrackRequest, Track
 
 
 def analyze_request(project_id: int, payload: dict):
+    """Wrapper on request analyzer"""
     context = {'project_id': project_id, 'payload': payload}
     thread = threading.Thread(target=analyze, kwargs=context)
     thread.start()
 
 
 def analyze(project_id: int, payload: dict):
+    """
+    Used to analyze request and create track request if ``request_url``
+    matches any of tracks patterns.
+    """
     request_url = payload.get('requestUrl', None)
     status_code = payload.get('statusCode', None)
     payload.pop('requestId', None)
