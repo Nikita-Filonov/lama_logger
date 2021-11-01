@@ -1,15 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import RequestsSideDomainFilters from "../RequestsSideDomainFilters";
 import {Button, Checkbox, Divider, FormControlLabel, FormGroup, Typography} from "@mui/material";
 import RequestsSideBodyFilters from "../RequestsSideBodyFilters";
 import RequestsSideHeadersFilters from "../HeadersFilters/RequestsSideHeadersFilters";
 import RequestsSideStatusCodesFilters from "../RequestsSideStatusCodesFilters";
-import {AccessTime} from "@mui/icons-material";
+import {AccessTime, SaveOutlined} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {
   setRequestsFilters,
   setRequestsTimeFilterModal
 } from "../../../../../../Redux/Requests/Requests/requestsActions";
+import SaveFilters from "../../../../../Modals/Requests/Requests/Filters/SaveFilters";
 
 const FiltersFields = (props) => {
   const {
@@ -18,6 +19,7 @@ const FiltersFields = (props) => {
     setRequestsFilters,
     setRequestsTimeFilterModal
   } = props;
+  const [saveFiltersModal, setSaveFiltersModal] = useState(false);
 
   const onRequestTimeFilter = () => setRequestsTimeFilterModal(true);
   const onFilter = (event, filter = 'methods') => {
@@ -71,6 +73,16 @@ const FiltersFields = (props) => {
         Time filters
       </Button>
       <Divider className={'mt-2'}/>
+      <Button
+        size={'small'}
+        startIcon={<SaveOutlined fontSize={'small'}/>}
+        fullWidth
+        className={'justify-content-start mt-2'}
+        onClick={() => setSaveFiltersModal(true)}
+      >
+        Save filters
+      </Button>
+      <SaveFilters modal={saveFiltersModal} setModal={setSaveFiltersModal}/>
     </React.Fragment>
   )
 }

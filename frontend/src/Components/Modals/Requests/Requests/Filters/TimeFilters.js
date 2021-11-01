@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -21,6 +21,14 @@ const TimeFilters = (props) => {
   const [unit, setUnit] = useState(requestsFilters?.time?.interval?.unit);
   const [range, setRange] = useState([requestsFilters?.time?.range?.start, requestsFilters?.time?.range?.end]);
   const [type, setType] = useState(requestsFilters?.time?.type);
+
+  useEffect(() => {
+    setPrev(requestsFilters?.time?.interval?.prev);
+    setAmount(requestsFilters?.time?.interval?.amount);
+    setUnit(requestsFilters?.time?.interval?.unit);
+    setRange([requestsFilters?.time?.range?.start, requestsFilters?.time?.range?.end]);
+    setType(requestsFilters?.time?.type);
+  }, [requestsFilters])
 
   const isRangeValid = useMemo(() => type === 'range' ? range.every(r => r !== null) : true, [type, range])
   const onClose = () => setRequestsTimeFilterModal(false);

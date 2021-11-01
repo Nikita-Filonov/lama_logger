@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
-import {Check, DeleteOutline, MoreHoriz} from "@mui/icons-material";
+import {Check, Close, DeleteOutline, MoreHoriz} from "@mui/icons-material";
 import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../../Styles/Menus";
 import {connect} from "react-redux";
@@ -50,10 +50,16 @@ const SavedFilterMenu = ({project, request, setConfirmAction}) => {
           </ListItemIcon>
           Select filter
         </MenuItem>
+        <MenuItem onClick={onSend}>
+          <ListItemIcon>
+            <Close fontSize="small"/>
+          </ListItemIcon>
+          Deselect filter
+        </MenuItem>
         <Divider/>
         <MenuItem onClick={onDelete} sx={{color: 'red'}}>
           <ListItemIcon sx={{color: 'red'}}>
-            <DeleteOutline/>
+            <DeleteOutline fontSize="small"/>
           </ListItemIcon>
           Delete
         </MenuItem>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Divider, IconButton, Paper, Tooltip} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import {Close, FilterList, Settings} from "@mui/icons-material";
+import {Close, FilterList, SaveOutlined, Settings} from "@mui/icons-material";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
 import {setRequestsFiltersSidebar} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {useHistory} from "react-router-dom";

@@ -5,13 +5,19 @@ import SavedFilterMenu from "../../../Menus/Requests/Requests/SavedFilterMenu";
 import {connect} from "react-redux";
 import {setRequestsFilters} from "../../../../Redux/Requests/Requests/requestsActions";
 import {useAlerts} from "../../../../Providers/AlertsProvider";
+import {DEFAULT_REQUESTS_FILTERS} from "../../../../Utils/Constants";
 
 const SavedFilter = ({filter, setRequestsFilters, requestsFilters}) => {
   const {setAlert} = useAlerts();
 
   const onSelect = () => {
-    setRequestsFilters(filter);
-    setAlert({message: 'Filters selected', level: 'success'});
+    if (filter?.id === requestsFilters?.id) {
+      setRequestsFilters(DEFAULT_REQUESTS_FILTERS);
+      setAlert({message: 'Default filters selected', level: 'success'});
+    } else {
+      setRequestsFilters(filter);
+      setAlert({message: 'Filters selected', level: 'success'});
+    }
   }
 
   return (

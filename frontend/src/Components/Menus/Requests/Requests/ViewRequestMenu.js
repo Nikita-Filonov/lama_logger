@@ -79,7 +79,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
         <Divider/>
         <MenuItem onClick={onDelete} sx={{color: 'red'}}>
           <ListItemIcon sx={{color: 'red'}}>
-            <DeleteOutline/>
+            <DeleteOutline fontSize="small"/>
           </ListItemIcon>
           Delete
         </MenuItem>
