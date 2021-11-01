@@ -79,3 +79,56 @@ class Request(models.Model):
 
     def __str__(self):
         return self.requestUrl
+
+
+class RequestsFilter(models.Model):
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.CASCADE,
+        null=True
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
+    )
+    body = models.JSONField(
+        verbose_name='Body',
+        default=dict
+    )
+    domain = models.CharField(
+        verbose_name='Domain',
+        null=True,
+        blank=True,
+        max_length=500
+    )
+    headers = models.JSONField(
+        verbose_name='Headers',
+        default=list,
+        blank=True
+    )
+    methods = models.JSONField(
+        verbose_name='Methods',
+        default=list,
+        blank=True
+    )
+    statusCodes = models.JSONField(
+        verbose_name='Status codes',
+        default=dict,
+        blank=True
+    )
+    time = models.JSONField(
+        verbose_name='Time',
+        default=dict,
+        blank=True
+    )
+
+    def __str__(self):
+        return f'{self.project.title}:{self.user.email}'

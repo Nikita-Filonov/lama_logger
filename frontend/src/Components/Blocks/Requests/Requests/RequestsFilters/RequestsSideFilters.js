@@ -1,8 +1,18 @@
 import React from "react";
-import {Button, Checkbox, Divider, FormControlLabel, FormGroup, IconButton, Paper, Typography} from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import {AccessTime, Close, Settings} from "@mui/icons-material";
+import {AccessTime, Close, FilterList, Settings} from "@mui/icons-material";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
 import {
   setRequestsFilters,
@@ -47,9 +57,16 @@ const RequestsSideFilters = (props) => {
     <Box sx={{width: 200, mr: 2}} hidden={requestsFiltersSidebar}>
       <Paper className={clsx('p-1 ps-2 pb-4', classes.sideBarFiltersContainer, classes.tableContainer)}>
         <div className={'d-flex'}>
-          <IconButton size={'small'} onClick={onSettings}>
-            <Settings fontSize={'small'}/>
-          </IconButton>
+          <Tooltip title={'Filters settings'} placement={'top'}>
+            <IconButton size={'small'} onClick={onSettings}>
+              <Settings fontSize={'small'}/>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={'Saved filters'} placement={'top'}>
+            <IconButton size={'small'} sx={{ml: .5}}>
+              <FilterList fontSize={'small'}/>
+            </IconButton>
+          </Tooltip>
           <div className={'flex-grow-1'}/>
           <IconButton size={'small'} onClick={onClose}>
             <Close fontSize={'small'}/>
