@@ -1,5 +1,6 @@
 import {INITIAL_REQUESTS} from './initialState';
 import {
+  CREATE_SAVED_REQUESTS_FILTER,
   DELETE_REQUESTS,
   SET_REQUEST,
   SET_REQUESTS,
@@ -59,6 +60,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requestsStatsFilters: action.payload};
     case SET_SAVED_REQUESTS_FILTERS:
       return {...state, savedRequestsFilters: action.payload};
+    case CREATE_SAVED_REQUESTS_FILTER:
+      return {...state, savedRequestsFilters: [...state.savedRequestsFilters, action.payload]}
     default:
       return state;
   }

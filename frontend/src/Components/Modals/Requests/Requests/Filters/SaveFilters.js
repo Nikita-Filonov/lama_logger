@@ -5,15 +5,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {connect} from "react-redux";
-import {setRequestsFilters, setRequestsTimeFilterModal} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {TextField} from "@mui/material";
+import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
+import {LoadingButton} from "@mui/lab";
 
 
-const SaveFilters = ({modal, setModal}) => {
+const SaveFilters = ({modal, setModal, project, requestsFilters}) => {
+  const {request, createRequestsFilter} = useRequests();
   const [title, setTitle] = useState('');
 
   const onClose = () => setModal(false);
 
+  const onSave = async () => createRequestsFilter(project.id, {...requestsFilters, title})
+    .then(() => onClose());
 
   return (
     <Dialog open={modal} onClose={onClose} fullWidth>
@@ -32,7 +36,13 @@ const SaveFilters = ({modal, setModal}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button disabled={title.length === 0}>Save</Button>
+        <LoadingButton
+          loading={request}
+          disabled={title.length === 0}
+          onClick={onSave}
+        >
+          Save
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
@@ -40,14 +50,11 @@ const SaveFilters = ({modal, setModal}) => {
 
 
 const getState = (state) => ({
+  project: state.projects.project,
   requestsFilters: state.requests.requestsFilters,
-  requestsTimeFilterModal: state.requests.requestsTimeFilterModal,
 })
 
 export default connect(
   getState,
-  {
-    setRequestsFilters,
-    setRequestsTimeFilterModal,
-  },
+  null,
 )(SaveFilters);

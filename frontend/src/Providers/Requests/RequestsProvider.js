@@ -1,8 +1,13 @@
 import React, {useContext, useState} from 'react';
-import {DELETE_REQUESTS, SET_REQUESTS, SET_SAVED_REQUESTS_FILTERS} from "../../Redux/Requests/Requests/actionTypes";
+import {
+  CREATE_SAVED_REQUESTS_FILTER,
+  DELETE_REQUESTS,
+  SET_REQUESTS,
+  SET_SAVED_REQUESTS_FILTERS
+} from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {copyText, queryWithPagination} from "../../Utils/Utils/Common";
-import {get, remove} from "../../Utils/Api/Fetch";
+import {get, post, remove} from "../../Utils/Api/Fetch";
 
 
 const RequestsContext = React.createContext(null);
@@ -11,6 +16,7 @@ const RequestsProvider = ({children, store}) => {
   const {setAlert} = useAlerts();
   const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
+  const [request, setRequest] = useState(false);
 
   const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
     setLoad(state => state);
@@ -43,15 +49,25 @@ const RequestsProvider = ({children, store}) => {
     store.dispatch({type: SET_SAVED_REQUESTS_FILTERS, payload: json})
   }
 
+  const createRequestsFilter = async (projectId, payload) => {
+    setRequest(true);
+    const {json, error} = await post(projectsApi + `${projectId}/requests/filters/`, payload);
+    !error && store.dispatch({type: CREATE_SAVED_REQUESTS_FILTER, payload: json});
+    setAlert(error ? json : {message: 'Requests filters were successfully saved', level: 'success'});
+    setRequest(false);
+  }
+
   return (
     <RequestsContext.Provider
       value={{
         load,
+        request,
         getRequests,
         getRequestAsCurl,
         deleteRequests,
         deleteRequest,
-        getRequestsFilters
+        getRequestsFilters,
+        createRequestsFilter
       }}
     >
       {children}
