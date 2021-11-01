@@ -64,7 +64,7 @@ const Requests = (props) => {
             {load ? <RequestsTableSkeletons/> : <RequestsTable/>}
           </Grid>
           {(viewMode.requests === 'side' && !_.isEmpty(request)) &&
-          <Grid item xs={6} style={{overflow: 'auto'}} className={classes.tableContainer}>
+          <Grid item xs={6} className={classes.tableContainer}>
             <ViewRequestSidePanel request={request}/>
           </Grid>}
         </Grid>
