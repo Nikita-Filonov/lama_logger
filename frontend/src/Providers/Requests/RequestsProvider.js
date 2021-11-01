@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
-import {baseUrl} from "../../Utils/Constants";
 import {useUsers} from "../Users/UsersProvider";
-import {DELETE_REQUESTS, SET_REQUEST, SET_REQUESTS} from "../../Redux/Requests/Requests/actionTypes";
+import {DELETE_REQUESTS, SET_REQUESTS} from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {copyText, queryWithPagination} from "../../Utils/Utils/Common";
+import {get, remove} from "../../Utils/Api/Fetch";
 
 
 const RequestsContext = React.createContext(null);
@@ -11,88 +11,49 @@ const RequestsContext = React.createContext(null);
 const RequestsProvider = ({children, store}) => {
   const {token} = useUsers()
   const {setAlert} = useAlerts()
-  const projectsApi = baseUrl + 'api/v1/projects/';
+  const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
 
-
   const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
-    setLoad(state => state)
+    setLoad(state => state);
     const query = await queryWithPagination(filters, limit, offset, 'Requests');
-    await fetch(projectsApi + `${projectId}/requests/${query}`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        store.dispatch({type: SET_REQUESTS, payload: data});
-        setLoad(false);
-      });
-  }
-
-  const getRequest = async (projectId, requestId) => {
-    await fetch(projectsApi + `${projectId}/requests/${requestId}/`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => store.dispatch({type: SET_REQUEST, payload: data}));
+    const {json} = await get(projectsApi + `${projectId}/requests/${query}`);
+    store.dispatch({type: SET_REQUESTS, payload: json});
+    setLoad(false);
   }
 
   const getRequestAsCurl = async (projectId, requestId) => {
-    await fetch(projectsApi + `${projectId}/requests/${requestId}/curl/`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        copyText(data.curl)
-        setAlert({message: 'Request copied to clipboard'})
-      });
+    const {json, error} = await get(projectsApi + `${projectId}/requests/${requestId}/curl/`);
+    copyText(json?.curl)
+    setAlert(error ? json : {message: 'Request copied to clipboard', level: 'success'})
   }
 
   const deleteRequests = async (projectId, requests) => {
-    store.dispatch({type: DELETE_REQUESTS, payload: requests})
-    const response = await fetch(projectsApi + `${projectId}/requests/`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requests)
-    })
-    if (response.ok) {
-      setAlert({message: `${requests?.length} were successfully deleted`, level: 'success'})
-    } else {
-      const payload = await response.json();
-      setAlert(payload)
-    }
+    store.dispatch({type: DELETE_REQUESTS, payload: requests});
+    const {json, error} = await remove(projectsApi + `${projectId}/requests/`, requests);
+    setAlert(error ? json : {message: `${requests?.length} were successfully deleted`, level: 'success'})
   }
 
   const deleteRequest = async (projectId, requestId) => {
-    const response = await fetch(projectsApi + `${projectId}/requests/${requestId}/`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Token ${token}`,
-        'Content-Type': 'application/json'
-      },
-    })
-    const payload = await response.json();
-    setAlert(payload)
-    response.ok && store.dispatch({type: DELETE_REQUESTS, payload: [requestId]})
+    const {json, error} = await remove(projectsApi + `${projectId}/requests/${requestId}/`);
+    !error && store.dispatch({type: DELETE_REQUESTS, payload: [requestId]});
+    setAlert(json);
+  }
+
+  const getRequestsFilters = async (projectId) => {
+    const {json, error} = await get(projectsApi + `${projectId}/requests/filters/`);
+    console.log(json);
   }
 
   return (
     <RequestsContext.Provider
       value={{
         load,
-        getRequest,
         getRequests,
         getRequestAsCurl,
         deleteRequests,
-        deleteRequest
+        deleteRequest,
+        getRequestsFilters
       }}
     >
       {children}

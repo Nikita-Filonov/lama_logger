@@ -27,16 +27,14 @@ export const makeRequestsFilters = (filters) => {
   for (let i = 0; i < filters?.headers?.length; i++) {
     const key = filters?.headers[i].key;
     const value = filters?.headers[i].value;
-    if (key && value){
+    if (key && value) {
       headers[key] = value;
     }
   }
 
   const headersFilters = {requestHeaders__contains: headers};
-  const bodyFilters = (body?.responseBody || body?.requestBody) ? {
-    responseBody__contains: body?.responseBody,
-    requestBody__contains: body?.requestBody
-  } : {};
+  const responseBodyFilters = body?.responseBody ? {responseBody__contains: body?.responseBody} : {};
+  const requestBodyFilters = body?.requestBody ? {requestBody__contains: body?.requestBody} : {}
   const domainFilters = filters?.domain ? {requestUrl__icontains: filters?.domain} : {};
 
   return {
@@ -45,9 +43,10 @@ export const makeRequestsFilters = (filters) => {
       statusCode__in: statusCodes,
       created__range: filters?.time?.type === 'range'
         ? filters?.time?.range : getFilterInterval(filters?.time?.interval),
-      ...bodyFilters,
       ...domainFilters,
       ...headersFilters,
+      ...requestBodyFilters,
+      ...responseBodyFilters,
     })
   }
 }
