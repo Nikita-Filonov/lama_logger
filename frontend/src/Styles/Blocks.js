@@ -101,8 +101,12 @@ export const DrawerStyled = styled(MuiDrawer, {shouldForwardProp: (prop) => prop
 
 export const RequestsTableStyles = makeStyles((theme) => ({
   tableContainer: {
+    overflow: "hidden",
     maxHeight: window.innerHeight / 1.3,
     height: window.innerHeight / 1.3,
+    "&:hover": {
+      overflowY: "scroll",
+    }
   },
   rowRequestUrlText: {
     textOverflow: 'ellipsis',
@@ -116,7 +120,9 @@ export const RequestsTableStyles = makeStyles((theme) => ({
   },
   sideBarFiltersContainer: {
     overflow: "hidden",
-    overflowY: "scroll",
+    "&:hover": {
+      overflowY: "scroll",
+    }
   }
 }));
 
@@ -144,6 +150,13 @@ export const ViewRequestStyles = makeStyles(theme => ({
     height: 40,
     marginLeft: 10,
     marginRight: 10
+  },
+  accordionContainer: {
+    overflow: "hidden",
+    "&:hover": {
+      overflowY: "scroll",
+      backgroundColor: 'red'
+    }
   }
 }), {index: 1});
 
