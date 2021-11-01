@@ -20,10 +20,10 @@ function a11yProps(index) {
 
 const ViewRequestAccordion = ({request, viewMode}) => {
   const [requestTab, setRequestTab] = useState(0);
-  const [responseTab, setResponseTab] = useState(0)
+  const [responseTab, setResponseTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
-  const onResponseTab = (event, newValue) => setResponseTab(newValue)
+  const onResponseTab = (event, newValue) => setResponseTab(newValue);
 
 
   return (
