@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {memo, useEffect, useMemo, useRef, useState} from "react";
 import {connect} from "react-redux";
 import {Checkbox, Collapse, TableCell, TableRow, Typography} from '@mui/material';
 import {StatusCodeIndicator} from "../../../Blocks/Requests/Requests/StatusCodeIndicator";
@@ -59,7 +59,7 @@ const RequestRow = (props) => {
         <TableCell component="th" scope="row" onClick={onSelect}>
           {request.method}
         </TableCell>
-        <TableCell align="left" onClick={onSelect}>
+        <TableCell align="left" onClick={onSelect} sx={{maxWidth: 200}} className={classes.rowRequestUrlText}>
           <Typography className={classes.rowRequestUrlText}>{request?.requestUrl}</Typography>
         </TableCell>
         <TableCell align="right" className={'d-flex'} onClick={onSelect}>
@@ -97,4 +97,4 @@ export default connect(
     setRequest,
     setSelectedRequests
   },
-)(RequestRow);
+)(memo(RequestRow));
