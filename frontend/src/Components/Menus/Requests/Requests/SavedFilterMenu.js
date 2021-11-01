@@ -8,24 +8,22 @@ import {Check, Close, DeleteOutline, MoreHoriz} from "@mui/icons-material";
 import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../../Styles/Menus";
 import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
+import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 
-const SavedFilterMenu = ({project, request, setConfirmAction}) => {
-  const history = useHistory();
+const SavedFilterMenu = ({project, filter, setConfirmAction}) => {
+  const {deleteRequestsFilter} = useRequests();
   const [menu, setMenu] = useState(null);
 
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null);
-  const onSend = async () => history.push(`/projects/${project.id}/requests/send`);
   const onDelete = async () => {
     setConfirmAction({
       modal: true,
-      title: 'Delete request?',
-      description: 'Are you sure you want to delete request? You will not be able to restore it later',
+      title: 'Delete filters?',
+      description: 'Are you sure you want to delete filters? You will not be able to restore it later',
       confirmButton: 'Delete',
-      action: async () => {
-      }
+      action: async () => await deleteRequestsFilter(project.id, filter?.id)
     })
   }
 
@@ -44,13 +42,13 @@ const SavedFilterMenu = ({project, request, setConfirmAction}) => {
         transformOrigin={{horizontal: 'left', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
-        <MenuItem onClick={onSend}>
+        <MenuItem>
           <ListItemIcon>
             <Check fontSize="small"/>
           </ListItemIcon>
           Select filter
         </MenuItem>
-        <MenuItem onClick={onSend}>
+        <MenuItem>
           <ListItemIcon>
             <Close fontSize="small"/>
           </ListItemIcon>

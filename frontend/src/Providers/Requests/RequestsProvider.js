@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import {
   CREATE_SAVED_REQUESTS_FILTER,
   DELETE_REQUESTS,
+  DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUESTS,
   SET_SAVED_REQUESTS_FILTERS
 } from "../../Redux/Requests/Requests/actionTypes";
@@ -57,6 +58,12 @@ const RequestsProvider = ({children, store}) => {
     setRequest(false);
   }
 
+  const deleteRequestsFilter = async (projectId, filterId) => {
+    const {json, error} = await remove(projectsApi + `${projectId}/requests/filters/${filterId}/`);
+    !error && store.dispatch({type: DELETE_SAVED_REQUESTS_FILTER, payload: {filterId}});
+    setAlert(json);
+  }
+
   return (
     <RequestsContext.Provider
       value={{
@@ -67,7 +74,8 @@ const RequestsProvider = ({children, store}) => {
         deleteRequests,
         deleteRequest,
         getRequestsFilters,
-        createRequestsFilter
+        createRequestsFilter,
+        deleteRequestsFilter
       }}
     >
       {children}

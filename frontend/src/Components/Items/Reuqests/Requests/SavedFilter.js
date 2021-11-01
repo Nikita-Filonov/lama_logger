@@ -33,7 +33,7 @@ const SavedFilter = ({filter, setRequestsFilters, requestsFilters}) => {
           style={{...common.ellipsisText, width: 100, maxWidth: 100, marginLeft: 3}}
         />
         <ListItemSecondaryAction>
-          <SavedFilterMenu/>
+          <SavedFilterMenu filter={filter}/>
         </ListItemSecondaryAction>
       </ListItem>
     </Tooltip>

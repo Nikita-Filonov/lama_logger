@@ -16,7 +16,7 @@ from core.projects.helpers.utils import to_curl
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
 from core.tracks.helpers.analyzers.analyze_request import analyze_request
-from utils.exeptions import BadRequest
+from utils.exeptions import BadRequest, NotFound
 
 
 @api_view(['POST'])
@@ -83,10 +83,7 @@ class RequestApi(views.APIView):
         try:
             request = Request.objects.get(requestId=request_id)
         except Request.DoesNotExist:
-            return Response(
-                {'message': 'Request does not exists', 'level': 'error'},
-                status=status.HTTP_404_NOT_FOUND
-            )
+            raise NotFound('Request does not exists')
 
         request.delete()
         return Response({'message': 'Request was successfully deleted', 'level': 'success'})
