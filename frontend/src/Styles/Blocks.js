@@ -105,7 +105,7 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     maxHeight: window.innerHeight / 1.3,
     height: window.innerHeight / 1.3,
     "&:hover": {
-      overflowY: "scroll",
+      overflowY: "overlay",
     }
   },
   rowRequestUrlText: {
@@ -121,7 +121,7 @@ export const RequestsTableStyles = makeStyles((theme) => ({
   sideBarFiltersContainer: {
     overflow: "hidden",
     "&:hover": {
-      overflowY: "scroll",
+      overflowY: "overlay",
     }
   }
 }));
@@ -140,7 +140,11 @@ export const ViewRequestStyles = makeStyles(theme => ({
     fontSize: 12
   },
   headersContainer: {
-    maxHeight: 200
+    maxHeight: 200,
+    overflow: "hidden",
+    "&:hover": {
+      overflowY: "overlay",
+    }
   },
   toolbarContainer: {
     padding: 10,
@@ -150,13 +154,6 @@ export const ViewRequestStyles = makeStyles(theme => ({
     height: 40,
     marginLeft: 10,
     marginRight: 10
-  },
-  accordionContainer: {
-    overflow: "hidden",
-    "&:hover": {
-      overflowY: "scroll",
-      backgroundColor: 'red'
-    }
   }
 }), {index: 1});
 
