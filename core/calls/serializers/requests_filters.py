@@ -1,15 +1,12 @@
 from rest_framework import serializers
 
 from core.calls.models import RequestsFilter
-from core.users.serializers.users import DefaultUserSerializer
 
 
 class RequestsFiltersSerializer(serializers.ModelSerializer):
-    user = DefaultUserSerializer(many=False, read_only=True)
-
     class Meta:
         model = RequestsFilter
-        exclude = ('project',)
+        exclude = ('project', 'user')
 
 
 class RequestsFilterSerializer(serializers.ModelSerializer):

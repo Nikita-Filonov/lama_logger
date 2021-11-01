@@ -4,30 +4,19 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import {ContentCopy, DeleteOutline, InsertLink, MoreVert, Send} from "@mui/icons-material";
+import {Check, DeleteOutline, MoreHoriz} from "@mui/icons-material";
 import {Divider} from "@mui/material";
 import {ProjectMenuStyles} from "../../../../Styles/Menus";
-import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import {connect} from "react-redux";
-import {useAlerts} from "../../../../Providers/AlertsProvider";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {useHistory} from "react-router-dom";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 
-const ViewRequestMenu = ({project, request, setConfirmAction}) => {
+const SavedFilterMenu = ({project, request, setConfirmAction}) => {
   const history = useHistory();
-  const {setAlert} = useAlerts();
-  const {getRequestAsCurl, deleteRequest} = useRequests();
   const [menu, setMenu] = useState(null);
 
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null);
-  const onCurl = async () => {
-    await getRequestAsCurl(project.id, request?.requestId)
-    onClose()
-  }
-  const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
   const onSend = async () => history.push(`/projects/${project.id}/requests/send`);
   const onDelete = async () => {
     setConfirmAction({
@@ -35,47 +24,32 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
       title: 'Delete request?',
       description: 'Are you sure you want to delete request? You will not be able to restore it later',
       confirmButton: 'Delete',
-      action: async () => await deleteRequest(project.id, request?.requestId)
+      action: async () => {
+      }
     })
   }
 
   return (
     <React.Fragment>
       <Box sx={ProjectMenuStyles.boxContainer}>
-        <Tooltip title="Request actions" placement={'top'}>
-          <IconButton onClick={onOpen} size="small">
-            <MoreVert/>
-          </IconButton>
-        </Tooltip>
+        <IconButton onClick={onOpen} size="small">
+          <MoreHoriz fontSize={'small'}/>
+        </IconButton>
       </Box>
       <Menu
         anchorEl={menu}
         open={Boolean(menu)}
         onClose={onClose}
         onClick={onClose}
-        transformOrigin={{horizontal: 'right', vertical: 'top'}}
+        transformOrigin={{horizontal: 'left', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
         <MenuItem onClick={onSend}>
           <ListItemIcon>
-            <Send fontSize="small"/>
+            <Check fontSize="small"/>
           </ListItemIcon>
-          Send
+          Select filter
         </MenuItem>
-        <MenuItem onClick={onCurl}>
-          <ListItemIcon>
-            <InsertLink fontSize="small"/>
-          </ListItemIcon>
-          Copy as curl
-        </MenuItem>
-        <CopyToClipboard text={window.location.href} onCopy={onCopyLink}>
-          <MenuItem>
-            <ListItemIcon>
-              <ContentCopy fontSize="small"/>
-            </ListItemIcon>
-            Copy request link
-          </MenuItem>
-        </CopyToClipboard>
         <Divider/>
         <MenuItem onClick={onDelete} sx={{color: 'red'}}>
           <ListItemIcon sx={{color: 'red'}}>
@@ -97,4 +71,4 @@ export default connect(
   {
     setConfirmAction
   },
-)(ViewRequestMenu);
+)(SavedFilterMenu);

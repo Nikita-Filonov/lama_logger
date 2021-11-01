@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {useUsers} from "../Users/UsersProvider";
-import {DELETE_REQUESTS, SET_REQUESTS} from "../../Redux/Requests/Requests/actionTypes";
+import {DELETE_REQUESTS, SET_REQUESTS, SET_SAVED_REQUESTS_FILTERS} from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {copyText, queryWithPagination} from "../../Utils/Utils/Common";
 import {get, remove} from "../../Utils/Api/Fetch";
@@ -9,8 +8,7 @@ import {get, remove} from "../../Utils/Api/Fetch";
 const RequestsContext = React.createContext(null);
 
 const RequestsProvider = ({children, store}) => {
-  const {token} = useUsers()
-  const {setAlert} = useAlerts()
+  const {setAlert} = useAlerts();
   const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
 
@@ -41,8 +39,8 @@ const RequestsProvider = ({children, store}) => {
   }
 
   const getRequestsFilters = async (projectId) => {
-    const {json, error} = await get(projectsApi + `${projectId}/requests/filters/`);
-    console.log(json);
+    const {json} = await get(projectsApi + `${projectId}/requests/filters/`);
+    store.dispatch({type: SET_SAVED_REQUESTS_FILTERS, payload: json})
   }
 
   return (

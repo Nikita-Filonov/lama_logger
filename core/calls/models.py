@@ -99,6 +99,10 @@ class RequestsFilter(models.Model):
         verbose_name='Created',
         default=timezone.now
     )
+    title = models.CharField(
+        verbose_name='Title',
+        max_length=255
+    )
     body = models.JSONField(
         verbose_name='Body',
         default=dict
@@ -131,4 +135,4 @@ class RequestsFilter(models.Model):
     )
 
     def __str__(self):
-        return f'{self.project.title}:{self.user.email}'
+        return f'{self.project.title}:{self.title}'

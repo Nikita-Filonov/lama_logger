@@ -9,6 +9,7 @@ import {
   SET_REQUESTS_REALTIME,
   SET_REQUESTS_STATS_FILTERS,
   SET_REQUESTS_TIME_FILTER_MODAL,
+  SET_SAVED_REQUESTS_FILTERS,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
 
@@ -56,6 +57,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     }
     case SET_REQUESTS_STATS_FILTERS:
       return {...state, requestsStatsFilters: action.payload};
+    case SET_SAVED_REQUESTS_FILTERS:
+      return {...state, savedRequestsFilters: action.payload};
     default:
       return state;
   }

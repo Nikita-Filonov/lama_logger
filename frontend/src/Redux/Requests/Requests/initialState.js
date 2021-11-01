@@ -8,6 +8,7 @@ export const INITIAL_REQUESTS = {
     previous: null,
     results: []
   },
+  savedRequestsFilters: [],
   requestsFilters: JSON.parse(localStorage.getItem('requestsFilters')) || DEFAULT_REQUESTS_FILTERS,
   requestsPagination: {
     page: 0,
