@@ -17,7 +17,7 @@ export const RequestRoute = ({component: Component, ...rest}) => {
     (async () => {
       const props = matchPath(pathname, {path: REQUESTS_ROUTES});
       const projectId = parseInt(props?.params?.projectId);
-      (projectId !== storeProject?.id) && await getProject(projectId);
+      ((projectId !== storeProject?.id) && token) && await getProject(projectId);
     })()
   }, [pathname])
 
