@@ -55,8 +55,10 @@ export const RequestsRoutes = ({store}) =>
             path="/projects/:projectId/stats"
             component={props => <RequestsStatsProvider><RequestsStats {...props}/></RequestsStatsProvider>}
           />
-          <RequestsSettingsRoute exact path="/projects/:projectId/settings/general" component={ProjectSettingsGeneral}/>
-          <RequestsSettingsRoute exact path="/projects/:projectId/settings/members" component={ProjectSettingsMembers}/>
+          <RequestsSettingsRoute exact path="/projects/:projectId/settings/general"
+                                 component={ProjectSettingsGeneral}/>
+          <RequestsSettingsRoute exact path="/projects/:projectId/settings/members"
+                                 component={ProjectSettingsMembers}/>
           <RequestsSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
           <RequestsSettingsRoute exact path="/projects/:projectId/settings/inbound"
                                  component={RequestsInboundDataFilters}/>

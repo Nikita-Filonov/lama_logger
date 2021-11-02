@@ -28,17 +28,19 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 const CustomRoute = () =>
   <Router>
-    <div className={'d-flex'}>
-      <Switch>
-        <PublicRoute exact path="/login" component={Login}/>
-        <PublicRoute exact path="/registration" component={Registration}/>
-      </Switch>
-      <ProjectRoutes/>
-      <ProfileRoutes/>
-      <IntegrationsRoutes/>
-      <RequestsRoutes store={store}/>
-      <ConfirmAction/>
-    </div>
+    <ProjectsProvider store={store}>
+      <div className={'d-flex'}>
+        <Switch>
+          <PublicRoute exact path="/login" component={Login}/>
+          <PublicRoute exact path="/registration" component={Registration}/>
+        </Switch>
+        <ProjectRoutes/>
+        <ProfileRoutes/>
+        <IntegrationsRoutes/>
+        <RequestsRoutes store={store}/>
+        <ConfirmAction/>
+      </div>
+    </ProjectsProvider>
   </Router>
 
 
@@ -50,9 +52,7 @@ ReactDOM.render(
           <SettingsProvider>
             <AlertsProvider>
               <UsersProvider store={store}>
-                <ProjectsProvider store={store}>
-                  <CustomRoute/>
-                </ProjectsProvider>
+                <CustomRoute/>
               </UsersProvider>
             </AlertsProvider>
           </SettingsProvider>

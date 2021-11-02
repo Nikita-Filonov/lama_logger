@@ -2,6 +2,7 @@ from rest_framework.permissions import BasePermission
 
 from core.projects.models import Project
 from core.projects.permissions.utils import to_scope, common_check
+from utils.exeptions import Forbidden
 
 
 class IsProjectActionAllowed(BasePermission):
@@ -11,4 +12,9 @@ class IsProjectActionAllowed(BasePermission):
     SCOPES = to_scope(Project)
 
     def has_permission(self, request, view):
-        return common_check(view, request, self.SCOPES)
+        is_allowed = common_check(view, request, self.SCOPES)
+
+        if is_allowed:
+            return True
+
+        raise Forbidden('You do not have access to this project')

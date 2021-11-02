@@ -1,10 +1,22 @@
-import React from 'react'
-import {Redirect, Route} from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {matchPath, Redirect, Route, useLocation} from 'react-router-dom'
 import NavigationBar from "../../NavigationBar";
 import RequestNavigationDrawer from "../../Drawers/Requests/RequestNavigationDrawer";
+import {useProjects} from "../../../../Providers/ProjectsProvider";
+import {REQUESTS_ROUTES} from "../../../../Utils/Constants";
 
 export const RequestRoute = ({component: Component, ...rest}) => {
-  const token = localStorage.getItem('token')
+  const {getProject} = useProjects();
+  const {pathname} = useLocation();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    (async () => {
+      const props = matchPath(pathname, {path: REQUESTS_ROUTES});
+      const projectId = props?.params?.projectId;
+      projectId && await getProject(projectId);
+    })()
+  }, [pathname])
 
   return (
     <React.Fragment>

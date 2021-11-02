@@ -57,6 +57,6 @@ class AccountManager:
     name = 'Account manager'
     scopes = [
         *filter_scopes(PROJECT, 'view'),
-        ROLE,
-        MEMBER,
+        *ROLE,
+        *MEMBER,
     ]

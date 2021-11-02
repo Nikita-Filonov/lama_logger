@@ -24,6 +24,20 @@ export const BREADCRUMB_ROUTES = [
   {path: '/integrations/:language', breadcrumb: getSdkLanguage},
 ];
 
+export const REQUESTS_ROUTES = [
+  '/projects/:projectId',
+  '/projects/:projectId/stats',
+  '/projects/:projectId/tracks',
+  '/projects/:projectId/tracks/:trackId',
+  '/projects/:projectId/requests',
+  '/projects/:projectId/settings',
+  '/projects/:projectId/requests/send',
+  '/projects/:projectId/settings/general',
+  '/projects/:projectId/settings/members',
+  '/projects/:projectId/settings/roles',
+  '/projects/:projectId/settings/inbound'
+]
+
 export const UNITS = [
   {label: 'Seconds', unit: 'seconds'},
   {label: 'Minutes', unit: 'minutes'},

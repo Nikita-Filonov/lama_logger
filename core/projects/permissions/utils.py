@@ -1,3 +1,5 @@
+from itertools import chain
+
 from core.projects.helpers.utils import get_member
 
 
@@ -7,10 +9,10 @@ def to_scope(model):
     """
     model_name = model.__name__
     return {
-        'GET': f'%s.view' % model_name,
-        'POST': f'%s.create' % model_name,
-        'PATCH': f'%s.update' % model_name,
-        'DELETE': f'%s.delete' % model_name
+        'GET': f'%s.View' % model_name,
+        'POST': f'%s.Create' % model_name,
+        'PATCH': f'%s.Update' % model_name,
+        'DELETE': f'%s.Delete' % model_name
     }
 
 
@@ -20,5 +22,7 @@ def common_check(view, request, scopes):
     if not member:
         return
 
-    member_roles = [role.scope for role in member.roles.all()]
+    member_roles = list(chain.from_iterable([role.scope for role in member.roles.all()]))
+    print(scopes[request.method] in member_roles)
+    print(scopes[request.method], member_roles)
     return scopes[request.method] in member_roles
