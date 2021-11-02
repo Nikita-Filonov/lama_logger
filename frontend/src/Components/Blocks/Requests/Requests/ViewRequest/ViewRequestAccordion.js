@@ -33,9 +33,6 @@ const ViewRequestAccordion = ({request, viewMode}) => {
           {request?.method} request to <Link href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
-        {viewMode.requests === 'accordion' && <Typography variant={'body2'} sx={{mr: 2}}>
-          {moment.utc(request.created).local().startOf('seconds').fromNow()}
-        </Typography>}
         {viewMode.requests === 'accordion' && <ViewRequestMenu request={request}/>}
       </div>
       <Typography variant={'subtitle1'} gutterBottom>Request</Typography>
@@ -66,9 +63,9 @@ const ViewRequestAccordion = ({request, viewMode}) => {
         <AccessTime fontSize={'small'}/>
         <Typography sx={{ml: 1}} variant={'subtitle1'}>Duration {request?.duration * 1000} milliseconds</Typography>
         <div className={'flex-grow-1'}/>
-        {viewMode.requests === 'side' && <Typography variant={'body2'} sx={{mr: 2}}>
+        <Typography variant={'body2'} sx={{mr: 2}}>
           {moment.utc(request.created).local().startOf('seconds').fromNow()}
-        </Typography>}
+        </Typography>
       </div>
     </Box>
   )

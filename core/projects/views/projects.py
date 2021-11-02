@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from core.projects.helpers.utils import query_to_dict
 from core.projects.models import Project
+from core.projects.permissions.common import IsProjectActionAllowed
 from core.projects.serializers.projects import ProjectsSerializer, ProjectSerializer
 from utils.exeptions import NotFound, BadRequest
 
@@ -37,7 +38,7 @@ class ProjectsApi(views.APIView):
 
 class ProjectApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsProjectActionAllowed]
 
     def get(self, request, project_id):
         try:
