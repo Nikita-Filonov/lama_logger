@@ -1,26 +1,11 @@
-import React, {useEffect} from 'react'
-import {matchPath, Redirect, Route, useLocation} from 'react-router-dom'
+import React from 'react'
 import {Container} from "@mui/material";
 import ProjectSettingsSidebar from "../../../Blocks/Requests/Settings/ProjectSettingsSidebar";
 import NavigationBar from "../../NavigationBar";
 import RequestNavigationDrawer from "../../Drawers/Requests/RequestNavigationDrawer";
-import {useProjects} from "../../../../Providers/ProjectsProvider";
-import {REQUESTS_ROUTES} from "../../../../Utils/Constants";
+import {RequestRoute} from "./RequestRoute";
 
 export const RequestsSettingsRoute = ({component: Component, ...rest}) => {
-  const token = localStorage.getItem('token');
-  const project = localStorage.getItem('project');
-  const {getProject} = useProjects();
-  const {pathname} = useLocation();
-
-
-  useEffect(() => {
-    (async () => {
-      const props = matchPath(pathname, {path: REQUESTS_ROUTES});
-      const projectId = props?.params?.projectId;
-      projectId && await getProject(projectId);
-    })()
-  }, [pathname])
 
   return (
     <React.Fragment>
@@ -28,21 +13,7 @@ export const RequestsSettingsRoute = ({component: Component, ...rest}) => {
       <Container maxWidth={'xl'}>
         <ProjectSettingsSidebar/>
         <div>
-          <Route
-            {...rest}
-            render={props =>
-              token ? (
-                <React.Fragment>
-                  {project
-                    ? <Component {...props} />
-                    : <Redirect to={{pathname: '/projects', state: {from: props.location}}}/>
-                  }
-                </React.Fragment>
-              ) : (
-                <Redirect to={{pathname: '/login', state: {from: props.location}}}/>
-              )
-            }
-          />
+          <RequestRoute component={Component} {...rest}/>
         </div>
       </Container>
     </React.Fragment>

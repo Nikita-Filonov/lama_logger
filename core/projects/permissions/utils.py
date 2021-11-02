@@ -23,6 +23,4 @@ def common_check(view, request, scopes):
         return
 
     member_roles = list(chain.from_iterable([role.scope for role in member.roles.all()]))
-    print(scopes[request.method] in member_roles)
-    print(scopes[request.method], member_roles)
     return scopes[request.method] in member_roles
