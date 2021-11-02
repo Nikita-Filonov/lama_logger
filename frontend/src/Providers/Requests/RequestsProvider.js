@@ -8,7 +8,7 @@ import {
 } from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {copyText, queryWithPagination} from "../../Utils/Utils/Common";
-import {get, post, remove} from "../../Utils/Api/Fetch";
+import {get, patch, post, remove} from "../../Utils/Api/Fetch";
 
 
 const RequestsContext = React.createContext(null);
@@ -64,6 +64,11 @@ const RequestsProvider = ({children, store}) => {
     setAlert(json);
   }
 
+  const updateRequestsFilter = async (projectId, filterId, payload, isLazy = true) => {
+    const {json, error} = await patch(projectsApi + `${projectId}/requests/filters/${filterId}/`, payload);
+    !isLazy && setAlert(error ? json : {message: 'Requests filters were successfully updated', level: 'success'})
+  }
+
   return (
     <RequestsContext.Provider
       value={{
@@ -75,7 +80,8 @@ const RequestsProvider = ({children, store}) => {
         deleteRequest,
         getRequestsFilters,
         createRequestsFilter,
-        deleteRequestsFilter
+        deleteRequestsFilter,
+        updateRequestsFilter
       }}
     >
       {children}

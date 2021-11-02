@@ -37,7 +37,15 @@ class RequestsFilterApi(views.APIView):
     throttle_classes = [UserRateThrottle]
 
     def patch(self, request, project_id, filter_id):
-        pass
+        requests_filter = RequestsFilter.objects.get(id=filter_id)
+        serializer = RequestsFilterSerializer(requests_filter, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            requests_filter = serializer.save()
+            serializer = RequestsFiltersSerializer(requests_filter, many=False)
+            return Response(serializer.data)
+
+        raise BadRequest(message='Error happened while updating filter', data=serializer.errors)
 
     def delete(self, request, project_id, filter_id):
         try:

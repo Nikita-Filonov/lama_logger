@@ -1,8 +1,7 @@
-import React, {useEffect, useMemo, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import _ from "lodash";
 import {useRequests} from "../../Providers/Requests/RequestsProvider";
 import {connect} from "react-redux";
-import {useUsers} from "../../Providers/Users/UsersProvider";
 import RequestsToolbar from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbar";
 import {useParams} from "react-router-dom";
 import RequestsTable from "../../Components/Blocks/Requests/Requests/RequestsTable/RequestsTable";
@@ -21,24 +20,24 @@ const Requests = (props) => {
   const {request, viewMode, requestsRealtime, selectedRequests, requestsFilters, requestsPagination} = props;
   const {projectId} = useParams();
   const requestsInterval = useRef(null);
-  const {token} = useUsers();
-  const {load, getRequests} = useRequests();
+  const {load, getRequests, updateRequestsFilter} = useRequests();
 
   useEffect(() => {
     (async () => {
-      token && await getRequests(
+      await getRequests(
         projectId,
         requestsPagination.rowsPerPage,
         requestsPagination.rowsPerPage * requestsPagination.page,
         makeRequestsFilters(requestsFilters)
-      )
+      );
+      requestsFilters?.id && await updateRequestsFilter(projectId, requestsFilters?.id, requestsFilters);
     })()
-  }, [token, projectId, requestsFilters, requestsPagination])
+  }, [projectId, requestsFilters, requestsPagination])
 
   useEffect(() => {
     clearInterval(requestsInterval.current)
 
-    if (requestsRealtime?.enabled && token) {
+    if (requestsRealtime?.enabled) {
       requestsInterval.current = setInterval(async () => {
         await getRequests(
           projectId,
@@ -52,7 +51,7 @@ const Requests = (props) => {
     return () => {
       clearInterval(requestsInterval.current)
     };
-  }, [token, projectId, requestsRealtime, requestsFilters, requestsPagination])
+  }, [projectId, requestsRealtime, requestsFilters, requestsPagination])
 
   return (
     <Container maxWidth={'xl'}>
