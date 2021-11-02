@@ -1,7 +1,22 @@
 import ast
 from shlex import quote
+from typing import Union
 
 from django_celery_beat.models import IntervalSchedule
+
+from core.projects.models import Project, Member
+from core.users.models import CustomUser
+
+
+def get_member(project: Union[Project, int], user: CustomUser) -> Union[Member, None]:
+    """Getting member"""
+    if isinstance(project, int):
+        project = Project.objects.get(id=project)
+
+    try:
+        return project.members.filter(user=user)[0]
+    except IndexError:
+        return
 
 
 def query_to_dict(query: dict, parse: bool = False, ignore=None) -> dict:
