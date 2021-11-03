@@ -15,10 +15,13 @@ import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettings
 import {StatusCodesAutocomplete} from "../../../../Components/Blocks/Requests/Settings/Requests/Filters/StatusCodesAutocomplete";
 import HeadersFiltersSettings
   from "../../../../Components/Blocks/Requests/Settings/Requests/Filters/HeadersFiltersSettings";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_SETTINGS} from "../../../../Utils/Permissions/Projects";
 
 
 const RequestsFiltersSettings = ({project, projectSettings}) => {
   const classes = ProjectSettingsStyles();
+  const {isAllowed} = usePermissions();
   const {load, request, updateProjectSettings} = useProjectSettings();
   const [filterMethods, setFilterMethods] = useState(projectSettings?.filterMethods);
   const [filterStatusCodes, setFilterStatusCodes] = useState(projectSettings?.filterStatusCodes);
@@ -50,10 +53,10 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
     setFilterHeaders({...filterHeaders, [type]: [...copyHeaders]});
   }
   const onChangeHeader = useCallback(async (type = 'keys', index, value) =>
-      setFilterHeaders({
-        ...filterHeaders,
-        [type]: filterHeaders[type]?.map((header, i) => i === index ? value : header)
-      }), [filterHeaders]);
+    setFilterHeaders({
+      ...filterHeaders,
+      [type]: filterHeaders[type]?.map((header, i) => i === index ? value : header)
+    }), [filterHeaders]);
   const onNewHeader = async (type = 'keys') => setFilterHeaders({
     ...filterHeaders,
     [type]: [...filterHeaders[type], '']
@@ -122,7 +125,7 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
             loadingPosition="start"
             startIcon={<SaveOutlined/>}
             variant="text"
-            disabled={disabled}
+            disabled={disabled || !isAllowed([PROJECT_SETTINGS.update])}
           >
             Save changes
           </LoadingButton>

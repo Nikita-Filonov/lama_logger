@@ -4,15 +4,18 @@ import {Autocomplete, Checkbox, Grid, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import Box from "@mui/material/Box";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {REQUESTS_STATUS_CODES_FILTERS, REQUESTS_METHODS_FILTERS} from "../../../../Utils/Constants";
+import {REQUESTS_METHODS_FILTERS, REQUESTS_STATUS_CODES_FILTERS} from "../../../../Utils/Constants";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
 import {StatusCodeIndicator} from "../../../../Components/Blocks/Requests/Requests/StatusCodeIndicator";
 import {SaveOutlined} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_SETTINGS} from "../../../../Utils/Permissions/Projects";
 
 
 const RequestsInboundDataFilters = ({project, projectSettings}) => {
   const classes = ProjectSettingsStyles();
+  const {isAllowed} = usePermissions();
   const {load, request, updateProjectSettings} = useProjectSettings();
   const [excludeMethods, setExcludeMethods] = useState(projectSettings?.excludeMethods);
   const [excludeStatuses, setExcludeStatuses] = useState(projectSettings?.excludeStatuses);
@@ -107,7 +110,7 @@ const RequestsInboundDataFilters = ({project, projectSettings}) => {
             loadingPosition="start"
             startIcon={<SaveOutlined/>}
             variant="text"
-            disabled={disabled}
+            disabled={disabled || !isAllowed([PROJECT_SETTINGS.update])}
           >
             Save changes
           </LoadingButton>
