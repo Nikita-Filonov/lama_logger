@@ -4,8 +4,11 @@ import {AccessAlarm} from "@mui/icons-material";
 import PeriodicTaskMenu from "../../../../Menus/Requests/Settings/PeriodicTasks/PeriodicTaskMenu";
 import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
 import {connect} from "react-redux";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_TASKS} from "../../../../../Utils/Permissions/Projects";
 
 const PeriodicTask = ({task, project}) => {
+  const {isAllowed} = usePermissions();
   const {updateTask} = useProjectTasks();
 
   const onEnable = async () => await updateTask(project.id, task.id, {
@@ -19,7 +22,11 @@ const PeriodicTask = ({task, project}) => {
     <ListItem key={task.id} disableGutters divider>
       <ListItemIcon>
         <Tooltip title={task?.task?.enabled ? 'Disable task' : 'Enable task'} placement={'left'}>
-          <Checkbox checked={task?.task?.enabled} onClick={onEnable}/>
+          <Checkbox
+            checked={task?.task?.enabled}
+            onClick={onEnable}
+            disabled={!isAllowed([PROJECT_TASKS.update])}
+          />
         </Tooltip>
       </ListItemIcon>
       <ListItemText

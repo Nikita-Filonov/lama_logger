@@ -20,9 +20,12 @@ import {AVAILABLE_TASKS, UNITS} from "../../../../../Utils/Constants";
 import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
 import {setCreateTaskModal, setPeriodicTask} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {INITIAL_REQUESTS_SETTINGS} from "../../../../../Redux/Requests/Settings/initialState";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_TASK} from "../../../../../Utils/Permissions/Projects";
 
 const CreatePeriodicTask = (props) => {
   const {project, periodicTask, setPeriodicTask, createTaskModal, setCreateTaskModal} = props;
+  const {isAllowed} = usePermissions();
   const {request, createTask, updateTask} = useProjectTasks();
 
   const onClose = () => {
@@ -119,7 +122,8 @@ const CreatePeriodicTask = (props) => {
           disabled={
             periodicTask.name.length === 0 ||
             periodicTask.task.length === 0 ||
-            !periodicTask.interval.every
+            !periodicTask.interval.every ||
+            !isAllowed([PROJECT_TASK.create, PROJECT_TASK.update])
           }
         >
           {periodicTask.editMode ? 'Update' : 'Create'}

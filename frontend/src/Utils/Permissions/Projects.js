@@ -34,3 +34,11 @@ export const ROLE = {
   update: 'Role.Update',
   delete: 'Role.Delete'
 }
+
+
+export const PROJECT_TASK = {
+  view: 'ProjectTask.View',
+  create: 'ProjectTask.Create',
+  update: 'ProjectTask.Update',
+  delete: 'ProjectTask.Delete'
+}

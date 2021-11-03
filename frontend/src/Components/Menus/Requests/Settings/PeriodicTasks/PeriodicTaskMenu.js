@@ -10,10 +10,13 @@ import {connect} from "react-redux";
 import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksProvider";
 import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
 import {setCreateTaskModal, setPeriodicTask} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_TASKS} from "../../../../../Utils/Permissions/Projects";
 
 
 const PeriodicTaskMenu = (props) => {
   const {project, task, setConfirmAction, setCreateTaskModal, setPeriodicTask} = props;
+  const {isAllowed} = usePermissions();
   const {deleteTask} = useProjectTasks();
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
@@ -51,13 +54,13 @@ const PeriodicTaskMenu = (props) => {
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
-        <MenuItem onClick={onEdit}>
+        <MenuItem onClick={onEdit} disabled={!isAllowed([PROJECT_TASKS.update])}>
           <ListItemIcon>
             <CreateOutlined fontSize="small"/>
           </ListItemIcon>
           Edit
         </MenuItem>
-        <MenuItem sx={{color: 'red'}} onClick={onDelete}>
+        <MenuItem sx={{color: 'red'}} onClick={onDelete} disabled={!isAllowed([PROJECT_TASKS.delete])}>
           <ListItemIcon>
             <Delete fontSize="small" sx={{color: 'red'}}/>
           </ListItemIcon>
