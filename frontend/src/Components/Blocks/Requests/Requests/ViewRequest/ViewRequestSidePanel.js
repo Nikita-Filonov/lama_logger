@@ -26,8 +26,12 @@ const ViewRequestSidePanel = ({request, setRequest}) => {
   )
 }
 
+const getState = (state) => ({
+  request: state.requests.request,
+})
+
 export default connect(
-  null,
+  getState,
   {
     setRequest,
   },

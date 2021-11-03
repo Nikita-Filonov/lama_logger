@@ -36,7 +36,7 @@ const RequestRow = (props) => {
     const query = new URLSearchParams(history.location.search);
     const requestId = query.get('requestId');
     if (requestId && requestId === request.requestId) {
-      setOpen(true);
+      viewMode.requests === 'accordion' && setOpen(true);
       rowRef.current.scrollIntoView({behavior: 'smooth'});
     }
   }, [])

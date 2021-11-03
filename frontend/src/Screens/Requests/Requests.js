@@ -64,7 +64,7 @@ const Requests = (props) => {
           </Grid>
           {(viewMode.requests === 'side' && !_.isEmpty(request)) &&
           <Grid item xs={6} className={classes.tableContainer}>
-            <ViewRequestSidePanel request={request}/>
+            <ViewRequestSidePanel/>
           </Grid>}
         </Grid>
       </div>
