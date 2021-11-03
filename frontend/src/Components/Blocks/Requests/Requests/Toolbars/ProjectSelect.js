@@ -31,7 +31,6 @@ const ProjectSelect = ({project, projects, setProject}) => {
     <React.Fragment>
       <Tooltip title={'Select project'}>
         <Button
-          id={'basic-button'}
           color={'inherit'}
           aria-controls="basic-menu"
           aria-haspopup="true"
@@ -44,18 +43,14 @@ const ProjectSelect = ({project, projects, setProject}) => {
         </Button>
       </Tooltip>
       <Menu
-        id="basic-menu"
         anchorEl={menu}
         open={Boolean(menu)}
         onClose={onClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
       >
         {projects.map(p => <MenuItem
           value={p.id}
           key={p.id}
-          sx={{maxWidth: 300}}
+          sx={{maxWidth: 300, width: 300}}
           onClick={() => onSelectProject(p.id)}
           selected={project.id === p.id}
         >
