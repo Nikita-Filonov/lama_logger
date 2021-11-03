@@ -7,16 +7,23 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import {DragHandle} from "@mui/icons-material";
 import {Draggable, Droppable} from "react-beautiful-dnd";
 import ActivityMenu from "../../../../Menus/Requests/Settings/Tracks/Activities/ActivityMenu";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {ACTIVITY} from "../../../../../Utils/Permissions/Tracks";
 
 
 export const Activity = ({activity, index}) => {
+  const {isAllowed} = usePermissions();
   const [collapse, setCollapse] = useState(false);
 
   return (
     <Droppable droppableId={`${activity.id}`}>
       {(provided, _) =>
         <div {...provided.droppableProps} ref={provided.innerRef}>
-          <Draggable draggableId={activity.id?.toString()} index={index}>
+          <Draggable
+            index={index}
+            draggableId={activity.id?.toString()}
+            isDragDisabled={!isAllowed([ACTIVITY.update])}
+          >
             {(provided, snapshot) =>
               <React.Fragment>
                 <ListItem

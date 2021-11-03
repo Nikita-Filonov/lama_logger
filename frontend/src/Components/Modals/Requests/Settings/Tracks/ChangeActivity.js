@@ -5,9 +5,12 @@ import {LoadingButton} from "@mui/lab";
 import {connect} from "react-redux";
 import {useServices} from "../../../../../Providers/Requests/Tracks/ServicesProvider";
 import {setActivity, setChangeActivityModal} from "../../../../../Redux/Requests/Tracks/tracksActions";
+import {ACTIVITY} from "../../../../../Utils/Permissions/Tracks";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
 
 const ChangeActivity = (props) => {
   const {project, activity, setActivity, changeActivityModal, setChangeActivityModal} = props;
+  const {isAllowed} = usePermissions();
   const {request, updateActivity} = useServices();
 
   const onClose = () => setChangeActivityModal(false);
@@ -38,7 +41,13 @@ const ChangeActivity = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <LoadingButton loading={request} onClick={onUpdate}>Update</LoadingButton>
+        <LoadingButton
+          loading={request}
+          onClick={onUpdate}
+          disabled={!isAllowed([ACTIVITY.update])}
+        >
+          Update
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   )

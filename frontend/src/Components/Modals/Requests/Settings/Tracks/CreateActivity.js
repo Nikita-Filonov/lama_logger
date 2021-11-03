@@ -4,9 +4,12 @@ import {connect} from "react-redux";
 import {SlideTransition} from "../../../../../Utils/Utils/Common";
 import {LoadingButton} from "@mui/lab";
 import {useServices} from "../../../../../Providers/Requests/Tracks/ServicesProvider";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {ACTIVITY} from "../../../../../Utils/Permissions/Tracks";
 
 
 const CreateActivity = ({project, modal, setModal}) => {
+  const {isAllowed} = usePermissions();
   const {request, createActivity} = useServices();
   const [title, setTitle] = useState('');
   const onClose = () => setModal(false)
@@ -45,6 +48,7 @@ const CreateActivity = ({project, modal, setModal}) => {
         <LoadingButton
           loading={request}
           onClick={onCreate}
+          disabled={!isAllowed([ACTIVITY.create])}
         >
           Create
         </LoadingButton>
