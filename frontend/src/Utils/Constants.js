@@ -91,7 +91,19 @@ export const REQUESTS_STATUS_CODES_TYPES = [
 
 export const SIDEBAR_WIDTH = 300;
 
-export const INSTANCES = ['Request', 'Project', 'Member', 'Role'];
+export const INSTANCES = [
+  {label: 'Requests', inst: 'Request'},
+  {label: 'Projects', inst: 'Project'},
+  {label: 'Members', inst: 'Member'},
+  {label: 'Roles', inst: 'Role'},
+  {label: 'Tasks', inst: 'ProjectTask'},
+  {label: 'Project settings', inst: 'ProjectSettings'},
+  {label: 'Requests filters', inst: 'RequestsFilter'},
+  {label: 'Tracks', inst: 'Track'},
+  {label: 'Services', inst: 'Service'},
+  {label: 'Activity', inst: 'ServiceActivity'},
+  {label: 'Tracked requests', inst: 'TrackRequest'}
+];
 export const AVAILABLE_LANGUAGES = [
   {
     language: 'python',

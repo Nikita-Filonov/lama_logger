@@ -138,6 +138,13 @@ class Project(models.Model):
 
 
 class ProjectSettings(models.Model):
+    SCOPES = [
+        'ProjectSettings.View',
+        'ProjectSettings.Create',
+        'ProjectSettings.Update',
+        'ProjectSettings.Delete'
+    ]
+
     project = models.OneToOneField(
         Project,
         verbose_name='Project',
@@ -179,6 +186,13 @@ class ProjectSettings(models.Model):
 
 
 class ProjectTask(models.Model):
+    SCOPES = [
+        'ProjectTask.View',
+        'ProjectTask.Create',
+        'ProjectTask.Update',
+        'ProjectTask.Delete'
+    ]
+
     project = models.ForeignKey(
         Project,
         verbose_name='Project',

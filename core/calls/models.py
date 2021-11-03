@@ -9,6 +9,13 @@ from core.users.models import CustomUser
 
 
 class Request(models.Model):
+    SCOPES = [
+        'Request.View',
+        'Request.Create',
+        'Request.Update',
+        'Request.Delete'
+    ]
+
     requestId = models.UUIDField(
         verbose_name='Request id',
         default=uuid.uuid4,
@@ -82,6 +89,12 @@ class Request(models.Model):
 
 
 class RequestsFilter(models.Model):
+    SCOPES = [
+        'RequestsFilter.View',
+        'RequestsFilter.Create',
+        'RequestsFilter.Update',
+        'RequestsFilter.Delete'
+    ]
     project = models.ForeignKey(
         Project,
         verbose_name='Project',

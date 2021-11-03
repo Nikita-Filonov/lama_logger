@@ -14,9 +14,9 @@ import {
 import {connect} from "react-redux";
 import FormControl from "@mui/material/FormControl";
 import {useProjects} from "../../../../../Providers/ProjectsProvider";
-import {ButtonSpinner} from "../../../../Blocks/Common/ButtonSpiner";
 import RolesSelect from "../../../../Blocks/Requests/Settings/Users/Members/RolesSelect";
 import {setInviteMemberModal} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {LoadingButton} from "@mui/lab";
 
 
 const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
@@ -69,12 +69,13 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button
+        <LoadingButton
+          loading={request}
           onClick={onInvite}
-          disabled={!member?.username || member?.roles?.length === 0 || request}
+          disabled={!member?.username || member?.roles?.length === 0}
         >
-          {request && <ButtonSpinner/>} Invite
-        </Button>
+          Invite
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   )

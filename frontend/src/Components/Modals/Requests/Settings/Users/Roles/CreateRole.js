@@ -12,10 +12,10 @@ import {
 } from '@mui/material';
 import {connect} from "react-redux";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
-import {ButtonSpinner} from "../../../../../Blocks/Common/ButtonSpiner";
 import {ScopesList} from "../../../../../Blocks/Requests/Settings/Users/Roles/ScopesList";
 import {setCreateRoleModal, setRole} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {INITIAL_REQUESTS_SETTINGS} from "../../../../../../Redux/Requests/Settings/initialState";
+import {LoadingButton} from "@mui/lab";
 
 
 const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal}) => {
@@ -71,9 +71,13 @@ const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button disabled={!role.name} onClick={onCreate}>
-          {request && <ButtonSpinner/>} {role?.editMode ? 'Update' : 'Create'}
-        </Button>
+        <LoadingButton
+          loading={request}
+          disabled={!role.name}
+          onClick={onCreate}
+        >
+          {role?.editMode ? 'Update' : 'Create'}
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   )

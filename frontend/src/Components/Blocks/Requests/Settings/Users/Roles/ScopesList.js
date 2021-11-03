@@ -35,14 +35,14 @@ export const ScopesList = ({scopes, onSelectScope}) => {
       subheader={<li/>}
     >
       {INSTANCES.map((inst) => (
-        <li key={`section-${inst}`}>
+        <li key={`section-${inst.label}`}>
           <ul>
             <ListSubheader sx={{backgroundColor: subheaderBackground}}>
-              {inst}
+              {inst.label}
             </ListSubheader>
             <Divider/>
             {['Create', 'Update', 'Delete'].map((permission, index) =>
-              <Permission inst={inst} permission={permission} key={permission + index}/>
+              <Permission inst={inst.inst} permission={permission} key={permission + index}/>
             )}
           </ul>
         </li>
