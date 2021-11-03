@@ -8,6 +8,8 @@ import {SaveOutlined} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 import {baseUrl} from "../../../../Utils/Constants";
+import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_SETTINGS} from "../../../../Utils/Permissions/Projects";
 
 
 const NotificationsSettings = ({project}) => {
@@ -74,16 +76,18 @@ const NotificationsSettings = ({project}) => {
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
-          <LoadingButton
-            onClick={onSave}
-            loading={request}
-            loadingPosition="start"
-            startIcon={<SaveOutlined/>}
-            disabled={disabled}
-            variant="text"
-          >
-            Save changes
-          </LoadingButton>
+          <PermissionsProvider action={PROJECT_SETTINGS.update}>
+            {allowed => <LoadingButton
+              onClick={onSave}
+              loading={request}
+              loadingPosition="start"
+              startIcon={<SaveOutlined/>}
+              disabled={disabled || !allowed}
+              variant="text"
+            >
+              Save changes
+            </LoadingButton>}
+          </PermissionsProvider>
         </Box>
       </Grid>
     </div>
