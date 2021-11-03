@@ -13,6 +13,7 @@ import {useHistory} from "react-router-dom";
 import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
+import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
 
 
 const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
@@ -111,7 +112,8 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
           options={project?.members?.map(member => member.user)}
           defaultValue={project?.creator}
           getOptionLabel={(option, _) => optionLabel(option)}
-          renderOption={(props, option) => <UserOption props={props} label={optionLabel(option)}/>}
+          renderOption={(props, option) =>
+            <UserOption key={option} props={props} label={optionLabel(option)}/>}
           onChange={(event, value) => setCreator(value)}
           renderInput={(params) =>
             <TextField
@@ -125,16 +127,20 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
-          <LoadingButton
-            onClick={onSave}
-            loading={request}
-            loadingPosition="start"
-            startIcon={<SaveOutlined/>}
-            disabled={disabled}
-            variant="text"
-          >
-            Save changes
-          </LoadingButton>
+          <PermissionsProvider action={'Project.Update'}>
+            {allowed =>
+              <LoadingButton
+                onClick={onSave}
+                loading={request}
+                loadingPosition="start"
+                startIcon={<SaveOutlined/>}
+                disabled={disabled || !allowed}
+                variant="text"
+              >
+                Save changes
+              </LoadingButton>
+            }
+          </PermissionsProvider>
         </Box>
       </Grid>
       <Grid item xs={12} className={'mt-3'}>

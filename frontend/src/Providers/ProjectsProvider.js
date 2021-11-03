@@ -1,10 +1,9 @@
-import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useUsers} from "./Users/UsersProvider";
 import {CREATE_PROJECT, SET_PROJECT, SET_PROJECTS, UPDATE_PROJECT} from "../Redux/Projects/actionTypes";
 import {useAlerts} from "./AlertsProvider";
 import {objectToQuery} from "../Utils/Utils/Common";
 import {get, patch, post, remove} from "../Utils/Api/Fetch";
-import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 
 
@@ -18,9 +17,6 @@ const ProjectsProvider = ({children, store}) => {
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
 
-  const project = useSelector(state => state.projects.project);
-  const user = useSelector(state => state.users.user);
-  const me = useMemo(() => project?.members?.find(m => m?.user?.id === user?.id), [user, project])
 
   useEffect(() => {
     (async () => token && await getProjects())();
@@ -112,7 +108,6 @@ const ProjectsProvider = ({children, store}) => {
   return (
     <ProjectsContext.Provider
       value={{
-        me,
         load,
         request,
         getProject,
