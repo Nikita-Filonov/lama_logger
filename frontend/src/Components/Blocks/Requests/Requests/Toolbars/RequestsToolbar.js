@@ -48,7 +48,7 @@ const RequestsToolbar = (props) => {
         Members filters
       </Button>
       <Divider orientation={'vertical'} flexItem style={RequestsToolbarStyles.buttonsDivider}/>
-      <Tooltip title={(requestsRealtime ? 'Disable' : 'Enable') + ' realtime updates'}>
+      <Tooltip title={(requestsRealtime?.enabled ? 'Disable' : 'Enable') + ' realtime updates'}>
         <IconButton onClick={onRealtime}>
           {requestsRealtime?.enabled ? <PauseOutlined/> : <PlayArrowOutlinedIcon/>}
         </IconButton>
