@@ -14,9 +14,14 @@ export const ScopesList = ({scopes, onSelectScope}) => {
     const isSelected = useMemo(() => scopes.indexOf(`${inst}.${permission}`) !== -1, [scopes])
 
     return (
-      <ListItem button onClick={async () => await onSelectScope(isSelected, `${inst}.${permission}`)}>
+      <ListItem
+        disabled={permission === 'View'}
+        button
+        onClick={async () => await onSelectScope(isSelected, `${inst}.${permission}`)}
+      >
         <ListItemIcon>
           <Checkbox
+            disabled={permission === 'View'}
             checked={isSelected}
             edge="start"
             tabIndex={-1}
@@ -41,7 +46,7 @@ export const ScopesList = ({scopes, onSelectScope}) => {
               {inst.label}
             </ListSubheader>
             <Divider/>
-            {['Create', 'Update', 'Delete'].map((permission, index) =>
+            {['View', 'Create', 'Update', 'Delete'].map((permission, index) =>
               <Permission inst={inst.inst} permission={permission} key={permission + index}/>
             )}
           </ul>

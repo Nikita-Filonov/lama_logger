@@ -15,7 +15,7 @@ import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {ScopesList} from "../../../../../Blocks/Requests/Settings/Users/Roles/ScopesList";
 import {setCreateRoleModal, setRole} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {INITIAL_REQUESTS_SETTINGS} from "../../../../../../Redux/Requests/Settings/initialState";
-import {LoadingButton} from "@mui/lab";
+import {Alert, LoadingButton} from "@mui/lab";
 import {usePermissions} from "../../../../../../Providers/Users/PermissionsProvider";
 import {ROLE} from "../../../../../../Utils/Permissions/Projects";
 
@@ -47,6 +47,10 @@ const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal
         {!role?.editMode && <DialogContentText>
           You can create your custom role with custom scope of permissions
         </DialogContentText>}
+        <Alert severity="warning" sx={{mt: 2}}>
+          Keep in mind that all roles has "View" permission by default.
+          And you can not remove this permission for now.
+        </Alert>
         <TextField
           value={role.name}
           onChange={event => setRole({...role, name: event.target.value})}
@@ -80,7 +84,7 @@ const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal
         <Button onClick={onClose}>Cancel</Button>
         <LoadingButton
           loading={request}
-          disabled={!role.name || !isAllowed([ROLE.create, ROLE.update])}
+          disabled={role?.name?.length === 0 || !isAllowed([ROLE.create, ROLE.update])}
           onClick={onCreate}
         >
           {role?.editMode ? 'Update' : 'Create'}
