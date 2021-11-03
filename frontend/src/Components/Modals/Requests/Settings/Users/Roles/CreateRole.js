@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {
   Button,
   Dialog,
@@ -16,22 +16,29 @@ import {ScopesList} from "../../../../../Blocks/Requests/Settings/Users/Roles/Sc
 import {setCreateRoleModal, setRole} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {INITIAL_REQUESTS_SETTINGS} from "../../../../../../Redux/Requests/Settings/initialState";
 import {LoadingButton} from "@mui/lab";
+import {usePermissions} from "../../../../../../Providers/Users/PermissionsProvider";
+import {ROLE} from "../../../../../../Utils/Permissions/Projects";
 
 
 const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal}) => {
+  const {isAllowed} = usePermissions();
   const {request, createRole, updateRole} = useProjects();
   const onClose = () => {
     setCreateRoleModal(false)
     setRole(INITIAL_REQUESTS_SETTINGS.role)
   }
 
-  const onSelectScope = (isSelected, permission) => isSelected
+  const onSelectScope = useCallback(async (isSelected, permission) => isSelected
     ? setRole({...role, scope: role.scope.filter(p => p !== permission)})
-    : setRole({...role, scope: [...role.scope, permission]})
+    : setRole({...role, scope: [...role.scope, permission]}),
+    [role]
+  )
 
-  const onCreate = async () => role?.editMode
+  const onCreate = useCallback(async () => role?.editMode
     ? updateRole(project.id, role.id, role).then(() => onClose())
-    : createRole(project.id, role).then(() => onClose());
+    : createRole(project.id, role).then(() => onClose()),
+    [role]
+  );
 
   return (
     <Dialog open={createRoleModal} onClose={onClose} maxWidth={'sm'} fullWidth>
@@ -73,7 +80,7 @@ const CreateRole = ({role, setRole, project, createRoleModal, setCreateRoleModal
         <Button onClick={onClose}>Cancel</Button>
         <LoadingButton
           loading={request}
-          disabled={!role.name}
+          disabled={!role.name || !isAllowed([ROLE.create, ROLE.update])}
           onClick={onCreate}
         >
           {role?.editMode ? 'Update' : 'Create'}

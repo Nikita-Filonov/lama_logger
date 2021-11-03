@@ -8,12 +8,13 @@ import {SaveOutlined} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 import {baseUrl} from "../../../../Utils/Constants";
-import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 import {PROJECT_SETTINGS} from "../../../../Utils/Permissions/Projects";
 
 
 const NotificationsSettings = ({project}) => {
   const classes = ProjectSettingsStyles();
+  const {isAllowed} = usePermissions();
   const {request, updateProject} = useProjects();
   const [telegramChannel, setTelegramChannel] = useState(project?.telegramChannel);
   const [slackChannel, setSlackChannel] = useState(project?.slackChannel)
@@ -76,18 +77,16 @@ const NotificationsSettings = ({project}) => {
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
-          <PermissionsProvider action={PROJECT_SETTINGS.update}>
-            {allowed => <LoadingButton
-              onClick={onSave}
-              loading={request}
-              loadingPosition="start"
-              startIcon={<SaveOutlined/>}
-              disabled={disabled || !allowed}
-              variant="text"
-            >
-              Save changes
-            </LoadingButton>}
-          </PermissionsProvider>
+          <LoadingButton
+            onClick={onSave}
+            loading={request}
+            loadingPosition="start"
+            startIcon={<SaveOutlined/>}
+            disabled={disabled || !isAllowed([PROJECT_SETTINGS.update])}
+            variant="text"
+          >
+            Save changes
+          </LoadingButton>
         </Box>
       </Grid>
     </div>

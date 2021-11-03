@@ -14,7 +14,7 @@ export const ScopesList = ({scopes, onSelectScope}) => {
     const isSelected = useMemo(() => scopes.indexOf(`${inst}.${permission}`) !== -1, [scopes])
 
     return (
-      <ListItem button onClick={() => onSelectScope(isSelected, `${inst}.${permission}`)}>
+      <ListItem button onClick={async () => await onSelectScope(isSelected, `${inst}.${permission}`)}>
         <ListItemIcon>
           <Checkbox
             checked={isSelected}

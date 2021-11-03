@@ -5,10 +5,13 @@ import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
 import RolesSelect from "../../../../../Blocks/Requests/Settings/Users/Members/RolesSelect";
 import {setSelectedMembers} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
+import {usePermissions} from "../../../../../../Providers/Users/PermissionsProvider";
+import {MEMBER} from "../../../../../../Utils/Permissions/Projects";
 
 
 const MemberRow = (props) => {
   const {member, project, selectedMembers, setSelectedMembers, setConfirmAction} = props;
+  const {isAllowed} = usePermissions();
   const {updateMember, deleteMembers} = useProjects();
   const isSelected = useMemo(() => selectedMembers.indexOf(member.id) !== -1, [selectedMembers]);
   const username = useMemo(() => member?.user?.username ? member?.user?.username : member?.user?.email, [member])
@@ -48,7 +51,9 @@ const MemberRow = (props) => {
         <RolesSelect member={member} onSelectRole={onSelectRole} sx={{width: 300, display: 'flex'}}/>
       </TableCell>
       <TableCell padding="checkbox">
-        <Button style={{color: 'red'}} onClick={onDelete}>Delete</Button>
+        <Button color={'error'} onClick={onDelete} disabled={!isAllowed([MEMBER.delete])}>
+          Delete
+        </Button>
       </TableCell>
     </TableRow>
   )

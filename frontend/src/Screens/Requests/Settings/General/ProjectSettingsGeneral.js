@@ -13,13 +13,14 @@ import {useHistory} from "react-router-dom";
 import {DeleteOutline, SaveOutlined} from "@mui/icons-material";
 import {LoadingButton} from "@mui/lab";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 import {PROJECT} from "../../../../Utils/Permissions/Projects";
 
 
 const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
   const classes = ProjectSettingsStyles();
   const history = useHistory();
+  const {isAllowed} = usePermissions();
   const {setAlert} = useAlerts();
   const {request, updateProject} = useProjects();
   const [title, setTitle] = useState(project?.title);
@@ -128,18 +129,16 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
       </Grid>
       <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
-          <PermissionsProvider action={PROJECT.update}>
-            {allowed => <LoadingButton
-              onClick={onSave}
-              loading={request}
-              loadingPosition="start"
-              startIcon={<SaveOutlined/>}
-              disabled={disabled || !allowed}
-              variant="text"
-            >
-              Save changes
-            </LoadingButton>}
-          </PermissionsProvider>
+          <LoadingButton
+            onClick={onSave}
+            loading={request}
+            loadingPosition="start"
+            startIcon={<SaveOutlined/>}
+            disabled={disabled || !isAllowed([PROJECT.update])}
+            variant="text"
+          >
+            Save changes
+          </LoadingButton>
         </Box>
       </Grid>
       <Grid item xs={12} className={'mt-3'}>

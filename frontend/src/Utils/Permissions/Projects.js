@@ -26,3 +26,11 @@ export const MEMBER = {
   update: 'Member.Update',
   delete: 'Member.Delete'
 }
+
+
+export const ROLE = {
+  view: 'Role.View',
+  create: 'Role.Create',
+  update: 'Role.Update',
+  delete: 'Role.Delete'
+}

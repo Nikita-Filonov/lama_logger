@@ -8,10 +8,13 @@ import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
 import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {setSelectedMembers} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {ViewRequestStyles} from "../../../../../../Styles/Blocks";
+import {usePermissions} from "../../../../../../Providers/Users/PermissionsProvider";
+import {MEMBER} from "../../../../../../Utils/Permissions/Projects";
 
 const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelectedMembers}) => {
   const classes = ViewRequestStyles();
   const {deleteMembers} = useProjects();
+  const {isAllowed} = usePermissions();
 
   const onDelete = async () => setConfirmAction({
     modal: true,
@@ -30,7 +33,7 @@ const MembersToolbar = ({project, selectedMembers, setConfirmAction, setSelected
     <Paper elevation={3} className={clsx('mt-4 d-flex align-items-center', classes.toolbarContainer)}>
       <Typography variant="subtitle1">Selected {selectedMembers.length}</Typography>
       <div className={'flex-grow-1'}/>
-      <IconButton size={'small'} onClick={onDelete}>
+      <IconButton size={'small'} onClick={onDelete} disabled={!isAllowed([MEMBER.delete])}>
         <Delete/>
       </IconButton>
     </Paper>

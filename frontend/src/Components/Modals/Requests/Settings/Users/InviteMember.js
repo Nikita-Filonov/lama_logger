@@ -17,9 +17,12 @@ import {useProjects} from "../../../../../Providers/ProjectsProvider";
 import RolesSelect from "../../../../Blocks/Requests/Settings/Users/Members/RolesSelect";
 import {setInviteMemberModal} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {LoadingButton} from "@mui/lab";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {MEMBER} from "../../../../../Utils/Permissions/Projects";
 
 
 const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
+  const {isAllowed} = usePermissions();
   const {request, inviteMember} = useProjects();
   const [member, setMember] = useState({username: '', roles: [], notify: false});
   const onClose = () => setInviteMemberModal(false)
@@ -72,7 +75,7 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
         <LoadingButton
           loading={request}
           onClick={onInvite}
-          disabled={!member?.username || member?.roles?.length === 0}
+          disabled={!member?.username || member?.roles?.length === 0 || !isAllowed([MEMBER.create])}
         >
           Invite
         </LoadingButton>
