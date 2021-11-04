@@ -26,9 +26,11 @@ import {LoadingButton} from "@mui/lab";
 import {useTracks} from "../../../../Providers/Requests/Tracks/TracksProvider";
 import {setCreateTrackModal} from "../../../../Redux/Requests/Tracks/tracksActions";
 import {SlideTransition} from "../../../../Utils/Utils/Common";
+import EndpointAutocomplete from "../../../Blocks/Requests/Tracks/EndpointAutocomplete";
 
 
-const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) => {
+const CreateTrack = (props) => {
+  const {createTrackModal, setCreateTrackModal, project, service} = props;
   const {request, createTrack} = useTracks();
   const [endpoint, setEndpoint] = useState('');
   const [times, setTimes] = useState(1);
@@ -80,16 +82,7 @@ const CreateTrack = ({createTrackModal, setCreateTrackModal, project, service}) 
           You can create track for certain endpoint. When error will happen on this
           endpoint we will let you know about it.
         </DialogContentText>
-        <TextField
-          value={endpoint}
-          onChange={event => setEndpoint(event.target.value)}
-          className={'mt-3'}
-          variant={'standard'}
-          size={'small'}
-          fullWidth
-          label={'Endpoint'}
-          placeholder={'https://some.unstable.endpoint.com/api/v1/'}
-        />
+        <EndpointAutocomplete endpoint={endpoint} setEndpoint={setEndpoint}/>
         <TextField
           value={times}
           onChange={event => setTimes(event.target.value)}

@@ -5,6 +5,7 @@ export const INITIAL_PROJECTS = {
   projects: [],
   projectSettings: {
     filterStatusCodes: REQUESTS_STATUS_CODES_FILTERS,
-    filterMethods: REQUESTS_METHODS_FILTERS
+    filterMethods: REQUESTS_METHODS_FILTERS,
+    trackPatterns: []
   }
 }
