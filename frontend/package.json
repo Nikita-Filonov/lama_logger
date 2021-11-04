@@ -29,6 +29,7 @@
     "react-graph-vis": "^1.0.7",
     "react-json-view": "^1.21.3",
     "react-redux": "^7.2.4",
+    "react-resizable": "^3.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-syntax-highlighter": "^15.4.4",
