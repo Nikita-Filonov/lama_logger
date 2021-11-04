@@ -8,8 +8,7 @@ import {Headers} from "./Headers";
 import {Body} from "./Body";
 import moment from "moment";
 import {AccessTime} from "@mui/icons-material";
-
-const tabsStyles = {minHeight: 28, height: 28}
+import {tabsStyles} from "../../../../../Styles/Blocks";
 
 function a11yProps(index) {
   return {

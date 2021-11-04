@@ -1,11 +1,10 @@
 import React from "react";
 import {Container, Divider, IconButton, Paper, Tab, Tabs} from "@mui/material";
 import clsx from "clsx";
-import {ViewRequestStyles} from "../../Styles/Blocks";
+import {tabsStyles, ViewRequestStyles} from "../../Styles/Blocks";
 import {Add} from "@mui/icons-material";
 import {RequestSection} from "../../Components/Blocks/Requests/RequestsSend/Request/RequestSection";
 
-const tabsStyles = {minHeight: 28, height: 28}
 
 export const RequestsSend = () => {
   const classes = ViewRequestStyles();

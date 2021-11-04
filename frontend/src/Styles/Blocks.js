@@ -126,7 +126,7 @@ export const RequestsTableStyles = makeStyles((theme) => ({
   }
 }));
 
-
+export const tabsStyles = {minHeight: 28, height: 28};
 const tabHeight = '28px' // default: '48px'
 export const ViewRequestStyles = makeStyles(theme => ({
   tabsRoot: {
