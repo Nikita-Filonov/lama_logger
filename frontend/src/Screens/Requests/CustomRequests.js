@@ -5,7 +5,7 @@ import {tabsStyles, ViewRequestStyles} from "../../Styles/Blocks";
 import {Add} from "@mui/icons-material";
 import {RequestSection} from "../../Components/Blocks/Requests/CustomRequests/Request/RequestSection";
 import {ResponseSection} from "../../Components/Blocks/Requests/CustomRequests/Response/ResponseSection";
-import {RecentRequests} from "../../Components/Blocks/Requests/CustomRequests/RecentRequests";
+import RecentRequests from "../../Components/Blocks/Requests/CustomRequests/RecentRequests";
 import Divider from "@mui/material/Divider";
 
 
@@ -58,10 +58,10 @@ export const CustomRequests = () => {
 
       <div className={'d-flex'}>
         <Grid container spacing={2} sx={{mt: 1}}>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <RecentRequests/>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <RequestSection/>
             <ResponseSection/>
           </Grid>

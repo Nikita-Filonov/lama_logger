@@ -5,6 +5,7 @@ import {DragHandle, Send} from "@mui/icons-material";
 import {TabPanel} from "../../../Common/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import {RequestsSendStyles} from "../../../../../Styles/Screens";
+import {HeaderDivider} from "../HeaderDivider";
 
 export const RequestSection = () => {
   const classes = RequestsSendStyles();
@@ -21,7 +22,7 @@ export const RequestSection = () => {
           <DragHandle fontSize={'small'}/>
         </IconButton>
       </div>
-      <Divider sx={{mt: 1, mb: 1}}/>
+      <HeaderDivider/>
 
       <div className={'d-flex'}>
         <Button

@@ -38,7 +38,7 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
 
 export const RequestsSendStyles = makeStyles({
   methodButton: {
-    paddingLeft: 8,
+    paddingLeft: 12,
     paddingRight: 56,
     position: "relative",
 

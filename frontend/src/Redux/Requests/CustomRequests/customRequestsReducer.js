@@ -1,11 +1,11 @@
-import {INITIAL_REQUESTS_SEND} from './initialState';
-import {SET_REQUESTS_SEND} from "./actionTypes";
+import {INITIAL_CUSTOM_REQUESTS} from "./initialState";
+import {SET_CUSTOM_REQUESTS} from "./actionTypes";
 
 
-export const requestsReducer = (state = INITIAL_REQUESTS_SEND, action = {}) => {
+export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = {}) => {
   switch (action.type) {
-    case SET_REQUESTS_SEND:
-      return {...state, requestsSend: action.payload}
+    case SET_CUSTOM_REQUESTS:
+      return {...state, customRequests: action.payload}
     default:
       return state;
   }

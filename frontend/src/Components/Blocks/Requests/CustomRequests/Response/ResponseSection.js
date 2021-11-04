@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Divider, Grid, Paper, Tab, Tabs, Typography} from "@mui/material";
+import {Paper, Tab, Tabs, Typography} from "@mui/material";
 import {TabPanel} from "../../../Common/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import {DragHandle} from "@mui/icons-material";
+import {HeaderDivider} from "../HeaderDivider";
 
 export const ResponseSection = () => {
   const [requestTab, setRequestTab] = useState(0);
@@ -19,7 +20,7 @@ export const ResponseSection = () => {
           <DragHandle fontSize={'small'}/>
         </IconButton>
       </div>
-      <Divider sx={{mt: 1, mb: 1}}/>
+      <HeaderDivider/>
       <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'} className={'mt-3'}>
         <Tab sx={tabsStyles} color={'primary'} label="Headers"/>
         <Tab sx={tabsStyles} label="Body"/>
