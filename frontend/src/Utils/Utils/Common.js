@@ -8,7 +8,6 @@ export const uuid4 = async () => {
   });
 }
 
-export const isDigit = (str) => /^\d+$/.test(str);
 export const capitalize = s => (s && s[0].toUpperCase() + s.slice(1)) || "";
 export const normalizeAmount = async (unit, amount) => {
   if (unit === 'seconds') {
@@ -57,5 +56,3 @@ export const copyText = (text) => {
 export const SlideTransition = forwardRef((props, ref) =>
   <Slide direction="up" ref={ref} {...props} />);
 
-
-export const validateHttp = (value) => /(?:(?:https?|ftp):)?\/\//.test(value);

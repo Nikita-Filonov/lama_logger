@@ -1,18 +1,15 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {Autocomplete, TextField} from "@mui/material";
 import {connect} from "react-redux";
+import {validateHttp} from "../../../../Utils/Utils/Validators";
 
 const EndpointAutocomplete = ({endpoint, setEndpoint, projectSettings}) => {
   const [fakeEndpoint, setFakeEndpoint] = useState('');
 
+  const domains = useMemo(() => projectSettings?.trackDomains?.map(p => p.domain), [projectSettings]);
+  const patterns = useMemo(() => projectSettings?.trackPatterns?.map(p => p.pattern), [projectSettings]);
 
-  const filterOptions = (options, {inputValue}) => {
-    if (inputValue?.startsWith('http')) {
-      return options;
-    }
-
-    return ['https://some.unstable.endpoint.com/api/v1/', 'http://localhost:8000'];
-  }
+  const filterOptions = (options, {inputValue}) => validateHttp(inputValue) ? patterns : domains;
 
   const onInputChange = (event) => {
     const value = event.target.value;
@@ -31,7 +28,7 @@ const EndpointAutocomplete = ({endpoint, setEndpoint, projectSettings}) => {
       inputValue={endpoint}
       size={'small'}
       freeSolo
-      options={projectSettings?.trackPatterns?.map(p => p.pattern)}
+      options={patterns}
       onChange={onAutocompleteChange}
       disableCloseOnSelect
       filterOptions={filterOptions}

@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from '@mui/material';
 import {connect} from "react-redux";
-import {SlideTransition, validateHttp} from "../../../../../Utils/Utils/Common";
+import {SlideTransition} from "../../../../../Utils/Utils/Common";
 import {LoadingButton} from "@mui/lab";
 import {useProjectSettings} from "../../../../../Providers/Requests/ProjectSettingsProvider";
 import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
 import {PROJECT_SETTINGS} from "../../../../../Utils/Permissions/Projects";
+import {validateHttp} from "../../../../../Utils/Utils/Validators";
 
 
 const CreateTrackDomain = ({project, modal, setModal, trackDomains}) => {

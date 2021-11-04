@@ -2,8 +2,8 @@ import React, {useCallback} from "react";
 import {REQUESTS_STATUS_CODES_TYPES} from "../../../../../../Utils/Constants";
 import {Autocomplete, Checkbox, InputAdornment, TextField} from "@mui/material";
 import {StatusCodeIndicator} from "../../../Requests/StatusCodeIndicator";
-import {isDigit} from "../../../../../../Utils/Utils/Common";
 import {useAlerts} from "../../../../../../Providers/AlertsProvider";
+import {isDigit} from "../../../../../../Utils/Utils/Validators";
 
 
 export const StatusCodesAutocomplete = ({load, type = 'success', value, options, onChange, className}) => {
