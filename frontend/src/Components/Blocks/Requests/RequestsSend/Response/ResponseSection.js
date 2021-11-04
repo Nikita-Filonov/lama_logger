@@ -2,18 +2,16 @@ import React, {useState} from "react";
 import {Divider, Grid, Paper, Tab, Tabs, Typography} from "@mui/material";
 import {TabPanel} from "../../../Common/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
-import {RequestsSendStyles} from "../../../../../Styles/Screens";
 import IconButton from "@mui/material/IconButton";
 import {DragHandle} from "@mui/icons-material";
 
 export const ResponseSection = () => {
-  const classes = RequestsSendStyles();
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
 
   return (
-    <Paper sx={{p: 1, mt: 2}} elevation={3} className={''}>
+    <Paper sx={{p: 1, mt: 2}} elevation={3}>
       <div className={'d-flex align-items-center'}>
         <Typography>Response</Typography>
         <div className={'flex-grow-1'}/>

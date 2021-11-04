@@ -13,7 +13,7 @@ export const RequestSection = () => {
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
 
   return (
-    <Paper sx={{p: 1}} elevation={3} className={''}>
+    <Paper sx={{p: 1}} elevation={3}>
       <div className={'d-flex align-items-center'}>
         <Typography>Request</Typography>
         <div className={'flex-grow-1'}/>
