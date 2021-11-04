@@ -3,9 +3,9 @@ import {Container, Grid, IconButton, Paper, Tabs} from "@mui/material";
 import clsx from "clsx";
 import {tabsStyles, ViewRequestStyles} from "../../Styles/Blocks";
 import {Add} from "@mui/icons-material";
-import {RequestSection} from "../../Components/Blocks/Requests/RequestsSend/Request/RequestSection";
-import {ResponseSection} from "../../Components/Blocks/Requests/RequestsSend/Response/ResponseSection";
-import {RecentRequests} from "../../Components/Blocks/Requests/RequestsSend/RecentRequests";
+import {RequestSection} from "../../Components/Blocks/Requests/CustomRequests/Request/RequestSection";
+import {ResponseSection} from "../../Components/Blocks/Requests/CustomRequests/Response/ResponseSection";
+import {RecentRequests} from "../../Components/Blocks/Requests/CustomRequests/RecentRequests";
 
 
 export const RequestsSend = () => {

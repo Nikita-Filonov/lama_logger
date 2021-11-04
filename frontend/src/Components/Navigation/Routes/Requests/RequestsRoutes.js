@@ -11,7 +11,7 @@ import ProjectSettingsRoles from "../../../../Screens/Requests/Settings/Users/Pr
 import RequestsInboundDataFilters from "../../../../Screens/Requests/Settings/Requests/RequestsInboundDataFilters";
 import {ProjectSettingsProvider} from "../../../../Providers/Requests/ProjectSettingsProvider";
 import {RequestsProvider} from "../../../../Providers/Requests/RequestsProvider";
-import {RequestsSend} from "../../../../Screens/Requests/RequestsSend";
+import {CustomRequests} from "../../../../Screens/Requests/CustomRequests";
 import RequestsTracks from "../../../../Screens/Requests/Tracks/RequestsTracks";
 import IntegrationsSettings from "../../../../Screens/Requests/Settings/Integrations/IntegrationsSettings";
 import RequestsFiltersSettings from "../../../../Screens/Requests/Settings/Requests/RequestsFiltersSettings";
@@ -26,6 +26,7 @@ import {ProjectTasksProvider} from "../../../../Providers/Requests/ProjectTasksP
 import TracksPatternsSettings from "../../../../Screens/Requests/Settings/Tracks/TracksPatternsSettings";
 import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
 import TracksDomainsSettings from "../../../../Screens/Requests/Settings/Tracks/TracksDomainsSettings";
+import {CustomRequestsProvider} from "../../../../Providers/Requests/CustomRequestsPorvider";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -34,7 +35,15 @@ export const RequestsRoutes = ({store}) =>
         <PermissionsProvider>
           <Switch>
             <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
-            <RequestRoute exact path="/projects/:projectId/requests/send" component={RequestsSend}/>
+            <RequestRoute
+              exact
+              path="/projects/:projectId/requests/custom"
+              component={props =>
+                <CustomRequestsProvider store={store}>
+                  <CustomRequests {...props}/>
+                </CustomRequestsProvider>
+              }
+            />
             <RequestRoute
               exact
               path="/projects/:projectId/tracks"

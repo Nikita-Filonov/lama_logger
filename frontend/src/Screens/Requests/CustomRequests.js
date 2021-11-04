@@ -3,13 +3,13 @@ import {Container, Grid, IconButton, Paper, Tabs, Tab} from "@mui/material";
 import clsx from "clsx";
 import {tabsStyles, ViewRequestStyles} from "../../Styles/Blocks";
 import {Add} from "@mui/icons-material";
-import {RequestSection} from "../../Components/Blocks/Requests/RequestsSend/Request/RequestSection";
-import {ResponseSection} from "../../Components/Blocks/Requests/RequestsSend/Response/ResponseSection";
-import {RecentRequests} from "../../Components/Blocks/Requests/RequestsSend/RecentRequests";
+import {RequestSection} from "../../Components/Blocks/Requests/CustomRequests/Request/RequestSection";
+import {ResponseSection} from "../../Components/Blocks/Requests/CustomRequests/Response/ResponseSection";
+import {RecentRequests} from "../../Components/Blocks/Requests/CustomRequests/RecentRequests";
 import Divider from "@mui/material/Divider";
 
 
-export const RequestsSend = () => {
+export const CustomRequests = () => {
   const classes = ViewRequestStyles();
 
   return (
@@ -56,15 +56,17 @@ export const RequestsSend = () => {
         </IconButton>
       </Paper>
 
-      <Grid container spacing={2} sx={{mt: 1}}>
-        <Grid item xs={3}>
-          <RecentRequests/>
+      <div className={'d-flex'}>
+        <Grid container spacing={2} sx={{mt: 1}}>
+          <Grid item xs={3}>
+            <RecentRequests/>
+          </Grid>
+          <Grid item xs={9}>
+            <RequestSection/>
+            <ResponseSection/>
+          </Grid>
         </Grid>
-        <Grid item xs={9}>
-          <RequestSection/>
-          <ResponseSection/>
-        </Grid>
-      </Grid>
+      </div>
     </Container>
   )
 }

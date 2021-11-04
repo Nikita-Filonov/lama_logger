@@ -28,7 +28,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
     onClose()
   }
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
-  const onSend = async () => history.push(`/projects/${project.id}/requests/send`);
+  const onSend = async () => history.push(`/projects/${project.id}/requests/custom`);
   const onDelete = async () => {
     setConfirmAction({
       modal: true,
