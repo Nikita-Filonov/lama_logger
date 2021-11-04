@@ -34,3 +34,23 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
     '& ul': {padding: 0},
   }
 }));
+
+
+export const RequestsSendStyles = makeStyles({
+  methodButton: {
+    paddingLeft: 8,
+    paddingRight: 56,
+    position: "relative",
+
+    "& .MuiButton-sizeSmall": {
+      paddingLeft: 48,
+      paddingRight: 32,
+      position: "absolute",
+      left: 16
+    },
+    "& .MuiButton-endIcon": {
+      position: "absolute",
+      right: 8
+    }
+  },
+});
