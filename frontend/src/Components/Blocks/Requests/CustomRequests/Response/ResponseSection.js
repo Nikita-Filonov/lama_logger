@@ -20,24 +20,20 @@ export const ResponseSection = () => {
         </IconButton>
       </div>
       <Divider sx={{mt: 1, mb: 1}}/>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
-            <Tab sx={tabsStyles} color={'primary'} label="Headers"/>
-            <Tab sx={tabsStyles} label="Body"/>
-            <Tab sx={tabsStyles} label="Params"/>
-          </Tabs>
-          <TabPanel value={requestTab} index={0}>
-            dsfsdfsdfsd
-          </TabPanel>
-          <TabPanel value={requestTab} index={1}>
-            dsdsfsdf
-          </TabPanel>
-          <TabPanel value={requestTab} index={1}>
-            dsdsfsdf
-          </TabPanel>
-        </Grid>
-      </Grid>
+      <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'} className={'mt-3'}>
+        <Tab sx={tabsStyles} color={'primary'} label="Headers"/>
+        <Tab sx={tabsStyles} label="Body"/>
+        <Tab sx={tabsStyles} label="Params"/>
+      </Tabs>
+      <TabPanel value={requestTab} index={0}>
+        dsfsdfsdfsd
+      </TabPanel>
+      <TabPanel value={requestTab} index={1}>
+        dsdsfsdf
+      </TabPanel>
+      <TabPanel value={requestTab} index={1}>
+        dsdsfsdf
+      </TabPanel>
     </Paper>
   )
 }
