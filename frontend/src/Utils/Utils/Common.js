@@ -56,3 +56,6 @@ export const copyText = (text) => {
 
 export const SlideTransition = forwardRef((props, ref) =>
   <Slide direction="up" ref={ref} {...props} />);
+
+
+export const validateHttp = (value) => /(?:(?:https?|ftp):)?\/\//.test(value);

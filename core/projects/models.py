@@ -180,6 +180,11 @@ class ProjectSettings(models.Model):
         blank=True,
         default=DEFAULT_PATTERNS
     )
+    trackDomains = models.JSONField(
+        verbose_name='Track domains',
+        blank=True,
+        default=list
+    )
 
     def __str__(self):
         return self.project.title

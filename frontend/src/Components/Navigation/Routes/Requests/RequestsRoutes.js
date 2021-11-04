@@ -25,6 +25,7 @@ import PeriodicTasksSettings from "../../../../Screens/Requests/Settings/Periodi
 import {ProjectTasksProvider} from "../../../../Providers/Requests/ProjectTasksProvider";
 import TracksPatternsSettings from "../../../../Screens/Requests/Settings/Tracks/TracksPatternsSettings";
 import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
+import TracksDomainsSettings from "../../../../Screens/Requests/Settings/Tracks/TracksDomainsSettings";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -74,6 +75,8 @@ export const RequestsRoutes = ({store}) =>
                                    component={TracksActivitiesSettings}/>
             <RequestsSettingsRoute exact path="/projects/:projectId/settings/patterns"
                                    component={TracksPatternsSettings}/>
+            <RequestsSettingsRoute exact path="/projects/:projectId/settings/domains"
+                                   component={TracksDomainsSettings}/>
             <RequestsSettingsRoute exact path="/projects/:projectId/settings/notifications"
                                    component={NotificationsSettings}/>
             <RequestsSettingsRoute

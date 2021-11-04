@@ -100,6 +100,12 @@ const ProjectSettingsSidebar = ({project}) => {
             />
             <ListItemLink
               sx={{pl: 4}}
+              to={`/projects/${project.id}/settings/domains`}
+              title={'Domains'}
+              selected={location.pathname.endsWith('/settings/domains')}
+            />
+            <ListItemLink
+              sx={{pl: 4}}
               to={`/projects/${project.id}/settings/patterns`}
               title={'Tracks patterns'}
               selected={location.pathname.endsWith('/settings/patterns')}
