@@ -3,7 +3,7 @@ import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 import {Grid, Typography} from "@mui/material";
-import {TrackPattern} from "../../../../Components/Items/Reuqests/Settings/Tracks/TrackPattern";
+import TrackPattern from "../../../../Components/Items/Reuqests/Settings/Tracks/TrackPattern";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
 import CreateTrackPattern from "../../../../Components/Modals/Requests/Settings/Tracks/CreateTrackPattern";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {ProjectSettingsHeader} from "../../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
 import {Grid, List, Typography} from "@mui/material";
 import {ZoomFab} from "../../../../Components/Blocks/Common/ZoomFab";
-import {Domain} from "../../../../Components/Items/Reuqests/Settings/Tracks/Domain";
+import Domain from "../../../../Components/Items/Reuqests/Settings/Tracks/Domain";
 import CreateTrackDomain from "../../../../Components/Modals/Requests/Settings/Tracks/CreateTrackDomain";
 import Box from "@mui/material/Box";
 import {LoadingButton} from "@mui/lab";

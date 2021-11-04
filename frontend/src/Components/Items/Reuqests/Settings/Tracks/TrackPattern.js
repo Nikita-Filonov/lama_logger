@@ -1,8 +1,22 @@
 import React from "react";
 import {Grid, IconButton, TextField} from "@mui/material";
 import {Close} from "@mui/icons-material";
+import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
+import {connect} from "react-redux";
 
-export const TrackPattern = ({index, pattern, onChange, onRemove}) => {
+const TrackPattern = (props) => {
+  const {index, pattern, onChange, onRemove, setConfirmAction} = props;
+
+  const onRemovePress = () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Delete pattern?',
+      description: 'Are you sure you want to delete the pattern? You will not be able to restore it later',
+      confirmButton: 'Delete',
+      action: async () => await onRemove(index)
+    })
+  }
+
   return (
     <Grid container xs={12} spacing={2}>
       <Grid item xs={6}>
@@ -31,7 +45,7 @@ export const TrackPattern = ({index, pattern, onChange, onRemove}) => {
             label={'Regex expression'}
             className={'me-2'}
           />
-          <IconButton size={'small'} sx={{mt: 2}} onClick={async () => await onRemove(index)}>
+          <IconButton size={'small'} sx={{mt: 2}} onClick={onRemovePress}>
             <Close fontSize={'small'}/>
           </IconButton>
         </div>
@@ -39,3 +53,10 @@ export const TrackPattern = ({index, pattern, onChange, onRemove}) => {
     </Grid>
   )
 }
+
+export default connect(
+  null,
+  {
+    setConfirmAction
+  },
+)(TrackPattern);
