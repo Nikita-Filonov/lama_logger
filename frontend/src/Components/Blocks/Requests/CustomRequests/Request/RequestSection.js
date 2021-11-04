@@ -22,33 +22,26 @@ export const RequestSection = () => {
         </IconButton>
       </div>
       <Divider sx={{mt: 1, mb: 1}}/>
+
+      <div className={'d-flex'}>
+        <Button
+          sx={{mr: 2}}
+          variant={'outlined'}
+          color={'inherit'}
+          className={classes.methodButton}
+          endIcon={<KeyboardArrowDownIcon/>}
+        >
+          POST
+        </Button>
+        <TextField
+          fullWidth
+          className={'w-100'}
+          variant={'standard'}
+          placeholder={'Enter url'}
+        />
+        <Button sx={{ml: 2, pr: 2, pl: 2}} endIcon={<Send/>}>Send</Button>
+      </div>
       <Grid container spacing={2}>
-        <Grid item xs={1.5}>
-          <Button
-            fullWidth
-            variant={'outlined'}
-            color={'inherit'}
-            className={classes.methodButton}
-            endIcon={<KeyboardArrowDownIcon/>}
-          >
-            POST
-          </Button>
-        </Grid>
-        <Grid item xs={9.5}>
-          <TextField
-            fullWidth
-            variant={'standard'}
-            placeholder={'Enter url'}
-          />
-        </Grid>
-        <Grid item xs={1}>
-          <Button
-            fullWidth
-            endIcon={<Send/>}
-          >
-            Send
-          </Button>
-        </Grid>
         <Grid item xs={12}>
           <Divider sx={{mt: 2}}/>
         </Grid>
