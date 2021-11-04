@@ -10,10 +10,13 @@ import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettings
 import Box from "@mui/material/Box";
 import {LoadingButton} from "@mui/lab";
 import {SaveOutlined} from "@mui/icons-material";
+import {PROJECT_SETTINGS} from "../../../../Utils/Permissions/Projects";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 
 
 const TracksPatternsSettings = ({projectSettings, project}) => {
   const classes = ProjectSettingsStyles();
+  const {isAllowed} = usePermissions();
   const {request, updateProjectSettings} = useProjectSettings();
   const [trackPatterns, setTrackPatterns] = useState(projectSettings?.trackPatterns);
   const [createPatternModal, setCreateTrackModal] = useState(false);
@@ -62,12 +65,12 @@ const TracksPatternsSettings = ({projectSettings, project}) => {
         setModal={setCreateTrackModal}
         trackPatterns={trackPatterns}
       />
-      <Grid item xs={12} className={'mt-3'}>
+      {trackPatterns?.length > 0 && <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
           <LoadingButton
             loadingPosition="start"
             startIcon={<SaveOutlined/>}
-            disabled={disabled}
+            disabled={disabled || !isAllowed([PROJECT_SETTINGS.update])}
             variant="text"
             onClick={onSave}
             loading={request}
@@ -75,7 +78,7 @@ const TracksPatternsSettings = ({projectSettings, project}) => {
             Save changes
           </LoadingButton>
         </Box>
-      </Grid>
+      </Grid>}
     </div>
   )
 }

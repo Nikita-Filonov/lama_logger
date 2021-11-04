@@ -3,9 +3,12 @@ import {Grid, IconButton, TextField} from "@mui/material";
 import {Close} from "@mui/icons-material";
 import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
 import {connect} from "react-redux";
+import {PROJECT_SETTINGS} from "../../../../../Utils/Permissions/Projects";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
 
 const TrackPattern = (props) => {
   const {index, pattern, onChange, onRemove, setConfirmAction} = props;
+  const {isAllowed} = usePermissions();
 
   const onRemovePress = () => {
     setConfirmAction({
@@ -45,7 +48,12 @@ const TrackPattern = (props) => {
             label={'Regex expression'}
             className={'me-2'}
           />
-          <IconButton size={'small'} sx={{mt: 2}} onClick={onRemovePress}>
+          <IconButton
+            size={'small'}
+            sx={{mt: 2}}
+            onClick={onRemovePress}
+            disabled={!isAllowed([PROJECT_SETTINGS.update])}
+          >
             <Close fontSize={'small'}/>
           </IconButton>
         </div>

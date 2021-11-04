@@ -10,10 +10,13 @@ import Box from "@mui/material/Box";
 import {LoadingButton} from "@mui/lab";
 import {SaveOutlined} from "@mui/icons-material";
 import {useProjectSettings} from "../../../../Providers/Requests/ProjectSettingsProvider";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
+import {PROJECT_SETTINGS} from "../../../../Utils/Permissions/Projects";
 
 
 const TracksDomainsSettings = ({project, projectSettings}) => {
   const classes = ProjectSettingsStyles();
+  const {isAllowed} = usePermissions();
   const {request, updateProjectSettings} = useProjectSettings();
   const [trackDomains, setTrackDomains] = useState(projectSettings?.trackDomains);
   const [createDomainModal, setCreateDomainModal] = useState(false);
@@ -49,12 +52,12 @@ const TracksDomainsSettings = ({project, projectSettings}) => {
           />
         )}
       </List>
-      <Grid item xs={12} className={'mt-3'}>
+      {trackDomains?.length > 0 && <Grid item xs={12} className={'mt-3'}>
         <Box className={'position-relative'}>
           <LoadingButton
             loadingPosition="start"
             startIcon={<SaveOutlined/>}
-            disabled={disabled}
+            disabled={disabled || !isAllowed([PROJECT_SETTINGS.update])}
             variant="text"
             onClick={onSave}
             loading={request}
@@ -62,7 +65,7 @@ const TracksDomainsSettings = ({project, projectSettings}) => {
             Save changes
           </LoadingButton>
         </Box>
-      </Grid>
+      </Grid>}
       <ZoomFab title={'New domain'} action={() => setCreateDomainModal(true)}/>
       <CreateTrackDomain
         modal={createDomainModal}
