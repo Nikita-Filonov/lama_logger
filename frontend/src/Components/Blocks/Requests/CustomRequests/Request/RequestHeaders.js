@@ -14,18 +14,24 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
       .map(header => ({key: header, value: customRequest?.requestHeaders[header], include: true}))
   ), [customRequest?.requestHeaders])
 
-  const onInclude = async (event, index) =>
-    setHeaders(headers.map((payload, i) => i === index ? {...payload, include: event.target.checked} : payload));
+  const onChange = async (value, index, key) =>
+    setHeaders(headers.map((payload, i) => i === index ? {...payload, [key]: value} : payload));
+
 
   return (
     <div className={classes.requestHeadersContainer}>
       {headers?.map(({key, value, include}, index) =>
         <div className={'d-flex align-items-center'} key={index}>
-          <Checkbox size={'small'} checked={include} onClick={async event => await onInclude(event, index)}/>
+          <Checkbox
+            size={'small'}
+            checked={include}
+            onClick={async event => await onChange(event.target.checked, index, 'include')}
+          />
           <TextField
             disabled={disabled}
             sx={{mr: 2}}
             value={key}
+            onChange={async event => await onChange(event.target.value, index, 'key')}
             fullWidth
             variant={'standard'}
             size={'small'}
@@ -34,6 +40,7 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
           <TextField
             disabled={disabled}
             value={value}
+            onChange={async event => await onChange(event.target.value, index, 'value')}
             fullWidth
             variant={'standard'}
             size={'small'}
