@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {Checkbox, IconButton, TextField} from "@mui/material";
+import React, {useCallback, useEffect, useState} from "react";
+import {Button, Checkbox, IconButton, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
-import {Close} from "@mui/icons-material";
+import {Add, Close} from "@mui/icons-material";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 
 const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => {
@@ -14,9 +14,12 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
       .map(header => ({key: header, value: customRequest?.requestHeaders[header], include: true}))
   ), [customRequest?.requestHeaders])
 
-  const onChange = async (value, index, key) =>
-    setHeaders(headers.map((payload, i) => i === index ? {...payload, [key]: value} : payload));
-
+  const onChange = useCallback(async (value, index, key) =>
+      setHeaders(headers.map((payload, i) => i === index ? {...payload, [key]: value} : payload)),
+    [headers]
+  );
+  const onNewHeader = async () => setHeaders([...headers, {key: '', value: '', include: true}]);
+  const onRemove = async (index) => setHeaders(headers.filter((_, i) => i !== index));
 
   return (
     <div className={classes.requestHeadersContainer}>
@@ -46,11 +49,20 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
             size={'small'}
             placeholder={'Value'}
           />
-          <IconButton size={'small'} sx={{mr: 1}}>
+          <IconButton size={'small'} sx={{mr: 1}} onClick={async () => await onRemove(index)}>
             <Close fontSize={'small'}/>
           </IconButton>
         </div>
       )}
+      <Button
+        color={'inherit'}
+        startIcon={<Add/>}
+        size={'small'}
+        sx={{ml: 1, mt: 1}}
+        onClick={onNewHeader}
+      >
+        New header
+      </Button>
     </div>
   )
 }
