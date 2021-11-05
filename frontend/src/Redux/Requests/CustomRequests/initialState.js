@@ -6,6 +6,6 @@ export const INITIAL_CUSTOM_REQUESTS = {
     results: []
   },
   customRequest: {
-    requestHeaders: {}
+    requestHeaders: []
   }
 }

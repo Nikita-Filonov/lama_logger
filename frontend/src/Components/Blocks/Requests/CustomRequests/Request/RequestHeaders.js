@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React from "react";
 import {Button, Checkbox, IconButton, TextField} from "@mui/material";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
@@ -7,53 +7,38 @@ import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 
 const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
-  const [headers, setHeaders] = useState([]);
 
-  useEffect(() => setHeaders(
-    Object.keys(customRequest?.requestHeaders)
-      .map(header => ({key: header, value: customRequest?.requestHeaders[header], include: true}))
-  ), [customRequest?.requestHeaders])
-
-  const onChangeInput = useCallback(async (value, index, key) => {
-    const newHeaders = headers.map((payload, i) => i === index ? {...payload, [key]: value} : payload);
-    setHeaders(newHeaders);
-    await updateHeadersPayload(newHeaders);
-  }, [headers])
-
-  const onNewHeader = useCallback(async () => {
-    const newHeaders = [...headers, {key: '', value: '', include: true}];
-    setHeaders(newHeaders);
-    await updateHeadersPayload(newHeaders);
-  }, [headers]);
-  const onRemove = useCallback(async (index) => {
-    const newHeaders = headers.filter((_, i) => i !== index);
-    setHeaders(newHeaders);
-    await updateHeadersPayload(newHeaders);
-  }, [headers])
-
-  const updateHeadersPayload = useCallback(async (requestHeaders) => {
-    let safeHeaders = {};
-    for (let i = 0; i < requestHeaders.length; i++) {
-      const key = requestHeaders[i]?.key;
-      safeHeaders[key] = requestHeaders[i]?.value;
-    }
-    setCustomRequest({...customRequest, requestHeaders: safeHeaders})
-  }, [customRequest?.requestHeaders]);
+  const onChange = async (value, index, key) => {
+    const requestHeaders = customRequest?.requestHeaders?.map((payload, i) =>
+      i === index
+        ? {...payload, [key]: value}
+        : payload
+    );
+    setCustomRequest({...customRequest, requestHeaders});
+  }
+  const onNewHeader = async () => {
+    const requestHeaders = [...customRequest?.requestHeaders, {key: '', value: '', include: true}];
+    setCustomRequest({...customRequest, requestHeaders});
+  }
+  const onRemove = async (index) => {
+    const requestHeaders = customRequest?.requestHeaders?.filter((_, i) => i !== index);
+    setCustomRequest({...customRequest, requestHeaders});
+  }
 
   return (
     <div className={classes.requestHeadersContainer}>
-      {headers?.map(({key, value, include}, index) =>
+      {customRequest?.requestHeaders?.map(({key, value, include}, index) =>
         <div className={'d-flex align-items-center'} key={index}>
           <Checkbox
             size={'small'}
             checked={include}
-            onClick={async event => await onChangeInput(event.target.checked, index, 'include')}
+            onClick={async event => await onChange(event.target.checked, index, 'include')}
           />
           <TextField
             disabled={disabled}
             sx={{mr: 2}}
             value={key}
-            onChange={async event => await onChangeInput(event.target.value, index, 'key')}
+            onChange={async event => await onChange(event.target.value, index, 'key')}
             fullWidth
             variant={'standard'}
             size={'small'}
@@ -62,7 +47,7 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
           <TextField
             disabled={disabled}
             value={value}
-            onChange={async event => await onChangeInput(event.target.value, index, 'value')}
+            onChange={async event => await onChange(event.target.value, index, 'value')}
             fullWidth
             variant={'standard'}
             size={'small'}
