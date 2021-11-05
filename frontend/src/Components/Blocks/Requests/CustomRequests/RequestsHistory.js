@@ -5,11 +5,11 @@ import {connect} from "react-redux";
 import {common} from "../../../../Styles/Blocks";
 import {HeaderDivider} from "./HeaderDivider";
 
-const RecentRequests = ({customRequests}) => {
+const RequestsHistory = ({customRequests}) => {
   return (
     <Paper elevation={3} sx={{p: 1, pl: 1.5}}>
       <div className={'d-flex align-items-center'}>
-        <Typography>Recent requests</Typography>
+        <Typography>History</Typography>
         <div className={'flex-grow-1'}/>
         <IconButton size={'small'}>
           <MoreVert fontSize={'small'}/>
@@ -20,10 +20,10 @@ const RecentRequests = ({customRequests}) => {
         {customRequests?.results?.map(request =>
           <ListItem key={request.requestId} divider disableGutters>
             <Grid container spacing={2}>
-              <Grid item xs={2}>
+              <Grid item xs={2} md={2} lg={2} xl={2} sm={2}>
                 <Typography sx={{mr: 2}}>{request?.method}</Typography>
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={10} md={10} lg={10} xl={10} sm={10}>
                 <Typography style={common.ellipsisText}>{request?.requestUrl}</Typography>
               </Grid>
             </Grid>
@@ -46,4 +46,4 @@ const getState = (state) => ({
 export default connect(
   getState,
   null,
-)(RecentRequests);
+)(RequestsHistory);

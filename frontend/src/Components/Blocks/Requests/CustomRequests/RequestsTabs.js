@@ -30,7 +30,7 @@ const RequestsTabs = ({customRequests, drawer}) => {
         variant="scrollable"
         scrollButtons
         allowScrollButtonsMobile
-        style={{width: drawer ? width / 1.5 : width / 1.15, transition: 'width 0.3s',}}
+        style={{width: drawer ? width / 1.35 : width / 1.15, transition: 'width 0.3s',}}
       >
         {customRequests?.results?.map((request, index) =>
           <CustomRequestTab

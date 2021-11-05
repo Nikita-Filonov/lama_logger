@@ -2,7 +2,7 @@ import React from "react";
 import {Container, Grid} from "@mui/material";
 import {RequestSection} from "../../Components/Blocks/Requests/CustomRequests/Request/RequestSection";
 import {ResponseSection} from "../../Components/Blocks/Requests/CustomRequests/Response/ResponseSection";
-import RecentRequests from "../../Components/Blocks/Requests/CustomRequests/RecentRequests";
+import RequestsHistory from "../../Components/Blocks/Requests/CustomRequests/RequestsHistory";
 import RequestsTabs from "../../Components/Blocks/Requests/CustomRequests/RequestsTabs";
 
 export const CustomRequests = () => {
@@ -14,7 +14,7 @@ export const CustomRequests = () => {
       <div className={'d-flex'}>
         <Grid container spacing={2} sx={{mt: 1}}>
           <Grid item xs={4}>
-            <RecentRequests/>
+            <RequestsHistory/>
           </Grid>
           <Grid item xs={8}>
             <RequestSection/>
