@@ -14,12 +14,34 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
       .map(header => ({key: header, value: customRequest?.requestHeaders[header], include: true}))
   ), [customRequest?.requestHeaders])
 
-  const onChange = useCallback(async (value, index, key) =>
-      setHeaders(headers.map((payload, i) => i === index ? {...payload, [key]: value} : payload)),
-    [headers]
+  const onChange = useCallback(async (value, index, key) => {
+      const newHeaders = headers.map((payload, i) => i === index ? {...payload, [key]: value} : payload);
+      setHeaders(newHeaders);
+      await updateHeadersPayload(newHeaders);
+    }, [headers]
   );
-  const onNewHeader = async () => setHeaders([...headers, {key: '', value: '', include: true}]);
-  const onRemove = async (index) => setHeaders(headers.filter((_, i) => i !== index));
+  const onNewHeader = async () => {
+    const newHeaders = [...headers, {key: '', value: '', include: true}];
+    setHeaders(newHeaders);
+    await updateHeadersPayload(newHeaders);
+  };
+  const onRemove = async (index) => {
+    const newHeaders = headers.filter((_, i) => i !== index);
+    setHeaders(newHeaders);
+    await updateHeadersPayload(newHeaders);
+  }
+
+  const updateHeadersPayload = async (requestHeaders) => {
+    let safeHeaders = {};
+    for (let i = 0; i < requestHeaders.length; i++) {
+      const key = headers[i].key;
+      const value = headers[i].value;
+      if (key && value) {
+        safeHeaders[key] = value;
+      }
+    }
+    setCustomRequest({...customRequest, safeHeaders})
+  };
 
   return (
     <div className={classes.requestHeadersContainer}>
