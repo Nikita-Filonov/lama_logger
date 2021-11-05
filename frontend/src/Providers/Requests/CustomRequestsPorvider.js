@@ -1,13 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {queryWithPagination} from "../../Utils/Utils/Common";
-import {get} from "../../Utils/Api/Fetch";
-import {SET_CUSTOM_REQUESTS} from "../../Redux/Requests/CustomRequests/actionTypes";
+import {get, post} from "../../Utils/Api/Fetch";
+import {CREATE_CUSTOM_REQUEST, SET_CUSTOM_REQUESTS} from "../../Redux/Requests/CustomRequests/actionTypes";
 import {useSelector} from "react-redux";
+import {useAlerts} from "../AlertsProvider";
 
 
 const CustomRequestsContext = React.createContext(null);
 
 const CustomRequestsProvider = ({children, store}) => {
+  const {setAlert} = useAlerts();
   const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
   const [request, setRequest] = useState(false);
@@ -31,12 +33,25 @@ const CustomRequestsProvider = ({children, store}) => {
     setLoad(false);
   }
 
+  const createCustomRequest = async (projectId, payload) => {
+    setRequest(true);
+    const {json, error} = await post(projectsApi + `${projectId}/custom-requests/`, payload);
+    store.dispatch({type: CREATE_CUSTOM_REQUEST, payload: json});
+    setAlert(error ? json : {message: 'Request successfully created', level: 'success'});
+    setRequest(false);
+  }
+
+  const updateCustomRequest = async (projectId, requestId, payload) => {
+
+  }
+
   return (
     <CustomRequestsContext.Provider
       value={{
         load,
         request,
         getCustomRequests,
+        createCustomRequest
       }}
     >
       {children}

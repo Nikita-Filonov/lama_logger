@@ -1,5 +1,5 @@
 import {INITIAL_CUSTOM_REQUESTS} from "./initialState";
-import {SET_CUSTOM_REQUEST, SET_CUSTOM_REQUESTS} from "./actionTypes";
+import {CREATE_CUSTOM_REQUEST, SET_CUSTOM_REQUEST, SET_CUSTOM_REQUESTS} from "./actionTypes";
 
 
 export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = {}) => {
@@ -8,6 +8,14 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
       return {...state, customRequests: action.payload};
     case SET_CUSTOM_REQUEST:
       return {...state, customRequest: action.payload};
+    case CREATE_CUSTOM_REQUEST:
+      return {
+        ...state,
+        customRequests: {
+          ...state.customRequests,
+          results: [...state.customRequests.results, action.payload]
+        }
+      };
     default:
       return state;
   }

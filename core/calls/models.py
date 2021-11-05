@@ -30,7 +30,8 @@ class Request(models.Model):
     requestUrl = models.CharField(
         verbose_name='Request url',
         max_length=500,
-        null=False
+        null=True,
+        blank=True
     )
     requestHeaders = models.JSONField(
         verbose_name='Request headers',
@@ -44,7 +45,9 @@ class Request(models.Model):
         null=True
     )
     statusCode = models.IntegerField(
-        verbose_name='Response status code'
+        verbose_name='Response status code',
+        null=True,
+        blank=True
     )
     responseBody = models.TextField(
         verbose_name='Response body',

@@ -7,10 +7,12 @@ import {Add} from "@mui/icons-material";
 import {useWindowSize} from "../../../../Utils/Hooks/LayoutHooks";
 import {CustomRequestTab} from "../../../Items/Reuqests/CustomRequests/CustomRequestTab";
 import {setCustomRequest} from "../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
 
 
-const RequestsTabs = ({customRequests, drawer, setCustomRequest}) => {
+const RequestsTabs = ({customRequests, project, drawer, setCustomRequest}) => {
   const {width} = useWindowSize();
+  const {createCustomRequest} = useCustomRequests();
   const classes = ViewRequestStyles();
   const [value, setValue] = useState(0);
 
@@ -19,6 +21,7 @@ const RequestsTabs = ({customRequests, drawer, setCustomRequest}) => {
     setValue(newValue);
   }
 
+  const onCreate = async () => await createCustomRequest(project.id, {isCustom: true});
 
   return (
     <Paper
@@ -44,7 +47,7 @@ const RequestsTabs = ({customRequests, drawer, setCustomRequest}) => {
         )}
       </Tabs>
       <div className={'flex-grow-1'}/>
-      <IconButton size={'small'}>
+      <IconButton size={'small'} onClick={onCreate}>
         <Add/>
       </IconButton>
     </Paper>
@@ -53,6 +56,7 @@ const RequestsTabs = ({customRequests, drawer, setCustomRequest}) => {
 
 const getState = (state) => ({
   drawer: state.users.drawer,
+  project: state.projects.project,
   customRequests: state.customRequests.customRequests,
 })
 

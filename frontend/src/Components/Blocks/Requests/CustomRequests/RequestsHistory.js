@@ -5,8 +5,11 @@ import {connect} from "react-redux";
 import {common} from "../../../../Styles/Blocks";
 import {HeaderDivider} from "./HeaderDivider";
 import {METHOD_COLORS} from "../../../../Utils/Constants";
+import {CustomRequestsStyles} from "../../../../Styles/Screens";
 
 const RequestsHistory = ({customRequests}) => {
+  const classes = CustomRequestsStyles();
+
   return (
     <Paper elevation={3} sx={{p: 1, pl: 1.5}}>
       <div className={'d-flex align-items-center'}>
@@ -17,7 +20,7 @@ const RequestsHistory = ({customRequests}) => {
         </IconButton>
       </div>
       <HeaderDivider/>
-      <List dense>
+      <List dense className={classes.historyListContainer}>
         {customRequests?.results?.map(request =>
           <ListItem key={request.requestId} divider disableGutters>
             <Grid container spacing={2}>

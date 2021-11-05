@@ -20,7 +20,9 @@ export const CustomRequestTab = ({request, index, onSelectTab}) =>
         >
           {request?.method}
         </Typography>
-        <Typography variant={'body2'} style={common.ellipsisText}>{request?.requestUrl}</Typography>
+        <Typography variant={'body2'} style={common.ellipsisText}>
+          {request?.requestUrl ? request?.requestUrl : 'No url'}
+        </Typography>
         <IconButton size={'small'}>
           <Close fontSize={'small'}/>
         </IconButton>

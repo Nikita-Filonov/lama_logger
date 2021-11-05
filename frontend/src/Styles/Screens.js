@@ -60,5 +60,10 @@ export const CustomRequestsStyles = makeStyles({
     "&:hover": {
       overflowY: "overlay",
     }
+  },
+  historyListContainer: {
+    overflow: "auto",
+    maxHeight: window.innerHeight / 1.47,
+    height: window.innerHeight / 1.47,
   }
 });
