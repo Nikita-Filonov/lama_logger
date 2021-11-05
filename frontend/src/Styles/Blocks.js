@@ -1,7 +1,8 @@
 import {styled} from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
-import {makeStyles} from "@mui/styles";
+import {makeStyles, withStyles} from "@mui/styles";
+import {TabScrollButton} from "@mui/material";
 
 
 export const common = {
@@ -28,6 +29,15 @@ export const common = {
     textOverflow: 'ellipsis',
     whiteSpace: "nowrap",
     overflow: 'hidden'
+  },
+  verticalDivider: {
+    alignSelf: 'stretch',
+    height: 'auto'
+  },
+  horizontalList: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 0,
   }
 }
 
@@ -208,3 +218,14 @@ export const AccountNavbarMenuProps = {
     },
   },
 }
+
+export const CustomRequestsTabScrollButton = withStyles(theme => ({
+  root: {
+    width: 28,
+    overflow: 'hidden',
+    transition: 'width 0.5s',
+    '&.Mui-disabled': {
+      width: 0,
+    },
+  },
+}))(TabScrollButton);

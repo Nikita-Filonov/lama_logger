@@ -18,12 +18,12 @@ const RecentRequests = ({customRequests}) => {
       <HeaderDivider/>
       <List dense>
         {customRequests?.results?.map(request =>
-          <ListItem key={request.id} divider disableGutters>
+          <ListItem key={request.requestId} divider disableGutters>
             <Grid container spacing={2}>
-              <Grid item xs={1.5}>
+              <Grid item xs={2}>
                 <Typography sx={{mr: 2}}>{request?.method}</Typography>
               </Grid>
-              <Grid item xs={10.5}>
+              <Grid item xs={10}>
                 <Typography style={common.ellipsisText}>{request?.requestUrl}</Typography>
               </Grid>
             </Grid>

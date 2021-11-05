@@ -88,6 +88,44 @@ class Request(models.Model):
         return self.requestUrl
 
 
+class CustomRequestsHistory(models.Model):
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(
+        verbose_name='Created',
+        default=timezone.now
+    )
+    method = models.CharField(
+        verbose_name='Method',
+        max_length=20,
+        default='GET'
+    )
+    requestUrl = models.CharField(
+        verbose_name='Request url',
+        max_length=500,
+        null=False
+    )
+    requestBody = models.TextField(
+        verbose_name='Request body',
+        blank=True,
+        null=True
+    )
+    requestHeaders = models.JSONField(
+        verbose_name='Request headers',
+        default=list,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f'{self.user.email}:{self.requestUrl}'
+
+
 class RequestsFilter(models.Model):
     SCOPES = [
         'RequestsFilter.View',

@@ -1,13 +1,16 @@
 import json
 
-from rest_framework import views
+from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.calls.models import Request
-from core.calls.serializers.requests import RequestsSerializer
+from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
+from core.projects.models import Project
+from utils.exeptions import BadRequest
 
 
 class CustomRequestsApi(views.APIView, LimitOffsetPagination):
@@ -23,5 +26,14 @@ class CustomRequestsApi(views.APIView, LimitOffsetPagination):
         serializer = RequestsSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)
 
-    def delete(self, request, project_id):
-        pass
+    def post(self, request, project_id):
+        project = Project.objects.get(id=project_id)
+        context = {'user': request.user, 'project': project}
+        serializer = RequestSerializer(data=request.data, context=context)
+        if serializer.is_valid():
+            created_request = serializer.save()
+
+            payload = RequestsSerializer(created_request, many=False).data
+            return Response(payload, status=status.HTTP_201_CREATED)
+
+        raise BadRequest('Error happened while creating request')
