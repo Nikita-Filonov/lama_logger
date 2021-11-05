@@ -3,6 +3,7 @@ export const INITIAL_USERS = {
     email: '',
     username: '',
   },
+  drawer: false,
   theme: localStorage.getItem('theme') || 'light',
   confirmAction: {
     modal: false,

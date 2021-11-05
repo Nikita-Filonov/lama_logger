@@ -3,20 +3,19 @@ import {Box, CssBaseline, IconButton, Toolbar, Typography, useTheme, Zoom} from 
 import MenuIcon from '@mui/icons-material/Menu';
 import {AppBarStyled, DrawerHeaderStyled} from "../../Styles/Blocks";
 import {connect} from "react-redux";
-import {setTheme} from "../../Redux/Users/usersActions";
+import {setDrawer, setTheme} from "../../Redux/Users/usersActions";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {NavigationBreadcrumbs} from "./NavigationBreadcrumbs";
 import {AccountNavbarMenu} from "../Menus/AccountNavbarMenu";
 
 
-const NavigationBar = ({drawer, setTheme}) => {
+const NavigationBar = ({drawer, setTheme, setDrawer, drawerOpen}) => {
   const {palette} = useTheme();
-  const [open, setOpen] = useState(false);
   const [themeButton, setThemeButton] = useState(true);
 
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  const handleDrawerOpen = () => setDrawer(true);
+  const handleDrawerClose = () => setDrawer(false);
 
   const onTheme = async () => {
     setThemeButton(false);
@@ -29,7 +28,7 @@ const NavigationBar = ({drawer, setTheme}) => {
   return (
     <Box sx={{display: 'flex'}}>
       <CssBaseline/>
-      <AppBarStyled position="fixed" open={open}>
+      <AppBarStyled position="fixed" open={drawerOpen}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -38,7 +37,7 @@ const NavigationBar = ({drawer, setTheme}) => {
             edge="start"
             sx={{
               marginRight: '36px',
-              ...(open && {display: 'none'}),
+              ...(drawerOpen && {display: 'none'}),
             }}
           >
             <MenuIcon/>
@@ -54,7 +53,7 @@ const NavigationBar = ({drawer, setTheme}) => {
           <AccountNavbarMenu/>
         </Toolbar>
       </AppBarStyled>
-      {React.createElement(drawer, {open: open, onClose: handleDrawerClose})}
+      {React.createElement(drawer, {open: drawerOpen, onClose: handleDrawerClose})}
       <Box component="main" sx={{flexGrow: 1}}>
         <DrawerHeaderStyled/>
       </Box>
@@ -62,9 +61,14 @@ const NavigationBar = ({drawer, setTheme}) => {
   );
 }
 
+const getState = (state) => ({
+  drawerOpen: state.users.drawer
+})
+
 export default connect(
-  null,
+  getState,
   {
-    setTheme
+    setTheme,
+    setDrawer
   },
 )(NavigationBar);

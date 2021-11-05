@@ -8,7 +8,7 @@ import {useWindowSize} from "../../../../Utils/Hooks/LayoutHooks";
 import {CustomRequestTab} from "../../../Items/Reuqests/CustomRequests/CustomRequestTab";
 
 
-const RequestsTabs = ({customRequests}) => {
+const RequestsTabs = ({customRequests, drawer}) => {
   const {width} = useWindowSize();
   const classes = ViewRequestStyles();
   const [value, setValue] = useState(0);
@@ -30,7 +30,7 @@ const RequestsTabs = ({customRequests}) => {
         variant="scrollable"
         scrollButtons
         allowScrollButtonsMobile
-        style={{maxWidth: width / 1.2}}
+        style={{width: drawer ? width / 1.5 : width / 1.15, transition: 'width 0.3s',}}
       >
         {customRequests?.results?.map((request, index) =>
           <CustomRequestTab
@@ -50,6 +50,7 @@ const RequestsTabs = ({customRequests}) => {
 }
 
 const getState = (state) => ({
+  drawer: state.users.drawer,
   customRequests: state.customRequests.customRequests,
 })
 
