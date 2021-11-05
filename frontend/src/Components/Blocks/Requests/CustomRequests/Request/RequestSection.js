@@ -7,8 +7,9 @@ import {HeaderDivider} from "../HeaderDivider";
 import MethodSelect from "./MethodSelect";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import RequestHeaders from "./RequestHeaders";
 
-const RequestSection = ({customRequest}) => {
+const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
@@ -27,6 +28,8 @@ const RequestSection = ({customRequest}) => {
       <div className={'d-flex'}>
         <MethodSelect/>
         <TextField
+          value={customRequest?.requestUrl}
+          onChange={event => setCustomRequest({...customRequest, requestUrl: event.target.value})}
           fullWidth
           className={'w-100'}
           variant={'standard'}
@@ -41,7 +44,7 @@ const RequestSection = ({customRequest}) => {
         <Tab sx={tabsStyles} label="Params"/>
       </Tabs>
       <TabPanel value={requestTab} index={0}>
-        dsfsdfsdfsd
+        <RequestHeaders/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
         dsdsfsdf

@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {Button, Menu, Tooltip} from "@mui/material";
-import {RequestsSendStyles} from "../../../../../Styles/Screens";
+import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import MenuItem from "@mui/material/MenuItem";
 import {CUSTOM_METHODS} from "../../../../../Utils/Constants";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
 const MethodSelect = ({customRequest, setCustomRequest}) => {
-  const classes = RequestsSendStyles();
+  const classes = CustomRequestsStyles();
   const [menu, setMenu] = useState(null);
 
   const onOpen = (event) => setMenu(event.currentTarget);

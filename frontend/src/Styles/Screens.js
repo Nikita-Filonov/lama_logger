@@ -36,7 +36,7 @@ export const ProjectSettingsStyles = makeStyles((theme) => ({
 }));
 
 
-export const RequestsSendStyles = makeStyles({
+export const CustomRequestsStyles = makeStyles({
   methodButton: {
     paddingLeft: 12,
     paddingRight: 56,
@@ -53,4 +53,12 @@ export const RequestsSendStyles = makeStyles({
       right: 8
     }
   },
+  requestHeadersContainer: {
+    maxHeight: 200,
+    height: 200,
+    overflow: 'hidden',
+    "&:hover": {
+      overflowY: "overlay",
+    }
+  }
 });
