@@ -9,6 +9,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import ViewRequestAccordion from "../../../Blocks/Requests/Requests/ViewRequest/ViewRequestAccordion";
 import {setRequest, setSelectedRequests} from "../../../../Redux/Requests/Requests/requestsActions";
+import {METHOD_COLORS} from "../../../../Utils/Constants";
 
 const RequestRow = (props) => {
   const {request, requests, storeRequest, setRequest, viewMode, selectedRequests, setSelectedRequests} = props;
@@ -57,7 +58,9 @@ const RequestRow = (props) => {
           />
         </TableCell>
         <TableCell component="th" scope="row" onClick={onSelect}>
-          {request.method}
+          <Typography color={METHOD_COLORS[request?.method]} variant={'body2'}>
+            {request.method}
+          </Typography>
         </TableCell>
         <TableCell align="left" onClick={onSelect} sx={{maxWidth: 200}} className={classes.rowRequestUrlText}>
           <Typography className={classes.rowRequestUrlText}>{request?.requestUrl}</Typography>

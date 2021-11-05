@@ -128,3 +128,11 @@ export const AVAILABLE_LANGUAGES = [
 export const AVAILABLE_TASKS = [
   {task: 'core.projects.tasks.cleaners.clear_requests', label: 'Clear requests'}
 ]
+
+export const METHOD_COLORS = {
+  'GET': '#61AFFE',
+  'POST': '#49CC90',
+  'PUT': '#FCA130',
+  'PATCH': '#50E3C2',
+  'DELETE': '#F93E3E'
+}

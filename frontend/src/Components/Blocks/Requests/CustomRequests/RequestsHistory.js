@@ -4,6 +4,7 @@ import {MoreHoriz, MoreVert} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {common} from "../../../../Styles/Blocks";
 import {HeaderDivider} from "./HeaderDivider";
+import {METHOD_COLORS} from "../../../../Utils/Constants";
 
 const RequestsHistory = ({customRequests}) => {
   return (
@@ -21,7 +22,7 @@ const RequestsHistory = ({customRequests}) => {
           <ListItem key={request.requestId} divider disableGutters>
             <Grid container spacing={2}>
               <Grid item xs={2} md={2} lg={2} xl={2} sm={2}>
-                <Typography sx={{mr: 2}}>{request?.method}</Typography>
+                <Typography color={METHOD_COLORS[request?.method]} sx={{mr: 2}}>{request?.method}</Typography>
               </Grid>
               <Grid item xs={10} md={10} lg={10} xl={10} sm={10}>
                 <Typography style={common.ellipsisText}>{request?.requestUrl}</Typography>

@@ -9,6 +9,7 @@ import {Body} from "./Body";
 import moment from "moment";
 import {AccessTime} from "@mui/icons-material";
 import {tabsStyles} from "../../../../../Styles/Blocks";
+import {METHOD_COLORS} from "../../../../../Utils/Constants";
 
 function a11yProps(index) {
   return {
@@ -28,8 +29,15 @@ const ViewRequestAccordion = ({request, viewMode}) => {
   return (
     <Box sx={viewMode.requests === 'accordion' ? {m: 1} : {pl: 2, pr: 1, pb: 2}}>
       <div className={'d-flex justify-content-center align-items-center'}>
-        <Typography variant="h6" gutterBottom component="div" className={'mt-3'} style={{fontSize: 17}}>
-          {request?.method} request to <Link href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
+        <Typography
+          variant="h6"
+          gutterBottom
+          component="div"
+          className={'mt-3'}
+          style={{fontSize: 17}}
+          color={METHOD_COLORS[request?.method]}
+        >
+          {request?.method} <Link sx={{ml: 1}} href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
         {viewMode.requests === 'accordion' && <ViewRequestMenu request={request}/>}
