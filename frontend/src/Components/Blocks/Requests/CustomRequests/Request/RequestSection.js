@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import {Button, Divider, IconButton, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {DragHandle, Send} from "@mui/icons-material";
 import {TabPanel} from "../../../Common/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
-import {RequestsSendStyles} from "../../../../../Styles/Screens";
 import {HeaderDivider} from "../HeaderDivider";
+import MethodSelect from "./MethodSelect";
+import {connect} from "react-redux";
+import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
-export const RequestSection = () => {
-  const classes = RequestsSendStyles();
+const RequestSection = ({customRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
@@ -25,15 +25,7 @@ export const RequestSection = () => {
       <HeaderDivider/>
 
       <div className={'d-flex'}>
-        <Button
-          sx={{mr: 2}}
-          variant={'outlined'}
-          color={'inherit'}
-          className={classes.methodButton}
-          endIcon={<KeyboardArrowDownIcon/>}
-        >
-          POST
-        </Button>
+        <MethodSelect/>
         <TextField
           fullWidth
           className={'w-100'}
@@ -60,3 +52,14 @@ export const RequestSection = () => {
     </Paper>
   )
 }
+
+const getState = (state) => ({
+  customRequest: state.customRequests.customRequest,
+})
+
+export default connect(
+  getState,
+  {
+    setCustomRequest
+  },
+)(RequestSection);

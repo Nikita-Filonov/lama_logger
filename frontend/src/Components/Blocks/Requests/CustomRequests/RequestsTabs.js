@@ -6,15 +6,17 @@ import {CustomRequestsTabScrollButton, tabsStyles, ViewRequestStyles} from "../.
 import {Add} from "@mui/icons-material";
 import {useWindowSize} from "../../../../Utils/Hooks/LayoutHooks";
 import {CustomRequestTab} from "../../../Items/Reuqests/CustomRequests/CustomRequestTab";
+import {setCustomRequest} from "../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
 
-const RequestsTabs = ({customRequests, drawer}) => {
+const RequestsTabs = ({customRequests, drawer, setCustomRequest}) => {
   const {width} = useWindowSize();
   const classes = ViewRequestStyles();
   const [value, setValue] = useState(0);
 
   const onSelectTab = (request, newValue) => {
-    setValue(newValue)
+    setCustomRequest(request);
+    setValue(newValue);
   }
 
 
@@ -56,5 +58,7 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  null,
+  {
+    setCustomRequest
+  },
 )(RequestsTabs);

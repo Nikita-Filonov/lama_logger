@@ -5,4 +5,5 @@ export const INITIAL_CUSTOM_REQUESTS = {
     previous: null,
     results: []
   },
+  customRequest: {}
 }

@@ -136,3 +136,5 @@ export const METHOD_COLORS = {
   'PATCH': '#50E3C2',
   'DELETE': '#F93E3E'
 }
+
+export const CUSTOM_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
