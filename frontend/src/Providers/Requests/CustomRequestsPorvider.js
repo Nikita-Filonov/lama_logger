@@ -3,6 +3,7 @@ import {queryWithPagination} from "../../Utils/Utils/Common";
 import {get, patch, post} from "../../Utils/Api/Fetch";
 import {
   CREATE_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUESTS,
   UPDATE_CUSTOM_REQUEST
 } from "../../Redux/Requests/CustomRequests/actionTypes";
@@ -41,6 +42,7 @@ const CustomRequestsProvider = ({children, store}) => {
     setRequest(true);
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests/`, payload);
     store.dispatch({type: CREATE_CUSTOM_REQUEST, payload: json});
+    store.dispatch({type: SET_CUSTOM_REQUEST, payload: json});
     setAlert(error ? json : {message: 'Request successfully created', level: 'success'});
     setRequest(false);
   }
