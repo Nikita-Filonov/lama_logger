@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {Button, Divider, IconButton, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
-import {DragHandle, Send} from "@mui/icons-material";
+import {Button, Divider, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
+import {Send} from "@mui/icons-material";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import {HeaderDivider} from "../HeaderDivider";
@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import RequestHeaders from "./RequestHeaders";
 import RequestBody from "./RequestBody";
+import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
 
 const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
@@ -20,9 +21,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
       <div className={'d-flex align-items-center'}>
         <Typography>Request</Typography>
         <div className={'flex-grow-1'}/>
-        <IconButton size={'small'}>
-          <DragHandle fontSize={'small'}/>
-        </IconButton>
+        <RequestSectionMenu/>
       </div>
       <HeaderDivider/>
 
