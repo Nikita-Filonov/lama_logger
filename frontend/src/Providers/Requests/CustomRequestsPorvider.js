@@ -41,18 +41,18 @@ const CustomRequestsProvider = ({children, store}) => {
   const createCustomRequest = async (projectId, payload) => {
     setRequest(true);
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests/`, payload);
-    store.dispatch({type: CREATE_CUSTOM_REQUEST, payload: json});
-    store.dispatch({type: SET_CUSTOM_REQUEST, payload: json});
+    !error && store.dispatch({type: CREATE_CUSTOM_REQUEST, payload: json});
+    !error && store.dispatch({type: SET_CUSTOM_REQUEST, payload: json});
     setAlert(error ? json : {message: 'Request successfully created', level: 'success'});
     setRequest(false);
   }
 
   const updateCustomRequest = async (projectId, requestId, payload) => {
     setRequest(true);
-    const {json} = await patch(projectsApi + `${projectId}/custom-requests/${requestId}/`, payload);
-    store.dispatch({type: UPDATE_CUSTOM_REQUEST, payload: {requestId, payload: json}});
+    const {json, error} = await patch(projectsApi + `${projectId}/custom-requests/${requestId}/`, payload);
+    !error && store.dispatch({type: UPDATE_CUSTOM_REQUEST, payload: {requestId, payload: json}});
+    error && setAlert(json);
     setRequest(false);
-
   }
 
   return (
