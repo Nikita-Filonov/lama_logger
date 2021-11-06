@@ -2,7 +2,11 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
+
+from core.users.helpers.dumps import JSON_EDITOR
 
 
 class UserManager(BaseUserManager):
@@ -167,3 +171,27 @@ class ApiToken(models.Model):
 
     def __str__(self):
         return f'{self.user.email}:{self.name}'
+
+
+class UserSettings(models.Model):
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name='User',
+        on_delete=models.CASCADE,
+    )
+    jsonEditor = models.JSONField(
+        verbose_name='Json editor',
+        blank=False,
+        null=False,
+        default=dict
+    )
+
+    def __str__(self):
+        return self.user.email
+
+
+@receiver(post_save, sender=CustomUser)
+def on_project_create(sender, instance, **kwargs):
+    user = CustomUser.objects.filter(user=instance)
+    if not user:
+        UserSettings.objects.create(user=instance, jsonEditor=JSON_EDITOR)

@@ -13,10 +13,10 @@ import {ListItemLink} from "../Common/Navigation/ListItemLink";
 import {getMatchesSettingsRoute} from "../../../Utils/Utils/Routing";
 
 
-export const SettingsSidebar = ({project = 1}) => {
+export const SettingsSidebar = () => {
   const classes = ProjectSettingsStyles();
   const location = useLocation();
-  const [collapse, setCollapse] = useState({customRequests: false, theme: false});
+  const [collapse, setCollapse] = useState({customRequests: false});
 
   useEffect(() => {
     const collapseKey = getMatchesSettingsRoute(location.pathname);
@@ -27,35 +27,24 @@ export const SettingsSidebar = ({project = 1}) => {
 
   return (
     <Box className={classes.sidebarContainer} component="nav">
-      <Typography className={'mt-4 mb-2'} variant={'h6'}>Project settings</Typography>
+      <Typography className={'mt-4 mb-2'} variant={'h6'}>Settings</Typography>
       <List className={classes.sidebarListContainer}>
         <ListItemLink
-          selected={location.pathname.endsWith('/settings/general')}
-          to={`/projects/${project.id}/settings/general`}
-          title={'General'}
+          selected={location.pathname.endsWith('/settings/theme')}
+          to={`/settings/theme`}
+          title={'Theme'}
         />
-        <ListItemLink
-          selected={location.pathname.endsWith('/settings/notifications')}
-          to={`/projects/${project.id}/settings/notifications`}
-          title={'Notifications'}
-        />
-        <ListItem button onClick={() => onCollapse('users')}>
-          <ListItemText primary={'Users'}/>
+        <ListItem button onClick={() => onCollapse('customRequests')}>
+          <ListItemText primary={'Custom requests'}/>
           {collapse.users ? <ExpandLess/> : <ExpandMore/>}
         </ListItem>
         <Collapse component="li" in={collapse.customRequests} timeout="auto" unmountOnExit>
           <List disablePadding>
             <ListItemLink
               sx={{pl: 4}}
-              to={`/projects/${project.id}/settings/members`}
-              title={'Members'}
-              selected={location.pathname.endsWith('/settings/members')}
-            />
-            <ListItemLink
-              sx={{pl: 4}}
-              to={`/projects/${project.id}/settings/roles`}
-              title={'Roles'}
-              selected={location.pathname.endsWith('/settings/roles')}
+              to={`/settings/json-editor`}
+              title={'Json editor'}
+              selected={location.pathname.endsWith('/settings/json-editor')}
             />
           </List>
         </Collapse>
