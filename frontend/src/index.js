@@ -22,6 +22,7 @@ import {SettingsProvider} from "./Providers/SettingsProvider";
 import {Registration} from "./Screens/Login/Registration";
 import {ProfileRoutes} from "./Components/Navigation/Routes/Profile/ProfileRoutes";
 import {IntegrationsRoutes} from "./Components/Navigation/Routes/Integrations/IntegrationsRoutes";
+import {SettingsRoutes} from "./Components/Navigation/Routes/Settings/SettingsRoutes";
 
 
 const store = createStore(reducer, applyMiddleware(thunk));
@@ -36,6 +37,7 @@ const CustomRoute = () =>
         </Switch>
         <ProjectRoutes/>
         <ProfileRoutes/>
+        <SettingsRoutes/>
         <IntegrationsRoutes/>
         <RequestsRoutes store={store}/>
         <ConfirmAction/>

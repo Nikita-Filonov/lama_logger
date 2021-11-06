@@ -25,7 +25,8 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
     setRequest({})
   }
   const onProfile = () => history.push('/user/profile');
-  const onIntegrations = () => history.push('/integrations')
+  const onIntegrations = () => history.push('/integrations');
+  const onSettings = () => history.push('/settings/theme');
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -54,7 +55,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Integrations'}/>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={onSettings} selected={location.pathname.startsWith('/settings')}>
           <ListItemIcon>
             <Settings/>
           </ListItemIcon>

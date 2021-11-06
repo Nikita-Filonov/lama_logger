@@ -29,6 +29,8 @@ export const BREADCRUMB_ROUTES = [
   {path: '/user/tokens', breadcrumb: 'Tokens'},
   {path: '/integrations', breadcrumb: 'Integrations'},
   {path: '/integrations/:language', breadcrumb: getSdkLanguage},
+  {path: '/settings/theme', breadcrumb: 'Theme'},
+  {path: '/settings/json-editor', breadcrumb: 'Json editor'}
 ];
 
 export const REQUESTS_ROUTES = [
