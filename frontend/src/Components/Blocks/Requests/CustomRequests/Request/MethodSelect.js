@@ -21,7 +21,7 @@ const MethodSelect = ({customRequest, setCustomRequest}) => {
 
   return (
     <React.Fragment>
-      <Tooltip title={'Select project'}>
+      <Tooltip title={'Select method'}>
         <Button
           sx={{mr: 2}}
           variant={'outlined'}
