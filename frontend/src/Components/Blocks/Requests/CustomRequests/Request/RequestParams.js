@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
@@ -9,37 +9,38 @@ import {Add, Close} from "@mui/icons-material";
 
 const RequestParams = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
-  const [params, setParams] = useState([]);
 
   useEffect(() => {
     (async () => await getQueryParams())();
   }, [customRequest?.requestUrl]);
 
-  const getQueryParams = async () => {
+  const getQueryParams = useCallback(async () => {
+    const notIncludedQueryParams = customRequest?.queryParams.filter(q => !q.include);
     const queryObject = await parseQueryFromUrl(customRequest?.requestUrl);
-    setParams(Object.keys(queryObject).map(key => ({key: key, value: queryObject[key], include: true})))
-  }
+    const queryParams = Object.keys(queryObject).map(key => ({key: key, value: queryObject[key], include: true}));
+    setCustomRequest({...customRequest, queryParams: [...queryParams, ...notIncludedQueryParams]});
+  }, [customRequest?.queryParams, customRequest?.requestUrl])
 
   const onChange = async (value, index, key) => {
-    const requestHeaders = customRequest?.requestHeaders?.map((payload, i) =>
+    const queryParams = customRequest?.queryParams?.map((payload, i) =>
       i === index
         ? {...payload, [key]: value}
         : payload
     );
-    setCustomRequest({...customRequest, requestHeaders});
+    setCustomRequest({...customRequest, queryParams});
   }
   const onNewHeader = async () => {
-    const requestHeaders = [...customRequest?.requestHeaders, {key: '', value: '', include: true}];
-    setCustomRequest({...customRequest, requestHeaders});
+    const queryParams = [...customRequest?.queryParams, {key: '', value: '', include: true}];
+    setCustomRequest({...customRequest, queryParams});
   }
   const onRemove = async (index) => {
-    const requestHeaders = customRequest?.requestHeaders?.filter((_, i) => i !== index);
-    setCustomRequest({...customRequest, requestHeaders});
+    const queryParams = customRequest?.queryParams?.filter((_, i) => i !== index);
+    setCustomRequest({...customRequest, queryParams});
   }
 
   return (
     <div className={classes.requestHeadersContainer}>
-      {params?.map(({key, value, include}, index) =>
+      {customRequest?.queryParams?.map(({key, value, include}, index) =>
         <div className={'d-flex align-items-center'} key={index}>
           <Checkbox
             size={'small'}

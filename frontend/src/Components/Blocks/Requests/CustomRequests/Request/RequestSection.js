@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Divider, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
+import {Button, Divider, Paper, Tab, Tabs, Typography} from "@mui/material";
 import {Send} from "@mui/icons-material";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
@@ -11,6 +11,7 @@ import RequestHeaders from "./RequestHeaders";
 import RequestBody from "./RequestBody";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
 import RequestParams from "./RequestParams";
+import RequestUrl from "./RequestUrl";
 
 const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
@@ -28,14 +29,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
 
       <div className={'d-flex'}>
         <MethodSelect/>
-        <TextField
-          value={customRequest?.requestUrl || ''}
-          onChange={event => setCustomRequest({...customRequest, requestUrl: event.target.value})}
-          fullWidth
-          className={'w-100'}
-          variant={'standard'}
-          placeholder={'Enter url'}
-        />
+        <RequestUrl/>
         <Button sx={{ml: 2, pr: 2, pl: 2}} endIcon={<Send/>}>Send</Button>
       </div>
       <Divider sx={{mt: 2}}/>

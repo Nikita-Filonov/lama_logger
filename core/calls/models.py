@@ -44,6 +44,12 @@ class Request(models.Model):
         blank=True,
         null=True
     )
+    queryParams = models.JSONField(
+        verbose_name='Query params',
+        default=list,
+        blank=True,
+        null=True
+    )
     statusCode = models.IntegerField(
         verbose_name='Response status code',
         null=True,
