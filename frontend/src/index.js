@@ -18,7 +18,7 @@ import {LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {RequestsRoutes} from "./Components/Navigation/Routes/Requests/RequestsRoutes";
 import {ProjectRoutes} from "./Components/Navigation/Routes/Projects/ProjectRoutes";
-import {SettingsProvider} from "./Providers/SettingsProvider";
+import {UserSettingsProvider} from "./Providers/Users/UserSettingsProvider";
 import {Registration} from "./Screens/Login/Registration";
 import {ProfileRoutes} from "./Components/Navigation/Routes/Profile/ProfileRoutes";
 import {IntegrationsRoutes} from "./Components/Navigation/Routes/Integrations/IntegrationsRoutes";
@@ -51,13 +51,13 @@ ReactDOM.render(
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Provider store={store}>
         <ThemeWrapper>
-          <SettingsProvider>
+          <UserSettingsProvider>
             <AlertsProvider>
               <UsersProvider store={store}>
                 <CustomRoute/>
               </UsersProvider>
             </AlertsProvider>
-          </SettingsProvider>
+          </UserSettingsProvider>
         </ThemeWrapper>
       </Provider>
     </LocalizationProvider>

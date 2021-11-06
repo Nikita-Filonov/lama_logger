@@ -174,6 +174,11 @@ class ApiToken(models.Model):
 
 
 class UserSettings(models.Model):
+    SKELETON_ANIMATIONS = (
+        ('pulse', 'pulse'),
+        ('wave', 'wave'),
+        (None, None)
+    )
     user = models.ForeignKey(
         CustomUser,
         verbose_name='User',
@@ -184,6 +189,14 @@ class UserSettings(models.Model):
         blank=False,
         null=False,
         default=dict
+    )
+    skeletonAnimation = models.CharField(
+        verbose_name='Skeleton animation',
+        max_length=20,
+        default='wave',
+        null=True,
+        blank=True,
+        choices=SKELETON_ANIMATIONS
     )
 
     def __str__(self):

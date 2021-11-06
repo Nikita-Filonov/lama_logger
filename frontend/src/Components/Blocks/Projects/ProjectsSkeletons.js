@@ -1,10 +1,10 @@
 import React from "react";
 import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
 import {Skeleton} from "@mui/lab";
-import {useSettings} from "../../../Providers/SettingsProvider";
+import {useUserSettings} from "../../../Providers/Users/UserSettingsProvider";
 
 export const ProjectsSkeletons = () => {
-  const {settings} = useSettings();
+  const {settings} = useUserSettings();
 
   return (
     <React.Fragment>

@@ -1,9 +1,9 @@
 import React, {useMemo} from "react";
-import {useSettings} from "../../../../Providers/SettingsProvider";
 import {Skeleton} from "@mui/lab";
+import {useUserSettings} from "../../../../Providers/Users/UserSettingsProvider";
 
 export const ApiTokensSkeletons = () => {
-  const {settings} = useSettings();
+  const {settings} = useUserSettings();
 
   const skeletonsCount = useMemo(() => Math.floor(window.innerHeight / 70), [])
   return (

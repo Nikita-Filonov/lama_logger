@@ -1,14 +1,13 @@
 import React from "react";
 import {Grid, Paper, Typography} from "@mui/material";
 import {Skeleton} from "@mui/lab";
-import {useSettings} from "../../../../Providers/SettingsProvider";
+import {useUserSettings} from "../../../../Providers/Users/UserSettingsProvider";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
-import {StatsChartStyles, ViewRequestStyles} from "../../../../Styles/Blocks";
+import {StatsChartStyles} from "../../../../Styles/Blocks";
 import {HelpOutline} from "@mui/icons-material";
 
 export const StatsInfoGrid = () => {
-  const classes = ViewRequestStyles();
-  const {settings} = useSettings();
+  const {settings} = useUserSettings();
   const {load, requestsStats} = useRequestsStats();
 
   return (

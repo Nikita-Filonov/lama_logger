@@ -1,9 +1,9 @@
 import React, {useMemo} from "react";
 import {Skeleton} from "@mui/lab";
-import {useSettings} from "../../../../Providers/SettingsProvider";
+import {useUserSettings} from "../../../../Providers/Users/UserSettingsProvider";
 
 export const RequestsTableSkeletons = () => {
-  const {settings} = useSettings();
+  const {settings} = useUserSettings();
 
   const skeletonsCount = useMemo(() => Math.floor((window.innerHeight - 170) / 50), [])
   return (
