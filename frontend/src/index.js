@@ -51,13 +51,13 @@ ReactDOM.render(
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Provider store={store}>
         <ThemeWrapper>
-          <UserSettingsProvider>
-            <AlertsProvider>
-              <UsersProvider store={store}>
+          <AlertsProvider>
+            <UsersProvider store={store}>
+              <UserSettingsProvider store={store}>
                 <CustomRoute/>
-              </UsersProvider>
-            </AlertsProvider>
-          </UserSettingsProvider>
+              </UserSettingsProvider>
+            </UsersProvider>
+          </AlertsProvider>
         </ThemeWrapper>
       </Provider>
     </LocalizationProvider>

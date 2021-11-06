@@ -1,10 +1,10 @@
 import React from "react";
 import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
 import {Skeleton} from "@mui/lab";
-import {useUserSettings} from "../../../Providers/Users/UserSettingsProvider";
+import {useSelector} from "react-redux";
 
 export const ProjectsSkeletons = () => {
-  const {settings} = useUserSettings();
+  const {skeletonAnimation} = useSelector(state => state.users.userSettings);
 
   return (
     <React.Fragment>
@@ -12,9 +12,9 @@ export const ProjectsSkeletons = () => {
         <Grid item xs={12} sm={6} md={3} key={index}>
           <Card>
             <CardHeader
-              title={<Skeleton animation={settings.skeletonAnimation} height={12} width="100%"
+              title={<Skeleton animation={skeletonAnimation} height={12} width="100%"
                                style={{marginBottom: 6}}/>}
-              subheader={<Skeleton animation={settings.skeletonAnimation} height={12} width="100%"
+              subheader={<Skeleton animation={skeletonAnimation} height={12} width="100%"
                                    style={{marginBottom: 6}}/>}
             />
             <CardContent>

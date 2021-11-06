@@ -47,6 +47,18 @@ export const REQUESTS_ROUTES = [
   '/projects/:projectId/settings/inbound'
 ]
 
+export const DEFAULT_USER_SETTINGS = {
+  jsonEditor: {
+    tabSize: 2,
+    useWorker: false,
+    enableSnippets: true,
+    showLineNumbers: true,
+    enableLiveAutocompletion: true,
+    enableBasicAutocompletion: true
+  },
+  skeletonAnimation: "wave"
+}
+
 export const UNITS = [
   {label: 'Seconds', unit: 'seconds'},
   {label: 'Minutes', unit: 'minutes'},

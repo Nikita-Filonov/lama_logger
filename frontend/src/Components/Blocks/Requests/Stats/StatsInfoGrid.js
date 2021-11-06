@@ -1,14 +1,14 @@
 import React from "react";
 import {Grid, Paper, Typography} from "@mui/material";
 import {Skeleton} from "@mui/lab";
-import {useUserSettings} from "../../../../Providers/Users/UserSettingsProvider";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
 import {StatsChartStyles} from "../../../../Styles/Blocks";
 import {HelpOutline} from "@mui/icons-material";
+import {useSelector} from "react-redux";
 
 export const StatsInfoGrid = () => {
-  const {settings} = useUserSettings();
   const {load, requestsStats} = useRequestsStats();
+  const {skeletonAnimation} = useSelector(state => state.users.userSettings);
 
   return (
     <Grid container spacing={2} className={'mt-2'}>
@@ -19,7 +19,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.total}
+            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.total}
           </Typography>
         </Paper>
       </Grid>
@@ -30,7 +30,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.create}
+            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.create}
           </Typography>
         </Paper>
       </Grid>
@@ -41,7 +41,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.delete}
+            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.delete}
           </Typography>
         </Paper>
       </Grid>
@@ -52,7 +52,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={settings.skeletonAnimation}/> : requestsStats?.filter}
+            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.filter}
           </Typography>
         </Paper>
       </Grid>
