@@ -47,7 +47,7 @@ const RequestsSideStatusCodesFilters = (props) => {
     <FormGroup>
       <Typography variant={'subtitle2'} className={'mt-2'}>Status codes</Typography>
       {REQUESTS_STATUS_CODES_TYPES.map((codes, index) =>
-        <div className={'d-flex align-items-center'}>
+        <div className={'d-flex align-items-center'} key={index}>
           <FormControlLabel
             key={index}
             control={
