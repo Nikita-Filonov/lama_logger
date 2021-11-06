@@ -11,10 +11,12 @@ const CustomRequests = ({project, customRequest}) => {
   const {updateCustomRequest} = useCustomRequests();
 
   useEffect(() => {
-    const timeout = setTimeout(async () =>
-      await updateCustomRequest(project.id, customRequest.requestId, customRequest), 700);
+    const timeout = setTimeout(async () => (project.id && customRequest?.requestId) &&
+      await updateCustomRequest(project.id, customRequest?.requestId, customRequest),
+      700
+    );
     return () => clearTimeout(timeout);
-  }, [customRequest])
+  }, [project.id, customRequest])
 
   return (
     <Container maxWidth={'xl'}>

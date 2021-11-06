@@ -28,7 +28,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
       <div className={'d-flex'}>
         <MethodSelect/>
         <TextField
-          value={customRequest?.requestUrl}
+          value={customRequest?.requestUrl || ''}
           onChange={event => setCustomRequest({...customRequest, requestUrl: event.target.value})}
           fullWidth
           className={'w-100'}

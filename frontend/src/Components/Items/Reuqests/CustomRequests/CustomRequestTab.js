@@ -11,6 +11,7 @@ export const CustomRequestTab = ({request, index, onSelectTab}) =>
     value={index}
     sx={{...tabsStyles, pr: 0.5, pl: 1}}
     style={{flexDirection: 'row'}}
+    component={'div'}
     label={
       <React.Fragment>
         <Typography
