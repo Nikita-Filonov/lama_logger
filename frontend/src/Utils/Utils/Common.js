@@ -56,3 +56,8 @@ export const copyText = (text) => {
 export const SlideTransition = forwardRef((props, ref) =>
   <Slide direction="up" ref={ref} {...props} />);
 
+export const parseQueryFromUrl = async (url: string) => {
+  const queryParams = url.split('?')[1];
+  const urlSearchParams = new URLSearchParams(queryParams);
+  return Object.fromEntries(urlSearchParams.entries());
+}

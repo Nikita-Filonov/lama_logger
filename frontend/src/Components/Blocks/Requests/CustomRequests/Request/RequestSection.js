@@ -10,6 +10,7 @@ import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/cus
 import RequestHeaders from "./RequestHeaders";
 import RequestBody from "./RequestBody";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
+import RequestParams from "./RequestParams";
 
 const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
@@ -50,7 +51,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
         <RequestBody/>
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        dsdsfsdf
+        <RequestParams/>
       </TabPanel>
     </Paper>
   )

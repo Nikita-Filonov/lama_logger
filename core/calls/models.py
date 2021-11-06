@@ -88,7 +88,7 @@ class Request(models.Model):
     )
 
     def __str__(self):
-        return self.requestUrl
+        return self.requestUrl or 'No url'
 
 
 class CustomRequestsHistory(models.Model):
