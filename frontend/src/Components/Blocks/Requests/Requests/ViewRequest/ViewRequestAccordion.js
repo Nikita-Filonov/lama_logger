@@ -3,7 +3,7 @@ import {Box, Link, Tab, Tabs, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequest} from "../../../../../Redux/Requests/Requests/requestsActions";
 import ViewRequestMenu from "../../../../Menus/Requests/Requests/ViewRequestMenu";
-import {TabPanel} from "../../../Common/TabPanel";
+import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {Headers} from "./Headers";
 import {Body} from "./Body";
 import moment from "moment";

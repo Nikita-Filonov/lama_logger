@@ -10,7 +10,7 @@ import {useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {ProjectSettingsStyles} from "../../../../Styles/Screens";
 import {Typography} from "@mui/material";
-import {ListItemLink} from "../../Common/Drawers/ListItemLink";
+import {ListItemLink} from "../../Common/Navigation/ListItemLink";
 import {getMatchesRequestsSettingsRoute} from "../../../../Utils/Utils/Routing";
 
 

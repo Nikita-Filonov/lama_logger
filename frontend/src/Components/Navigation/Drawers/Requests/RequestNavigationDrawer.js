@@ -14,7 +14,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
 import {setRequest} from "../../../../Redux/Requests/Requests/requestsActions";
-import DrawerSelectProject from "../../../Blocks/Common/Drawers/DrawerSelectProject";
+import DrawerSelectProject from "../../../Blocks/Common/Navigation/DrawerSelectProject";
 
 const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   const history = useHistory();

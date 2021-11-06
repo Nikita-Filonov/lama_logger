@@ -16,7 +16,7 @@ const RequestsSideDomainFilters = ({requestsFilters, setRequestsFilters}) => {
     <React.Fragment>
       <Typography variant={'subtitle2'} className={'mt-2'}>Url</Typography>
       <TextField
-        value={domain}
+        value={domain || ''}
         onChange={event => setDomain(event.target.value)}
         label={'Domain or url'}
         variant={'standard'}

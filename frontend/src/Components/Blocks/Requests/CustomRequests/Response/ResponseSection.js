@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Paper, Tab, Tabs, Typography} from "@mui/material";
-import {TabPanel} from "../../../Common/TabPanel";
+import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import {DragHandle} from "@mui/icons-material";

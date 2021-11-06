@@ -1,4 +1,3 @@
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 export const TabPanel = (props) => {
@@ -14,7 +13,7 @@ export const TabPanel = (props) => {
     >
       {value === index && (
         <Box sx={{paddingTop: 3, paddingBottom: 3}}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>

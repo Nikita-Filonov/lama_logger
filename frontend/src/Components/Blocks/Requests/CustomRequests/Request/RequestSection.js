@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, Divider, IconButton, Paper, Tab, Tabs, TextField, Typography} from "@mui/material";
 import {DragHandle, Send} from "@mui/icons-material";
-import {TabPanel} from "../../../Common/TabPanel";
+import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import {HeaderDivider} from "../HeaderDivider";
 import MethodSelect from "./MethodSelect";
@@ -40,16 +40,16 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
       <Divider sx={{mt: 2}}/>
       <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'} className={'mt-3'}>
         <Tab sx={tabsStyles} color={'primary'} label="Headers"/>
-        <Tab sx={tabsStyles} label="Body"/>
-        <Tab sx={tabsStyles} label="Params"/>
+        <Tab sx={tabsStyles} color={'primary'} label="Body"/>
+        <Tab sx={tabsStyles} color={'primary'} label="Params"/>
       </Tabs>
-      <TabPanel value={requestTab} index={0}>
+      <TabPanel value={requestTab} index={0} component={'span'}>
         <RequestHeaders/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
         dsdsfsdf
       </TabPanel>
-      <TabPanel value={requestTab} index={1}>
+      <TabPanel value={requestTab} index={2}>
         dsdsfsdf
       </TabPanel>
     </Paper>

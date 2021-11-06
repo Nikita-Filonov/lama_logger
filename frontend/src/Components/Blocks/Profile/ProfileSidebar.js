@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import {useLocation} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {ProjectSettingsStyles} from "../../../Styles/Screens";
-import {ListItemLink} from "../Common/Drawers/ListItemLink";
+import {ListItemLink} from "../Common/Navigation/ListItemLink";
 
 
 export const ProfileSidebar = () => {
