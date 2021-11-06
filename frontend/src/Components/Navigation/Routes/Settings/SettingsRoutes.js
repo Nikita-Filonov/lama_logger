@@ -1,6 +1,6 @@
 import React from "react";
 import {Switch} from "react-router-dom";
-import {CustomRequestsJsonEditorSettings} from "../../../../Screens/Settings/CustomRequests/CustomRequestsJsonEditorSettings";
+import CustomRequestsJsonEditorSettings from "../../../../Screens/Settings/CustomRequests/CustomRequestsJsonEditorSettings";
 import {SettingsRoute} from "./SettingsRoute";
 
 

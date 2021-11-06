@@ -50,11 +50,12 @@ export const REQUESTS_ROUTES = [
 export const DEFAULT_USER_SETTINGS = {
   jsonEditor: {
     tabSize: 2,
-    useWorker: false,
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: true,
     enableSnippets: true,
     showLineNumbers: true,
-    enableLiveAutocompletion: true,
-    enableBasicAutocompletion: true
+    showGutter: true,
+    highlightActiveLine: true
   },
   skeletonAnimation: "wave"
 }

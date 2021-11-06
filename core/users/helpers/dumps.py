@@ -1,8 +1,9 @@
 JSON_EDITOR = {
+    'tabSize': 2,
     'enableBasicAutocompletion': True,
     'enableLiveAutocompletion': True,
     'enableSnippets': True,
     'showLineNumbers': True,
-    'tabSize': 2,
-    'useWorker': False
+    'showGutter': True,
+    'highlightActiveLine': True
 }

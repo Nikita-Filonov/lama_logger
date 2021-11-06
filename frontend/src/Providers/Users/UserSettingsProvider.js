@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react';
-import {get} from "../../Utils/Api/Fetch";
+import React, {useContext, useEffect, useState} from 'react';
+import {get, patch} from "../../Utils/Api/Fetch";
 import {useUsers} from "./UsersProvider";
 import {SET_USER_SETTINGS} from "../../Redux/Users/actionTypes";
 import {useAlerts} from "../AlertsProvider";
@@ -11,6 +11,7 @@ const UserSettingsProvider = ({children, store}) => {
   const userSettingsApi = 'api/v1/user/settings/';
   const {token} = useUsers();
   const {setAlert} = useAlerts();
+  const [request, setRequest] = useState(false);
 
   useEffect(() => {
     (async () => token && await getUserSettings())()
@@ -22,8 +23,12 @@ const UserSettingsProvider = ({children, store}) => {
     error && setAlert({message: 'Unable to fetch user settings', level: 'error'});
   }
 
-  const updateUserSettings = async (settingsId, payload) => {
-
+  const updateUserSettings = async (payload) => {
+    setRequest(true);
+    const {json, error} = await patch(userSettingsApi, payload);
+    !error && store.dispatch({type: SET_USER_SETTINGS, payload: json});
+    setAlert(error ? json : {message: 'User settings were successfully updated', level: 'success'});
+    setRequest(false);
   }
 
   return (

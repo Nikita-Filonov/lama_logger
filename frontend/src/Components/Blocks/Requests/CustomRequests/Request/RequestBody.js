@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
 
-const RequestBody = ({customRequest, setCustomRequest}) => {
+const RequestBody = ({userSettings, customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
   const {palette} = useTheme();
 
@@ -29,23 +29,15 @@ const RequestBody = ({customRequest, setCustomRequest}) => {
         onChange={onEdit}
         fontSize={14}
         showPrintMargin={true}
-        showGutter={true}
-        highlightActiveLine={true}
         value={customRequest?.requestBody}
-        setOptions={{
-          enableBasicAutocompletion: true,
-          enableLiveAutocompletion: true,
-          enableSnippets: true,
-          showLineNumbers: true,
-          tabSize: 2,
-          useWorker: false
-        }}
+        setOptions={{useWorker: false, ...userSettings.jsonEditor}}
       />
     </div>
   )
 }
 
 const getState = (state) => ({
+  userSettings: state.users.userSettings,
   customRequest: state.customRequests.customRequest,
 })
 

@@ -7,7 +7,7 @@ export const INITIAL_USERS = {
   },
   drawer: false,
   theme: localStorage.getItem('theme') || 'light',
-  userSettings: localStorage.getItem('userSettings') || DEFAULT_USER_SETTINGS,
+  userSettings: JSON.parse(localStorage.getItem('userSettings')) || DEFAULT_USER_SETTINGS,
   confirmAction: {
     modal: false,
     title: null,
