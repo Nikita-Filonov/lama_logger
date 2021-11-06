@@ -7,6 +7,7 @@ export const INITIAL_CUSTOM_REQUESTS = {
   },
   customRequest: JSON.parse(localStorage.getItem('customRequest')) || {
     requestId: null,
-    requestHeaders: []
+    requestHeaders: [],
+    requestBody: null
   }
 }

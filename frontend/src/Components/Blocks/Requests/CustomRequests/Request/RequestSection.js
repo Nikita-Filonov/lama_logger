@@ -8,6 +8,7 @@ import MethodSelect from "./MethodSelect";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import RequestHeaders from "./RequestHeaders";
+import RequestBody from "./RequestBody";
 
 const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
@@ -47,7 +48,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
         <RequestHeaders/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        dsdsfsdf
+        <RequestBody/>
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
         dsdsfsdf

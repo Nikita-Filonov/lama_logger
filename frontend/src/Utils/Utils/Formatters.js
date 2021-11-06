@@ -15,7 +15,7 @@ export const bodyTypeDetect = (responseHeaders, body = null) => {
     return 'text'
   }
 
-  const contentType = responseHeaders['Content-Type']
+  const contentType = responseHeaders['Content-Type'].toLowerCase();
   if (contentType?.startsWith('application/json')) {
     return 'json'
   }
