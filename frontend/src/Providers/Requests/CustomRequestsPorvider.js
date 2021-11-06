@@ -1,7 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {queryWithPagination} from "../../Utils/Utils/Common";
-import {get, post} from "../../Utils/Api/Fetch";
-import {CREATE_CUSTOM_REQUEST, SET_CUSTOM_REQUESTS} from "../../Redux/Requests/CustomRequests/actionTypes";
+import {get, patch, post} from "../../Utils/Api/Fetch";
+import {
+  CREATE_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUESTS,
+  UPDATE_CUSTOM_REQUEST
+} from "../../Redux/Requests/CustomRequests/actionTypes";
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";
 
@@ -42,6 +46,10 @@ const CustomRequestsProvider = ({children, store}) => {
   }
 
   const updateCustomRequest = async (projectId, requestId, payload) => {
+    setRequest(true);
+    const {json} = await patch(projectsApi + `${projectId}/custom-requests/${requestId}/`, payload);
+    store.dispatch({type: UPDATE_CUSTOM_REQUEST, payload: {requestId, payload: json}});
+    setRequest(false);
 
   }
 
@@ -51,7 +59,8 @@ const CustomRequestsProvider = ({children, store}) => {
         load,
         request,
         getCustomRequests,
-        createCustomRequest
+        createCustomRequest,
+        updateCustomRequest
       }}
     >
       {children}

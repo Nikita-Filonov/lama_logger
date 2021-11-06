@@ -37,3 +37,20 @@ class CustomRequestsApi(views.APIView, LimitOffsetPagination):
             return Response(payload, status=status.HTTP_201_CREATED)
 
         raise BadRequest('Error happened while creating request')
+
+
+class CustomRequestApi(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    def patch(self, request, project_id, request_id):
+        custom_request = Request.objects.get(requestId=request_id)
+        serializer = RequestSerializer(custom_request, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            custom_request = serializer.save()
+            serializer = RequestsSerializer(custom_request, many=False)
+            return Response(serializer.data)
+
+        raise BadRequest(message='Error happened while updating request', data=serializer.errors)
