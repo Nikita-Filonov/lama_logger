@@ -5,7 +5,7 @@ import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/cus
 import {parseQueryFromUrl} from "../../../../../Utils/Utils/Common";
 import {Button, Checkbox, IconButton, TextField} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
-import {isValidJson} from "../../../../../Utils/Utils/Validators";
+import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 
 const RequestParams = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
@@ -39,15 +39,11 @@ const RequestParams = ({customRequest, setCustomRequest}) => {
   }
 
   const onPasteQuery = async (event, index, key) => {
-    const pastedValue = event.clipboardData.getData('Text');
+    const {result, isJson} = await parsePastedValue(event);
 
-    if (isValidJson(pastedValue)) {
-      const pastedJson = JSON.parse(pastedValue);
-      const queryParams = Object.keys(pastedJson).map(key => ({key: key, value: pastedJson[key], include: true}));
-      setCustomRequest({...customRequest, queryParams: [...customRequest?.queryParams, ...queryParams]});
-    } else {
-      await onChange(pastedValue, index, key);
-    }
+    isJson
+      ? setCustomRequest({...customRequest, queryParams: [...customRequest?.queryParams, ...result]})
+      : await onChange(result, index, key);
   }
 
   return (

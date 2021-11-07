@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {Add, Close} from "@mui/icons-material";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
+import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 
 const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
@@ -25,6 +26,14 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
     setCustomRequest({...customRequest, requestHeaders});
   }
 
+  const onPasteHeaders = async (event, index, key) => {
+    const {result, isJson} = await parsePastedValue(event);
+
+    isJson
+      ? setCustomRequest({...customRequest, requestHeaders: [...customRequest?.requestHeaders, ...result]})
+      : await onChange(result, index, key);
+  }
+
   return (
     <div className={classes.requestHeadersContainer}>
       {customRequest?.requestHeaders?.map(({key, value, include}, index) =>
@@ -38,6 +47,7 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
             disabled={disabled}
             sx={{mr: 2}}
             value={key}
+            onPaste={async event => await onPasteHeaders(event, index, 'key')}
             onChange={async event => await onChange(event.target.value, index, 'key')}
             fullWidth
             variant={'standard'}
@@ -47,6 +57,7 @@ const RequestHeaders = ({disabled = false, customRequest, setCustomRequest}) => 
           <TextField
             disabled={disabled}
             value={value}
+            onPaste={async event => await onPasteHeaders(event, index, 'value')}
             onChange={async event => await onChange(event.target.value, index, 'value')}
             fullWidth
             variant={'standard'}

@@ -1,4 +1,5 @@
 import moment from "moment";
+import {isValidJson} from "./Validators";
 
 const getFilterInterval = ({amount, unit, prev}) => {
   const now = moment(Date.now());
@@ -57,4 +58,15 @@ export const makeRequestsStatsFilters = (filters) => {
       created__range: filters?.time?.range
     })
   }
+}
+
+export const parsePastedValue = async (event) => {
+  let result = event.clipboardData.getData('Text');
+  let isJson = false;
+  if (isValidJson(result)) {
+    const pastedJson = JSON.parse(result);
+    result = Object.keys(pastedJson).map(key => ({key: key, value: pastedJson[key], include: true}));
+    isJson = true;
+  }
+  return {result, isJson};
 }
