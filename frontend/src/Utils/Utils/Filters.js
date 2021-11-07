@@ -61,6 +61,7 @@ export const makeRequestsStatsFilters = (filters) => {
 }
 
 export const parsePastedValue = async (event) => {
+  event.preventDefault();
   let result = event.clipboardData.getData('Text');
   let isJson = false;
   if (isValidJson(result)) {
