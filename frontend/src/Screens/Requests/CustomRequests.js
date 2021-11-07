@@ -23,7 +23,7 @@ const CustomRequests = ({project, customRequest}) => {
     <Container maxWidth={'xl'}>
       <RequestsTabs/>
       <div className={'d-flex'}>
-        <Grid container spacing={2} sx={{mt: 1}}>
+        <Grid container spacing={2} sx={{mt: 0.5}}>
           <Grid item xs={4}>
             <RequestsHistory/>
           </Grid>
