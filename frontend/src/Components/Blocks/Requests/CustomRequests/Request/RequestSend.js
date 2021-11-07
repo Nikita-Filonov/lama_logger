@@ -31,7 +31,6 @@ const RequestSend = ({customRequest, setCustomRequest}) => {
     try {
       response = await fetch(customRequest?.requestUrl, options);
     } catch (error) {
-      console.log(error);
       setRequest(false);
       return;
     }

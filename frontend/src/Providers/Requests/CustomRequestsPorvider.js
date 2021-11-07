@@ -55,6 +55,14 @@ const CustomRequestsProvider = ({children, store}) => {
     setRequest(false);
   }
 
+  const deleteCustomRequest = async () => {
+
+  }
+
+  const createCustomRequestHistory = async () => {
+
+  }
+
   return (
     <CustomRequestsContext.Provider
       value={{

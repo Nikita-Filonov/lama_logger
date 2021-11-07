@@ -34,7 +34,15 @@ export const RequestsRoutes = ({store}) =>
       <ProjectSettingsProvider store={store}>
         <PermissionsProvider>
           <Switch>
-            <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
+            <RequestRoute
+              exact
+              path="/projects/:projectId/requests"
+              component={props =>
+                <CustomRequestsProvider store={store}>
+                  <Requests {...props}/>
+                </CustomRequestsProvider>
+              }
+            />
             <RequestRoute
               exact
               path="/projects/:projectId/requests/custom"

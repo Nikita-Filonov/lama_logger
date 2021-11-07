@@ -12,6 +12,7 @@ import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import clsx from "clsx";
 import {useWindowSize} from "../../../../../Utils/Hooks/LayoutHooks";
 import {StatusCodeIndicator} from "../../Requests/StatusCodeIndicator";
+import {isValidJson} from "../../../../../Utils/Utils/Validators";
 
 export const ResponseSection = () => {
   const {width} = useWindowSize();
@@ -44,10 +45,14 @@ export const ResponseSection = () => {
         <ResponseHeaders/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <div className={clsx(classes.requestHeadersContainer)}
+        <div className={clsx(classes.responseHeadersContainer)}
              style={{display: 'inline-block', width: width / 1.67, wordWrap: 'break-word'}}>
           {customRequests?.responseBody && <Body
-            body={JSON.stringify(customRequests?.responseBody)}
+            body={
+              isValidJson(customRequests?.responseBody)
+                ? customRequests?.responseBody
+                : JSON.stringify(customRequests?.responseBody)
+            }
             responseHeaders={customRequests?.responseHeaders}
           />}
         </div>

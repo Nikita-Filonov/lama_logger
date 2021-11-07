@@ -10,6 +10,8 @@ export const INITIAL_CUSTOM_REQUESTS = {
     requestHeaders: [],
     queryParams: [],
     requestBody: null,
-    requestUrl: null
+    requestUrl: null,
+    responseHeaders: {},
+    responseBody: null
   }
 }
