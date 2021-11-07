@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from "react";
+import React, {useMemo} from "react";
 import {connect} from "react-redux";
 import clsx from "clsx";
 import {IconButton, Paper, Tabs} from "@mui/material";
@@ -38,7 +38,7 @@ const RequestsTabs = ({customRequest, customRequests, project, drawer, setCustom
         variant="scrollable"
         scrollButtons
         allowScrollButtonsMobile
-        style={{width: drawer ? width / 1.35 : width / 1.15, transition: 'width 0.3s',}}
+        style={{width: drawer ? width / 1.35 : width / 1.15, transition: 'width 0.3s'}}
       >
         {customRequests?.results?.map((request, index) =>
           <CustomRequestTab

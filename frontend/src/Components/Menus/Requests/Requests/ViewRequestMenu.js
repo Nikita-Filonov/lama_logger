@@ -32,7 +32,11 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
   }
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
   const onSend = async () => {
-    const requestHeaders = Object.keys(request?.requestHeaders).map(key => ({key: key, value: key, include: true}));
+    const requestHeaders = Object.keys(request?.requestHeaders).map(key => ({
+      key: key,
+      value: request?.requestHeaders[key],
+      include: true
+    }));
     const queryObject = await parseQueryFromUrl(request?.requestUrl);
     const queryParams = Object.keys(queryObject).map(key => ({key: key, value: queryObject[key], include: true}));
     const payload = {
