@@ -5,13 +5,13 @@ import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/cus
 import {parseQueryFromUrl} from "../../../../../Utils/Utils/Common";
 import {Button, Checkbox, IconButton, TextField} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
-
+import {isValidJson} from "../../../../../Utils/Utils/Validators";
 
 const RequestParams = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
 
   useEffect(() => {
-    (async () => await getQueryParams())();
+    (async () => customRequest?.requestUrl && await getQueryParams())();
   }, [customRequest?.requestUrl]);
 
   const getQueryParams = useCallback(async () => {
@@ -38,6 +38,18 @@ const RequestParams = ({customRequest, setCustomRequest}) => {
     setCustomRequest({...customRequest, queryParams});
   }
 
+  const onPasteQuery = async (event, index, key) => {
+    const pastedValue = event.clipboardData.getData('Text');
+
+    if (isValidJson(pastedValue)) {
+      const pastedJson = JSON.parse(pastedValue);
+      const queryParams = Object.keys(pastedJson).map(key => ({key: key, value: pastedJson[key], include: true}));
+      setCustomRequest({...customRequest, queryParams: [...customRequest?.queryParams, ...queryParams]});
+    } else {
+      await onChange(pastedValue, index, key);
+    }
+  }
+
   return (
     <div className={classes.requestHeadersContainer}>
       {customRequest?.queryParams?.map(({key, value, include}, index) =>
@@ -50,6 +62,7 @@ const RequestParams = ({customRequest, setCustomRequest}) => {
           <TextField
             sx={{mr: 2}}
             value={key}
+            onPaste={async event => await onPasteQuery(event, index, 'key')}
             onChange={async event => await onChange(event.target.value, index, 'key')}
             fullWidth
             variant={'standard'}
@@ -58,6 +71,7 @@ const RequestParams = ({customRequest, setCustomRequest}) => {
           />
           <TextField
             value={value}
+            onPaste={async event => await onPasteQuery(event, index, 'value')}
             onChange={async event => await onChange(event.target.value, index, 'value')}
             fullWidth
             variant={'standard'}

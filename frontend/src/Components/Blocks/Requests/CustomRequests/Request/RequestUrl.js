@@ -7,7 +7,7 @@ import {objectToQuery} from "../../../../../Utils/Utils/Common";
 const RequestUrl = ({customRequest, setCustomRequest}) => {
 
   useEffect(() => {
-    (async () => await queryObjectToString())()
+    (async () => customRequest?.queryParams?.length > 0 && await queryObjectToString())()
   }, [customRequest?.queryParams]);
 
   const queryObjectToString = useCallback(async () => {
@@ -15,7 +15,7 @@ const RequestUrl = ({customRequest, setCustomRequest}) => {
     for (let i = 0; i < customRequest?.queryParams?.length; i++) {
       const key = customRequest?.queryParams[i].key;
       const value = customRequest?.queryParams[i].value;
-      if (customRequest?.queryParams[i].include) {
+      if (customRequest?.queryParams[i].include && (key.length > 0 || value.length > 0)) {
         queryObject[key] = value;
       }
     }

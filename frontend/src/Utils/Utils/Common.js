@@ -1,5 +1,6 @@
 import React, {forwardRef} from "react";
 import {Slide} from "@mui/material";
+import _ from 'lodash';
 
 export const uuid4 = async () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -31,7 +32,9 @@ export const normalizeAmount = async (unit, amount) => {
 }
 
 export const objectToQuery = async (object, ignore = ['meta']) =>
-  object && '?' + Object.keys(object)
+  _.isEmpty(object)
+    ? ''
+    : '?' + Object.keys(object)
     .map(key => !ignore.includes(key) ? `${key}=${object[key]}&` : '')
     .join('');
 
