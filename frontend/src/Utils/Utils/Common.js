@@ -58,7 +58,7 @@ export const SlideTransition = forwardRef((props, ref) =>
 
 export const parseQueryFromUrl = async (url: string) => {
   if (!url) {
-    return []
+    return [];
   }
   const queryParams = url.split('?')[1];
   const urlSearchParams = new URLSearchParams(queryParams);
