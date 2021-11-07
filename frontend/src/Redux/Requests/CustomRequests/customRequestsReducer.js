@@ -1,5 +1,11 @@
 import {INITIAL_CUSTOM_REQUESTS} from "./initialState";
-import {CREATE_CUSTOM_REQUEST, SET_CUSTOM_REQUEST, SET_CUSTOM_REQUESTS, UPDATE_CUSTOM_REQUEST} from "./actionTypes";
+import {
+  CREATE_CUSTOM_REQUEST,
+  DELETE_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUESTS,
+  UPDATE_CUSTOM_REQUEST
+} from "./actionTypes";
 
 
 export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = {}) => {
@@ -29,6 +35,14 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
               : request
           )
         }
+      }
+    }
+    case DELETE_CUSTOM_REQUEST: {
+      const {requestId} = action.payload;
+      const results = state.customRequests.results.filter(r => r.requestId !== requestId);
+      return {
+        ...state,
+        customRequests: {...state.customRequests, results}
       }
     }
     default:

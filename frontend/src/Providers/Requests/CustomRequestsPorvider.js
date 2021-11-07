@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {queryWithPagination} from "../../Utils/Utils/Common";
-import {get, patch, post} from "../../Utils/Api/Fetch";
+import {get, patch, post, remove} from "../../Utils/Api/Fetch";
 import {
   CREATE_CUSTOM_REQUEST,
+  DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUESTS,
   UPDATE_CUSTOM_REQUEST
@@ -55,8 +56,12 @@ const CustomRequestsProvider = ({children, store}) => {
     setRequest(false);
   }
 
-  const deleteCustomRequest = async () => {
-
+  const deleteCustomRequest = async (projectId, requestId) => {
+    setRequest(true);
+    const {json, error} = await remove(projectsApi + `${projectId}/custom-requests/${requestId}/`);
+    !error && store.dispatch({type: DELETE_CUSTOM_REQUEST, payload: {requestId}});
+    setAlert(error ? json : {message: 'Request successfully deleted', level: 'success'});
+    setRequest(false);
   }
 
   const createCustomRequestHistory = async () => {
@@ -70,7 +75,8 @@ const CustomRequestsProvider = ({children, store}) => {
         request,
         getCustomRequests,
         createCustomRequest,
-        updateCustomRequest
+        updateCustomRequest,
+        deleteCustomRequest
       }}
     >
       {children}
