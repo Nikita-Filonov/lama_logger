@@ -16,7 +16,8 @@ const CustomRequests = ({project, customRequest}) => {
       700
     );
     return () => clearTimeout(timeout);
-  }, [project.id, customRequest])
+  }, [project.id, customRequest?.requestUrl, customRequest?.method,
+    customRequest?.requestBody, customRequest?.requestHeaders, customRequest?.queryParams])
 
   return (
     <Container maxWidth={'xl'}>

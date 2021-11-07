@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {Button, Divider, Paper, Tab, Tabs, Typography} from "@mui/material";
-import {Send} from "@mui/icons-material";
+import {Divider, Paper, Tab, Tabs, Typography} from "@mui/material";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import {HeaderDivider} from "../HeaderDivider";
@@ -12,6 +11,7 @@ import RequestBody from "./RequestBody";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
 import RequestParams from "./RequestParams";
 import RequestUrl from "./RequestUrl";
+import RequestSend from "./RequestSend";
 
 const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
@@ -26,11 +26,10 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
         <RequestSectionMenu/>
       </div>
       <HeaderDivider/>
-
       <div className={'d-flex'}>
         <MethodSelect/>
         <RequestUrl/>
-        <Button sx={{ml: 2, pr: 2, pl: 2}} endIcon={<Send/>}>Send</Button>
+        <RequestSend/>
       </div>
       <Divider sx={{mt: 2}}/>
       <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'} className={'mt-3'}>
