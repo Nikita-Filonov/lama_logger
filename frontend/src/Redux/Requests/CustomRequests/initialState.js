@@ -5,6 +5,12 @@ export const INITIAL_CUSTOM_REQUESTS = {
     previous: null,
     results: []
   },
+  customRequestsHistory: {
+    count: 0,
+    next: null,
+    previous: null,
+    results: []
+  },
   customRequest: JSON.parse(localStorage.getItem('customRequest')) || {
     requestId: null,
     requestHeaders: [],

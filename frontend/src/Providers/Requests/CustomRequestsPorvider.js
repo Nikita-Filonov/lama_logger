@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {queryWithPagination} from "../../Utils/Utils/Common";
+import {objectToQuery, queryWithPagination} from "../../Utils/Utils/Common";
 import {get, patch, post, remove} from "../../Utils/Api/Fetch";
 import {
   CREATE_CUSTOM_REQUEST,
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUESTS,
+  SET_CUSTOM_REQUESTS_HISTORY,
   UPDATE_CUSTOM_REQUEST
 } from "../../Redux/Requests/CustomRequests/actionTypes";
 import {useSelector} from "react-redux";
@@ -23,13 +24,12 @@ const CustomRequestsProvider = ({children, store}) => {
   const project = useSelector(state => state.projects.project);
 
   useEffect(() => {
-    (async () => await getCustomRequests(
-      project.id,
-      50,
-      0,
-      {filters: JSON.stringify({isCustom: true})}
-    ))()
-  }, [project.id])
+    (async () => {
+      await getCustomRequests(project.id, 50, 0, {filters: JSON.stringify({isCustom: true})})
+      await getCustomRequestsHistory(project.id);
+    })()
+  }, [project.id]);
+
 
   const getCustomRequests = async (projectId, limit = 50, offset = 0, filters = {}) => {
     setLoad(state => state);
@@ -64,8 +64,16 @@ const CustomRequestsProvider = ({children, store}) => {
     setRequest(false);
   }
 
-  const createCustomRequestHistory = async (projectId, payload) => {
-    const {json, error} = await post(projectsApi + `${projectId}/custom-requests/`, payload);
+  const getCustomRequestsHistory = async (projectId, limit = 50, offset = 0) => {
+    setLoad(state => state);
+    const query = await objectToQuery({limit, offset});
+    const {json} = await get(projectsApi + `${projectId}/custom-requests-history/${query}`);
+    store.dispatch({type: SET_CUSTOM_REQUESTS_HISTORY, payload: json});
+    setLoad(false);
+  }
+
+  const createCustomRequestsHistory = async (projectId, payload) => {
+    const {json, error} = await post(projectsApi + `${projectId}/custom-requests-history/`, payload);
   }
 
   return (
@@ -76,7 +84,8 @@ const CustomRequestsProvider = ({children, store}) => {
         getCustomRequests,
         createCustomRequest,
         updateCustomRequest,
-        deleteCustomRequest
+        deleteCustomRequest,
+        createCustomRequestsHistory
       }}
     >
       {children}

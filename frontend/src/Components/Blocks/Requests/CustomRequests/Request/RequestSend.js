@@ -3,9 +3,11 @@ import {Send} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {LoadingButton} from "@mui/lab";
+import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
 
-const RequestSend = ({customRequest, setCustomRequest}) => {
+const RequestSend = ({project, customRequest, setCustomRequest}) => {
   const [request, setRequest] = useState(false);
+  const {createCustomRequestsHistory} = useCustomRequests();
 
   const sendRequest = async () => {
     setRequest(true)
@@ -27,6 +29,8 @@ const RequestSend = ({customRequest, setCustomRequest}) => {
       options.body = customRequest?.requestBody
     }
     let response;
+
+    await createCustomRequestsHistory(project.id, customRequest);
 
     try {
       response = await fetch(customRequest?.requestUrl, options);
@@ -55,6 +59,7 @@ const RequestSend = ({customRequest, setCustomRequest}) => {
 }
 
 const getState = (state) => ({
+  project: state.projects.project,
   customRequest: state.customRequests.customRequest,
 })
 

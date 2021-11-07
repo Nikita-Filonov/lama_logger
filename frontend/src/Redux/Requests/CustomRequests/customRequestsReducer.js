@@ -4,6 +4,7 @@ import {
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUESTS,
+  SET_CUSTOM_REQUESTS_HISTORY,
   UPDATE_CUSTOM_REQUEST
 } from "./actionTypes";
 
@@ -44,6 +45,9 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
         ...state,
         customRequests: {...state.customRequests, results}
       }
+    }
+    case SET_CUSTOM_REQUESTS_HISTORY: {
+      return {...state, customRequestsHistory: action.payload};
     }
     default:
       return state;
