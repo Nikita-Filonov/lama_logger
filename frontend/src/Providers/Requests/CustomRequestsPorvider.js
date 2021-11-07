@@ -29,7 +29,7 @@ const CustomRequestsProvider = ({children, store}) => {
       0,
       {filters: JSON.stringify({isCustom: true})}
     ))()
-  }, [project])
+  }, [project.id])
 
   const getCustomRequests = async (projectId, limit = 50, offset = 0, filters = {}) => {
     setLoad(state => state);
@@ -64,8 +64,8 @@ const CustomRequestsProvider = ({children, store}) => {
     setRequest(false);
   }
 
-  const createCustomRequestHistory = async () => {
-
+  const createCustomRequestHistory = async (projectId, payload) => {
+    const {json, error} = await post(projectsApi + `${projectId}/custom-requests/`, payload);
   }
 
   return (

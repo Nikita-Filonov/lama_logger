@@ -1,6 +1,7 @@
 from django.urls import path
 
 from core.calls.views.custom_requests import CustomRequestsApi, CustomRequestApi
+from core.calls.views.custom_requests_history import CustomRequestsHistoryApi
 from core.calls.views.requests import RequestsApi, RequestApi, request_to_curl, create_request
 from core.calls.views.requests_filters import RequestsFiltersApi, RequestsFilterApi
 
@@ -15,5 +16,7 @@ urlpatterns = [
 
     path('projects/<int:project_id>/custom-requests/', CustomRequestsApi.as_view(), name='custom_requests'),
     path('projects/<int:project_id>/custom-requests/<str:request_id>/', CustomRequestApi.as_view(),
-         name='custom_request')
+         name='custom_request'),
+    path('projects/<int:project_id>/custom-requests-history/', CustomRequestsHistoryApi.as_view(),
+         name='custom_requests_history')
 ]

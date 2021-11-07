@@ -130,6 +130,18 @@ class CustomRequestsHistory(models.Model):
         blank=True,
         null=True
     )
+    queryParams = models.JSONField(
+        verbose_name='Query params',
+        default=list,
+        blank=True,
+        null=True
+    )
+    project = models.ForeignKey(
+        Project,
+        verbose_name='Project',
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     def __str__(self):
         return f'{self.user.email}:{self.requestUrl}'
