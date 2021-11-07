@@ -27,10 +27,10 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null);
   const onCurl = async () => {
-    await getRequestAsCurl(project.id, request?.requestId)
-    onClose()
+    await getRequestAsCurl(project.id, request?.requestId);
+    onClose();
   }
-  const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'})
+  const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'});
   const onSend = async () => {
     const requestHeaders = Object.keys(request?.requestHeaders).map(key => ({
       key: key,
@@ -46,7 +46,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
       requestBody: request?.requestBody,
       method: request?.method,
       isCustom: true
-    }
+    };
     await createCustomRequest(project.id, payload);
     history.push(`/projects/${project.id}/requests/custom`);
   };
@@ -57,8 +57,8 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
       description: 'Are you sure you want to delete request? You will not be able to restore it later',
       confirmButton: 'Delete',
       action: async () => await deleteRequest(project.id, request?.requestId)
-    })
-  }
+    });
+  };
 
   return (
     <React.Fragment>
