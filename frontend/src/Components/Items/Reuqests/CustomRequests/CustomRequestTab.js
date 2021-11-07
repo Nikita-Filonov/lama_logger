@@ -6,13 +6,22 @@ import {METHOD_COLORS} from "../../../../Utils/Constants";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
+import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 
 
-const CustomRequestTab = ({project, request, index, setCustomRequest}) => {
+const CustomRequestTab = ({project, request, index, setCustomRequest, setConfirmAction}) => {
   const {deleteCustomRequest} = useCustomRequests();
 
   const onSelectTab = useCallback(async () => setCustomRequest(request), [request]);
-  const onDelete = async () => await deleteCustomRequest(project.id, request.requestId);
+  const onDelete = useCallback(async () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Delete request?',
+      description: 'Are you sure you want to delete the request? You will not be able to restore it',
+      confirmButton: 'Delete',
+      action: async () => await deleteCustomRequest(project.id, request.requestId)
+    })
+  }, [project.id, request.requestId])
 
   return (
     <Tab
@@ -49,6 +58,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setCustomRequest
+    setCustomRequest,
+    setConfirmAction
   },
 )(memo(CustomRequestTab));
