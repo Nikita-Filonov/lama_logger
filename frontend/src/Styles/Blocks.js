@@ -118,6 +118,14 @@ export const RequestsTableStyles = makeStyles((theme) => ({
       overflowY: "overlay",
     }
   },
+  sidePanelContainer: {
+    overflow: "hidden",
+    maxHeight: window.innerHeight / 1.42,
+    height: window.innerHeight / 1.42,
+    "&:hover": {
+      overflowY: "overlay",
+    }
+  },
   rowRequestUrlText: {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',

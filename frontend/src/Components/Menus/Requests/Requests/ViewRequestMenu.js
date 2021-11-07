@@ -61,7 +61,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
       <Box sx={ProjectMenuStyles.boxContainer}>
         <Tooltip title="Request actions" placement={'top'}>
           <IconButton onClick={onOpen} size="small">
-            <MoreVert/>
+            <MoreVert fontSize={'small'}/>
           </IconButton>
         </Tooltip>
       </Box>

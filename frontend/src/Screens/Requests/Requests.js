@@ -12,11 +12,9 @@ import {makeRequestsFilters} from "../../Utils/Utils/Filters";
 import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";
 import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/RequestsTableSkeletons";
 import ViewRequestSidePanel from "../../Components/Blocks/Requests/Requests/ViewRequest/ViewRequestSidePanel";
-import {RequestsTableStyles} from "../../Styles/Blocks";
 
 
 const Requests = (props) => {
-  const classes = RequestsTableStyles();
   const {request, viewMode, requestsRealtime, selectedRequests, requestsFilters, requestsPagination} = props;
   const {projectId} = useParams();
   const requestsInterval = useRef(null);
@@ -63,7 +61,7 @@ const Requests = (props) => {
             {load ? <RequestsTableSkeletons/> : <RequestsTable/>}
           </Grid>
           {(viewMode.requests === 'side' && !_.isEmpty(request)) &&
-          <Grid item xs={6} className={classes.tableContainer}>
+          <Grid item xs={6}>
             <ViewRequestSidePanel/>
           </Grid>}
         </Grid>

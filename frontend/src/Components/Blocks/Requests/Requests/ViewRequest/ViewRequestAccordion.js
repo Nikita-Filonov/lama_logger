@@ -8,7 +8,7 @@ import {Headers} from "./Headers";
 import {Body} from "./Body";
 import moment from "moment";
 import {AccessTime} from "@mui/icons-material";
-import {tabsStyles} from "../../../../../Styles/Blocks";
+import {RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {METHOD_COLORS} from "../../../../../Utils/Constants";
 
 function a11yProps(index) {
@@ -19,6 +19,7 @@ function a11yProps(index) {
 }
 
 const ViewRequestAccordion = ({request, viewMode}) => {
+  const classes = RequestsTableStyles();
   const [requestTab, setRequestTab] = useState(0);
   const [responseTab, setResponseTab] = useState(0);
 
@@ -27,7 +28,10 @@ const ViewRequestAccordion = ({request, viewMode}) => {
 
 
   return (
-    <Box sx={viewMode.requests === 'accordion' ? {m: 1} : {pl: 2, pr: 1, pb: 2}}>
+    <Box
+      sx={viewMode.requests === 'accordion' ? {m: 1} : {pl: 2, pr: 1, pb: 2}}
+      className={viewMode.requests !== 'accordion' && classes.sidePanelContainer}
+    >
       <div className={'d-flex justify-content-center align-items-center'}>
         <Typography
           variant="h6"

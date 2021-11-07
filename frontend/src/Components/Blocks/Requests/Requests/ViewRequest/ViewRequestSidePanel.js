@@ -14,7 +14,7 @@ const ViewRequestSidePanel = ({request, setRequest}) => {
       <div className={'d-flex align-items-center p-2'}>
         <Tooltip title={'Close request'}>
           <IconButton size={'small'} onClick={onClose}>
-            <Close/>
+            <Close fontSize={'small'}/>
           </IconButton>
         </Tooltip>
         <div className={'flex-grow-1'}/>
