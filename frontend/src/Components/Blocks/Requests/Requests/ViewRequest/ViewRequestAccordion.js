@@ -29,7 +29,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
 
   return (
     <Box
-      sx={viewMode.requests === 'accordion' ? {m: 1} : {pl: 2, pr: 1, pb: 2}}
+      sx={viewMode.requests === 'accordion' ? {m: 1} : {pl: 2, pr: 1, pb: 2, mt: 1}}
       className={viewMode.requests !== 'accordion' && classes.sidePanelContainer}
     >
       <div className={'d-flex justify-content-center align-items-center'}>
@@ -37,7 +37,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
           variant="h6"
           gutterBottom
           component="div"
-          className={'mt-3'}
+          className={'mt-2'}
           style={{fontSize: 17}}
           color={METHOD_COLORS[request?.method]}
         >

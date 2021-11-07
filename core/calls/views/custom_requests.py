@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.calls.models import Request
+from core.calls.permissions.requests import IsRequestActionAllowed
 from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.projects.models import Project
 from utils.exeptions import BadRequest
@@ -41,7 +42,7 @@ class CustomRequestsApi(views.APIView, LimitOffsetPagination):
 
 class CustomRequestApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestActionAllowed]
     throttle_classes = [UserRateThrottle]
 
     def patch(self, request, project_id, request_id):
@@ -54,3 +55,8 @@ class CustomRequestApi(views.APIView):
             return Response(serializer.data)
 
         raise BadRequest(message='Error happened while updating request', data=serializer.errors)
+
+    def delete(self, request, project_id, request_id):
+        request = Request.objects.get(requestId=request_id)
+        request.delete()
+        return Response({'message': 'Request was successfully deleted', 'level': 'success'})
