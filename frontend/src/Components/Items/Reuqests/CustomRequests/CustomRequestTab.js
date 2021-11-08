@@ -7,12 +7,20 @@ import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
+import {useAlerts} from "../../../../Providers/AlertsProvider";
 
 
 const CustomRequestTab = ({project, request, index, setCustomRequest, setConfirmAction}) => {
+  const {setAlert} = useAlerts();
   const {deleteCustomRequest} = useCustomRequests();
 
-  const onSelectTab = useCallback(async () => setCustomRequest(request), [request]);
+  const onSelectTab = useCallback(async () => {
+    if (Array.isArray(request.requestHeaders) && Array.isArray(request.queryParams)) {
+      setCustomRequest(request)
+    } else {
+      setAlert({message: 'Unable to select this request. Probably its data were deformed', level: 'error'});
+    }
+  }, [request]);
   const onDelete = useCallback(async () => {
     setConfirmAction({
       modal: true,

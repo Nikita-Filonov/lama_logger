@@ -105,6 +105,12 @@ class CustomRequestsHistory(models.Model):
         null=True,
         blank=True
     )
+    requestId = models.UUIDField(
+        verbose_name='Request id',
+        default=uuid.uuid4,
+        editable=True,
+        unique=False
+    )
     created = models.DateTimeField(
         verbose_name='Created',
         default=timezone.now

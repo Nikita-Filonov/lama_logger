@@ -49,4 +49,4 @@ class CustomRequestsHistoryApi(views.APIView, LimitOffsetPagination):
             payload = CustomRequestsHistoriesSerializer(history, many=False).data
             return Response(payload, status=status.HTTP_201_CREATED)
 
-        raise BadRequest('Error happened while saving requests history')
+        raise BadRequest('Error happened while saving requests history', data=serializer.errors)
