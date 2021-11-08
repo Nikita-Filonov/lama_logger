@@ -2,12 +2,15 @@ import React from "react";
 import {IconButton, List, Paper, Typography} from "@mui/material";
 import {MoreVert} from "@mui/icons-material";
 import {connect} from "react-redux";
-import {HeaderDivider} from "./HeaderDivider";
-import {CustomRequestsStyles} from "../../../../Styles/Screens";
-import {HistoryAccordion} from "../../../Items/Reuqests/CustomRequests/HistoryAccordion";
+import {HeaderDivider} from "../HeaderDivider";
+import {CustomRequestsStyles} from "../../../../../Styles/Screens";
+import {HistoryAccordion} from "../../../../Items/Reuqests/CustomRequests/HistoryAccordion";
+import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
+import {HistorySkeletons} from "./HistorySkeletons";
 
 const RequestsHistory = ({customRequestsHistory}) => {
   const classes = CustomRequestsStyles();
+  const {loadHistory} = useCustomRequests();
 
   return (
     <Paper elevation={3} sx={{p: 1, pl: 1.5}}>
@@ -20,12 +23,15 @@ const RequestsHistory = ({customRequestsHistory}) => {
       </div>
       <HeaderDivider/>
       <List dense className={classes.historyListContainer}>
-        {customRequestsHistory?.results?.map((history, index) =>
-          <HistoryAccordion
-            key={index}
-            history={history}
-          />
-        )}
+        {loadHistory
+          ? <HistorySkeletons/>
+          : customRequestsHistory?.results?.map((history, index) =>
+            <HistoryAccordion
+              key={index}
+              history={history}
+            />
+          )
+        }
       </List>
     </Paper>
   )
