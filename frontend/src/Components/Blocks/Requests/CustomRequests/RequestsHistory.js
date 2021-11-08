@@ -1,13 +1,12 @@
 import React from "react";
-import {Grid, IconButton, List, ListItem, ListItemSecondaryAction, Paper, Typography} from "@mui/material";
-import {MoreHoriz, MoreVert} from "@mui/icons-material";
+import {IconButton, List, Paper, Typography} from "@mui/material";
+import {MoreVert} from "@mui/icons-material";
 import {connect} from "react-redux";
-import {common} from "../../../../Styles/Blocks";
 import {HeaderDivider} from "./HeaderDivider";
-import {METHOD_COLORS} from "../../../../Utils/Constants";
 import {CustomRequestsStyles} from "../../../../Styles/Screens";
+import {HistoryAccordion} from "../../../Items/Reuqests/CustomRequests/HistoryAccordion";
 
-const RequestsHistory = ({customRequests}) => {
+const RequestsHistory = ({customRequestsHistory}) => {
   const classes = CustomRequestsStyles();
 
   return (
@@ -21,22 +20,11 @@ const RequestsHistory = ({customRequests}) => {
       </div>
       <HeaderDivider/>
       <List dense className={classes.historyListContainer}>
-        {customRequests?.results?.map(request =>
-          <ListItem key={request.requestId} divider disableGutters>
-            <Grid container spacing={2}>
-              <Grid item xs={2} md={2} lg={2} xl={2} sm={2}>
-                <Typography color={METHOD_COLORS[request?.method]} sx={{mr: 2}}>{request?.method}</Typography>
-              </Grid>
-              <Grid item xs={10} md={10} lg={10} xl={10} sm={10}>
-                <Typography style={common.ellipsisText}>{request?.requestUrl}</Typography>
-              </Grid>
-            </Grid>
-            <ListItemSecondaryAction>
-              <IconButton size={'small'}>
-                <MoreHoriz fontSize={'small'}/>
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+        {customRequestsHistory?.results?.map((history, index) =>
+          <HistoryAccordion
+            key={index}
+            history={history}
+          />
         )}
       </List>
     </Paper>
@@ -44,7 +32,7 @@ const RequestsHistory = ({customRequests}) => {
 }
 
 const getState = (state) => ({
-  customRequests: state.customRequests.customRequests,
+  customRequestsHistory: state.customRequests.customRequestsHistory,
 })
 
 export default connect(

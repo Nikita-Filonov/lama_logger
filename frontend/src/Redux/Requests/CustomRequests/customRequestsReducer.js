@@ -1,12 +1,15 @@
 import {INITIAL_CUSTOM_REQUESTS} from "./initialState";
 import {
   CREATE_CUSTOM_REQUEST,
+  CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUESTS,
   SET_CUSTOM_REQUESTS_HISTORY,
   UPDATE_CUSTOM_REQUEST
 } from "./actionTypes";
+import {uuid4Sync} from "../../../Utils/Utils/Common";
+import moment from "moment";
 
 
 export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = {}) => {
@@ -48,6 +51,27 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
     }
     case SET_CUSTOM_REQUESTS_HISTORY: {
       return {...state, customRequestsHistory: action.payload};
+    }
+    case CREATE_CUSTOM_REQUESTS_HISTORY: {
+      const {created} = action.payload;
+      let results = state.customRequestsHistory.results;
+      const targetSection = results.find(section => section.created.startsWith(created));
+
+      if (targetSection) {
+        results = results.map(section =>
+          targetSection.id === section.id
+            ? {...section, data: [...section.data, action.payload]}
+            : section
+        )
+      } else {
+        results = [...results, {
+          id: uuid4Sync(),
+          created: moment(created).format('YYYY-MM-DD') + 'T00:00:00Z',
+          data: [action.payload]
+        }]
+      }
+
+      return {...state, customRequestsHistory: {...state.customRequestsHistory, results}};
     }
     default:
       return state;

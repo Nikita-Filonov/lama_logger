@@ -3,6 +3,7 @@ import {objectToQuery, queryWithPagination} from "../../Utils/Utils/Common";
 import {get, patch, post, remove} from "../../Utils/Api/Fetch";
 import {
   CREATE_CUSTOM_REQUEST,
+  CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUESTS,
@@ -40,28 +41,22 @@ const CustomRequestsProvider = ({children, store}) => {
   }
 
   const createCustomRequest = async (projectId, payload) => {
-    setRequest(true);
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests/`, payload);
     !error && store.dispatch({type: CREATE_CUSTOM_REQUEST, payload: json});
     !error && store.dispatch({type: SET_CUSTOM_REQUEST, payload: json});
     setAlert(error ? json : {message: 'Request successfully created', level: 'success'});
-    setRequest(false);
   }
 
   const updateCustomRequest = async (projectId, requestId, payload) => {
-    setRequest(true);
     const {json, error} = await patch(projectsApi + `${projectId}/custom-requests/${requestId}/`, payload);
     !error && store.dispatch({type: UPDATE_CUSTOM_REQUEST, payload: {requestId, payload: json}});
     error && setAlert(json);
-    setRequest(false);
   }
 
   const deleteCustomRequest = async (projectId, requestId) => {
-    setRequest(true);
     const {json, error} = await remove(projectsApi + `${projectId}/custom-requests/${requestId}/`);
     !error && store.dispatch({type: DELETE_CUSTOM_REQUEST, payload: {requestId}});
     setAlert(error ? json : {message: 'Request successfully deleted', level: 'success'});
-    setRequest(false);
   }
 
   const getCustomRequestsHistory = async (projectId, limit = 50, offset = 0) => {
@@ -74,6 +69,8 @@ const CustomRequestsProvider = ({children, store}) => {
 
   const createCustomRequestsHistory = async (projectId, payload) => {
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests-history/`, payload);
+    !error && store.dispatch({type: CREATE_CUSTOM_REQUESTS_HISTORY, payload: json});
+    error && setAlert(json);
   }
 
   return (

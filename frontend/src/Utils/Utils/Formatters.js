@@ -48,3 +48,13 @@ export const getTimeFiltersLabel = (filters) => {
   }
   return 'Time filters'
 }
+
+export const toCalendarWithoutTime = (date) =>
+  moment(date).calendar(null, {
+    lastDay: '[Yesterday]',
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    lastWeek: '[last] dddd',
+    nextWeek: 'dddd',
+    sameElse: 'L'
+  })

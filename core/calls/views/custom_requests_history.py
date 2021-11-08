@@ -1,3 +1,4 @@
+import uuid
 from itertools import groupby
 
 from rest_framework import views, status
@@ -11,7 +12,7 @@ from core.calls.models import CustomRequestsHistory
 from core.calls.serializers.custom_requests_history import CustomRequestsHistoriesSerializer, \
     CustomRequestsHistorySerializer
 from core.projects.models import Project
-from core.stats.helper.utils import group_types
+from core.stats.helper.utils import group_types, by_days
 from utils.exeptions import BadRequest
 
 
@@ -27,6 +28,7 @@ class CustomRequestsHistoryApi(views.APIView, LimitOffsetPagination):
         group_type = group_types['days']
         grouped_results = [
             {
+                'id': uuid.uuid4(),
                 'created': created,
                 'data': CustomRequestsHistoriesSerializer(histories, many=True).data
             }
@@ -40,7 +42,9 @@ class CustomRequestsHistoryApi(views.APIView, LimitOffsetPagination):
         context = {'user': request.user, 'project': project}
         serializer = CustomRequestsHistorySerializer(data=request.data, context=context)
         if serializer.is_valid():
-            history = serializer.save()
+            history: CustomRequestsHistory = serializer.save()
+            history.created = by_days(history)
+            history.save()
 
             payload = CustomRequestsHistoriesSerializer(history, many=False).data
             return Response(payload, status=status.HTTP_201_CREATED)
