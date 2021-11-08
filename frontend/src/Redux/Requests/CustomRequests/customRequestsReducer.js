@@ -60,7 +60,7 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
       if (targetSection) {
         results = results.map(section =>
           targetSection.id === section.id
-            ? {...section, data: [...section.data, action.payload]}
+            ? {...section, data: [action.payload, ...section.data]}
             : section
         )
       } else {

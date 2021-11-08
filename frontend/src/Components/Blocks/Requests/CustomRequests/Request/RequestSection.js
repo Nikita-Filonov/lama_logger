@@ -4,8 +4,6 @@ import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import {HeaderDivider} from "../HeaderDivider";
 import MethodSelect from "./MethodSelect";
-import {connect} from "react-redux";
-import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import RequestHeaders from "./RequestHeaders";
 import RequestBody from "./RequestBody";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
@@ -13,7 +11,7 @@ import RequestParams from "./RequestParams";
 import RequestUrl from "./RequestUrl";
 import RequestSend from "./RequestSend";
 
-const RequestSection = ({customRequest, setCustomRequest}) => {
+export const RequestSection = () => {
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
@@ -49,14 +47,3 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
     </Paper>
   )
 }
-
-const getState = (state) => ({
-  customRequest: state.customRequests.customRequest,
-})
-
-export default connect(
-  getState,
-  {
-    setCustomRequest
-  },
-)(RequestSection);

@@ -6,17 +6,33 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import {connect} from "react-redux";
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import {MoreVert} from "@mui/icons-material";
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
+import {MoreVert, PersonOutline} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
+import {ShareRequestsInfo} from "../../../Modals/Requests/CustomRequests/ShareRequestsInfo";
+import ShareRequests from "../../../Modals/Requests/CustomRequests/ShareRequests";
 
 const RequestSectionMenu = () => {
   const history = useHistory();
   const [menu, setMenu] = useState(null);
+  const [shareRequestsModal, setShareRequestsModal] = useState(false);
+  const [shareRequestsInfoModel, setShareRequestsInfoModal] = useState(false);
 
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null);
 
   const onSettings = () => history.push('/settings/json-editor');
+
+  const onShareRequests = () => localStorage.getItem('shareRequestsInfo')
+    ? setShareRequestsModal(true)
+    : setShareRequestsInfoModal(true)
+
+  const onAcceptShareInfo = () => {
+    setShareRequestsInfoModal(false);
+    localStorage.setItem('shareRequestsInfo', 'true');
+    setShareRequestsModal(true)
+  };
+
 
   return (
     <React.Fragment>
@@ -39,7 +55,25 @@ const RequestSectionMenu = () => {
           </ListItemIcon>
           Settings
         </MenuItem>
+        <MenuItem disabled onClick={onShareRequests}>
+          <ListItemIcon>
+            <GroupAddOutlinedIcon/>
+          </ListItemIcon>
+          Share my requests
+        </MenuItem>
+        <MenuItem disabled onClick={onShareRequests}>
+          <ListItemIcon>
+            <PersonOutline/>
+          </ListItemIcon>
+          Shared with me
+        </MenuItem>
       </Menu>
+      <ShareRequests modal={shareRequestsModal} setModal={setShareRequestsModal}/>
+      <ShareRequestsInfo
+        modal={shareRequestsInfoModel}
+        setModal={setShareRequestsInfoModal}
+        onAcceptShareInfo={onAcceptShareInfo}
+      />
     </React.Fragment>
   );
 }
