@@ -109,7 +109,8 @@ class CustomRequestsHistory(models.Model):
         verbose_name='Request id',
         default=uuid.uuid4,
         editable=True,
-        unique=False
+        unique=False,
+        help_text='Same as requestId in "Requests" model. This requestId not unique'
     )
     created = models.DateTimeField(
         verbose_name='Created',

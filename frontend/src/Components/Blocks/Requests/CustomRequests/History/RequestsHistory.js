@@ -4,7 +4,7 @@ import {MoreVert} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {HeaderDivider} from "../HeaderDivider";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
-import {HistoryAccordion} from "../../../../Items/Reuqests/CustomRequests/HistoryAccordion";
+import HistoryAccordion from "../../../../Items/Reuqests/CustomRequests/HistoryAccordion";
 import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
 import {RequestsHistorySkeletons} from "./RequestsHistorySkeletons";
 
