@@ -36,7 +36,7 @@ const RequestsTable = (props) => {
         />
         <TableBody>
           {stableSort(requests?.results, getComparator(order, orderBy))
-            .map(r => <RequestRow request={r} key={r.requestId}/>)}
+            .map(request => <RequestRow request={request} key={request.requestId}/>)}
         </TableBody>
 
         {requests?.results?.length > 0 && <TablePagination

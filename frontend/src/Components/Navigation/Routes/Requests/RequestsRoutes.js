@@ -32,77 +32,63 @@ export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
     <ServicesProvider store={store}>
       <ProjectSettingsProvider store={store}>
-        <PermissionsProvider>
-          <Switch>
-            <RequestRoute
-              exact
-              path="/projects/:projectId/requests"
-              component={props =>
-                <CustomRequestsProvider store={store}>
-                  <Requests {...props}/>
-                </CustomRequestsProvider>
-              }
-            />
-            <RequestRoute
-              exact
-              path="/projects/:projectId/requests/custom"
-              component={props =>
-                <CustomRequestsProvider store={store}>
-                  <CustomRequests {...props}/>
-                </CustomRequestsProvider>
-              }
-            />
-            <RequestRoute
-              exact
-              path="/projects/:projectId/tracks"
-              component={props =>
-                <TracksProvider store={store}>
-                  <RequestsTracks {...props}/>
-                </TracksProvider>
-              }
-            />
-            <RequestRoute
-              exact
-              path="/projects/:projectId/tracks/:trackId"
-              component={props =>
-                <TracksProvider store={store}>
-                  <ViewTrack {...props}/>
-                </TracksProvider>
-              }
-            />
-            <RequestRoute
-              exact
-              path="/projects/:projectId/stats"
-              component={props => <RequestsStatsProvider><RequestsStats {...props}/></RequestsStatsProvider>}
-            />
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/general"
-                                   component={ProjectSettingsGeneral}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/members"
-                                   component={ProjectSettingsMembers}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/inbound"
-                                   component={RequestsInboundDataFilters}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/integrations"
-                                   component={IntegrationsSettings}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/filters"
-                                   component={RequestsFiltersSettings}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/realtime"
-                                   component={RequestsRealtimeSettings}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/activities"
-                                   component={TracksActivitiesSettings}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/patterns"
-                                   component={TracksPatternsSettings}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/domains"
-                                   component={TracksDomainsSettings}/>
-            <RequestsSettingsRoute exact path="/projects/:projectId/settings/notifications"
-                                   component={NotificationsSettings}/>
-            <RequestsSettingsRoute
-              exact
-              path="/projects/:projectId/settings/tasks"
-              component={props => <ProjectTasksProvider><PeriodicTasksSettings {...props}/></ProjectTasksProvider>}
-            />
-          </Switch>
-        </PermissionsProvider>
+        <CustomRequestsProvider store={store}>
+          <PermissionsProvider>
+            <Switch>
+              <RequestRoute exact path="/projects/:projectId/requests" component={Requests}/>
+              <RequestRoute exact path="/projects/:projectId/custom-requests" component={CustomRequests}/>
+              <RequestRoute
+                exact
+                path="/projects/:projectId/tracks"
+                component={props =>
+                  <TracksProvider store={store}>
+                    <RequestsTracks {...props}/>
+                  </TracksProvider>
+                }
+              />
+              <RequestRoute
+                exact
+                path="/projects/:projectId/tracks/:trackId"
+                component={props =>
+                  <TracksProvider store={store}>
+                    <ViewTrack {...props}/>
+                  </TracksProvider>
+                }
+              />
+              <RequestRoute
+                exact
+                path="/projects/:projectId/stats"
+                component={props => <RequestsStatsProvider><RequestsStats {...props}/></RequestsStatsProvider>}
+              />
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/general"
+                                     component={ProjectSettingsGeneral}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/members"
+                                     component={ProjectSettingsMembers}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/roles" component={ProjectSettingsRoles}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/inbound"
+                                     component={RequestsInboundDataFilters}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/integrations"
+                                     component={IntegrationsSettings}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/filters"
+                                     component={RequestsFiltersSettings}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/realtime"
+                                     component={RequestsRealtimeSettings}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/activities"
+                                     component={TracksActivitiesSettings}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/patterns"
+                                     component={TracksPatternsSettings}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/domains"
+                                     component={TracksDomainsSettings}/>
+              <RequestsSettingsRoute exact path="/projects/:projectId/settings/notifications"
+                                     component={NotificationsSettings}/>
+              <RequestsSettingsRoute
+                exact
+                path="/projects/:projectId/settings/tasks"
+                component={props => <ProjectTasksProvider><PeriodicTasksSettings {...props}/></ProjectTasksProvider>}
+              />
+            </Switch>
+          </PermissionsProvider>
+        </CustomRequestsProvider>
       </ProjectSettingsProvider>
     </ServicesProvider>
   </RequestsProvider>

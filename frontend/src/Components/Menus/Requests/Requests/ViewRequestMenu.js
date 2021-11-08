@@ -48,7 +48,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
       isCustom: true
     };
     await createCustomRequest(project.id, payload);
-    history.push(`/projects/${project.id}/requests/custom`);
+    history.push(`/projects/${project.id}/custom-requests`);
   };
   const onDelete = async () => {
     setConfirmAction({

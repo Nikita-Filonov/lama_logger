@@ -7,6 +7,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import ListItemText from "@mui/material/ListItemText";
 import {BarChart, Dvr, FlashOn, Http, LibraryBooks, PeopleOutline, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
@@ -31,7 +32,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   const onRequests = () => history.push(baseRoute + '/requests');
   const onStats = () => history.push(baseRoute + '/stats');
   const onTracks = () => history.push(baseRoute + '/tracks');
-
+  const onUsersRequests = () => history.push(baseRoute + '/custom-requests');
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -53,6 +54,16 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
             <Http/>
           </ListItemIcon>
           <ListItemText primary={'Requests'}/>
+        </ListItem>
+        <ListItem
+          button
+          onClick={onUsersRequests}
+          selected={/\/projects\/[0-9]+\/custom-requests/.test(location.pathname)}
+        >
+          <ListItemIcon>
+            <SendOutlinedIcon/>
+          </ListItemIcon>
+          <ListItemText primary={'Custom requests'}/>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
