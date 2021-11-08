@@ -2,17 +2,18 @@ import React, {useMemo} from "react";
 import {connect} from "react-redux";
 import clsx from "clsx";
 import {IconButton, Paper, Tabs} from "@mui/material";
-import {CustomRequestsTabScrollButton, tabsStyles, ViewRequestStyles} from "../../../../Styles/Blocks";
+import {CustomRequestsTabScrollButton, tabsStyles, ViewRequestStyles} from "../../../../../Styles/Blocks";
 import {Add} from "@mui/icons-material";
-import {useWindowSize} from "../../../../Utils/Hooks/LayoutHooks";
-import CustomRequestTab from "../../../Items/Reuqests/CustomRequests/CustomRequestTab";
-import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
-import {setCustomRequest} from "../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import {useWindowSize} from "../../../../../Utils/Hooks/LayoutHooks";
+import CustomRequestTab from "../../../../Items/Reuqests/CustomRequests/CustomRequestTab";
+import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
+import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import {RequestsTabsSkeletons} from "./RequestsTabsSkeletons";
 
 
 const RequestsTabs = ({customRequest, customRequests, project, drawer, setCustomRequest}) => {
   const {width} = useWindowSize();
-  const {createCustomRequest} = useCustomRequests();
+  const {loadRequests, createCustomRequest} = useCustomRequests();
   const classes = ViewRequestStyles();
 
   const selectedTabIndex = useMemo(
@@ -40,13 +41,16 @@ const RequestsTabs = ({customRequest, customRequests, project, drawer, setCustom
         allowScrollButtonsMobile
         style={{width: drawer ? width / 1.35 : width / 1.15, transition: 'width 0.3s'}}
       >
-        {customRequests?.results?.map((request, index) =>
-          <CustomRequestTab
-            key={index}
-            index={index}
-            request={request}
-          />
-        )}
+        {loadRequests
+          ? <RequestsTabsSkeletons/>
+          : customRequests?.results?.map((request, index) =>
+            <CustomRequestTab
+              key={index}
+              index={index}
+              request={request}
+            />
+          )
+        }
       </Tabs>
       <div className={'flex-grow-1'}/>
       <IconButton size={'small'} onClick={onCreate}>

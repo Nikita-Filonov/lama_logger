@@ -19,7 +19,7 @@ const CustomRequestsContext = React.createContext(null);
 const CustomRequestsProvider = ({children, store}) => {
   const {setAlert} = useAlerts();
   const projectsApi = 'api/v1/projects/';
-  const [load, setLoad] = useState(true);
+  const [loadRequests, setLoadRequests] = useState(true);
   const [loadHistory, setLoadHistory] = useState(true);
   const [request, setRequest] = useState(false);
 
@@ -34,11 +34,11 @@ const CustomRequestsProvider = ({children, store}) => {
 
 
   const getCustomRequests = async (projectId, limit = 50, offset = 0, filters = {}) => {
-    setLoad(state => state);
+    setLoadRequests(state => state);
     const query = await queryWithPagination(filters, limit, offset, 'CustomRequests');
     const {json} = await get(projectsApi + `${projectId}/custom-requests/${query}`);
     store.dispatch({type: SET_CUSTOM_REQUESTS, payload: json});
-    setLoad(false);
+    setLoadRequests(false);
   }
 
   const createCustomRequest = async (projectId, payload) => {
@@ -77,9 +77,9 @@ const CustomRequestsProvider = ({children, store}) => {
   return (
     <CustomRequestsContext.Provider
       value={{
-        load,
         request,
         loadHistory,
+        loadRequests,
         getCustomRequests,
         createCustomRequest,
         updateCustomRequest,

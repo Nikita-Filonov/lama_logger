@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import {useSelector} from "react-redux";
 import {Skeleton} from "@mui/lab";
 
-export const HistorySkeletons = () => {
+export const RequestsHistorySkeletons = () => {
   const {skeletonAnimation} = useSelector(state => state.users.userSettings);
 
   const skeletonsCount = useMemo(() => Math.floor((window.innerHeight / 1.47) / 51), [])

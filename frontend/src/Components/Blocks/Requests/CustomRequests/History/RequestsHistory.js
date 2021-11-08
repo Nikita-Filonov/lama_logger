@@ -6,7 +6,7 @@ import {HeaderDivider} from "../HeaderDivider";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import {HistoryAccordion} from "../../../../Items/Reuqests/CustomRequests/HistoryAccordion";
 import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
-import {HistorySkeletons} from "./HistorySkeletons";
+import {RequestsHistorySkeletons} from "./RequestsHistorySkeletons";
 
 const RequestsHistory = ({customRequestsHistory}) => {
   const classes = CustomRequestsStyles();
@@ -24,7 +24,7 @@ const RequestsHistory = ({customRequestsHistory}) => {
       <HeaderDivider/>
       <List dense className={classes.historyListContainer}>
         {loadHistory
-          ? <HistorySkeletons/>
+          ? <RequestsHistorySkeletons/>
           : customRequestsHistory?.results?.map((history, index) =>
             <HistoryAccordion
               key={index}
