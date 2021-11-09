@@ -30,6 +30,7 @@ export const getMatchesRequestsSettingsRoute = (route) => {
 export const getMatchesSettingsRoute = (route: string) => {
   const routes = {
     '/settings/json-editor': 'customRequests',
+    '/settings/headers': 'customRequests',
     '/settings/theme': 'theme',
   }
   const matchRoute = Object.keys(routes).find(r => route.startsWith(r));

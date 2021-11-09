@@ -46,6 +46,18 @@ export const SettingsSidebar = () => {
               title={'Json editor'}
               selected={location.pathname.endsWith('/settings/json-editor')}
             />
+            <ListItemLink
+              sx={{pl: 4}}
+              to={`/settings/headers`}
+              title={'Headers'}
+              selected={location.pathname.endsWith('/settings/headers')}
+            />
+            <ListItemLink
+              sx={{pl: 4}}
+              to={`/settings/methods`}
+              title={'Methods'}
+              selected={location.pathname.endsWith('/settings/methods')}
+            />
           </List>
         </Collapse>
       </List>
