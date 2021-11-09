@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {ProjectSettingsStyles} from "../../../Styles/Screens";
 import {ProjectSettingsHeader} from "../../../Components/Blocks/Requests/Settings/ProjectSettingsHeader";
-import {Grid, Typography} from "@mui/material";
+import {Checkbox, FormControlLabel, Grid, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {LoadingButton} from "@mui/lab";
 import {SaveOutlined} from "@mui/icons-material";
@@ -38,10 +38,24 @@ const CustomRequestsHeadersSettings = ({userSettings}) => {
     [type]: [...customRequestsHeaders[type], '']
   });
 
+  const onDisableAutocomplete = async (disableAutocomplete) => setCustomRequestsHeaders({
+    ...customRequestsHeaders,
+    disableAutocomplete
+  })
+
   return (
     <div className={classes.contentContainer}>
       <ProjectSettingsHeader title={'Custom requests headers'}/>
       <Typography className={'mt-3'}>In this section you can change or add new headers for quick use</Typography>
+
+      <FormControlLabel
+        sx={{mt: 2}}
+        control={
+          <Checkbox onChange={async (_, checked) => await onDisableAutocomplete(checked)}/>
+        }
+        label="Disable headers options"
+        checked={customRequestsHeaders?.disableAutocomplete}
+      />
 
       <HeadersFiltersSettings
         filterHeaders={customRequestsHeaders}

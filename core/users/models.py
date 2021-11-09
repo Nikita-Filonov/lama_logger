@@ -212,10 +212,10 @@ class UserSettings(models.Model):
 
 @receiver(post_save, sender=CustomUser)
 def on_project_create(sender, instance, **kwargs):
-    user = CustomUser.objects.filter(user=instance)
-    if not user:
+    user_settings = UserSettings.objects.filter(user=instance)
+    if not user_settings:
         UserSettings.objects.create(
             user=instance,
             jsonEditor=JSON_EDITOR,
-            customRequestsHeaders=DEFAULT_HEADERS
+            customRequestsHeaders={'disableAutocomplete': False, **DEFAULT_HEADERS}
         )

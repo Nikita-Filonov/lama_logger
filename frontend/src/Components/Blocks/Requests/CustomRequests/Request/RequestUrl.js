@@ -7,7 +7,7 @@ import {objectToQuery} from "../../../../../Utils/Utils/Common";
 const RequestUrl = ({customRequest, setCustomRequest}) => {
 
   useEffect(() => {
-    (async () => customRequest?.queryParams?.length > 0 && await queryObjectToString())()
+    (async () => await queryObjectToString())()
   }, [customRequest?.queryParams]);
 
   const queryObjectToString = useCallback(async () => {
@@ -19,6 +19,7 @@ const RequestUrl = ({customRequest, setCustomRequest}) => {
         queryObject[key] = value;
       }
     }
+
     const currentUrl = customRequest?.requestUrl.split('?')[0];
     setCustomRequest({...customRequest, requestUrl: currentUrl + await objectToQuery(queryObject)});
   }, [customRequest?.requestUrl, customRequest?.queryParams])
