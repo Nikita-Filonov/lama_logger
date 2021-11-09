@@ -16,7 +16,7 @@ export const INITIAL_REQUESTS = {
   },
   requestsStatsFilters: {},
   selectedRequests: [],
-  requestsFiltersSidebar: true,
+  requestsFiltersSidebar: localStorage.getItem('requestsFiltersSidebar') !== 'false',
   requestsTimeFilterModal: false,
   requestsRealtime: JSON.parse(localStorage.getItem('requestsRealtime')) || DEFAULT_REALTIME_SETTINGS
 }

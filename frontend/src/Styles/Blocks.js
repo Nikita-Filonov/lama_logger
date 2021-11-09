@@ -140,7 +140,9 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     overflow: "hidden",
     "&:hover": {
       overflowY: "overlay",
-    }
+    },
+    maxHeight: window.innerHeight / 1.405,
+    height: window.innerHeight / 1.405,
   }
 }));
 

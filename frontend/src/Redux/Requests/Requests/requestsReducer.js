@@ -49,8 +49,10 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
         return {...state, selectedRequests: [...state.selectedRequests.filter(r => r !== requestId)]}
       }
     }
-    case SET_REQUESTS_FILTERS_SIDEBAR:
-      return {...state, requestsFiltersSidebar: action.payload}
+    case SET_REQUESTS_FILTERS_SIDEBAR: {
+      localStorage.setItem('requestsFiltersSidebar', JSON.stringify(action.payload));
+      return {...state, requestsFiltersSidebar: action.payload};
+    }
     case SET_REQUESTS_TIME_FILTER_MODAL:
       return {...state, requestsTimeFilterModal: action.payload}
     case SET_REQUESTS_REALTIME: {

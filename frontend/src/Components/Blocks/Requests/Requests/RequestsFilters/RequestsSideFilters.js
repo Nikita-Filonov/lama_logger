@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import {Divider, IconButton, Paper, Tooltip} from "@mui/material";
 import Box from "@mui/material/Box";
 import {connect} from "react-redux";
-import {Close, FilterList, SaveOutlined, Settings} from "@mui/icons-material";
+import {Close, FilterList, Settings} from "@mui/icons-material";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
 import {setRequestsFiltersSidebar} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {useHistory} from "react-router-dom";
-import clsx from "clsx";
 import FiltersFields from "./FiltersViews/FiltersFields";
 import SavedFilters from "./FiltersViews/SavedFilters";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -27,7 +26,7 @@ const RequestsSideFilters = (props) => {
 
   return (
     <Box sx={{width: 200, mr: 2}} hidden={requestsFiltersSidebar}>
-      <Paper className={clsx('p-1 ps-2 pb-4', classes.sideBarFiltersContainer, classes.tableContainer)}>
+      <Paper className={'p-1 ps-2 pb-2'}>
         <div className={'d-flex'}>
           <Tooltip title={'Filters settings'} placement={'top'}>
             <IconButton size={'small'} onClick={onSettings}>
@@ -45,7 +44,9 @@ const RequestsSideFilters = (props) => {
           </IconButton>
         </div>
         <Divider/>
-        {view === 'fields' ? <FiltersFields/> : <SavedFilters/>}
+        <Box className={classes.sideBarFiltersContainer}>
+          {view === 'fields' ? <FiltersFields/> : <SavedFilters/>}
+        </Box>
       </Paper>
     </Box>
   )
