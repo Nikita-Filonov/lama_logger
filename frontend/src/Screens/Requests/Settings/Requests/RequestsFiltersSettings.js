@@ -111,6 +111,8 @@ const RequestsFiltersSettings = ({project, projectSettings}) => {
       )}
 
       <HeadersFiltersSettings
+        title={'Headers'}
+        description={'Setup headers, so you will be able to choose headers filters quickly'}
         filterHeaders={filterHeaders}
         onNewHeader={onNewHeader}
         onRemoveHeader={onRemoveHeader}

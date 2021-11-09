@@ -1,5 +1,3 @@
-import json
-
 DEFAULT_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 DEFAULT_STATUS_CODES = {
     'success': [100, 101, 200, 201, 202, 203, 204, 205, 206, 208, 226],

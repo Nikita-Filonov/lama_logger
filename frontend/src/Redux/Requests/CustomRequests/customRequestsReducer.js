@@ -55,7 +55,8 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
     case CREATE_CUSTOM_REQUESTS_HISTORY: {
       const {created} = action.payload;
       let results = state.customRequestsHistory.results;
-      const targetSection = results.find(section => section.created.startsWith(created));
+
+      const targetSection = results.find(section => moment(section.created).isSame(created, 'day'));
 
       if (targetSection) {
         results = results.map(section =>

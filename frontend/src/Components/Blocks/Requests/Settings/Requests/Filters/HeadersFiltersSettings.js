@@ -2,11 +2,12 @@ import React, {memo} from "react";
 import {Button, Grid, IconButton, TextField, Typography} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 
-const HeadersFiltersSettings = ({filterHeaders, onNewHeader, onRemoveHeader, onChangeHeader}) => {
+const HeadersFiltersSettings = (props) => {
+  const {filterHeaders, onNewHeader, onRemoveHeader, onChangeHeader, title, description} = props;
   return (
     <React.Fragment>
-      <Typography className={'mt-3'}>Headers</Typography>
-      <Typography variant={'body2'}>Setup headers, so you will be able to choose headers filters quickly</Typography>
+      <Typography className={'mt-3'}>{title || ''}</Typography>
+      <Typography variant={'body2'}>{description || ''}</Typography>
       <Grid container xs={10} className={'mt-3'} spacing={2}>
         <Grid item xs={5}>
           <Typography>Keys</Typography>

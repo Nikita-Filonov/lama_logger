@@ -1,6 +1,7 @@
 import uuid
 from itertools import groupby
 
+from django.utils import timezone
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import LimitOffsetPagination
@@ -12,7 +13,7 @@ from core.calls.models import CustomRequestsHistory
 from core.calls.serializers.custom_requests_history import CustomRequestsHistoriesSerializer, \
     CustomRequestsHistorySerializer
 from core.projects.models import Project
-from core.stats.helper.utils import group_types, by_days
+from core.stats.helper.utils import group_types
 from utils.exeptions import BadRequest
 
 
@@ -43,7 +44,7 @@ class CustomRequestsHistoryApi(views.APIView, LimitOffsetPagination):
         serializer = CustomRequestsHistorySerializer(data=request.data, context=context)
         if serializer.is_valid():
             history: CustomRequestsHistory = serializer.save()
-            history.created = by_days(history)
+            history.created = timezone.now()
             history.save()
 
             payload = CustomRequestsHistoriesSerializer(history, many=False).data

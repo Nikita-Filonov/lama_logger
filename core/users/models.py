@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from core.projects.helpers.dumps import DEFAULT_HEADERS
 from core.users.helpers.dumps import JSON_EDITOR
 
 
@@ -190,6 +191,12 @@ class UserSettings(models.Model):
         null=False,
         default=dict
     )
+    customRequestsHeaders = models.JSONField(
+        verbose_name='Custom requests headers',
+        blank=False,
+        null=False,
+        default=dict
+    )
     skeletonAnimation = models.CharField(
         verbose_name='Skeleton animation',
         max_length=20,
@@ -207,4 +214,8 @@ class UserSettings(models.Model):
 def on_project_create(sender, instance, **kwargs):
     user = CustomUser.objects.filter(user=instance)
     if not user:
-        UserSettings.objects.create(user=instance, jsonEditor=JSON_EDITOR)
+        UserSettings.objects.create(
+            user=instance,
+            jsonEditor=JSON_EDITOR,
+            customRequestsHeaders=DEFAULT_HEADERS
+        )
