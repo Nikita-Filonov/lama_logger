@@ -5,7 +5,7 @@ import {Skeleton} from "@mui/lab";
 export const RequestsHistorySkeletons = () => {
   const {skeletonAnimation} = useSelector(state => state.users.userSettings);
 
-  const skeletonsCount = useMemo(() => Math.floor((window.innerHeight / 1.47) / 51), [])
+  const skeletonsCount = useMemo(() => Math.floor((window.innerHeight / 1.50) / 51), [])
 
   return (
     <div style={{width: '100%'}}>

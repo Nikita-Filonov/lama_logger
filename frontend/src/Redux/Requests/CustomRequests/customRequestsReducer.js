@@ -4,6 +4,7 @@ import {
   CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUEST_HISTORY_PAGINATION,
   SET_CUSTOM_REQUESTS,
   SET_CUSTOM_REQUESTS_HISTORY,
   UPDATE_CUSTOM_REQUEST
@@ -24,6 +25,7 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
         ...state,
         customRequests: {
           ...state.customRequests,
+          count: ++state.customRequests.count,
           results: [...state.customRequests.results, action.payload]
         }
       };
@@ -72,8 +74,14 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
         }]
       }
 
-      return {...state, customRequestsHistory: {...state.customRequestsHistory, results}};
+      return {
+        ...state,
+        count: ++state.customRequestsHistory.count,
+        customRequestsHistory: {...state.customRequestsHistory, results}
+      };
     }
+    case SET_CUSTOM_REQUEST_HISTORY_PAGINATION:
+      return {...state, customRequestsHistoryPagination: action.payload};
     default:
       return state;
   }

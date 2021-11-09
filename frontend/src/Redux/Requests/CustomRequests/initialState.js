@@ -11,6 +11,10 @@ export const INITIAL_CUSTOM_REQUESTS = {
     previous: null,
     results: []
   },
+  customRequestsHistoryPagination: {
+    page: 0,
+    rowsPerPage: 25
+  },
   customRequest: JSON.parse(localStorage.getItem('customRequest')) || {
     requestId: null,
     requestHeaders: [],

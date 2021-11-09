@@ -24,13 +24,21 @@ const CustomRequestsProvider = ({children, store}) => {
   const [request, setRequest] = useState(false);
 
   const project = useSelector(state => state.projects.project);
+  const historyPagination = useSelector(state => state.customRequests.customRequestsHistoryPagination);
 
   useEffect(() => {
     (async () => {
       await getCustomRequests(project.id, 50, 0, {filters: JSON.stringify({isCustom: true})})
-      await getCustomRequestsHistory(project.id);
     })()
   }, [project.id]);
+
+  useEffect(() => {
+    (async () => await getCustomRequestsHistory(
+      project.id,
+      historyPagination.rowsPerPage,
+      historyPagination.page * historyPagination.rowsPerPage
+    ))()
+  }, [project.id, historyPagination])
 
 
   const getCustomRequests = async (projectId, limit = 50, offset = 0, filters = {}) => {
@@ -60,8 +68,8 @@ const CustomRequestsProvider = ({children, store}) => {
     setAlert(error ? json : {message: 'Request successfully deleted', level: 'success'});
   }
 
-  const getCustomRequestsHistory = async (projectId, limit = 50, offset = 0) => {
-    setLoadHistory(true);
+  const getCustomRequestsHistory = async (projectId, limit = 25, offset = 0) => {
+    setLoadHistory(state => state);
     const query = await objectToQuery({limit, offset});
     const {json} = await get(projectsApi + `${projectId}/custom-requests-history/${query}`);
     store.dispatch({type: SET_CUSTOM_REQUESTS_HISTORY, payload: json});
