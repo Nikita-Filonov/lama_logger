@@ -11,9 +11,12 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import {useUsers} from "../../Providers/Users/UsersProvider";
 import {useHistory} from "react-router-dom";
-import {AccountNavbarMenuProps} from "../../Styles/Blocks";
+import {connect} from "react-redux";
+import {capitalize} from "../../Utils/Utils/Common";
+import {ListItem, Typography} from "@mui/material";
+import {PersonOutline} from "@mui/icons-material";
 
-export const AccountNavbarMenu = () => {
+const AccountNavbarMenu = ({user}) => {
   const {onLogout} = useUsers();
   const history = useHistory();
   const [menu, setMenu] = useState(null);
@@ -25,12 +28,15 @@ export const AccountNavbarMenu = () => {
     history.push('/login')
   }
 
+  const onProfile = () => history.push('/user/profile');
+  const onSettings = () => history.push('/settings/theme');
+
   return (
     <React.Fragment>
       <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
         <Tooltip title="Account settings">
           <IconButton onClick={onOpen} size="small">
-            <Avatar sx={{width: 32, height: 32}}>M</Avatar>
+            <Avatar sx={{width: 32, height: 32}}>{capitalize(user?.username?.charAt(0))}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -39,15 +45,20 @@ export const AccountNavbarMenu = () => {
         open={Boolean(menu)}
         onClose={onClose}
         onClick={onClose}
-        PaperProps={AccountNavbarMenuProps}
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
-        <MenuItem>
-          <Avatar/> Profile
+        <ListItem>
+          <Typography>Welcome, {user?.username}</Typography>
+        </ListItem>
+        <MenuItem onClick={onProfile}>
+          <ListItemIcon>
+            <PersonOutline fontSize="small"/>
+          </ListItemIcon>
+          Profile
         </MenuItem>
         <Divider/>
-        <MenuItem>
+        <MenuItem onClick={onSettings}>
           <ListItemIcon>
             <Settings fontSize="small"/>
           </ListItemIcon>
@@ -63,3 +74,12 @@ export const AccountNavbarMenu = () => {
     </React.Fragment>
   );
 }
+
+const getState = (state) => ({
+  user: state.users.user,
+})
+
+export default connect(
+  getState,
+  null,
+)(AccountNavbarMenu);

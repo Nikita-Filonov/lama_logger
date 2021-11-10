@@ -67,11 +67,11 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
             : section
         )
       } else {
-        results = [...results, {
+        results = [{
           id: uuid4Sync(),
           created: moment(created).format('YYYY-MM-DD') + 'T00:00:00Z',
           data: [action.payload]
-        }]
+        }, ...results]
       }
 
       return {

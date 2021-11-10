@@ -7,7 +7,7 @@ import {setDrawer, setTheme} from "../../Redux/Users/usersActions";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {NavigationBreadcrumbs} from "./NavigationBreadcrumbs";
-import {AccountNavbarMenu} from "../Menus/AccountNavbarMenu";
+import AccountNavbarMenu from "../Menus/AccountNavbarMenu";
 
 
 const NavigationBar = ({drawer, setTheme, setDrawer, drawerOpen}) => {
