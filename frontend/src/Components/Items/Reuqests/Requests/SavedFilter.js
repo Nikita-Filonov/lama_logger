@@ -14,6 +14,7 @@ const SavedFilter = ({filter, setRequestsFilters, requestsFilters}) => {
     if (filter?.id === requestsFilters?.id) {
       setRequestsFilters(DEFAULT_REQUESTS_FILTERS);
       setAlert({message: 'Default filters selected', level: 'success'});
+      setAlert({message: `Filters "${filter?.title}" deselected`, level: 'success'});
     } else {
       setRequestsFilters(filter);
       setAlert({message: 'Filters selected', level: 'success'});
@@ -33,7 +34,7 @@ const SavedFilter = ({filter, setRequestsFilters, requestsFilters}) => {
           style={{...common.ellipsisText, width: 100, maxWidth: 100, marginLeft: 3}}
         />
         <ListItemSecondaryAction>
-          <SavedFilterMenu filter={filter}/>
+          <SavedFilterMenu filter={filter} onSelectFilters={onSelect}/>
         </ListItemSecondaryAction>
       </ListItem>
     </Tooltip>

@@ -10,8 +10,13 @@ import {ProjectMenuStyles} from "../../../../Styles/Menus";
 import {connect} from "react-redux";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
+import {common} from "../../../../Styles/Blocks";
+import {REQUESTS_FILTER} from "../../../../Utils/Permissions/Requests";
 
-const SavedFilterMenu = ({project, filter, setConfirmAction}) => {
+const SavedFilterMenu = (props) => {
+  const {project, filter, requestsFilters, setConfirmAction, onSelectFilters} = props;
+  const {isAllowed} = usePermissions();
   const {deleteRequestsFilter} = useRequests();
   const [menu, setMenu] = useState(null);
 
@@ -42,21 +47,21 @@ const SavedFilterMenu = ({project, filter, setConfirmAction}) => {
         transformOrigin={{horizontal: 'left', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
-        <MenuItem>
+        <MenuItem onClick={onSelectFilters} disabled={filter?.id === requestsFilters?.id}>
           <ListItemIcon>
             <Check fontSize="small"/>
           </ListItemIcon>
           Select filter
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={onSelectFilters} disabled={filter?.id !== requestsFilters?.id}>
           <ListItemIcon>
             <Close fontSize="small"/>
           </ListItemIcon>
           Deselect filter
         </MenuItem>
         <Divider/>
-        <MenuItem onClick={onDelete} sx={{color: 'red'}}>
-          <ListItemIcon sx={{color: 'red'}}>
+        <MenuItem onClick={onDelete} sx={common.danger} disabled={!isAllowed([REQUESTS_FILTER.delete])}>
+          <ListItemIcon sx={common.danger}>
             <DeleteOutline fontSize="small"/>
           </ListItemIcon>
           Delete
@@ -67,7 +72,8 @@ const SavedFilterMenu = ({project, filter, setConfirmAction}) => {
 }
 
 const getState = (state) => ({
-  project: state.projects.project
+  project: state.projects.project,
+  requestsFilters: state.requests.requestsFilters,
 })
 
 export default connect(

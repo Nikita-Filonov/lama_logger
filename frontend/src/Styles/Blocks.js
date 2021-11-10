@@ -38,6 +38,9 @@ export const common = {
     display: 'flex',
     flexDirection: 'row',
     padding: 0,
+  },
+  danger: {
+    color: 'red'
   }
 }
 

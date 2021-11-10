@@ -11,6 +11,8 @@ import {
   setRequestsTimeFilterModal
 } from "../../../../../../Redux/Requests/Requests/requestsActions";
 import SaveFilters from "../../../../../Modals/Requests/Requests/Filters/SaveFilters";
+import {usePermissions} from "../../../../../../Providers/Users/PermissionsProvider";
+import {REQUESTS_FILTER} from "../../../../../../Utils/Permissions/Requests";
 
 const FiltersFields = (props) => {
   const {
@@ -19,6 +21,7 @@ const FiltersFields = (props) => {
     setRequestsFilters,
     setRequestsTimeFilterModal
   } = props;
+  const {isAllowed} = usePermissions();
   const [saveFiltersModal, setSaveFiltersModal] = useState(false);
 
   const onRequestTimeFilter = () => setRequestsTimeFilterModal(true);
@@ -75,6 +78,7 @@ const FiltersFields = (props) => {
       <Divider className={'mt-2'}/>
       <Button
         size={'small'}
+        disabled={!isAllowed([REQUESTS_FILTER.create])}
         startIcon={<SaveOutlined fontSize={'small'}/>}
         fullWidth
         className={'justify-content-start mt-2'}

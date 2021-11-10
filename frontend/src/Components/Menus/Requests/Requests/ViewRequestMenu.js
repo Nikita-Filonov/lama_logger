@@ -17,9 +17,13 @@ import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
 import {parseQueryFromUrl} from "../../../../Utils/Utils/Common";
 import {copyRequestToCurl} from "../../../../Utils/Api/Curl";
+import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
+import {common} from "../../../../Styles/Blocks";
+import {REQUEST} from "../../../../Utils/Permissions/Requests";
 
 const ViewRequestMenu = ({project, request, setConfirmAction}) => {
   const history = useHistory();
+  const {isAllowed} = usePermissions();
   const {setAlert} = useAlerts();
   const {deleteRequest} = useRequests();
   const {createCustomRequest} = useCustomRequests();
@@ -82,7 +86,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
-        <MenuItem onClick={onSend}>
+        <MenuItem onClick={onSend} disabled={!isAllowed([REQUEST.create])}>
           <ListItemIcon>
             <Send fontSize="small"/>
           </ListItemIcon>
@@ -103,8 +107,8 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
           </MenuItem>
         </CopyToClipboard>
         <Divider/>
-        <MenuItem onClick={onDelete} sx={{color: 'red'}}>
-          <ListItemIcon sx={{color: 'red'}}>
+        <MenuItem onClick={onDelete} sx={common.danger} disabled={!isAllowed([REQUEST.delete])}>
+          <ListItemIcon sx={common.danger}>
             <DeleteOutline fontSize="small"/>
           </ListItemIcon>
           Delete

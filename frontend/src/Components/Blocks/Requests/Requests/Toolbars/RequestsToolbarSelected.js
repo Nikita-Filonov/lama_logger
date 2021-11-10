@@ -9,6 +9,8 @@ import {setRequestsPagination, setSelectedRequests} from "../../../../../Redux/R
 import {Delete} from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
+import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
+import {REQUEST} from "../../../../../Utils/Permissions/Requests";
 
 const RequestsToolbarSelected = (props) => {
   const {
@@ -20,6 +22,7 @@ const RequestsToolbarSelected = (props) => {
     setConfirmAction
   } = props;
   const classes = ViewRequestStyles();
+  const {isAllowed} = usePermissions();
   const {deleteRequests} = useRequests();
 
   const onDelete = async () => {
@@ -49,7 +52,7 @@ const RequestsToolbarSelected = (props) => {
         </IconButton>
       </Tooltip>
       <Tooltip title={'Delete selected requests'} placement={'left'}>
-        <IconButton onClick={onDelete}>
+        <IconButton onClick={onDelete} disabled={!isAllowed([REQUEST.delete])}>
           <Delete/>
         </IconButton>
       </Tooltip>
