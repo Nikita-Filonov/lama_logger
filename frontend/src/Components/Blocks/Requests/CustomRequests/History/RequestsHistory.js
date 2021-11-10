@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import {Divider, IconButton, List, Paper, Typography} from "@mui/material";
+import {Divider, IconButton, List, Pagination, Paper, Typography} from "@mui/material";
 import {MoreVert} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {HeaderDivider} from "../HeaderDivider";
@@ -7,7 +7,6 @@ import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import HistoryAccordion from "../../../../Items/Reuqests/CustomRequests/HistoryAccordion";
 import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
 import {RequestsHistorySkeletons} from "./RequestsHistorySkeletons";
-import {Pagination} from "@mui/lab";
 import {setCustomRequestsHistoryPagination} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
 const RequestsHistory = (props) => {

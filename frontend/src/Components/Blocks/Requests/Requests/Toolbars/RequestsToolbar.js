@@ -10,7 +10,7 @@ import {AccessTime, PauseOutlined, PeopleOutline} from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import {getTimeFiltersLabel} from "../../../../../Utils/Utils/Formatters";
-import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
+import {ToggleButton, ToggleButtonGroup} from "@mui/material";
 import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import {setViewMode} from "../../../../../Redux/Users/usersActions";

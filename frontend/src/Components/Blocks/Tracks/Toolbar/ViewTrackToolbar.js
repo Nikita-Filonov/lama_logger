@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import clsx from "clsx";
 import {Paper} from "@mui/material";
 import {ViewRequestStyles} from "../../../../Styles/Blocks";
-import {ToggleButton, ToggleButtonGroup} from "@mui/lab";
+import {ToggleButton, ToggleButtonGroup} from "@mui/material";
 
 export const ViewTrackToolbar = () => {
   const classes = ViewRequestStyles();
