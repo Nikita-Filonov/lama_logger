@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid, Paper, Typography} from "@mui/material";
-import {Skeleton} from "@mui/lab";
+import {Skeleton} from "@mui/material";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
 import {StatsChartStyles} from "../../../../Styles/Blocks";
 import {HelpOutline} from "@mui/icons-material";

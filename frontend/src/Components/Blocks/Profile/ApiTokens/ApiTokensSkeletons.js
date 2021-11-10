@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import {Skeleton} from "@mui/lab";
+import {Skeleton} from "@mui/material";
 import {useSelector} from "react-redux";
 
 export const ApiTokensSkeletons = () => {

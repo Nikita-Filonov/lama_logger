@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, CardActions, CardContent, CardHeader, Grid} from "@mui/material";
-import {Skeleton} from "@mui/lab";
+import {Skeleton} from "@mui/material";
 import {useSelector} from "react-redux";
 
 export const ProjectsSkeletons = () => {

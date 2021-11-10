@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import {useSelector} from "react-redux";
-import {Skeleton} from "@mui/lab";
+import {Skeleton} from "@mui/material";
 
 export const RequestsHistorySkeletons = () => {
   const {skeletonAnimation} = useSelector(state => state.users.userSettings);
