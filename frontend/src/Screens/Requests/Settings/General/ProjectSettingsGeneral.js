@@ -48,7 +48,7 @@ const ProjectSettingsGeneral = ({project, setConfirmAction, removeProject}) => {
     }
 
     return creator?.id === project?.creator?.id;
-  }, [title, short, description, creator])
+  }, [title, short, description, creator, project])
   const optionLabel = useCallback((option) => option.username ? option.username : option.email, [])
 
   const onSave = async () => await updateProject(project.id, {title, short, description, creator: creator?.id})

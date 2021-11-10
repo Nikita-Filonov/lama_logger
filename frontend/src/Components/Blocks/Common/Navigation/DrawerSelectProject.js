@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Box, ListItemSecondaryAction, Popover, Typography} from "@mui/material";
+import {Box, Divider, ListItemSecondaryAction, Popover, Typography} from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import {common} from "../../../../Styles/Blocks";
 import ListItem from "@mui/material/ListItem";
@@ -56,20 +56,23 @@ const DrawerSelectProject = ({drawerOpen, project, projects, setProject}) => {
         }}
       >
         <Box sx={{p: 1}}>
-          <Typography variant={'subtitle2'}>Select project</Typography>
-          <List dense sx={{maxHeight: 250, mb: 2}}>
+          <Box sx={{mb: 0.7}}>
+            <Typography variant={'subtitle2'}>Select project</Typography>
+          </Box>
+          <Divider/>
+          <List dense sx={{maxHeight: 250, mb: 1, ...common.hoverScroll}}>
             {projects.map(p => <ListItem
               dense
               button
               disableGutters
               key={p.id}
-              sx={{maxWidth: 200, pl: 1, pr: 1}}
+              sx={{maxWidth: 200, pl: 1, pr: 1, width: 200}}
               onClick={async () => await onSelectProject(p.id)}
               selected={project.id === p.id}
             >
               <Typography style={common.ellipsisText} sx={{mr: 2}}>{p.title}</Typography>
               <ListItemSecondaryAction>
-                <IconButton size={'small'} onClick={async () => await onSettings(p.id)}>
+                <IconButton sx={{mr: 0.5}} size={'small'} onClick={async () => await onSettings(p.id)}>
                   <Settings fontSize={'small'}/>
                 </IconButton>
               </ListItemSecondaryAction>
