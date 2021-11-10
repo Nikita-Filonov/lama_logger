@@ -21,7 +21,6 @@ const RequestSend = ({project, customRequest, setCustomRequest}) => {
       }
     }
     let options = {
-      mode: 'no-cors',
       method: customRequest?.method,
       headers
     };
