@@ -1,9 +1,8 @@
 import React, {memo, useCallback, useEffect, useState} from "react";
-import {Box, Button, IconButton, Popover, TextField, Typography} from "@mui/material";
+import {Autocomplete, Box, Button, IconButton, Popover, TextField, Typography} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 import {connect} from "react-redux";
 import {setRequestsFilters} from "../../../../../../Redux/Requests/Requests/requestsActions";
-import {Autocomplete} from "@mui/lab";
 
 const HeadersPopover = (props) => {
   const {menu, onClose, requestsFilters, projectSettings, setRequestsFilters} = props;

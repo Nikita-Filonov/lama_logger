@@ -1,7 +1,6 @@
 import React from "react";
-import {Checkbox, IconButton, TextField} from "@mui/material";
+import {Autocomplete, Checkbox, IconButton, TextField} from "@mui/material";
 import {Close} from "@mui/icons-material";
-import {Autocomplete} from "@mui/lab";
 import {connect} from "react-redux";
 
 
