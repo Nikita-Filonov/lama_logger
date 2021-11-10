@@ -39,8 +39,7 @@ urlpatterns = [
 
     path('projects/', TemplateView.as_view(template_name='index.html'), name='index'),
     path('projects/<int:projects_id>/', TemplateView.as_view(template_name='index.html'), name='index'),
-    path('projects/<int:projects_id>/reqests/', TemplateView.as_view(template_name='index.html'), name='index'),
-    path('projects/<int:projects_id>/reqests/send/', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('projects/<int:projects_id>/requests/', TemplateView.as_view(template_name='index.html'), name='index'),
     path('projects/<int:projects_id>/tracks/', TemplateView.as_view(template_name='index.html'), name='index'),
     path('projects/<int:projects_id>/tracks/<int:track_id>/', TemplateView.as_view(template_name='index.html'),
          name='index'),
