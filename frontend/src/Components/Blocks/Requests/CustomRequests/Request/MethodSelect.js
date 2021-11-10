@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import {Button, Divider, ListItemIcon, Menu, Tooltip} from "@mui/material";
+import {Button, Menu, Tooltip} from "@mui/material";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import MenuItem from "@mui/material/MenuItem";
 import {CUSTOM_METHODS} from "../../../../../Utils/Constants";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
-import {Add} from "@mui/icons-material";
 
 const MethodSelect = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
@@ -50,13 +49,6 @@ const MethodSelect = ({customRequest, setCustomRequest}) => {
             {method}
           </MenuItem>
         )}
-        <Divider/>
-        <MenuItem>
-          <ListItemIcon>
-            <Add/>
-          </ListItemIcon>
-          New method
-        </MenuItem>
       </Menu>
     </React.Fragment>
   )
