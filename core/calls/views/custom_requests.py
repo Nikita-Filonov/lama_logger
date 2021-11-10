@@ -2,16 +2,18 @@ import json
 
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import api_view, permission_classes, throttle_classes, authentication_classes
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
+from core.calls.helpers.requests.custom_request import send_custom_request
 from core.calls.models import Request
 from core.calls.permissions.requests import IsRequestActionAllowed
 from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.projects.models import Project
-from utils.exeptions import BadRequest
+from utils.exeptions import BadRequest, NotFound
 
 
 class CustomRequestsApi(views.APIView, LimitOffsetPagination):
@@ -60,3 +62,17 @@ class CustomRequestApi(views.APIView):
         request = Request.objects.get(requestId=request_id)
         request.delete()
         return Response({'message': 'Request was successfully deleted', 'level': 'success'})
+
+
+@api_view(['POST'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def custom_request_send(request, project_id, request_id):
+    try:
+        request = Request.objects.get(requestId=request_id)
+    except Request.DoesNotExist:
+        raise NotFound('Custom request does not exists')
+
+    response = send_custom_request(request)
+    return Response(response)

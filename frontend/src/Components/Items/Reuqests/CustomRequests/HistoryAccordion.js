@@ -31,9 +31,9 @@ const HistoryAccordion = ({history, project, customRequests, setCustomRequest}) 
   const onActionHide = () => setAction(false);
 
   const onSelectRequest = async (request) => {
-    const existingRequest = customRequests?.results?.find(r => r.requestId === request.requestId)
+    const existingRequest = customRequests?.results?.some(r => r.requestId === request.requestId);
     if (existingRequest) {
-      setCustomRequest(existingRequest);
+      setCustomRequest(request);
     } else {
       await createCustomRequest(project.id, {...request, isCustom: true});
     }

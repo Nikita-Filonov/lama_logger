@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Container, Grid} from "@mui/material";
 import {RequestSection} from "../../Components/Blocks/Requests/CustomRequests/Request/RequestSection";
-import {ResponseSection} from "../../Components/Blocks/Requests/CustomRequests/Response/ResponseSection";
+import ResponseSection from "../../Components/Blocks/Requests/CustomRequests/Response/ResponseSection";
 import RequestsHistory from "../../Components/Blocks/Requests/CustomRequests/History/RequestsHistory";
 import RequestsTabs from "../../Components/Blocks/Requests/CustomRequests/RequestsTabs/RequestsTabs";
 import {useCustomRequests} from "../../Providers/Requests/CustomRequestsPorvider";
