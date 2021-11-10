@@ -7,7 +7,7 @@ import {objectToQuery} from "../../../../../Utils/Utils/Common";
 const RequestUrl = ({customRequest, setCustomRequest}) => {
 
   useEffect(() => {
-    (async () => await queryObjectToString())()
+    (async () => customRequest?.requestUrl && await queryObjectToString())()
   }, [customRequest?.queryParams]);
 
   const queryObjectToString = useCallback(async () => {

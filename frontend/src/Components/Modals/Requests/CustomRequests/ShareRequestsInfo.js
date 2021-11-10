@@ -4,9 +4,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import {Alert, AlertTitle} from "@mui/lab";
+import {Alert, AlertTitle, Typography} from "@mui/material";
 import {SlideTransition} from "../../../../Utils/Utils/Common";
-import {Typography} from "@mui/material";
 
 
 export const ShareRequestsInfo = ({modal, setModal, onAcceptShareInfo}) => {

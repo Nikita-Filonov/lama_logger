@@ -1,5 +1,6 @@
 import React, {useCallback} from "react";
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -15,7 +16,7 @@ import {useProjects} from "../../../../../../Providers/ProjectsProvider";
 import {ScopesList} from "../../../../../Blocks/Requests/Settings/Users/Roles/ScopesList";
 import {setCreateRoleModal, setRole} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {INITIAL_REQUESTS_SETTINGS} from "../../../../../../Redux/Requests/Settings/initialState";
-import {Alert, LoadingButton} from "@mui/lab";
+import {LoadingButton} from "@mui/lab";
 import {usePermissions} from "../../../../../../Providers/Users/PermissionsProvider";
 import {ROLE} from "../../../../../../Utils/Permissions/Projects";
 
