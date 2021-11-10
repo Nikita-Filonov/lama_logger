@@ -12,7 +12,6 @@ from core.calls.helpers.requests.authenticators import IntegrationTokenAuthentic
 from core.calls.helpers.requests.filters import filter_request
 from core.calls.models import Request
 from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
-from core.projects.helpers.utils import to_curl
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
 from core.tracks.helpers.analyzers.analyze_request import analyze_request
@@ -87,18 +86,3 @@ class RequestApi(views.APIView):
 
         request.delete()
         return Response({'message': 'Request was successfully deleted', 'level': 'success'})
-
-
-@api_view(['GET'])
-@authentication_classes((TokenAuthentication,))
-@permission_classes((IsAuthenticated,))
-@throttle_classes((UserRateThrottle,))
-def request_to_curl(request, project_id, request_id):
-    db_request = Request.objects.get(requestId=request_id)
-    curl_request = {
-        'method': db_request.method,
-        'headers': db_request.requestHeaders,
-        'body': db_request.requestBody,
-        'url': db_request.requestUrl
-    }
-    return Response({'curl': to_curl(curl_request)})

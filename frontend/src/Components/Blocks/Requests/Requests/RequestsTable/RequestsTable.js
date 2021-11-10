@@ -35,8 +35,10 @@ const RequestsTable = (props) => {
           onRequestSort={onRequestSort}
         />
         <TableBody>
-          {stableSort(requests?.results, getComparator(order, orderBy))
-            .map(request => <RequestRow request={request} key={request.requestId}/>)}
+          {
+            stableSort(requests?.results, getComparator(order, orderBy))
+            .map(request => <RequestRow request={request} key={request.requestId}/>)
+          }
         </TableBody>
 
         {requests?.results?.length > 0 && <TablePagination

@@ -7,7 +7,7 @@ import {
   SET_SAVED_REQUESTS_FILTERS
 } from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
-import {copyText, queryWithPagination} from "../../Utils/Utils/Common";
+import {queryWithPagination} from "../../Utils/Utils/Common";
 import {get, patch, post, remove} from "../../Utils/Api/Fetch";
 
 
@@ -25,12 +25,6 @@ const RequestsProvider = ({children, store}) => {
     const {json} = await get(projectsApi + `${projectId}/requests/${query}`);
     store.dispatch({type: SET_REQUESTS, payload: json});
     setLoad(false);
-  }
-
-  const getRequestAsCurl = async (projectId, requestId) => {
-    const {json, error} = await get(projectsApi + `${projectId}/requests/${requestId}/curl/`);
-    copyText(json?.curl)
-    setAlert(error ? json : {message: 'Request copied to clipboard', level: 'success'})
   }
 
   const deleteRequests = async (projectId, requests) => {
@@ -75,7 +69,6 @@ const RequestsProvider = ({children, store}) => {
         load,
         request,
         getRequests,
-        getRequestAsCurl,
         deleteRequests,
         deleteRequest,
         getRequestsFilters,
