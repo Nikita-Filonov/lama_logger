@@ -190,11 +190,9 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-BROKER_URL = 'redis://' + REDIS_HOST + ':' + f'{REDIS_PORT}' + '/0'
+BROKER_URL = os.environ.get('REDIS_URL')
 BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://timer_redis:6379/0'
+CELERY_RESULT_BACKEND = BROKER_URL
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_TIMEZONE = "Europe/Moscow"
 CELERY_TASK_TRACK_STARTED = True
