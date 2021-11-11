@@ -18,11 +18,11 @@ const RequestsTabs = ({customRequest, customRequests, project, drawer, setCustom
 
   const selectedTabIndex = useMemo(
     () => {
-      const index = customRequests?.results?.findIndex(r => r.requestId === customRequest.requestId);
+      const index = customRequests?.results?.findIndex(r => r.requestId === customRequest?.requestId);
       (index === -1 && customRequests?.count > 0) && setCustomRequest(customRequests?.results[0]);
       return index === -1 ? 0 : index;
     },
-    [customRequests?.results, customRequest.requestId]
+    [customRequests?.results, customRequest?.requestId]
   );
 
   const onCreate = async () => await createCustomRequest(project.id, {isCustom: true});
