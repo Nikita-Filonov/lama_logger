@@ -6,6 +6,7 @@ import RequestsHistory from "../../Components/Blocks/Requests/CustomRequests/His
 import RequestsTabs from "../../Components/Blocks/Requests/CustomRequests/RequestsTabs/RequestsTabs";
 import {useCustomRequests} from "../../Providers/Requests/CustomRequestsPorvider";
 import {connect} from "react-redux";
+import {EmptyList} from "../../Components/Blocks/Common/EmptyList";
 
 const CustomRequests = ({project, customRequest}) => {
   const {updateCustomRequest} = useCustomRequests();
@@ -28,8 +29,13 @@ const CustomRequests = ({project, customRequest}) => {
             <RequestsHistory/>
           </Grid>
           <Grid item xs={8}>
-            <RequestSection/>
-            <ResponseSection/>
+            {customRequest?.requestId
+              ? <React.Fragment>
+                <RequestSection/>
+                <ResponseSection/>
+              </React.Fragment>
+              : <EmptyList text={'You can select request from history or from requests section'}/>
+            }
           </Grid>
         </Grid>
       </div>
