@@ -3,12 +3,14 @@ import {
   CREATE_SAVED_REQUESTS_FILTER,
   DELETE_REQUESTS,
   DELETE_SAVED_REQUESTS_FILTER,
+  SET_REQUEST,
   SET_REQUESTS,
   SET_SAVED_REQUESTS_FILTERS
 } from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {queryWithPagination} from "../../Utils/Utils/Common";
 import {get, patch, post, remove} from "../../Utils/Api/Fetch";
+import {INITIAL_REQUESTS} from "../../Redux/Requests/Requests/initialState";
 
 
 const RequestsContext = React.createContext(null);
@@ -37,6 +39,15 @@ const RequestsProvider = ({children, store}) => {
     const {json, error} = await remove(projectsApi + `${projectId}/requests/${requestId}/`);
     !error && store.dispatch({type: DELETE_REQUESTS, payload: [requestId]});
     setAlert(json);
+  }
+
+  const deleteAllRequests = async (projectId) => {
+    const {json, error} = await remove(projectsApi + `${projectId}/requests/clear-all/`);
+    if (!error) {
+      store.dispatch({type: SET_REQUESTS, payload: INITIAL_REQUESTS.requests});
+      store.dispatch({type: SET_REQUEST, payload: {}});
+    }
+    setAlert(error ? json : {message: 'All requests were successfully cleared', level: 'success'});
   }
 
   const getRequestsFilters = async (projectId) => {
@@ -71,6 +82,7 @@ const RequestsProvider = ({children, store}) => {
         getRequests,
         deleteRequests,
         deleteRequest,
+        deleteAllRequests,
         getRequestsFilters,
         createRequestsFilter,
         deleteRequestsFilter,

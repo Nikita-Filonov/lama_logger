@@ -42,6 +42,16 @@ def create_request(request, project_id):
     raise BadRequest('Error happened while creating request')
 
 
+@api_view(['DELETE'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def delete_all_requests(request, project_id):
+    requests = Request.objects.filter(project_id=project_id)
+    requests.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class RequestsApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -61,7 +71,7 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
             raise BadRequest('You should provide requests ids')
 
         project = Project.objects.get(id=project_id)
-        requests = Request.objects.filter(requestId__in=requests)
+        requests = Request.objects.filter(project_id=project_id, requestId__in=requests)
 
         track_requests(project, requests, 'delete')
         requests.delete()
