@@ -1,4 +1,3 @@
-import requests
 from requests import request as lib_request
 
 from core.calls.models import Request
@@ -19,8 +18,8 @@ def send_custom_request(request: Request):
 
     try:
         response = lib_request(request.method, request.requestUrl, **options)
-    except requests.exceptions.ConnectionError as error:
-        raise BadRequest('Connection error, see response body for details', level='warning', data=str(error))
+    except Exception as error:
+        raise BadRequest('Error happened while sending request', level='warning', data=str(error))
 
     return {
         'responseHeaders': response.headers,

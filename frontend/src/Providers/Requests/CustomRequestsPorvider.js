@@ -6,12 +6,14 @@ import {
   CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUEST_ERROR,
   SET_CUSTOM_REQUESTS,
   SET_CUSTOM_REQUESTS_HISTORY,
   UPDATE_CUSTOM_REQUEST
 } from "../../Redux/Requests/CustomRequests/actionTypes";
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";
+import {INITIAL_CUSTOM_REQUESTS} from "../../Redux/Requests/CustomRequests/initialState";
 
 
 const CustomRequestsContext = React.createContext(null);
@@ -73,7 +75,19 @@ const CustomRequestsProvider = ({children, store}) => {
     setRequest(true);
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests/${requestId}/send/`);
     error && setAlert(json);
-    !error && store.dispatch({type: SET_CUSTOM_REQUEST, payload: {...customRequest, ...json}})
+
+    if (!error) {
+      store.dispatch({type: SET_CUSTOM_REQUEST, payload: {...customRequest, ...json}});
+      store.dispatch({type: SET_CUSTOM_REQUEST_ERROR, payload: INITIAL_CUSTOM_REQUESTS.customRequestError});
+    }
+
+    if (error && json?.data) {
+      store.dispatch({type: SET_CUSTOM_REQUEST_ERROR, payload: {level: json?.level, data: json.data}});
+      store.dispatch({
+        type: SET_CUSTOM_REQUEST,
+        payload: {...customRequest, responseHeaders: {}, responseBody: null, statusCode: null}
+      })
+    }
     setRequest(false);
   }
 

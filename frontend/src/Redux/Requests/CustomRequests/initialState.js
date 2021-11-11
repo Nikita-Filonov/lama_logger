@@ -23,5 +23,9 @@ export const INITIAL_CUSTOM_REQUESTS = {
     requestUrl: null,
     responseHeaders: {},
     responseBody: null
-  }
+  },
+  customRequestError: {
+    level: 'error',
+    data: null
+  },
 }

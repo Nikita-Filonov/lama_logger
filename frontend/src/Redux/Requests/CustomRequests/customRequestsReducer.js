@@ -4,6 +4,7 @@ import {
   CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST,
+  SET_CUSTOM_REQUEST_ERROR,
   SET_CUSTOM_REQUEST_HISTORY_PAGINATION,
   SET_CUSTOM_REQUESTS,
   SET_CUSTOM_REQUESTS_HISTORY,
@@ -20,6 +21,8 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
     case SET_CUSTOM_REQUEST:
       localStorage.setItem('customRequest', JSON.stringify(action.payload));
       return {...state, customRequest: action.payload};
+    case SET_CUSTOM_REQUEST_ERROR:
+      return {...state, customRequestError: action.payload};
     case CREATE_CUSTOM_REQUEST:
       return {
         ...state,

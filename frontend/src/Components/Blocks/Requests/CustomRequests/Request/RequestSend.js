@@ -18,6 +18,7 @@ const RequestSend = ({project, customRequest}) => {
       endIcon={<Send/>}
       onClick={sendRequest}
       loading={request}
+      loadingPosition="end"
     >
       Send
     </LoadingButton>

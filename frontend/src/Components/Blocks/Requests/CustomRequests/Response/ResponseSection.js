@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Paper, Tab, Tabs, Typography} from "@mui/material";
+import React, {useEffect, useMemo, useState} from "react";
+import {Alert, Paper, Tab, Tabs, Typography} from "@mui/material";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
@@ -7,19 +7,30 @@ import {DragHandle} from "@mui/icons-material";
 import {HeaderDivider} from "../HeaderDivider";
 import {ResponseHeaders} from "./ResponseHeaders";
 import {connect} from "react-redux";
-import {Body} from "../../Requests/ViewRequest/Body";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
-import clsx from "clsx";
 import {useWindowSize} from "../../../../../Utils/Hooks/LayoutHooks";
 import {StatusCodeIndicator} from "../../Requests/StatusCodeIndicator";
+import _ from 'lodash';
+import {setCustomRequestError} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import {INITIAL_CUSTOM_REQUESTS} from "../../../../../Redux/Requests/CustomRequests/initialState";
 import {isValidJson} from "../../../../../Utils/Utils/Validators";
+import {Body} from "../../Requests/ViewRequest/Body";
+import ResponseErrorAlert from "./ResponseErrorAlert";
 
-const ResponseSection = ({customRequest}) => {
+
+const ResponseSection = ({customRequest, customRequestError, setCustomRequestError}) => {
   const {width} = useWindowSize();
   const classes = CustomRequestsStyles();
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
+
+  const isRequestValid = useMemo(
+    () => customRequest?.statusCode && !_.isEmpty(customRequest?.responseHeaders) && customRequest?.responseBody,
+    [customRequest]
+  )
+
+  useEffect(() => setCustomRequestError(INITIAL_CUSTOM_REQUESTS.customRequestError), [customRequest?.requestId]);
 
   return (
     <Paper sx={{p: 1, mt: 2, mb: 4}} elevation={3}>
@@ -31,45 +42,53 @@ const ResponseSection = ({customRequest}) => {
         </IconButton>
       </div>
       <HeaderDivider/>
-      <div className={'d-flex align-items-center'}>
-        <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'} className={'mt-3'}>
-          <Tab sx={tabsStyles} label="Headers"/>
-          <Tab sx={tabsStyles} label="Body"/>
-        </Tabs>
-        <div className={'flex-grow-1'}/>
-        <Typography>{customRequest?.statusCode}</Typography>
-        <StatusCodeIndicator statusCode={customRequest?.statusCode}/>
-      </div>
-      <TabPanel value={requestTab} index={0}>
-        {customRequest?.responseHeaders
-          ? <ResponseHeaders/>
-          : <Typography>Headers will be shown after request is sent</Typography>
-        }
-      </TabPanel>
-      <TabPanel value={requestTab} index={1}>
-        <div className={clsx(classes.responseHeadersContainer)}
-             style={{display: 'inline-block', width: width / 1.67, wordWrap: 'break-word'}}>
-          {customRequest?.responseBody
-            ? <Body
+      {/*when no error data and no response*/}
+      {(!customRequestError?.data && !isRequestValid) &&
+      <Alert variant="outlined" severity={'info'}>
+        Response will be shown after request is sent
+      </Alert>}
+      {/*when some error happens*/}
+      {customRequestError?.data && <ResponseErrorAlert/>}
+      {/*when response is valid*/}
+      {isRequestValid && <div>
+        <div className={'d-flex align-items-center'}>
+          <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}
+                className={'mt-3'}>
+            <Tab sx={tabsStyles} label="Headers"/>
+            <Tab sx={tabsStyles} label="Body"/>
+          </Tabs>
+          <div className={'flex-grow-1'}/>
+          <Typography>{customRequest?.statusCode}</Typography>
+          <StatusCodeIndicator statusCode={customRequest?.statusCode}/>
+        </div>
+        <TabPanel value={requestTab} index={0}>
+          <ResponseHeaders/>
+        </TabPanel>
+        <TabPanel value={requestTab} index={1}>
+          <div className={classes.responseHeadersContainer}
+               style={{display: 'inline-block', width: width / 1.67, wordWrap: 'break-word'}}>
+            <Body
               body={isValidJson(customRequest?.responseBody)
                 ? customRequest?.responseBody
                 : JSON.stringify(customRequest?.responseBody)
               }
               responseHeaders={customRequest?.responseHeaders}
             />
-            : <Typography>Body will be shown after request is sent</Typography>
-          }
-        </div>
-      </TabPanel>
+          </div>
+        </TabPanel>
+      </div>}
     </Paper>
   )
 }
 
 const getState = (state) => ({
   customRequest: state.customRequests.customRequest,
+  customRequestError: state.customRequests.customRequestError,
 })
 
 export default connect(
   getState,
-  null,
+  {
+    setCustomRequestError
+  },
 )(ResponseSection);
