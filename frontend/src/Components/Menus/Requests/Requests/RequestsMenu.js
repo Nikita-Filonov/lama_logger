@@ -16,8 +16,10 @@ import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 import {REQUEST} from "../../../../Utils/Permissions/Requests";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
+import {useHistory} from "react-router-dom";
 
 const RequestsMenu = ({project, setConfirmAction, setRequestsFiltersSidebar}) => {
+  const history = useHistory();
   const [menu, setMenu] = useState(null);
   const {isAllowed} = usePermissions();
   const {deleteAllRequests} = useRequests();
@@ -32,6 +34,7 @@ const RequestsMenu = ({project, setConfirmAction, setRequestsFiltersSidebar}) =>
     confirmButton: 'Delete',
     action: async () => await deleteAllRequests(project.id)
   });
+  const onSettings = () => history.push(`/projects/${project.id}/settings/general`);
 
   return (
     <React.Fragment>
@@ -62,7 +65,7 @@ const RequestsMenu = ({project, setConfirmAction, setRequestsFiltersSidebar}) =>
           </ListItemIcon>
           Invite member
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={onSettings}>
           <ListItemIcon>
             <SettingsOutlinedIcon fontSize="small"/>
           </ListItemIcon>
