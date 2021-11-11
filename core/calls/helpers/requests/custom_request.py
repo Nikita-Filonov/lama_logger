@@ -24,6 +24,6 @@ def send_custom_request(request: Request):
     return {
         'responseHeaders': response.headers,
         'responseBody': response.text,
-        'statusCode': response.status_code
-        # TODO добавить сюда duration
+        'statusCode': response.status_code,
+        'duration': response.elapsed.total_seconds()
     }

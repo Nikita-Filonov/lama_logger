@@ -17,6 +17,7 @@ export const uuid4Sync = () => {
 }
 
 export const capitalize = s => (s && s[0].toUpperCase() + s.slice(1)) || "";
+export const getDuration = duration => Math.round(duration * 1000 * 100) / 100;
 export const normalizeAmount = async (unit, amount) => {
   if (unit === 'seconds') {
     return amount;

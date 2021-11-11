@@ -3,7 +3,7 @@ import {Alert, Paper, Tab, Tabs, Typography} from "@mui/material";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
-import {DragHandle} from "@mui/icons-material";
+import {AccessTime, DragHandle} from "@mui/icons-material";
 import {HeaderDivider} from "../HeaderDivider";
 import {ResponseHeaders} from "./ResponseHeaders";
 import {connect} from "react-redux";
@@ -16,6 +16,7 @@ import {INITIAL_CUSTOM_REQUESTS} from "../../../../../Redux/Requests/CustomReque
 import {isValidJson} from "../../../../../Utils/Utils/Validators";
 import {Body} from "../../Requests/ViewRequest/Body";
 import ResponseErrorAlert from "./ResponseErrorAlert";
+import {getDuration} from "../../../../../Utils/Utils/Common";
 
 
 const ResponseSection = ({customRequest, customRequestError, setCustomRequestError}) => {
@@ -58,6 +59,13 @@ const ResponseSection = ({customRequest, customRequestError, setCustomRequestErr
             <Tab sx={tabsStyles} label="Body"/>
           </Tabs>
           <div className={'flex-grow-1'}/>
+          <AccessTime fontSize={'small'}/>
+          <Typography
+            sx={{mr: 1.5, ml: 1}}
+            variant={'subtitle1'}
+          >
+            Duration {getDuration(customRequest?.duration)} milliseconds
+          </Typography>
           <Typography>{customRequest?.statusCode}</Typography>
           <StatusCodeIndicator statusCode={customRequest?.statusCode}/>
         </div>

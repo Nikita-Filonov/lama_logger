@@ -10,6 +10,7 @@ import moment from "moment";
 import {AccessTime} from "@mui/icons-material";
 import {RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {METHOD_COLORS} from "../../../../../Utils/Constants";
+import {getDuration} from "../../../../../Utils/Utils/Common";
 
 function a11yProps(index) {
   return {
@@ -72,7 +73,12 @@ const ViewRequestAccordion = ({request, viewMode}) => {
 
       <div className={'d-flex align-items-center'}>
         <AccessTime fontSize={'small'}/>
-        <Typography sx={{ml: 1}} variant={'subtitle1'}>Duration {request?.duration * 1000} milliseconds</Typography>
+        <Typography
+          sx={{ml: 1}}
+          variant={'subtitle1'}
+        >
+          Duration {getDuration(request?.duration)} milliseconds
+        </Typography>
         <div className={'flex-grow-1'}/>
         <Typography variant={'body2'} sx={{mr: 2}}>
           {moment.utc(request.created).local().startOf('seconds').fromNow()}
