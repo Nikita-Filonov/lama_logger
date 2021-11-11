@@ -6,7 +6,7 @@ import clsx from "clsx";
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
 import {setRequestsPagination, setSelectedRequests} from "../../../../../Redux/Requests/Requests/requestsActions";
-import {Delete} from "@mui/icons-material";
+import {Close, Delete} from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
 import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
@@ -37,14 +37,21 @@ const RequestsToolbarSelected = (props) => {
         setRequestsPagination({...requestsPagination, page: 0})
       }
     })
-  }
+  };
+
+  const onClearSelectedRequests = () => setSelectedRequests([]);
 
   return (
     <Paper
       elevation={3}
       className={clsx('mt-3 d-flex justify-content-center align-items-center', classes.toolbarContainer)}
     >
-      <Typography sx={{marginLeft: 1}}>Selected {selectedRequests.length}</Typography>
+      <Tooltip title={'Clear selected requests'}>
+        <IconButton sx={{mr: 1}} onClick={onClearSelectedRequests}>
+          <Close/>
+        </IconButton>
+      </Tooltip>
+      <Typography sx={{ml: 1}}>Selected {selectedRequests.length}</Typography>
       <div className={'flex-grow-1'}/>
       <Tooltip title={'Export selected requests'}>
         <IconButton className={'me-2'}>

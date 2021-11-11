@@ -30,6 +30,9 @@ export const common = {
     whiteSpace: "nowrap",
     overflow: 'hidden'
   },
+  breakLongWord: {
+    wordBreak: 'break-all'
+  },
   verticalDivider: {
     alignSelf: 'stretch',
     height: 'auto'

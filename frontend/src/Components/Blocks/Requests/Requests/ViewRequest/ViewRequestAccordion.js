@@ -8,7 +8,7 @@ import {Headers} from "./Headers";
 import {Body} from "./Body";
 import moment from "moment";
 import {AccessTime} from "@mui/icons-material";
-import {RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
+import {common, RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {METHOD_COLORS} from "../../../../../Utils/Constants";
 import {getDuration} from "../../../../../Utils/Utils/Common";
 
@@ -39,7 +39,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
           gutterBottom
           component="div"
           className={'mt-2'}
-          style={{fontSize: 17}}
+          style={{fontSize: 17, ...common.breakLongWord}}
           color={METHOD_COLORS[request?.method]}
         >
           {request?.method} <Link sx={{ml: 1}} href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
