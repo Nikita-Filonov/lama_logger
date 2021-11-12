@@ -15,7 +15,8 @@ from core.calls.serializers.requests import RequestsSerializer, RequestSerialize
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
 from core.tracks.helpers.analyzers.analyze_request import analyze_request
-from utils.exeptions import BadRequest, NotFound
+from utils.exeptions import BadRequest
+from utils.helpers.common import delete_model
 
 
 @api_view(['POST'])
@@ -89,10 +90,5 @@ class RequestApi(views.APIView):
         return Response(RequestsSerializer(db_request, many=False).data)
 
     def delete(self, request, project_id, request_id):
-        try:
-            request = Request.objects.get(requestId=request_id)
-        except Request.DoesNotExist:
-            raise NotFound('Request does not exists')
-
-        request.delete()
+        delete_model(Request, requestId=request_id)
         return Response({'message': 'Request was successfully deleted', 'level': 'success'})

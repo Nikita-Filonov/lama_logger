@@ -11,6 +11,7 @@ import {useAlerts} from "../AlertsProvider";
 import {queryWithPagination} from "../../Utils/Utils/Common";
 import {get, patch, post, remove} from "../../Utils/Api/Fetch";
 import {INITIAL_REQUESTS} from "../../Redux/Requests/Requests/initialState";
+import {useSelector} from "react-redux";
 
 
 const RequestsContext = React.createContext(null);
@@ -20,6 +21,8 @@ const RequestsProvider = ({children, store}) => {
   const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
   const [request, setRequest] = useState(false);
+
+  const selectedRequest = useSelector(state => state.requests.request);
 
   const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
     setLoad(state => state);
@@ -31,6 +34,10 @@ const RequestsProvider = ({children, store}) => {
 
   const deleteRequests = async (projectId, requests) => {
     store.dispatch({type: DELETE_REQUESTS, payload: requests});
+    requests.some(requestId => requestId === selectedRequest?.requestId) && store.dispatch({
+      type: SET_REQUEST,
+      payload: {}
+    });
     const {json, error} = await remove(projectsApi + `${projectId}/requests/`, requests);
     setAlert(error ? json : {message: `${requests?.length} were successfully deleted`, level: 'success'})
   }
@@ -38,6 +45,7 @@ const RequestsProvider = ({children, store}) => {
   const deleteRequest = async (projectId, requestId) => {
     const {json, error} = await remove(projectsApi + `${projectId}/requests/${requestId}/`);
     !error && store.dispatch({type: DELETE_REQUESTS, payload: [requestId]});
+    selectedRequest?.requestId === requestId && store.dispatch({type: SET_REQUEST, payload: {}});
     setAlert(json);
   }
 
