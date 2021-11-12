@@ -12,7 +12,7 @@ const headCells = [
     label: 'Name',
   },
   {
-    id: null,
+    id: 'scopesCount',
     align: 'left',
     label: 'Scopes',
   },

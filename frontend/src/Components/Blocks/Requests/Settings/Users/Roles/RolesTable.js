@@ -30,7 +30,8 @@ const RolesTable = ({project}) => {
         />
         <TableBody>
           {stableSort(filteredRoles, getComparator(order, orderBy))
-            .map(role => <RoleRow role={role} key={role.id}/>)}
+            .map(role => <RoleRow role={role} key={role.id}/>)
+          }
         </TableBody>
       </Table>
     </TableContainer>

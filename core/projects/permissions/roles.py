@@ -1,4 +1,5 @@
-from core.projects.models import Project, Member, Role
+from core.calls.models import Request, RequestsFilter
+from core.projects.models import Project, Member, Role, ProjectSettings, ProjectTask
 
 
 def filter_scopes(scopes, *args):
@@ -22,34 +23,51 @@ def to_scope(model) -> list:
 
 
 PROJECT = Project.SCOPES
+PROJECT_SETTINGS = ProjectSettings.SCOPES
+PROJECT_TASK = ProjectTask.SCOPES
 ROLE = Role.SCOPES
 MEMBER = Member.SCOPES
 
+REQUEST = Request.SCOPES
+REQUESTS_FILTER = RequestsFilter.SCOPES
+
 
 class Admin:
-    name = 'Admin'
+    name = 'Administrator'
     scopes = [
         *PROJECT,
         *ROLE,
         *MEMBER,
+        *PROJECT_SETTINGS,
+        *PROJECT_TASK,
+        *REQUEST,
+        *REQUESTS_FILTER
     ]
 
 
-class Editor:
-    name = 'Editor'
+class Developer:
+    name = 'Developer'
     scopes = [
         *filter_scopes(PROJECT, 'view'),
-        *filter_scopes(PROJECT, 'view'),
-        *filter_scopes(PROJECT, 'view'),
+        *filter_scopes(PROJECT_SETTINGS, 'view'),
+        *filter_scopes(PROJECT_TASK, 'view'),
+        *filter_scopes(ROLE, 'view'),
+        *filter_scopes(MEMBER, 'view'),
+        *REQUEST,
+        *REQUESTS_FILTER
     ]
 
 
-class Viewer:
-    name = 'Viewer'
+class AutomationEngineer:
+    name = 'Automation engineer'
     scopes = [
         *filter_scopes(PROJECT, 'view'),
-        *filter_scopes(PROJECT, 'view'),
-        *filter_scopes(PROJECT, 'view'),
+        *filter_scopes(PROJECT_SETTINGS, 'view'),
+        *filter_scopes(PROJECT_TASK, 'view'),
+        *filter_scopes(ROLE, 'view'),
+        *filter_scopes(MEMBER, 'view'),
+        *REQUEST,
+        *REQUESTS_FILTER,
     ]
 
 
@@ -57,6 +75,10 @@ class AccountManager:
     name = 'Account manager'
     scopes = [
         *filter_scopes(PROJECT, 'view'),
+        *filter_scopes(PROJECT_SETTINGS, 'view'),
+        *filter_scopes(PROJECT_TASK, 'view'),
+        *filter_scopes(ROLE, 'view'),
+        *filter_scopes(MEMBER, 'view'),
         *ROLE,
         *MEMBER,
     ]
