@@ -124,8 +124,8 @@ export const DrawerStyled = styled(MuiDrawer, {shouldForwardProp: (prop) => prop
 export const RequestsTableStyles = makeStyles((theme) => ({
   tableContainer: {
     overflow: "hidden",
-    maxHeight: window.innerHeight / 1.3,
-    height: window.innerHeight / 1.3,
+    maxHeight: window.innerHeight / 1.29,
+    height: window.innerHeight / 1.29,
     "&:hover": {
       overflowY: "overlay",
     }
@@ -153,8 +153,8 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     "&:hover": {
       overflowY: "overlay",
     },
-    maxHeight: window.innerHeight / 1.405,
-    height: window.innerHeight / 1.405,
+    maxHeight: window.innerHeight / 1.4,
+    height: window.innerHeight / 1.4,
   }
 }));
 
