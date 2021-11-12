@@ -5,6 +5,7 @@ import {
   SET_REQUESTS_PAGINATION,
   SET_REQUESTS_REALTIME,
   SET_REQUESTS_STATS_FILTERS,
+  SET_REQUESTS_STATS_GROUP_BY,
   SET_REQUESTS_TIME_FILTER_MODAL,
   SET_SELECTED_REQUESTS
 } from "./actionTypes";
@@ -48,5 +49,11 @@ export const setRequestsRealtime = (state) => ({
 
 export const setRequestsStatsFilters = (state) => ({
   type: SET_REQUESTS_STATS_FILTERS,
+  payload: state
+})
+
+
+export const setRequestsStatsGroupBy = (state) => ({
+  type: SET_REQUESTS_STATS_GROUP_BY,
   payload: state
 })

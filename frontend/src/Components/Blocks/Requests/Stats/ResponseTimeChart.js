@@ -1,7 +1,7 @@
 import React from "react";
 import {Paper} from "@mui/material";
 import {Line} from 'react-chartjs-2';
-import {ChartGroupByMenu} from "./ChartGroupByMenu";
+import ChartGroupByMenu from "./ChartGroupByMenu";
 
 const data = {
   labels: ['1', '2', '3', '4', '5', '6'],

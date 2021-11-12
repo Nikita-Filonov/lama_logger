@@ -1,30 +1,21 @@
 import React, {useContext, useState} from 'react';
-import {baseUrl} from "../../Utils/Constants";
-import {useUsers} from "../Users/UsersProvider";
 import {objectToQuery} from "../../Utils/Utils/Common";
+import {get} from "../../Utils/Api/Fetch";
 
 
 const RequestsStatsContext = React.createContext(null);
 
 const RequestsStatsProvider = ({children}) => {
-  const {token} = useUsers()
-  const projectsApi = baseUrl + 'api/v1/projects/';
+  const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
   const [requestsStats, setRequestsStats] = useState({data: []});
 
   const getRequestsStats = async (projectId, groupBy = 'hours', filters = {}) => {
-    setLoad(true)
+    setLoad(true);
     const query = await objectToQuery({...filters, groupBy});
-    await fetch(projectsApi + `${projectId}/requests/stats/${query}`, {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(async data => {
-        setRequestsStats(data)
-        setLoad(false);
-      });
+    const {json} = await get(projectsApi + `${projectId}/requests/stats/${query}`);
+    setRequestsStats(json);
+    setLoad(false);
   }
 
   return (

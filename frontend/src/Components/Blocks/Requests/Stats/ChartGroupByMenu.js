@@ -2,12 +2,19 @@ import React, {useState} from "react";
 import {Button, Menu} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuItem from "@mui/material/MenuItem";
+import {connect} from "react-redux";
+import {setRequestsStatsGroupBy} from "../../../../Redux/Requests/Requests/requestsActions";
 
-export const ChartGroupByMenu = () => {
+const ChartGroupByMenu = ({requestsStatsGroupBy, setRequestsStatsGroupBy, chart}) => {
   const [groupByMenu, setGroupByMenu] = useState(null);
 
   const onOpenGroupMenu = (event) => setGroupByMenu(event.currentTarget);
   const onCloseGroupMenu = () => setGroupByMenu(null);
+
+  const onSelect = async (value) => {
+    setRequestsStatsGroupBy({...requestsStatsGroupBy, [chart]: value});
+    onCloseGroupMenu();
+  }
 
   return (
     <div className={'d-flex'}>
@@ -18,7 +25,7 @@ export const ChartGroupByMenu = () => {
         color={'inherit'}
         endIcon={<KeyboardArrowDownIcon/>}
       >
-        Group: Hours
+        Group: {requestsStatsGroupBy[chart]}
       </Button>
       <Menu
         anchorEl={groupByMenu}
@@ -33,9 +40,20 @@ export const ChartGroupByMenu = () => {
           horizontal: 'center',
         }}
       >
-        <MenuItem>By hours</MenuItem>
-        <MenuItem>By days</MenuItem>
+        <MenuItem onClick={async () => await onSelect('hours')}>By hours</MenuItem>
+        <MenuItem onClick={async () => await onSelect('days')}>By days</MenuItem>
       </Menu>
     </div>
   )
 }
+
+const getState = (state) => ({
+  requestsStatsGroupBy: state.requests.requestsStatsGroupBy
+})
+
+export default connect(
+  getState,
+  {
+    setRequestsStatsGroupBy
+  },
+)(ChartGroupByMenu);
