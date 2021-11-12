@@ -7,6 +7,7 @@ from rest_framework.throttling import UserRateThrottle
 from core.projects.models import Project, Role
 from core.projects.serializers.projects import ProjectsSerializer
 from core.projects.serializers.roles import RoleSerializer
+from utils.helpers.common import delete_model
 
 
 class RolesApi(views.APIView):
@@ -47,3 +48,10 @@ class RoleApi(views.APIView):
             return Response(ProjectsSerializer(project, many=False).data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, project_id, role_id):
+        delete_model(Role, id=role_id)
+
+        project = Project.objects.get(id=project_id)
+        serializer = ProjectsSerializer(project, many=False)
+        return Response(serializer.data)

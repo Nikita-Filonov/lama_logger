@@ -1,26 +1,12 @@
 import React, {useMemo} from "react";
 import {connect} from "react-redux";
 import {Checkbox, TableCell, TableRow} from '@mui/material';
-import {useProjects} from "../../../../../../Providers/ProjectsProvider";
-import {setConfirmAction} from "../../../../../../Redux/Users/usersActions";
 import RoleRowMenu from "../../../../../Menus/Requests/Settings/Users/RoleRowMenu";
 import {setSelectedRoles} from "../../../../../../Redux/Requests/Settings/requestsSettingsActions";
 
 const RoleRow = (props) => {
-  const {role, project, selectedRoles, setSelectedRoles, setConfirmAction} = props;
-  const {deleteMembers} = useProjects();
+  const {role, selectedRoles, setSelectedRoles} = props;
   const isSelected = useMemo(() => selectedRoles.indexOf(role.id) !== -1, [selectedRoles]);
-
-  const onDelete = async () => {
-    setConfirmAction({
-      modal: true,
-      title: 'Delete member?',
-      description: 'Are you sure you want to delete member? ' +
-        'You will not be able to undo this action',
-      confirmButton: 'Delete',
-      action: async () => await deleteMembers(project.id, {members: [role.id]})
-    })
-  }
 
 
   return (
@@ -47,14 +33,12 @@ const RoleRow = (props) => {
 }
 
 const getState = (state) => ({
-  project: state.projects.project,
   selectedRoles: state.requestsSettings.selectedRoles,
 })
 
 export default connect(
   getState,
   {
-    setSelectedRoles,
-    setConfirmAction
+    setSelectedRoles
   },
 )(RoleRow);

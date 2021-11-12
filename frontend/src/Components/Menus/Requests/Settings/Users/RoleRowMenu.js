@@ -10,16 +10,31 @@ import {connect} from "react-redux";
 import {setCreateRoleModal, setRole} from "../../../../../Redux/Requests/Settings/requestsSettingsActions";
 import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
 import {ROLE} from "../../../../../Utils/Permissions/Projects";
+import {setConfirmAction} from "../../../../../Redux/Users/usersActions";
+import {useProjects} from "../../../../../Providers/ProjectsProvider";
 
-const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
+
+const RoleRowMenu = ({role, setRole, project, setCreateRoleModal, setConfirmAction}) => {
   const {isAllowed} = usePermissions();
+  const {deleteRole} = useProjects();
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null)
 
   const onEdit = () => {
-    setRole({...role, editMode: true})
-    setCreateRoleModal(true)
+    setRole({...role, editMode: true});
+    setCreateRoleModal(true);
+  };
+
+  const onDelete = async () => {
+    setConfirmAction({
+      modal: true,
+      title: 'Delete role?',
+      description: 'Are you sure you want to delete role? ' +
+        'You will not be able to undo this action',
+      confirmButton: 'Delete',
+      action: async () => await deleteRole(project?.id, role?.id)
+    })
   }
 
   return (
@@ -45,7 +60,7 @@ const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
           </ListItemIcon>
           Edit
         </MenuItem>
-        <MenuItem sx={{color: 'red'}} disabled={!isAllowed([ROLE.delete])}>
+        <MenuItem sx={{color: 'red'}} disabled={!isAllowed([ROLE.delete])} onClick={onDelete}>
           <ListItemIcon>
             <Delete fontSize="small" sx={{color: 'red'}}/>
           </ListItemIcon>
@@ -56,10 +71,15 @@ const RoleRowMenu = ({role, setRole, setCreateRoleModal}) => {
   );
 }
 
+const getState = (state) => ({
+  project: state.projects.project,
+})
+
 export default connect(
-  null,
+  getState,
   {
     setRole,
-    setCreateRoleModal
+    setCreateRoleModal,
+    setConfirmAction
   },
 )(RoleRowMenu);

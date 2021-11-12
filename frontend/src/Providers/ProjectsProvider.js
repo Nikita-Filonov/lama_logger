@@ -27,14 +27,10 @@ const ProjectsProvider = ({children, store}) => {
     store.dispatch({type: UPDATE_PROJECT, payload: data});
   }
 
-  const checkResponse = async ({json, error}, successMessage = {}, errorMessage = null) => {
-    if (!error) {
-      setAlert(successMessage)
-      await updateProjectState(json)
-    } else {
-      setAlert(errorMessage || json)
-    }
-    setRequest(false)
+  const checkResponse = async ({json, error}, successMessage = null) => {
+    !error && await updateProjectState(json);
+    setAlert(error ? json : (successMessage || json));
+    setRequest(false);
   }
 
   const getProjects = useCallback(async (query = {archived: 'False'}) => {
@@ -76,11 +72,7 @@ const ProjectsProvider = ({children, store}) => {
   const updateMember = async (projectId, memberId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
     const response = await patch(projectsApi + `${projectId}/members/${memberId}/`, payload);
-    await checkResponse(
-      response,
-      {message: 'Member was updated', level: 'success'},
-      {message: 'An error occurred while updating member', level: 'error'}
-    )
+    await checkResponse(response, {message: 'Member was updated', level: 'success'});
   }
 
   const deleteMembers = async (projectId, payload) => {
@@ -98,11 +90,13 @@ const ProjectsProvider = ({children, store}) => {
   const updateRole = async (projectId, roleId, payload, isLazy = false) => {
     !isLazy && setRequest(true)
     const response = await patch(projectsApi + `${projectId}/roles/${roleId}/`, payload);
-    await checkResponse(
-      response,
-      {message: 'Role was updated', level: 'success'},
-      {message: 'An error occurred while updating role', level: 'error'}
-    )
+    await checkResponse(response, {message: 'Role was updated', level: 'success'});
+  }
+
+  const deleteRole = async (projectId, roleId) => {
+    setRequest(true);
+    const response = await remove(projectsApi + `${projectId}/roles/${roleId}/`);
+    await checkResponse(response, {message: 'Role was successfully deleted', level: 'success'});
   }
 
   return (
@@ -117,7 +111,8 @@ const ProjectsProvider = ({children, store}) => {
         updateMember,
         deleteMembers,
         createRole,
-        updateRole
+        updateRole,
+        deleteRole
       }}
     >
       {children}

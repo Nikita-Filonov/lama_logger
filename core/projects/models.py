@@ -12,6 +12,7 @@ from core.users.models import CustomUser
 
 
 class Role(models.Model):
+    name = 'Role'
     SCOPES = [
         'Role.View',
         'Role.Create',
@@ -41,6 +42,7 @@ class Role(models.Model):
 
 
 class Member(models.Model):
+    name = 'Member'
     SCOPES = [
         'Member.View',
         'Member.Create',
@@ -63,6 +65,7 @@ class Member(models.Model):
 
 
 class Project(models.Model):
+    name = 'Project'
     SCOPES = [
         'Project.View',
         'Project.Create',
@@ -138,6 +141,7 @@ class Project(models.Model):
 
 
 class ProjectSettings(models.Model):
+    name = 'Project settings'
     SCOPES = [
         'ProjectSettings.View',
         'ProjectSettings.Create',
@@ -191,6 +195,7 @@ class ProjectSettings(models.Model):
 
 
 class ProjectTask(models.Model):
+    name = 'Project task'
     SCOPES = [
         'ProjectTask.View',
         'ProjectTask.Create',
