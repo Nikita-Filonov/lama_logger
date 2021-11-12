@@ -1,6 +1,8 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {objectToQuery} from "../../Utils/Utils/Common";
 import {get} from "../../Utils/Api/Fetch";
+import {makeRequestsStatsFilters} from "../../Utils/Utils/Filters";
+import {useSelector} from "react-redux";
 
 
 const RequestsStatsContext = React.createContext(null);
@@ -9,6 +11,16 @@ const RequestsStatsProvider = ({children}) => {
   const projectsApi = 'api/v1/projects/';
   const [load, setLoad] = useState(false);
   const [requestsStats, setRequestsStats] = useState({data: []});
+
+  const project = useSelector(state => state.projects.project);
+  const statsFilters = useSelector(state => state.stats.statsFilters);
+  const statsGroupBy = useSelector(state => state.stats.statsGroupBy);
+
+  useEffect(() => {
+    (async () => {
+      await getRequestsStats(project.id, statsGroupBy?.commonStatsChart, makeRequestsStatsFilters(statsFilters));
+    })()
+  }, [project.id, statsFilters, statsGroupBy]);
 
   const getRequestsStats = async (projectId, groupBy = 'hours', filters = {}) => {
     setLoad(true);

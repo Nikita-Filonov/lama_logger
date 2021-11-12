@@ -1,0 +1,2 @@
+export const SET_STATS_FILTERS = 'SET_STATS_FILTERS';
+export const SET_STATS_GROUP_BY = 'SET_STATS_GROUP_BY';

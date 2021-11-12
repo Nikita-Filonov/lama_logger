@@ -3,16 +3,16 @@ import {Button, Menu} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuItem from "@mui/material/MenuItem";
 import {connect} from "react-redux";
-import {setRequestsStatsGroupBy} from "../../../../Redux/Requests/Requests/requestsActions";
+import {setStatsGroupBy} from "../../../../Redux/Requests/Stats/statsActions";
 
-const ChartGroupByMenu = ({requestsStatsGroupBy, setRequestsStatsGroupBy, chart}) => {
+const ChartGroupByMenu = ({statsGroupBy, setStatsGroupBy, chart}) => {
   const [groupByMenu, setGroupByMenu] = useState(null);
 
   const onOpenGroupMenu = (event) => setGroupByMenu(event.currentTarget);
   const onCloseGroupMenu = () => setGroupByMenu(null);
 
   const onSelect = async (value) => {
-    setRequestsStatsGroupBy({...requestsStatsGroupBy, [chart]: value});
+    setStatsGroupBy({...statsGroupBy, [chart]: value});
     onCloseGroupMenu();
   }
 
@@ -25,7 +25,7 @@ const ChartGroupByMenu = ({requestsStatsGroupBy, setRequestsStatsGroupBy, chart}
         color={'inherit'}
         endIcon={<KeyboardArrowDownIcon/>}
       >
-        Group: {requestsStatsGroupBy[chart]}
+        Group: {statsGroupBy[chart]}
       </Button>
       <Menu
         anchorEl={groupByMenu}
@@ -48,12 +48,12 @@ const ChartGroupByMenu = ({requestsStatsGroupBy, setRequestsStatsGroupBy, chart}
 }
 
 const getState = (state) => ({
-  requestsStatsGroupBy: state.requests.requestsStatsGroupBy
+  statsGroupBy: state.stats.statsGroupBy
 })
 
 export default connect(
   getState,
   {
-    setRequestsStatsGroupBy
+    setStatsGroupBy
   },
 )(ChartGroupByMenu);

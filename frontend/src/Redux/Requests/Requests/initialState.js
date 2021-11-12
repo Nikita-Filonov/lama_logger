@@ -14,10 +14,6 @@ export const INITIAL_REQUESTS = {
     page: 0,
     rowsPerPage: localStorage.getItem('rowsPerPageRequests') || 25
   },
-  requestsStatsFilters: {},
-  requestsStatsGroupBy: JSON.parse(localStorage.getItem('requestsStatsGroupBy')) || {
-    commonStatsChart: 'days'
-  },
   selectedRequests: [],
   requestsFiltersSidebar: localStorage.getItem('requestsFiltersSidebar') !== 'false',
   requestsTimeFilterModal: false,

@@ -7,10 +7,10 @@ import {AccessTime, Clear, HelpOutline} from "@mui/icons-material";
 import ProjectSelect from "../Requests/Toolbars/ProjectSelect";
 import StatsTimeFilters from "../../../Modals/Requests/Stats/StatsTimeFilters";
 import {connect} from "react-redux";
-import {setRequestsStatsFilters} from "../../../../Redux/Requests/Requests/requestsActions";
 import {getTimeFiltersLabel} from "../../../../Utils/Utils/Formatters";
+import {setStatsFilters} from "../../../../Redux/Requests/Stats/statsActions";
 
-const StatsToolbar = ({requestsStatsFilters, setRequestsStatsFilters}) => {
+const StatsToolbar = ({statsFilters, setStatsFilters}) => {
   const classes = ViewRequestStyles();
   const [timeFiltersModal, setTimeFiltersModal] = useState(false);
 
@@ -27,11 +27,11 @@ const StatsToolbar = ({requestsStatsFilters, setRequestsStatsFilters}) => {
           color={'inherit'}
           onClick={() => setTimeFiltersModal(true)}
         >
-          <Typography style={common.ellipsisText}>{getTimeFiltersLabel(requestsStatsFilters?.time)}</Typography>
+          <Typography style={common.ellipsisText}>{getTimeFiltersLabel(statsFilters?.time)}</Typography>
         </Button>
         <div className={'flex-grow-1'}/>
         <Tooltip title={'Clear all filters'}>
-          <IconButton sx={{mr: 2}} onClick={() => setRequestsStatsFilters({})}>
+          <IconButton sx={{mr: 2}} onClick={() => setStatsFilters({})}>
             <Clear/>
           </IconButton>
         </Tooltip>
@@ -45,12 +45,12 @@ const StatsToolbar = ({requestsStatsFilters, setRequestsStatsFilters}) => {
 }
 
 const getState = (state) => ({
-  requestsStatsFilters: state.requests.requestsStatsFilters,
+  statsFilters: state.stats.statsFilters,
 })
 
 export default connect(
   getState,
   {
-    setRequestsStatsFilters,
+    setStatsFilters,
   },
 )(StatsToolbar);

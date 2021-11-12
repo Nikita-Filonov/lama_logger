@@ -5,6 +5,7 @@ import {usersReducer} from "./Users/usersReducer";
 import {requestsSettingsReducer} from "./Requests/Settings/requestsSettingsReducer";
 import {tracksReducer} from "./Requests/Tracks/tracksReducer";
 import {customRequestsReducer} from "./Requests/CustomRequests/customRequestsReducer";
+import {statsReducer} from "./Requests/Stats/statsReducer";
 
 
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   customRequests: customRequestsReducer,
   requestsSettings: requestsSettingsReducer,
   tracks: tracksReducer,
+  stats: statsReducer,
   users: usersReducer,
 });
