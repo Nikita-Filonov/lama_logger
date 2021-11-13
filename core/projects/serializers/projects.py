@@ -7,7 +7,7 @@ from core.projects.models import Project, Member, Role
 from core.projects.permissions.roles import Admin, AccountManager, Developer, AutomationEngineer
 from core.projects.serializers.members import MembersSerializer
 from core.projects.serializers.roles import RolesSerializer
-from core.stats.helper.utils import group_types, filter_action
+from core.stats.helper.statistics.utils import group_types, filter_action
 from core.stats.models import RequestStat
 from core.tracks.models import ServiceActivity
 from core.users.serializers.users import DefaultUserSerializer

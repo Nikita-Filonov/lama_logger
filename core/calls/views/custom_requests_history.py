@@ -13,7 +13,7 @@ from core.calls.models import CustomRequestsHistory
 from core.calls.serializers.custom_requests_history import CustomRequestsHistoriesSerializer, \
     CustomRequestsHistorySerializer
 from core.projects.models import Project
-from core.stats.helper.utils import group_types
+from core.stats.helper.statistics.utils import group_types
 from utils.exeptions import BadRequest
 
 
