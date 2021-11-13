@@ -3,7 +3,7 @@ import {Container, Grid} from "@mui/material";
 import StatsToolbar from "../../Components/Blocks/Requests/Stats/StatsToolbar";
 import {StatsInfoGrid} from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
 import {CommonStatsChart} from "../../Components/Blocks/Requests/Stats/CommonStatsChart";
-import {ResponseTimeChart} from "../../Components/Blocks/Requests/Stats/ResponseTimeChart";
+import RatioStatusCodesChart from "../../Components/Blocks/Requests/Stats/RatioStatusCodesChart";
 
 
 const RequestsStats = () => {
@@ -25,7 +25,7 @@ const RequestsStats = () => {
           <CommonStatsChart/>
         </Grid>
         <Grid item xs={6}>
-          <ResponseTimeChart/>
+          <RatioStatusCodesChart/>
         </Grid>
       </Grid>
     </Container>

@@ -58,7 +58,9 @@ export const RequestsRoutes = ({store}) =>
               <RequestRoute
                 exact
                 path="/projects/:projectId/stats"
-                component={props => <RequestsStatsProvider><RequestsStats {...props}/></RequestsStatsProvider>}
+                component={props => <RequestsStatsProvider store={store}>
+                  <RequestsStats {...props}/>
+                </RequestsStatsProvider>}
               />
               <RequestsSettingsRoute exact path="/projects/:projectId/settings/general"
                                      component={ProjectSettingsGeneral}/>

@@ -1,10 +1,12 @@
 from itertools import groupby
 from typing import List, Dict, Union
 
+from django.db.models import QuerySet
+
 from core.stats.models import RequestStat
 
 
-def to_stats_payload(requests_stats, group_type) -> \
+def to_stats_payload(requests_stats: QuerySet[RequestStat], group_type) -> \
         Dict[str, Union[list, List[Dict[str, Union[bool, str, List[int]]]]]]:
     """
     Common reason why we need this method - itertools.groupby let us
@@ -32,6 +34,22 @@ def to_stats_payload(requests_stats, group_type) -> \
                 'label': 'Removed',
                 'data': [filter_action('delete', list(stats)) for _, stats in removed],
                 'backgroundColor': 'rgb(75, 192, 192)',
+            },
+        ]
+    }
+
+
+def to_ratio_status_codes_payload(requests_stats: QuerySet[RequestStat], group_type):
+    labels, status_codes = [groupby(requests_stats, key=group_type['func']) for _ in range(2)]
+    return {
+        'labels': [created.strftime(group_type['format']) for created, _ in labels],
+        'datasets': [
+            {
+                'spanGaps': True,
+                'label': 'Status codes',
+                'data': [len(list(stats)) for _, stats in status_codes],
+                'backgroundColor': 'rgb(255, 99, 132)',
+                'borderColor': "#FF6384",
             },
         ]
     }

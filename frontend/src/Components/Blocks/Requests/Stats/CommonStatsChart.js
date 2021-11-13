@@ -12,7 +12,7 @@ export const CommonStatsChart = () => {
   return (
     <Paper>
       <Bar data={requestsStats?.data} options={commonChartOptions}/>
-      <ChartGroupByMenu chart={'commonStatsChart'}/>
+      <ChartGroupByMenu chart={'commonStats'}/>
     </Paper>
   )
 }
