@@ -1,6 +1,6 @@
 export const INITIAL_STATS = {
   statsFilters: {},
-  statsGroupBy: JSON.parse(localStorage.getItem('requestsStatsGroupBy')) || {
+  statsGroupBy: JSON.parse(localStorage.getItem('statsGroupBy')) || {
     commonStats: 'days',
     numberOfRequests: 'days',
     ratioStatusCodes: 'days',
