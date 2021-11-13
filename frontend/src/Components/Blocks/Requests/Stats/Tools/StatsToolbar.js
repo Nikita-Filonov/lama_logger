@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import clsx from "clsx";
 import {Divider, IconButton, Paper, Tooltip, Typography} from "@mui/material";
-import {common, RequestsToolbarStyles, ViewRequestStyles} from "../../../../Styles/Blocks";
+import {common, RequestsToolbarStyles, ViewRequestStyles} from "../../../../../Styles/Blocks";
 import Button from "@mui/material/Button";
 import {AccessTime, Clear, HelpOutline} from "@mui/icons-material";
-import ProjectSelect from "../Requests/Toolbars/ProjectSelect";
-import StatsTimeFilters from "../../../Modals/Requests/Stats/StatsTimeFilters";
+import ProjectSelect from "../../Requests/Toolbars/ProjectSelect";
+import StatsTimeFilters from "../../../../Modals/Requests/Stats/StatsTimeFilters";
 import {connect} from "react-redux";
-import {getTimeFiltersLabel} from "../../../../Utils/Utils/Formatters";
-import {setStatsFilters} from "../../../../Redux/Requests/Stats/statsActions";
+import {getTimeFiltersLabel} from "../../../../../Utils/Utils/Formatters";
+import {setStatsFilters} from "../../../../../Redux/Requests/Stats/statsActions";
 
 const StatsToolbar = ({statsFilters, setStatsFilters}) => {
   const classes = ViewRequestStyles();

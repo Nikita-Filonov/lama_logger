@@ -3,7 +3,7 @@ import {Button, Menu} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuItem from "@mui/material/MenuItem";
 import {connect} from "react-redux";
-import {setStatsGroupBy} from "../../../../Redux/Requests/Stats/statsActions";
+import {setStatsGroupBy} from "../../../../../Redux/Requests/Stats/statsActions";
 
 const ChartGroupByMenu = ({statsGroupBy, setStatsGroupBy, chart}) => {
   const [groupByMenu, setGroupByMenu] = useState(null);

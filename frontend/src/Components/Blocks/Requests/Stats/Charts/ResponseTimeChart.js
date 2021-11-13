@@ -1,8 +1,8 @@
 import React from "react";
 import {Paper} from "@mui/material";
 import {Line} from 'react-chartjs-2';
-import ChartGroupByMenu from "./ChartGroupByMenu";
-import {useCommonChartOptions} from "../../../../Utils/Hooks/ChartsHooks";
+import ChartGroupByMenu from "../Tools/ChartGroupByMenu";
+import {useCommonChartOptions} from "../../../../../Utils/Hooks/ChartsHooks";
 
 const data = {
   labels: [

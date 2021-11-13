@@ -1,9 +1,9 @@
 import React, {memo} from "react";
 import {Container, Grid} from "@mui/material";
-import StatsToolbar from "../../Components/Blocks/Requests/Stats/StatsToolbar";
+import StatsToolbar from "../../Components/Blocks/Requests/Stats/Tools/StatsToolbar";
 import {StatsInfoGrid} from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
-import {CommonStatsChart} from "../../Components/Blocks/Requests/Stats/CommonStatsChart";
-import RatioStatusCodesChart from "../../Components/Blocks/Requests/Stats/RatioStatusCodesChart";
+import {CommonStatsChart} from "../../Components/Blocks/Requests/Stats/Charts/CommonStatsChart";
+import RatioStatusCodesChart from "../../Components/Blocks/Requests/Stats/Charts/RatioStatusCodesChart";
 
 
 const RequestsStats = () => {
