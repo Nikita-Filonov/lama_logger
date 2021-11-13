@@ -51,3 +51,13 @@ class CustomRequestsHistoryApi(views.APIView, LimitOffsetPagination):
             return Response(payload, status=status.HTTP_201_CREATED)
 
         raise BadRequest('Error happened while saving requests history', data=serializer.errors)
+
+    def delete(self, request, project_id):
+        requests = request.data
+        if not isinstance(requests, list):
+            raise BadRequest('You should provide requests histories ids')
+
+        history = CustomRequestsHistory.objects.filter(project_id=project_id, requestId__in=requests)
+        history.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)

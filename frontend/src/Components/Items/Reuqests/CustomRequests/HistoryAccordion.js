@@ -1,14 +1,5 @@
 import React, {useState} from "react";
-import {
-  Collapse,
-  Grid,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-  Tooltip
-} from "@mui/material";
+import {Collapse, Grid, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Tooltip} from "@mui/material";
 import {DeleteOutline, Event, ExpandLess, ExpandMore, MoreHoriz} from "@mui/icons-material";
 import List from "@mui/material/List";
 import {METHOD_COLORS} from "../../../../Utils/Constants";
@@ -19,12 +10,14 @@ import {toCalendarWithoutTime} from "../../../../Utils/Utils/Formatters";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
+import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 
 
-const HistoryAccordion = ({history, project, customRequests, setCustomRequest}) => {
+const HistoryAccordion = (props) => {
+  const {history, project, customRequests, setCustomRequest, setConfirmAction} = props;
   const [open, setOpen] = useState(true);
   const [action, setAction] = useState(false);
-  const {createCustomRequest} = useCustomRequests();
+  const {createCustomRequest, deleteCustomRequestsHistory} = useCustomRequests();
 
   const onOpen = () => setOpen(!open);
   const onActionShow = () => setAction(true);
@@ -37,11 +30,23 @@ const HistoryAccordion = ({history, project, customRequests, setCustomRequest}) 
     } else {
       await createCustomRequest(project.id, {...request, isCustom: true});
     }
-  }
+  };
+
+  const onDelete = async () => setConfirmAction({
+    modal: true,
+    title: 'Delete custom requests history?',
+    description: 'Are you sure you want to delete custom requests history? This action will delete ' +
+      'all saved history in that section. You will be unable to restore it later.',
+    confirmButton: 'Delete',
+    action: async () => {
+      const payload = history?.data?.map(h => h?.requestId);
+      await deleteCustomRequestsHistory(project?.id, history?.id, payload);
+    }
+  })
 
   return (
     <React.Fragment>
-      <ListItemButton
+      <ListItem
         disableGutters
         onClick={onOpen}
         onMouseEnter={onActionShow}
@@ -51,13 +56,13 @@ const HistoryAccordion = ({history, project, customRequests, setCustomRequest}) 
           <Event fontSize={'small'}/>
         </ListItemIcon>
         <ListItemText primary={toCalendarWithoutTime(history?.created)}/>
-        {action && <Tooltip title={'Delete history'} placement={'left'}>
-          <IconButton size={'small'} sx={{p: 0.5}}>
+        {action && <Tooltip title={'Delete history'} placement={'left'} arrow>
+          <IconButton size={'small'} sx={{p: 0.5}} onClick={onDelete}>
             <DeleteOutline fontSize={'small'}/>
           </IconButton>
         </Tooltip>}
         {open ? <ExpandLess/> : <ExpandMore/>}
-      </ListItemButton>
+      </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding dense>
           {history?.data?.map(request =>
@@ -98,6 +103,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setCustomRequest
+    setCustomRequest,
+    setConfirmAction
   },
 )(HistoryAccordion);

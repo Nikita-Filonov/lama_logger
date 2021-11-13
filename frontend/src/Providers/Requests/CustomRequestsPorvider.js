@@ -5,6 +5,7 @@ import {
   CREATE_CUSTOM_REQUEST,
   CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
+  DELETE_CUSTOM_REQUESTS_HISTORY,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST_ERROR,
   SET_CUSTOM_REQUESTS,
@@ -97,12 +98,18 @@ const CustomRequestsProvider = ({children, store}) => {
     const {json} = await get(projectsApi + `${projectId}/custom-requests-history/${query}`);
     store.dispatch({type: SET_CUSTOM_REQUESTS_HISTORY, payload: json});
     setLoadHistory(false);
-  }
+  };
 
   const createCustomRequestsHistory = async (projectId, payload) => {
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests-history/`, payload);
     !error && store.dispatch({type: CREATE_CUSTOM_REQUESTS_HISTORY, payload: json});
     error && setAlert(json);
+  };
+
+  const deleteCustomRequestsHistory = async (projectId, sectionId, payload) => {
+    const {json, error} = await remove(projectsApi + `${projectId}/custom-requests-history/`, payload);
+    setAlert(error ? json : {message: 'History was successfully deleted', level: 'success'});
+    sectionId && store.dispatch({type: DELETE_CUSTOM_REQUESTS_HISTORY, payload: {sectionId, payload}})
   }
 
   return (
@@ -116,7 +123,8 @@ const CustomRequestsProvider = ({children, store}) => {
         createCustomRequest,
         updateCustomRequest,
         deleteCustomRequest,
-        createCustomRequestsHistory
+        createCustomRequestsHistory,
+        deleteCustomRequestsHistory
       }}
     >
       {children}

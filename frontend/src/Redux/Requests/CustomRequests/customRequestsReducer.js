@@ -3,6 +3,7 @@ import {
   CREATE_CUSTOM_REQUEST,
   CREATE_CUSTOM_REQUESTS_HISTORY,
   DELETE_CUSTOM_REQUEST,
+  DELETE_CUSTOM_REQUESTS_HISTORY,
   SET_CUSTOM_REQUEST,
   SET_CUSTOM_REQUEST_ERROR,
   SET_CUSTOM_REQUEST_HISTORY_PAGINATION,
@@ -79,12 +80,27 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
 
       return {
         ...state,
-        count: ++state.customRequestsHistory.count,
-        customRequestsHistory: {...state.customRequestsHistory, results}
+        customRequestsHistory: {
+          ...state.customRequestsHistory,
+          count: ++state.customRequestsHistory.count,
+          results
+        }
       };
     }
     case SET_CUSTOM_REQUEST_HISTORY_PAGINATION:
       return {...state, customRequestsHistoryPagination: action.payload};
+    case DELETE_CUSTOM_REQUESTS_HISTORY: {
+      const {sectionId, payload} = action.payload;
+      const results = state.customRequestsHistory.results.filter(h => h.id !== sectionId);
+      return {
+        ...state,
+        customRequestsHistory: {
+          ...state.customRequestsHistory,
+          count: state.customRequestsHistory.count - payload.length,
+          results
+        }
+      };
+    }
     default:
       return state;
   }
