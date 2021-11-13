@@ -11,6 +11,9 @@ import {AccessTime} from "@mui/icons-material";
 import {common, RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {METHOD_COLORS} from "../../../../../Utils/Constants";
 import {getDuration} from "../../../../../Utils/Utils/Common";
+import {requestToCustomRequest} from "../../../../../Utils/Utils/Formatters";
+import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
+import {useHistory} from "react-router-dom";
 
 function a11yProps(index) {
   return {
@@ -19,14 +22,21 @@ function a11yProps(index) {
   };
 }
 
-const ViewRequestAccordion = ({request, viewMode}) => {
+const ViewRequestAccordion = ({request, viewMode, project}) => {
   const classes = RequestsTableStyles();
+  const history = useHistory();
+  const {createCustomRequest} = useCustomRequests();
   const [requestTab, setRequestTab] = useState(0);
   const [responseTab, setResponseTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
   const onResponseTab = (event, newValue) => setResponseTab(newValue);
 
+  const onLink = async () => {
+    const payload = await requestToCustomRequest(request);
+    await createCustomRequest(project.id, payload);
+    history.push(`/projects/${project.id}/custom-requests`);
+  }
 
   return (
     <Box
@@ -42,7 +52,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
           style={{fontSize: 17, ...common.breakLongWord}}
           color={METHOD_COLORS[request?.method]}
         >
-          {request?.method} <Link sx={{ml: 1}} href={request?.requestUrl} target={'_blank'}>{request?.requestUrl}</Link>
+          {request?.method} <Link sx={{ml: 1}} onClick={onLink}>{request?.requestUrl}</Link>
         </Typography>
         <div className={'flex-grow-1'}/>
         {viewMode.requests === 'accordion' && <ViewRequestMenu request={request}/>}
@@ -90,6 +100,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
 
 const getState = (state) => ({
   viewMode: state.users.viewMode,
+  project: state.projects.project,
 })
 
 export default connect(

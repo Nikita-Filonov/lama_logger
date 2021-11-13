@@ -1,4 +1,5 @@
 import moment from "moment";
+import {parseQueryFromUrl} from "./Common";
 
 export const getStatusCodeColor = (statusCode) => {
   if (100 <= statusCode && statusCode <= 299) {
@@ -58,3 +59,21 @@ export const toCalendarWithoutTime = (date) =>
     nextWeek: 'dddd',
     sameElse: 'L'
   })
+
+export const requestToCustomRequest = async (request) => {
+  const requestHeaders = Object.keys(request?.requestHeaders).map(key => ({
+    key: key,
+    value: request?.requestHeaders[key],
+    include: true
+  }));
+  const queryObject = await parseQueryFromUrl(request?.requestUrl);
+  const queryParams = Object.keys(queryObject).map(key => ({key: key, value: queryObject[key], include: true}));
+  return {
+    requestUrl: request?.requestUrl,
+    requestHeaders,
+    queryParams,
+    requestBody: request?.requestBody,
+    method: request?.method,
+    isCustom: true
+  };
+}

@@ -15,11 +15,11 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {useHistory} from "react-router-dom";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {useCustomRequests} from "../../../../Providers/Requests/CustomRequestsPorvider";
-import {parseQueryFromUrl} from "../../../../Utils/Utils/Common";
 import {copyRequestToCurl} from "../../../../Utils/Api/Curl";
 import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 import {common} from "../../../../Styles/Blocks";
 import {REQUEST} from "../../../../Utils/Permissions/Requests";
+import {requestToCustomRequest} from "../../../../Utils/Utils/Formatters";
 
 const ViewRequestMenu = ({project, request, setConfirmAction}) => {
   const history = useHistory();
@@ -40,21 +40,7 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
   const onCopyLink = async () => setAlert({message: 'Request url copied to clipboard', level: 'success'});
 
   const onSend = async () => {
-    const requestHeaders = Object.keys(request?.requestHeaders).map(key => ({
-      key: key,
-      value: request?.requestHeaders[key],
-      include: true
-    }));
-    const queryObject = await parseQueryFromUrl(request?.requestUrl);
-    const queryParams = Object.keys(queryObject).map(key => ({key: key, value: queryObject[key], include: true}));
-    const payload = {
-      requestUrl: request?.requestUrl,
-      requestHeaders,
-      queryParams,
-      requestBody: request?.requestBody,
-      method: request?.method,
-      isCustom: true
-    };
+    const payload = await requestToCustomRequest(request);
     await createCustomRequest(project.id, payload);
     history.push(`/projects/${project.id}/custom-requests`);
   };
