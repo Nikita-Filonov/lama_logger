@@ -155,3 +155,6 @@ export const METHOD_COLORS = {
 }
 
 export const CUSTOM_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+
+// TODO добавить такую же констануту для реквестов
+export const TRACK_REQUESTS_PAGINATION = 'rowsPerPageTrackRequests';

@@ -13,6 +13,7 @@ import {
   SET_SERVICE,
   SET_TRACK,
   SET_TRACK_REQUESTS,
+  SET_TRACK_REQUESTS_PAGINATION,
   UPDATE_ACTIVITY
 } from "./actionTypes";
 
@@ -96,6 +97,8 @@ export const tracksReducer = (state = INITIAL_TRACKS, action = {}) => {
       return {...state, activities: [...activities]}
     case SET_TRACK_REQUESTS:
       return {...state, trackRequests: action.payload};
+    case SET_TRACK_REQUESTS_PAGINATION:
+      return {...state, trackRequestsPagination: action.payload};
     default:
       return state;
   }

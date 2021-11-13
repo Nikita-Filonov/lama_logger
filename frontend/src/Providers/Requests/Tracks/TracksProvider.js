@@ -3,6 +3,7 @@ import {useAlerts} from "../../AlertsProvider";
 import {CREATE_TRACK, SET_TRACK_REQUESTS} from "../../../Redux/Requests/Tracks/actionTypes";
 import {get, post} from "../../../Utils/Api/Fetch";
 import {useSelector} from "react-redux";
+import {queryWithPagination} from "../../../Utils/Utils/Common";
 
 
 const TracksContext = React.createContext(null);
@@ -17,8 +18,8 @@ const TracksProvider = ({children, store}) => {
   const project = useSelector(state => state.projects.project);
 
   useEffect(() => {
-    (async () => (track.id && project.id) && await getTrackRequests(project.id, track.id))()
-  }, [project, track])
+    (async () => (track?.id && project?.id) && await getTrackRequests(project.id, track.id))()
+  }, [project?.id, track?.id])
 
   const createTrack = async (projectId, serviceId, payload) => {
     setRequest(true)
@@ -29,10 +30,11 @@ const TracksProvider = ({children, store}) => {
     setRequest(false);
   }
 
-  const getTrackRequests = async (projectId, trackId) => {
-    setLoad(true);
-    const {json} = await get(projectsApi + `${projectId}/tracks/${trackId}/requests/`);
-    store.dispatch({type: SET_TRACK_REQUESTS, payload: json});
+  const getTrackRequests = async (projectId, trackId, limit = 25, offset = 0, filters = {}) => {
+    setLoad(state => state);
+    const query = await queryWithPagination(filters, limit, offset, 'TrackRequests');
+    const {json, error} = await get(projectsApi + `${projectId}/tracks/${trackId}/requests/${query}`);
+    !error && store.dispatch({type: SET_TRACK_REQUESTS, payload: json});
     setLoad(false);
   }
 

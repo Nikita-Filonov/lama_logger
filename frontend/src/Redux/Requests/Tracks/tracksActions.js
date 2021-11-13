@@ -5,7 +5,8 @@ import {
   SET_CHANGE_ACTIVITY_MODAL,
   SET_CREATE_TRACK_MODAL,
   SET_SERVICE,
-  SET_TRACK
+  SET_TRACK,
+  SET_TRACK_REQUESTS_PAGINATION
 } from "./actionTypes";
 
 
@@ -48,5 +49,10 @@ export const setChangeActivityModal = (state) => ({
 
 export const setTrack = (state) => ({
   type: SET_TRACK,
+  payload: state
+})
+
+export const setTrackRequestsPagination = (state) => ({
+  type: SET_TRACK_REQUESTS_PAGINATION,
   payload: state
 })
