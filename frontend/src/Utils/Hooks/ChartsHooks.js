@@ -27,7 +27,7 @@ export const useCommonChartOptions = () => {
           maxRotation: 0,
           minRotation: 0,
           autoSkipPadding: 10,
-          labelOffset: 35
+          // labelOffset: 35
         }
       },
     },

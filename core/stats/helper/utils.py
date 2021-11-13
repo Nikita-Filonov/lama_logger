@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from itertools import groupby
 from typing import List, Dict, Union, Tuple
 
@@ -53,16 +54,37 @@ def to_stats_payload(requests_stats: QuerySet[RequestStat], group_type) -> \
 
 
 def to_ratio_status_codes_payload(requests_stats: QuerySet[RequestStat], group_type):
-    labels, status_codes = [groupby(requests_stats, key=group_type['func']) for _ in range(2)]
+    labels, five, four, three, two = [groupby(requests_stats, key=group_type['func']) for _ in range(5)]
     return {
         'labels': [created.strftime(group_type['format']) for created, _ in labels],
         'datasets': [
             {
                 'spanGaps': True,
-                'label': 'Status codes',
-                'data': [len(list(stats)) for _, stats in status_codes],
-                'backgroundColor': 'rgb(255, 99, 132)',
-                'borderColor': "#FF6384",
+                'label': '5XX',
+                'data': count_status_codes(500, 599, five),
+                'borderColor': '#E40F08',
+                'backgroundColor': '#E40F08',
+            },
+            {
+                'spanGaps': True,
+                'label': '4XX',
+                'data': count_status_codes(400, 499, four),
+                'borderColor': '#CF9800',
+                'backgroundColor': '#CF9800',
+            },
+            {
+                'spanGaps': True,
+                'label': '3XX',
+                'data': count_status_codes(300, 399, three),
+                'borderColor': '#FFBD00',
+                'backgroundColor': '#FFBD00',
+            },
+            {
+                'spanGaps': True,
+                'label': '2XX',
+                'data': count_status_codes(200, 299, two),
+                'borderColor': '#02C001',
+                'backgroundColor': '#02C001',
             },
         ]
     }
@@ -77,6 +99,28 @@ def filter_action(action: str, stats: List[RequestStat]) -> int:
     filter_action('create', [RequestStat('create'), RequestStat('delete')]) -> [RequestStat('create'))]
     """
     return len(list(filter(lambda s: s.action == action, stats)))
+
+
+def count_status_codes(start: int, end: int, status_codes: Tuple[datetime, List[RequestStat]]):
+    """
+    :param start: integer status code, for example 500
+    :param end: integer status code, for example 599
+    :param status_codes: tuple of grouped ``RequestStat``
+    :return:
+
+    Will count number of status codes for list of ``RequestStat``
+    """
+    return [
+        # after converting filter object to list we getting len of that list
+        len(
+            # because filter returns an filter object, we have to convert that object to list
+            list(
+                # filtering only status codes which satisfy our start, end range
+                filter(lambda stat: start <= stat.statusCode <= end, list(stats))
+            )
+        )
+        for _, stats in status_codes
+    ]
 
 
 def by_hours(entity):
