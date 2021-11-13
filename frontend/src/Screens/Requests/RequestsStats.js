@@ -24,7 +24,7 @@ const RequestsStats = () => {
       {/*    <StatsChart groupBy={groupBy} setGroupBy={setGroupBy}/>*/}
       {/*  </Grid>*/}
       {/*</Grid>*/}
-      <Grid container spacing={2} sx={{mt: 1, mb: 4}}>
+      <Grid container spacing={2} sx={{mt: 0.5, mb: 4}}>
         <Grid item xs={6}>
           {loadNumberOfRequests ? <ChartSkeletons/> : <NumberOfRequestsChart/>}
         </Grid>

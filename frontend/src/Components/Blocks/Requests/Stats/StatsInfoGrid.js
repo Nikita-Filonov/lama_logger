@@ -10,7 +10,7 @@ const StatsInfoGrid = ({requestsStats}) => {
   const {skeletonAnimation} = useSelector(state => state.users.userSettings);
 
   return (
-    <Grid container spacing={2} className={'mt-2'}>
+    <Grid container spacing={2} sx={{mt: 0.5}}>
       <Grid item xs={3}>
         <Paper elevation={3} style={StatsChartStyles.gridContainer}>
           <div className={'d-flex align-items-center'}>
