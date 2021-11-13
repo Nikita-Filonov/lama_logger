@@ -1,8 +1,8 @@
 import React, {memo} from "react";
 import {Container, Grid} from "@mui/material";
 import StatsToolbar from "../../Components/Blocks/Requests/Stats/Tools/StatsToolbar";
-import {StatsInfoGrid} from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
-import {CommonStatsChart} from "../../Components/Blocks/Requests/Stats/Charts/CommonStatsChart";
+import StatsInfoGrid from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
+import NumberOfRequestsChart from "../../Components/Blocks/Requests/Stats/Charts/NumberOfRequestsChart";
 import RatioStatusCodesChart from "../../Components/Blocks/Requests/Stats/Charts/RatioStatusCodesChart";
 
 
@@ -22,7 +22,7 @@ const RequestsStats = () => {
       {/*</Grid>*/}
       <Grid container spacing={2} className={'mt-2'}>
         <Grid item xs={6}>
-          <CommonStatsChart/>
+          <NumberOfRequestsChart/>
         </Grid>
         <Grid item xs={6}>
           <RatioStatusCodesChart/>

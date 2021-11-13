@@ -3,49 +3,66 @@ import {objectToQuery} from "../../Utils/Utils/Common";
 import {get} from "../../Utils/Api/Fetch";
 import {makeRequestsStatsFilters} from "../../Utils/Utils/Filters";
 import {useSelector} from "react-redux";
-import {SET_RATIO_STATUS_CODES} from "../../Redux/Requests/Stats/actionTypes";
+import {
+  SET_NUMBER_OF_REQUESTS,
+  SET_RATIO_STATUS_CODES,
+  SET_REQUESTS_STATS
+} from "../../Redux/Requests/Stats/actionTypes";
 
 
 const RequestsStatsContext = React.createContext(null);
 
 const RequestsStatsProvider = ({children, store}) => {
   const projectsApi = 'api/v1/projects/';
-  const [load, setLoad] = useState({commonStats: true, ratioStatusCodes: true});
-  const [requestsStats, setRequestsStats] = useState({data: []});
-
+  const [loadRequestsStats, setLoadRequestsStats] = useState(true);
+  const [loadNumberOfRequests, setLoadNumberOfRequests] = useState(true);
+  const [loadRatioStatusCodes, setLoadRatioStatusCodes] = useState(true);
   const project = useSelector(state => state.projects.project);
   const statsFilters = useSelector(state => state.stats.statsFilters);
   const statsGroupBy = useSelector(state => state.stats.statsGroupBy);
 
   useEffect(() => {
-    (async () => await getRequestsStats(project.id, statsGroupBy?.commonStats, makeRequestsStatsFilters(statsFilters)))()
-  }, [project.id, statsFilters, statsGroupBy?.commonStats]);
+    (async () => await getRequestsStats(project.id, makeRequestsStatsFilters(statsFilters)))()
+  }, [project?.id, statsFilters]);
 
   useEffect(() => {
     (async () => await getRatioStatusCodes(project.id, statsGroupBy?.ratioStatusCodes, makeRequestsStatsFilters(statsFilters)))()
-  }, [project.id, statsFilters, statsGroupBy?.ratioStatusCodes]);
+  }, [project?.id, statsFilters, statsGroupBy?.ratioStatusCodes]);
 
-  const getRequestsStats = async (projectId, groupBy = 'hours', filters = {}) => {
-    setLoad({...load, commonStats: true});
+  useEffect(() => {
+    (async () => await getNumberOfRequests(project.id, statsGroupBy?.numberOfRequests, makeRequestsStatsFilters(statsFilters)))()
+  }, [project?.id, statsFilters, statsGroupBy?.numberOfRequests])
+
+  const getRequestsStats = async (projectId, filters = {}) => {
+    setLoadRequestsStats(true);
+    const query = await objectToQuery(filters);
+    const {json, error} = await get(projectsApi + `${projectId}/stats/requests-stats/${query}`);
+    !error && store.dispatch({type: SET_REQUESTS_STATS, payload: json});
+    setLoadRequestsStats(false);
+  }
+
+  const getNumberOfRequests = async (projectId, groupBy = 'hours', filters = {}) => {
+    setLoadNumberOfRequests(true);
     const query = await objectToQuery({...filters, groupBy});
-    const {json} = await get(projectsApi + `${projectId}/requests/stats/${query}`);
-    setRequestsStats(json);
-    setLoad({...load, commonStats: false});
+    const {json, error} = await get(projectsApi + `${projectId}/stats/number-of-requests/${query}`);
+    !error && store.dispatch({type: SET_NUMBER_OF_REQUESTS, payload: json});
+    setLoadNumberOfRequests(false);
   }
 
   const getRatioStatusCodes = async (projectId, groupBy = 'hours', filters = {}) => {
-    setLoad({...load, ratioStatusCodes: true});
+    setLoadRatioStatusCodes(true);
     const query = await objectToQuery({...filters, groupBy});
-    const {json} = await get(projectsApi + `${projectId}/requests/ratio-status-codes/${query}`);
-    store.dispatch({type: SET_RATIO_STATUS_CODES, payload: json});
-    setLoad({...load, ratioStatusCodes: false});
+    const {json, error} = await get(projectsApi + `${projectId}/stats/ratio-status-codes/${query}`);
+    !error && store.dispatch({type: SET_RATIO_STATUS_CODES, payload: json});
+    setLoadRatioStatusCodes(false);
   }
 
   return (
     <RequestsStatsContext.Provider
       value={{
-        load,
-        requestsStats,
+        loadRequestsStats,
+        loadNumberOfRequests,
+        loadRatioStatusCodes,
         getRequestsStats,
       }}
     >

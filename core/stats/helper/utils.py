@@ -1,9 +1,22 @@
+import json
 from itertools import groupby
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Tuple
 
 from django.db.models import QuerySet
 
 from core.stats.models import RequestStat
+
+
+def group_to_stats(request, project_id) -> Tuple:
+    """
+    Combining the same actions for grouping data for chart
+    """
+    filters = json.loads(request.query_params.get('filters', '{}'))  # date time, issue type, method
+    group_by = request.query_params.get('groupBy', 'hours')
+
+    requests_stats = RequestStat.objects.filter(project_id=project_id, **filters).order_by('created')
+    group_type = group_types[group_by]
+    return requests_stats, group_type
 
 
 def to_stats_payload(requests_stats: QuerySet[RequestStat], group_type) -> \

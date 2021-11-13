@@ -1,13 +1,12 @@
 import React from "react";
-import {Grid, Paper, Typography} from "@mui/material";
-import {Skeleton} from "@mui/material";
+import {Grid, Paper, Skeleton, Typography} from "@mui/material";
 import {useRequestsStats} from "../../../../Providers/Requests/RequestsStatsProvider";
 import {StatsChartStyles} from "../../../../Styles/Blocks";
 import {HelpOutline} from "@mui/icons-material";
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 
-export const StatsInfoGrid = () => {
-  const {load, requestsStats} = useRequestsStats();
+const StatsInfoGrid = ({requestsStats}) => {
+  const {loadRequestsStats} = useRequestsStats();
   const {skeletonAnimation} = useSelector(state => state.users.userSettings);
 
   return (
@@ -19,7 +18,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.total}
+            {loadRequestsStats ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.total}
           </Typography>
         </Paper>
       </Grid>
@@ -30,7 +29,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.create}
+            {loadRequestsStats ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.create}
           </Typography>
         </Paper>
       </Grid>
@@ -41,7 +40,7 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.delete}
+            {loadRequestsStats ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.delete}
           </Typography>
         </Paper>
       </Grid>
@@ -52,10 +51,19 @@ export const StatsInfoGrid = () => {
             <HelpOutline fontSize={'small'}/>
           </div>
           <Typography className={'mt-2'} variant={'h5'}>
-            {load ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.filter}
+            {loadRequestsStats ? <Skeleton animation={skeletonAnimation}/> : requestsStats?.filter}
           </Typography>
         </Paper>
       </Grid>
     </Grid>
   )
 }
+
+const getState = (state) => ({
+  requestsStats: state.stats.requestsStats
+})
+
+export default connect(
+  getState,
+  null,
+)(StatsInfoGrid);
