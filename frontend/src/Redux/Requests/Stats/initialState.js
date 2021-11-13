@@ -3,7 +3,8 @@ export const INITIAL_STATS = {
   statsGroupBy: JSON.parse(localStorage.getItem('requestsStatsGroupBy')) || {
     commonStats: 'days',
     numberOfRequests: 'days',
-    ratioStatusCodes: 'days'
+    ratioStatusCodes: 'days',
+    responseTime: 'days',
   },
   requestsStats: {
     total: null,
@@ -16,6 +17,10 @@ export const INITIAL_STATS = {
     datasets: []
   },
   numberOfRequests: {
+    labels: [],
+    datasets: []
+  },
+  responseTime: {
     labels: [],
     datasets: []
   }

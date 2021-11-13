@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from itertools import groupby
+from statistics import mean
 from typing import List, Dict, Union, Tuple
 
 from django.db.models import QuerySet
@@ -90,6 +91,37 @@ def to_ratio_status_codes_payload(requests_stats: QuerySet[RequestStat], group_t
     }
 
 
+def to_response_time_payload(requests_stats: QuerySet[RequestStat], group_type):
+    labels, average, _max, _min = [groupby(requests_stats, key=group_type['func']) for _ in range(4)]
+
+    return {
+        'labels': [created.strftime(group_type['format']) for created, _ in labels],
+        'datasets': [
+            {
+                'spanGaps': True,
+                'label': 'Average',
+                'data': get_averages('average', average),
+                'borderColor': '#FFBD00',
+                'backgroundColor': '#FFBD00',
+            },
+            {
+                'spanGaps': True,
+                'label': 'Min',
+                'data': get_averages('min', _min),
+                'borderColor': '#02C001',
+                'backgroundColor': '#02C001',
+            },
+            {
+                'spanGaps': True,
+                'label': 'Max',
+                'data': get_averages('max', _max),
+                'borderColor': '#E40F08',
+                'backgroundColor': '#E40F08',
+            }
+        ]
+    }
+
+
 def filter_action(action: str, stats: List[RequestStat]) -> int:
     """
     Used to filter list of RequestStat's, by their action type.
@@ -101,11 +133,11 @@ def filter_action(action: str, stats: List[RequestStat]) -> int:
     return len(list(filter(lambda s: s.action == action, stats)))
 
 
-def count_status_codes(start: int, end: int, status_codes: Tuple[datetime, List[RequestStat]]):
+def count_status_codes(start: int, end: int, stats: Tuple[datetime, List[RequestStat]]):
     """
     :param start: integer status code, for example 500
     :param end: integer status code, for example 599
-    :param status_codes: tuple of grouped ``RequestStat``
+    :param stats: tuple of grouped ``RequestStat``
     :return:
 
     Will count number of status codes for list of ``RequestStat``
@@ -119,7 +151,28 @@ def count_status_codes(start: int, end: int, status_codes: Tuple[datetime, List[
                 filter(lambda stat: start <= stat.statusCode <= end, list(stats))
             )
         )
-        for _, stats in status_codes
+        for _, stats in stats
+    ]
+
+
+def get_averages(convert_type: str, stats: Tuple[datetime, List[RequestStat]]):
+    """
+    :param convert_type: one of supported converting type: {'min': min, 'max': max, 'average': mean}
+    :param stats: tuple of grouped ``RequestStat``
+    :return:
+    """
+    supported_types = {'min': min, 'max': max, 'average': mean}
+    to = supported_types[convert_type]
+    return [
+        # getting min/max/average value
+        to(
+            # because map returns map object, we have to convert it to list
+            list(
+                # getting only durations from RequestStat
+                map(lambda s: s.duration, stats)
+            )
+        ) * 1000  # converting seconds to milliseconds
+        for _, stats in stats
     ]
 
 

@@ -6,7 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.stats.helper.utils import to_stats_payload, to_ratio_status_codes_payload, group_to_stats
+from core.stats.helper.utils import to_stats_payload, to_ratio_status_codes_payload, group_to_stats, \
+    to_response_time_payload
 from core.stats.models import RequestStat
 
 
@@ -47,3 +48,12 @@ def get_number_of_requests(request, project_id):
 def get_ratio_status_codes(request, project_id):
     requests_stats, group_type = group_to_stats(request, project_id)
     return Response(to_ratio_status_codes_payload(requests_stats, group_type))
+
+
+@api_view(['GET'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def get_response_time(request, project_id):
+    requests_stats, group_type = group_to_stats(request, project_id)
+    return Response(to_response_time_payload(requests_stats, group_type))

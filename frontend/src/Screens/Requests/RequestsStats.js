@@ -10,7 +10,7 @@ import {ChartSkeletons} from "../../Components/Blocks/Requests/Stats/Tools/Chart
 
 
 const RequestsStats = () => {
-  const {loadNumberOfRequests, loadRatioStatusCodes} = useRequestsStats();
+  const {loadResponseTime, loadNumberOfRequests, loadRatioStatusCodes} = useRequestsStats();
 
   return (
     <Container maxWidth={'xl'}>
@@ -32,7 +32,7 @@ const RequestsStats = () => {
           {loadRatioStatusCodes ? <ChartSkeletons/> : <RatioStatusCodesChart/>}
         </Grid>
         <Grid item xs={6}>
-          {loadNumberOfRequests ? <ChartSkeletons/> : <ResponseTimeChart/>}
+          {loadResponseTime ? <ChartSkeletons/> : <ResponseTimeChart/>}
         </Grid>
       </Grid>
     </Container>
