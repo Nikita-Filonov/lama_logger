@@ -15,6 +15,12 @@ class RequestStat(models.Model):
         verbose_name='Status code',
         null=False
     )
+    duration = models.FloatField(
+        verbose_name='Duration in seconds',
+        default=0.0,
+        null=True,
+        blank=True
+    )
     method = models.CharField(
         verbose_name='Method',
         null=False,

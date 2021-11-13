@@ -12,6 +12,7 @@ def track_request(project: Project, request: Request = None, action: str = 'crea
     RequestStat.objects.create(
         statusCode=request.statusCode,
         method=request.method,
+        duration=request.duration,
         action=action,
         project=project
     )
@@ -25,6 +26,7 @@ def track_requests(project: Project, requests: List[Request] = None, action: str
         RequestStat.objects.create(
             statusCode=request.statusCode,
             method=request.method,
+            duration=request.duration,
             action=action,
             project=project
         )

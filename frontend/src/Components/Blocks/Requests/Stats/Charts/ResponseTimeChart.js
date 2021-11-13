@@ -1,8 +1,9 @@
 import React from "react";
-import {Paper} from "@mui/material";
+import {Paper, Typography} from "@mui/material";
 import {Line} from 'react-chartjs-2';
 import ChartGroupByMenu from "../Tools/ChartGroupByMenu";
 import {useCommonChartOptions} from "../../../../../Utils/Hooks/ChartsHooks";
+import {connect} from "react-redux";
 
 const data = {
   labels: [
@@ -41,13 +42,25 @@ const options = {
   }
 };
 
-export const ResponseTimeChart = () => {
+const ResponseTimeChart = ({statsGroupBy}) => {
   const {commonChartOptions} = useCommonChartOptions();
 
   return (
     <Paper>
+      <Typography sx={{ml: 1.5, pt: 0.5}} variant={'subtitle2'}>
+        Average response time per {statsGroupBy?.numberOfRequests?.slice(0, -1)}
+      </Typography>
       <Line data={data} options={commonChartOptions}/>
       <ChartGroupByMenu/>
     </Paper>
   )
 }
+
+const getState = (state) => ({
+  statsGroupBy: state.stats.statsGroupBy,
+})
+
+export default connect(
+  getState,
+  null,
+)(ResponseTimeChart);
