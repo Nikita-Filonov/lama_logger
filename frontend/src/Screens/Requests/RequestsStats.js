@@ -4,9 +4,12 @@ import StatsToolbar from "../../Components/Blocks/Requests/Stats/Tools/StatsTool
 import StatsInfoGrid from "../../Components/Blocks/Requests/Stats/StatsInfoGrid";
 import NumberOfRequestsChart from "../../Components/Blocks/Requests/Stats/Charts/NumberOfRequestsChart";
 import RatioStatusCodesChart from "../../Components/Blocks/Requests/Stats/Charts/RatioStatusCodesChart";
+import {useRequestsStats} from "../../Providers/Requests/RequestsStatsProvider";
+import {ChartSkeletons} from "../../Components/Blocks/Requests/Stats/Tools/ChartSkeletons";
 
 
 const RequestsStats = () => {
+  const {loadNumberOfRequests, loadRatioStatusCodes} = useRequestsStats();
 
   return (
     <Container maxWidth={'xl'}>
@@ -22,10 +25,10 @@ const RequestsStats = () => {
       {/*</Grid>*/}
       <Grid container spacing={2} className={'mt-2'}>
         <Grid item xs={6}>
-          <NumberOfRequestsChart/>
+          {loadNumberOfRequests ? <ChartSkeletons/> : <NumberOfRequestsChart/>}
         </Grid>
         <Grid item xs={6}>
-          <RatioStatusCodesChart/>
+          {loadRatioStatusCodes ? <ChartSkeletons/> : <RatioStatusCodesChart/>}
         </Grid>
       </Grid>
     </Container>
