@@ -42,6 +42,7 @@ const ChartGroupByMenu = ({statsGroupBy, setStatsGroupBy, chart}) => {
       >
         <MenuItem onClick={async () => await onSelect('hours')}>By hours</MenuItem>
         <MenuItem onClick={async () => await onSelect('days')}>By days</MenuItem>
+        <MenuItem onClick={async () => await onSelect('months')}>By months</MenuItem>
       </Menu>
     </div>
   )

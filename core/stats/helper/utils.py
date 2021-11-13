@@ -85,13 +85,14 @@ def by_days(entity):
 
 def by_month(entity):
     """
-        Used to group stat by days.
+    Used to group stat by days.
 
-        For example, if state was created at 2022.10.14 12:15:54,
-        then output of this function will be following:
+    For example, if state was created at 2022.10.14 12:15:54,
+    then output of this function will be following:
 
-        group_by_date('2022.10.14 12:15.54') -> 2022.10.14 00:00:00
-        """
+    group_by_date('2022.10.14 12:15.54') -> 2022.10.14 00:00:00
+    """
+    return entity.created.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
 
 group_types = {
@@ -102,5 +103,9 @@ group_types = {
     'days': {
         'func': by_days,
         'format': '%b %d'
+    },
+    'months': {
+        'func': by_month,
+        'format': '%Y, %b'
     }
 }
