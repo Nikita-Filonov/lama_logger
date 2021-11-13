@@ -1,4 +1,4 @@
-import {DEFAULT_REALTIME_SETTINGS, DEFAULT_REQUESTS_FILTERS} from "../../../Utils/Constants";
+import {DEFAULT_REALTIME_SETTINGS, DEFAULT_REQUESTS_FILTERS, REQUESTS_PAGINATION} from "../../../Utils/Constants";
 
 export const INITIAL_REQUESTS = {
   request: JSON.parse(localStorage.getItem('request')) || {},
@@ -12,7 +12,7 @@ export const INITIAL_REQUESTS = {
   requestsFilters: JSON.parse(localStorage.getItem('requestsFilters')) || DEFAULT_REQUESTS_FILTERS,
   requestsPagination: {
     page: 0,
-    rowsPerPage: localStorage.getItem('rowsPerPageRequests') || 25
+    rowsPerPage: localStorage.getItem(REQUESTS_PAGINATION) || 25
   },
   selectedRequests: [],
   requestsFiltersSidebar: localStorage.getItem('requestsFiltersSidebar') !== 'false',

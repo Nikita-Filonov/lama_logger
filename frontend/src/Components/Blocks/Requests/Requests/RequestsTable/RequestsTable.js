@@ -6,6 +6,7 @@ import RequestsTableHeader from "./RequestsTableHeader";
 import {connect} from "react-redux";
 import {setRequestsPagination} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {getComparator, stableSort} from "../../../../../Utils/Utils/Sorting";
+import {REQUESTS_PAGINATION} from "../../../../../Utils/Constants";
 
 
 const RequestsTable = (props) => {
@@ -21,7 +22,7 @@ const RequestsTable = (props) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    localStorage.setItem('rowsPerPageRequests', event.target.value)
+    localStorage.setItem(REQUESTS_PAGINATION, event.target.value)
     setRequestsPagination({...requestsPagination, page: 0, rowsPerPage: parseInt(event.target.value, 10)})
   };
   const onPageChange = (e, page) => setRequestsPagination({...requestsPagination, page})
