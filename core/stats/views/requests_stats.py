@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
-from core.stats.helper.statistics.payload import group_to_stats, to_ratio_status_codes_payload, \
+from core.stats.helper.payload import group_to_stats, to_ratio_status_codes_payload, \
     to_response_time_payload, to_stats_payload
 from core.stats.models import RequestStat
 

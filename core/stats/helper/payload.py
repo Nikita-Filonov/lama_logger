@@ -4,7 +4,7 @@ from typing import List, Dict, Union, Tuple
 
 from django.db.models import QuerySet
 
-from core.stats.helper.statistics.utils import group_types, filter_action, count_status_codes, get_averages
+from core.stats.helper.utils import group_types, filter_action, count_status_codes, get_averages
 from core.stats.models import RequestStat
 
 
