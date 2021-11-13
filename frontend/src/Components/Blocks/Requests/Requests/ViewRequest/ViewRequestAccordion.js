@@ -1,5 +1,5 @@
 import React, {memo, useState} from "react";
-import {Box, Link, Tab, Tabs, Typography} from "@mui/material";
+import {Box, Tab, Tabs, Typography} from "@mui/material";
 import {connect} from "react-redux";
 import {setRequest} from "../../../../../Redux/Requests/Requests/requestsActions";
 import ViewRequestMenu from "../../../../Menus/Requests/Requests/ViewRequestMenu";
@@ -8,12 +8,9 @@ import {Headers} from "./Headers";
 import {Body} from "./Body";
 import moment from "moment";
 import {AccessTime} from "@mui/icons-material";
-import {common, RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
-import {METHOD_COLORS} from "../../../../../Utils/Constants";
+import {RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {getDuration} from "../../../../../Utils/Utils/Common";
-import {requestToCustomRequest} from "../../../../../Utils/Utils/Formatters";
-import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
-import {useHistory} from "react-router-dom";
+import RequestLink from "./RequestLink";
 
 function a11yProps(index) {
   return {
@@ -22,21 +19,13 @@ function a11yProps(index) {
   };
 }
 
-const ViewRequestAccordion = ({request, viewMode, project}) => {
+const ViewRequestAccordion = ({request, viewMode}) => {
   const classes = RequestsTableStyles();
-  const history = useHistory();
-  const {createCustomRequest} = useCustomRequests();
   const [requestTab, setRequestTab] = useState(0);
   const [responseTab, setResponseTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
   const onResponseTab = (event, newValue) => setResponseTab(newValue);
-
-  const onLink = async () => {
-    const payload = await requestToCustomRequest(request);
-    await createCustomRequest(project.id, payload);
-    history.push(`/projects/${project.id}/custom-requests`);
-  }
 
   return (
     <Box
@@ -44,16 +33,7 @@ const ViewRequestAccordion = ({request, viewMode, project}) => {
       className={viewMode.requests !== 'accordion' && classes.sidePanelContainer}
     >
       <div className={'d-flex justify-content-center align-items-center'}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          component="div"
-          className={'mt-2'}
-          style={{fontSize: 17, ...common.breakLongWord}}
-          color={METHOD_COLORS[request?.method]}
-        >
-          {request?.method} <Link sx={{ml: 1}} onClick={onLink}>{request?.requestUrl}</Link>
-        </Typography>
+        <RequestLink request={request}/>
         <div className={'flex-grow-1'}/>
         {viewMode.requests === 'accordion' && <ViewRequestMenu request={request}/>}
       </div>
@@ -99,8 +79,7 @@ const ViewRequestAccordion = ({request, viewMode, project}) => {
 }
 
 const getState = (state) => ({
-  viewMode: state.users.viewMode,
-  project: state.projects.project,
+  viewMode: state.users.viewMode
 })
 
 export default connect(
