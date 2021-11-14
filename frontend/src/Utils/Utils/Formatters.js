@@ -77,3 +77,13 @@ export const requestToCustomRequest = async (request) => {
     isCustom: true
   };
 }
+
+export const customRequestToRequest = async (request) => {
+  const requestHeaders = request?.requestHeaders.map(({key, value}) => ({[key]: value}));
+  return {
+    requestUrl: request?.requestUrl,
+    requestHeaders,
+    requestBody: request?.requestBody,
+    method: request?.method,
+  };
+}

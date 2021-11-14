@@ -9,12 +9,13 @@ import NodeChainRequestSection from "../../../Blocks/Requests/Requests/NodeChain
 import {useHistory} from "react-router-dom";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import NodeChainModalHeader from "../../../Blocks/Requests/Requests/NodeChain/NodeChainModalHeader";
+import {customRequestToRequest} from "../../../../Utils/Utils/Formatters";
 
 
 const NodeChain = (props) => {
   const {requestsNodeChainModal, setRequestsNodeChainModal, project, requestsChain, requestChain} = props;
   const history = useHistory();
-  const {getRequestsChain} = useRequests();
+  const {getRequestsChain, updateRequest} = useRequests();
 
   const onClose = () => setRequestsNodeChainModal(false);
 
@@ -50,8 +51,12 @@ const NodeChain = (props) => {
   }, [requestsNodeChainModal]);
 
   useEffect(() => {
-    const timeout = setTimeout(async () => (project.id && requestChain?.requestId) && {},
-      700
+    const timeout = setTimeout(async () => {
+        if (project?.id && requestChain?.requestId) {
+          const payload = await customRequestToRequest(requestChain);
+          await updateRequest(project?.id, requestChain?.requestId, {...requestChain, ...payload});
+        }
+      }, 700
     );
     return () => clearTimeout(timeout);
   }, [project.id, requestChain])

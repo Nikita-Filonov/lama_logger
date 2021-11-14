@@ -48,7 +48,10 @@ class CustomRequestApi(views.APIView):
     throttle_classes = [UserRateThrottle]
 
     def patch(self, request, project_id, request_id):
-        custom_request = Request.objects.get(requestId=request_id)
+        try:
+            custom_request = Request.objects.get(requestId=request_id, isCustom=True)
+        except Request.DoesNotExist:
+            raise NotFound('Custom request not found')
         serializer = RequestSerializer(custom_request, data=request.data, partial=True)
 
         if serializer.is_valid():

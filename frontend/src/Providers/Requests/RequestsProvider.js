@@ -64,6 +64,11 @@ const RequestsProvider = ({children, store}) => {
     !error && store.dispatch({type: SET_REQUESTS_CHAIN, payload: json});
   }
 
+  const updateRequest = async (projectId, requestId, payload) => {
+    const {json, error} = await patch(projectsApi + `${projectId}/requests/${requestId}/`, payload);
+    console.log(json, error);
+  }
+
   const getRequestsFilters = async (projectId) => {
     const {json} = await get(projectsApi + `${projectId}/requests/filters/`);
     store.dispatch({type: SET_SAVED_REQUESTS_FILTERS, payload: json})
@@ -96,6 +101,7 @@ const RequestsProvider = ({children, store}) => {
         getRequests,
         deleteRequests,
         deleteRequest,
+        updateRequest,
         deleteAllRequests,
         getRequestsChain,
         getRequestsFilters,

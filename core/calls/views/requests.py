@@ -15,7 +15,7 @@ from core.calls.serializers.requests import RequestsSerializer, RequestSerialize
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
 from core.tracks.helpers.analyzers.analyze_request import analyze_request
-from utils.exeptions import BadRequest
+from utils.exeptions import BadRequest, NotFound
 from utils.helpers.common import delete_model
 
 
@@ -98,6 +98,21 @@ class RequestApi(views.APIView):
     def get(self, request, project_id, request_id):
         db_request = Request.objects.get(requestId=request_id)
         return Response(RequestsSerializer(db_request, many=False).data)
+
+    def patch(self, request, project_id, request_id):
+        try:
+            custom_request = Request.objects.get(requestId=request_id, isCustom=False)
+        except Request.DoesNotExist:
+            raise NotFound('Request not found')
+
+        serializer = RequestSerializer(custom_request, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            custom_request = serializer.save()
+            serializer = RequestsSerializer(custom_request, many=False)
+            return Response(serializer.data)
+
+        raise BadRequest(message='Error happened while updating request', data=serializer.errors)
 
     def delete(self, request, project_id, request_id):
         delete_model(Request, requestId=request_id)
