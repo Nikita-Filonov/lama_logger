@@ -20,18 +20,29 @@ import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 import {common} from "../../../../Styles/Blocks";
 import {REQUEST} from "../../../../Utils/Permissions/Requests";
 import {requestToCustomRequest} from "../../../../Utils/Utils/Formatters";
+import PlaylistPlayOutlinedIcon from '@mui/icons-material/PlaylistPlayOutlined';
+import {setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
 
-const ViewRequestMenu = ({project, request, setConfirmAction}) => {
+const ViewRequestMenu = ({project, request, setConfirmAction, setRequestsNodeChainModal}) => {
   const history = useHistory();
   const {isAllowed} = usePermissions();
   const {setAlert} = useAlerts();
-  const {deleteRequest} = useRequests();
+  const {deleteRequest, getRequestsChain} = useRequests();
   const {createCustomRequest} = useCustomRequests();
   const [menu, setMenu] = useState(null);
 
   const onOpen = (event) => setMenu(event.currentTarget);
 
   const onClose = () => setMenu(null);
+
+  const onNodeChain = async () => {
+    if (!request?.node) {
+      setAlert({message: 'We unable to chain this request. Because he not connected to any node', level: 'warning'});
+      return;
+    }
+    await getRequestsChain(project?.id, request?.nodeId);
+    setRequestsNodeChainModal(true);
+  }
 
   const onCurl = async () => {
     await copyRequestToCurl(request);
@@ -72,6 +83,12 @@ const ViewRequestMenu = ({project, request, setConfirmAction}) => {
         transformOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
       >
+        <MenuItem onClick={onNodeChain}>
+          <ListItemIcon>
+            <PlaylistPlayOutlinedIcon fontSize="small"/>
+          </ListItemIcon>
+          Node chain
+        </MenuItem>
         <MenuItem onClick={onSend} disabled={!isAllowed([REQUEST.create])}>
           <ListItemIcon>
             <Send fontSize="small"/>
@@ -111,6 +128,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
-    setConfirmAction
+    setConfirmAction,
+    setRequestsNodeChainModal
   },
 )(ViewRequestMenu);

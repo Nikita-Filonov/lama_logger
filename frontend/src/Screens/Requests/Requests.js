@@ -12,6 +12,7 @@ import {makeRequestsFilters} from "../../Utils/Utils/Filters";
 import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/RequestsFilters/RequestsSideFilters";
 import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/RequestsTableSkeletons";
 import ViewRequestSidePanel from "../../Components/Blocks/Requests/Requests/ViewRequest/ViewRequestSidePanel";
+import NodeChain from "../../Components/Modals/Requests/Requests/NodeChain";
 
 
 const Requests = (props) => {
@@ -76,6 +77,7 @@ const Requests = (props) => {
       {/*    <ViewRequest/>*/}
       {/*  </Grid>}*/}
       {/*</Grid>*/}
+      <NodeChain/>
       <TimeFilters/>
     </Container>
   )

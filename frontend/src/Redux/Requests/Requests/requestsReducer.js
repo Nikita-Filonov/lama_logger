@@ -5,8 +5,10 @@ import {
   DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUEST,
   SET_REQUESTS,
+  SET_REQUESTS_CHAIN,
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
+  SET_REQUESTS_NODE_CHAIN_MODAL,
   SET_REQUESTS_PAGINATION,
   SET_REQUESTS_REALTIME,
   SET_REQUESTS_TIME_FILTER_MODAL,
@@ -53,11 +55,15 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
       return {...state, requestsFiltersSidebar: action.payload};
     }
     case SET_REQUESTS_TIME_FILTER_MODAL:
-      return {...state, requestsTimeFilterModal: action.payload}
+      return {...state, requestsTimeFilterModal: action.payload};
+    case SET_REQUESTS_NODE_CHAIN_MODAL:
+      return {...state, requestsNodeChainModal: action.payload};
     case SET_REQUESTS_REALTIME: {
       localStorage.setItem('requestsRealtime', JSON.stringify(action.payload));
       return {...state, requestsRealtime: action.payload}
     }
+    case SET_REQUESTS_CHAIN:
+      return {...state, requestsChain: action.payload};
     case SET_SAVED_REQUESTS_FILTERS:
       return {...state, savedRequestsFilters: action.payload};
     case CREATE_SAVED_REQUESTS_FILTER:

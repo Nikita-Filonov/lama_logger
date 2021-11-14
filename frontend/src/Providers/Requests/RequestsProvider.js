@@ -5,6 +5,7 @@ import {
   DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUEST,
   SET_REQUESTS,
+  SET_REQUESTS_CHAIN,
   SET_SAVED_REQUESTS_FILTERS
 } from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
@@ -58,6 +59,11 @@ const RequestsProvider = ({children, store}) => {
     setAlert(error ? json : {message: 'All requests were successfully cleared', level: 'success'});
   }
 
+  const getRequestsChain = async (projectId, nodeId) => {
+    const {json, error} = await get(projectsApi + `${projectId}/requests/chain/${nodeId}/`);
+    !error && store.dispatch({type: SET_REQUESTS_CHAIN, payload: json});
+  }
+
   const getRequestsFilters = async (projectId) => {
     const {json} = await get(projectsApi + `${projectId}/requests/filters/`);
     store.dispatch({type: SET_SAVED_REQUESTS_FILTERS, payload: json})
@@ -91,6 +97,7 @@ const RequestsProvider = ({children, store}) => {
         deleteRequests,
         deleteRequest,
         deleteAllRequests,
+        getRequestsChain,
         getRequestsFilters,
         createRequestsFilter,
         deleteRequestsFilter,

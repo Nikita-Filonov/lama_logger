@@ -15,7 +15,9 @@ export const INITIAL_REQUESTS = {
     rowsPerPage: localStorage.getItem(REQUESTS_PAGINATION) || 25
   },
   selectedRequests: [],
+  requestsChain: [],
   requestsFiltersSidebar: localStorage.getItem('requestsFiltersSidebar') !== 'false',
   requestsTimeFilterModal: false,
+  requestsNodeChainModal: false,
   requestsRealtime: JSON.parse(localStorage.getItem('requestsRealtime')) || DEFAULT_REALTIME_SETTINGS
 }

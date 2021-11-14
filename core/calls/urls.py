@@ -2,13 +2,14 @@ from django.urls import path
 
 from core.calls.views.custom_requests import CustomRequestsApi, CustomRequestApi, custom_request_send
 from core.calls.views.custom_requests_history import CustomRequestsHistoryApi
-from core.calls.views.requests import RequestsApi, RequestApi, create_request, delete_all_requests
+from core.calls.views.requests import RequestsApi, RequestApi, create_request, delete_all_requests, get_requests_chain
 from core.calls.views.requests_filters import RequestsFiltersApi, RequestsFilterApi
 
 urlpatterns = [
     path('projects/<int:project_id>/requests/', RequestsApi.as_view(), name='requests'),
     path('projects/<int:project_id>/requests/clear-all/', delete_all_requests, name='delete_all_requests'),
     path('projects/<int:project_id>/requests/create/', create_request, name='create_request'),
+    path('projects/<int:project_id>/requests/chain/<str:node_id>/', get_requests_chain, name='get_requests_chain'),
     path('projects/<int:project_id>/requests/filters/', RequestsFiltersApi.as_view(), name='requests_filters'),
     path('projects/<int:project_id>/requests/filters/<int:filter_id>/', RequestsFilterApi.as_view(),
          name='requests_filter'),

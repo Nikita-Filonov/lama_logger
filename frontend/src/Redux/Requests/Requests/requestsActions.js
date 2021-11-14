@@ -1,7 +1,9 @@
 import {
   SET_REQUEST,
+  SET_REQUESTS_CHAIN,
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
+  SET_REQUESTS_NODE_CHAIN_MODAL,
   SET_REQUESTS_PAGINATION,
   SET_REQUESTS_REALTIME,
   SET_REQUESTS_TIME_FILTER_MODAL,
@@ -40,7 +42,17 @@ export const setRequestsTimeFilterModal = (state) => ({
   payload: state
 })
 
+export const setRequestsNodeChainModal = (state) => ({
+  type: SET_REQUESTS_NODE_CHAIN_MODAL,
+  payload: state
+})
+
 export const setRequestsRealtime = (state) => ({
   type: SET_REQUESTS_REALTIME,
+  payload: state
+})
+
+export const setRequestsChain = (state) => ({
+  type: SET_REQUESTS_CHAIN,
   payload: state
 })

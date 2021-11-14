@@ -53,6 +53,16 @@ def delete_all_requests(request, project_id):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@api_view(['GET'])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
+@throttle_classes((UserRateThrottle,))
+def get_requests_chain(request, project_id, node_id):
+    requests = Request.objects.filter(project_id=project_id, nodeId=node_id).order_by('created')
+    serializer = RequestsSerializer(requests, many=True)
+    return Response(serializer.data)
+
+
 class RequestsApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]

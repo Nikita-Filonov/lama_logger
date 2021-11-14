@@ -155,6 +155,15 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     },
     maxHeight: window.innerHeight / 1.4,
     height: window.innerHeight / 1.4,
+  },
+  nodeChainListContainer: {
+    maxHeight: window.innerHeight / 1.3,
+    height: window.innerHeight / 1.3,
+    overflow: "hidden",
+    "&:hover": {
+      overflowY: "overlay",
+    },
+    marginTop: theme.spacing(2)
   }
 }));
 
