@@ -35,19 +35,19 @@ def to_stats_payload(requests_stats: QuerySet[RequestStat], group_type) -> \
                 'spanGaps': True,
                 'label': 'Created',
                 'data': [filter_action('create', list(stats)) for _, stats in created],
-                'backgroundColor': 'rgb(255, 99, 132)',
+                'backgroundColor': '#1976D2',
             },
             {
                 'spanGaps': True,
                 'label': 'Filtered',
                 'data': [filter_action('filter', list(stats)) for _, stats in filtered],
-                'backgroundColor': 'rgb(54, 162, 235)',
+                'backgroundColor': '#1E8EFF',
             },
             {
                 'spanGaps': True,
                 'label': 'Removed',
                 'data': [filter_action('delete', list(stats)) for _, stats in removed],
-                'backgroundColor': 'rgb(75, 192, 192)',
+                'backgroundColor': '#67B3FF',
             },
         ]
     }
