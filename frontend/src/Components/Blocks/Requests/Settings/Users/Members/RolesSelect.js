@@ -30,7 +30,6 @@ const RolesSelect = ({project, member, onSelectRole, fullWidth = false, sx = {}}
   return (
     <Select
       disabled={!isAllowed([MEMBER.update])}
-      label={'sdfdsfsd'}
       sx={sx}
       fullWidth={fullWidth}
       size={'small'}

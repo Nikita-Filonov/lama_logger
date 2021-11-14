@@ -30,7 +30,8 @@ const MembersTable = ({project}) => {
         />
         <TableBody>
           {stableSort(filteredMembers, getComparator(order, orderBy))
-            .map(m => <MemberRow member={m} key={m.id}/>)}
+            .map(member => <MemberRow member={member} key={member.id}/>)
+          }
         </TableBody>
       </Table>
     </TableContainer>
