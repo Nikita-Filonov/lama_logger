@@ -26,7 +26,10 @@ const RequestRow = (props) => {
   const onSelect = () => {
     viewMode.requests === 'accordion' && setOpen(!open);
     setRequest(request);
-    history.push(`?requestId=${request.requestId}`);
+
+    const queryParams = new URLSearchParams(history.location.search)
+    queryParams.set('requestId', request.requestId);
+    history.replace({search: queryParams.toString()});
   }
 
   useEffect(() => {

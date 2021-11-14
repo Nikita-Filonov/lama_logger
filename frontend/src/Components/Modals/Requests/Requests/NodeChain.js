@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import {SlideTransition} from "../../../../Utils/Utils/Common";
 import {connect} from "react-redux";
@@ -8,9 +8,15 @@ import {AppBar, Container, Dialog, Grid, IconButton, Toolbar, Tooltip, Typograph
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
 import NodeChainRequestsList from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestsList";
 import NodeChainRequestSection from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestSection";
+import {useHistory} from "react-router-dom";
+import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 
 
-const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsChain}) => {
+const NodeChain = (props) => {
+  const {requestsNodeChainModal, setRequestsNodeChainModal, project, requestsChain} = props;
+  const history = useHistory();
+  const {getRequestsChain} = useRequests();
+
   const onClose = () => setRequestsNodeChainModal(false);
   const title = useMemo(() => requestsChain.length > 0 ? requestsChain[0]?.node : 'Unknown', [requestsChain]);
   const totalDuration = useMemo(
@@ -19,6 +25,30 @@ const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsC
       : 0,
     [requestsChain]
   );
+
+  useEffect(() => {
+    (async () => {
+      const queryParams = new URLSearchParams(history.location.search)
+      if (queryParams.get('nodeChainModal') && queryParams.has('nodeId')) {
+        await getRequestsChain(project?.id, queryParams.get('nodeId'));
+        setRequestsNodeChainModal(true);
+      }
+    })()
+  }, [])
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(history.location.search)
+
+    if (requestsNodeChainModal) {
+      queryParams.set('nodeChainModal', true);
+      queryParams.set('nodeId', requestsChain[0]?.nodeId);
+    } else {
+      queryParams.delete('nodeChainModal');
+      queryParams.delete('nodeId');
+    }
+
+    history.replace({search: queryParams.toString()});
+  }, [requestsNodeChainModal])
 
   return (
     <Dialog
@@ -70,6 +100,7 @@ const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsC
 }
 
 const getState = (state) => ({
+  project: state.projects.project,
   requestsChain: state.requests.requestsChain,
   requestsNodeChainModal: state.requests.requestsNodeChainModal
 })
