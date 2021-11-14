@@ -62,7 +62,7 @@ COMMON_EXCEPTIONS = {
         'level': ERROR
     },
     404: {
-        'message': 'Resource was not find on the server',
+        'message': 'Resource was not fond on the server',
         'level': ERROR
     },
     400: {
