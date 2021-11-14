@@ -92,6 +92,18 @@ class Request(models.Model):
         on_delete=models.CASCADE,
         null=True
     )
+    node = models.CharField(
+        verbose_name='Node name',
+        null=True,
+        blank=True,
+        max_length=255
+    )
+    nodeId = models.UUIDField(
+        verbose_name='Node id',
+        default=uuid.uuid4,
+        editable=True,
+        unique=False
+    )
 
     def __str__(self):
         return self.requestUrl or 'No url'
