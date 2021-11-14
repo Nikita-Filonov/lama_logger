@@ -32,7 +32,7 @@ const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
 
   const onSelectRequest = async () => {
     const payload = await requestToCustomRequest(request);
-    setRequestChain(payload);
+    setRequestChain({...request, ...payload});
   }
 
   return (
