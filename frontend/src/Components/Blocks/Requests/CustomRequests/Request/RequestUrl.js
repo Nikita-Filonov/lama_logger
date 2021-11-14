@@ -1,10 +1,8 @@
 import React, {useCallback, useEffect} from "react";
 import {TextField} from "@mui/material";
-import {connect} from "react-redux";
-import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {objectToQuery} from "../../../../../Utils/Utils/Common";
 
-const RequestUrl = ({customRequest, setCustomRequest}) => {
+export const RequestUrl = ({customRequest, setCustomRequest}) => {
 
   useEffect(() => {
     (async () => customRequest?.requestUrl && await queryObjectToString())()
@@ -35,14 +33,3 @@ const RequestUrl = ({customRequest, setCustomRequest}) => {
     />
   )
 }
-
-const getState = (state) => ({
-  customRequest: state.customRequests.customRequest,
-})
-
-export default connect(
-  getState,
-  {
-    setCustomRequest
-  },
-)(RequestUrl);

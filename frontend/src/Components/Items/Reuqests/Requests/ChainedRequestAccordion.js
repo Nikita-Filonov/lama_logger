@@ -13,13 +13,15 @@ import {
 import {METHOD_COLORS} from "../../../../Utils/Constants";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import {common, tabsStyles} from "../../../../Styles/Blocks";
-import {getStatusCodeColor} from "../../../../Utils/Utils/Formatters";
+import {getStatusCodeColor, requestToCustomRequest} from "../../../../Utils/Utils/Formatters";
 import {TabPanel} from "../../../Blocks/Common/Navigation/TabPanel";
 import {Headers} from "../../../Blocks/Requests/Requests/ViewRequest/Headers";
 import {Body} from "../../../Blocks/Requests/Requests/ViewRequest/Body";
 import Divider from "@mui/material/Divider";
+import {connect} from "react-redux";
+import {setRequestChain} from "../../../../Redux/Requests/Requests/requestsActions";
 
-export const ChainedRequestAccordion = ({request}) => {
+const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
   const [open, setOpen] = useState(false);
   const [requestTab, setRequestTab] = useState(0);
   const [responseTab, setResponseTab] = useState(0);
@@ -28,9 +30,19 @@ export const ChainedRequestAccordion = ({request}) => {
   const onResponseTab = (event, newValue) => setResponseTab(newValue);
   const onOpen = () => setOpen(!open);
 
+  const onSelectRequest = async () => {
+    const payload = await requestToCustomRequest(request);
+    setRequestChain(payload);
+  }
+
   return (
     <React.Fragment>
-      <ListItem divider disableGutters>
+      <ListItem
+        divider
+        disableGutters
+        onClick={onSelectRequest}
+        selected={requestChain?.requestId === request?.requestId}
+      >
         <Grid container spacing={2}>
           <Grid item xs={1.5} md={1.5} lg={1.5} xl={1.5} sm={1.5}>
             <Typography color={METHOD_COLORS[request?.method]} sx={{mr: 2}}>{request?.method}</Typography>
@@ -83,3 +95,14 @@ export const ChainedRequestAccordion = ({request}) => {
     </React.Fragment>
   )
 }
+
+const getState = (state) => ({
+  requestChain: state.requests.requestChain
+})
+
+export default connect(
+  getState,
+  {
+    setRequestChain
+  },
+)(ChainedRequestAccordion);

@@ -6,8 +6,9 @@ import {connect} from "react-redux";
 import {setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
 import {AppBar, Container, Dialog, Grid, IconButton, Toolbar, Tooltip, Typography} from "@mui/material";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
-import RequestsList from "../../../Blocks/Requests/Requests/NodeChain/RequestsList";
-import {RequestSection} from "../../../Blocks/Requests/CustomRequests/Request/RequestSection";
+import NodeChainRequestsList from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestsList";
+import NodeChainRequestSection from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestSection";
+
 
 const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsChain}) => {
   const onClose = () => setRequestsNodeChainModal(false);
@@ -57,10 +58,10 @@ const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsC
 
         <Grid container spacing={2} sx={{mt: 0.1}}>
           <Grid item xs={6}>
-            <RequestsList/>
+            <NodeChainRequestsList/>
           </Grid>
           <Grid item xs={6}>
-            <RequestSection/>
+            <NodeChainRequestSection/>
           </Grid>
         </Grid>
       </Container>

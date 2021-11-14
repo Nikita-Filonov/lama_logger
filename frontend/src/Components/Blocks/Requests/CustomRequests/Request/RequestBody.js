@@ -7,7 +7,6 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/theme-github';
 import {connect} from "react-redux";
-import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
 
 const RequestBody = ({userSettings, customRequest, setCustomRequest}) => {
@@ -38,12 +37,9 @@ const RequestBody = ({userSettings, customRequest, setCustomRequest}) => {
 
 const getState = (state) => ({
   userSettings: state.users.userSettings,
-  customRequest: state.customRequests.customRequest,
 })
 
 export default connect(
   getState,
-  {
-    setCustomRequest
-  },
+  null,
 )(RequestBody);

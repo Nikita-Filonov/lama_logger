@@ -4,10 +4,8 @@ import {Button, Menu, Tooltip} from "@mui/material";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import MenuItem from "@mui/material/MenuItem";
 import {CUSTOM_METHODS} from "../../../../../Utils/Constants";
-import {connect} from "react-redux";
-import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
-const MethodSelect = ({customRequest, setCustomRequest}) => {
+export const MethodSelect = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
   const [menu, setMenu] = useState(null);
 
@@ -53,14 +51,3 @@ const MethodSelect = ({customRequest, setCustomRequest}) => {
     </React.Fragment>
   )
 }
-
-const getState = (state) => ({
-  customRequest: state.customRequests.customRequest,
-})
-
-export default connect(
-  getState,
-  {
-    setCustomRequest
-  },
-)(MethodSelect);

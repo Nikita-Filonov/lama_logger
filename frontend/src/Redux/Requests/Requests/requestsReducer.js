@@ -4,6 +4,7 @@ import {
   DELETE_REQUESTS,
   DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUEST,
+  SET_REQUEST_CHAIN,
   SET_REQUESTS,
   SET_REQUESTS_CHAIN,
   SET_REQUESTS_FILTERS,
@@ -64,6 +65,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     }
     case SET_REQUESTS_CHAIN:
       return {...state, requestsChain: action.payload};
+    case SET_REQUEST_CHAIN:
+      return {...state, requestChain: action.payload};
     case SET_SAVED_REQUESTS_FILTERS:
       return {...state, savedRequestsFilters: action.payload};
     case CREATE_SAVED_REQUESTS_FILTER:

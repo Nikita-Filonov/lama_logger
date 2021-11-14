@@ -1,14 +1,12 @@
 import React, {useCallback} from "react";
 import {Button} from "@mui/material";
-import {connect} from "react-redux";
-import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {Add} from "@mui/icons-material";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 import HeadersFields from "../../../../Items/Reuqests/CustomRequests/HeadersFields";
 
 
-const RequestHeaders = ({customRequest, setCustomRequest}) => {
+export const RequestHeaders = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
 
   const onChange = useCallback(async (value, index, key) => {
@@ -62,14 +60,3 @@ const RequestHeaders = ({customRequest, setCustomRequest}) => {
     </div>
   )
 }
-
-const getState = (state) => ({
-  customRequest: state.customRequests.customRequest,
-})
-
-export default connect(
-  getState,
-  {
-    setCustomRequest
-  },
-)(RequestHeaders);

@@ -3,15 +3,17 @@ import {Divider, Paper, Tab, Tabs, Typography} from "@mui/material";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {tabsStyles} from "../../../../../Styles/Blocks";
 import {HeaderDivider} from "../HeaderDivider";
-import MethodSelect from "./MethodSelect";
-import RequestHeaders from "./RequestHeaders";
+import {MethodSelect} from "./MethodSelect";
+import {RequestHeaders} from "./RequestHeaders";
 import RequestBody from "./RequestBody";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
-import RequestParams from "./RequestParams";
-import RequestUrl from "./RequestUrl";
+import {RequestParams} from "./RequestParams";
+import {RequestUrl} from "./RequestUrl";
 import RequestSend from "./RequestSend";
+import {connect} from "react-redux";
+import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 
-export const RequestSection = () => {
+const RequestSection = ({customRequest, setCustomRequest}) => {
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
@@ -25,8 +27,8 @@ export const RequestSection = () => {
       </div>
       <HeaderDivider/>
       <div className={'d-flex'}>
-        <MethodSelect/>
-        <RequestUrl/>
+        <MethodSelect customRequest={customRequest} setCustomRequest={setCustomRequest}/>
+        <RequestUrl customRequest={customRequest} setCustomRequest={setCustomRequest}/>
         <RequestSend/>
       </div>
       <Divider sx={{mt: 2}}/>
@@ -36,14 +38,25 @@ export const RequestSection = () => {
         <Tab sx={tabsStyles} color={'primary'} label="Params"/>
       </Tabs>
       <TabPanel value={requestTab} index={0} component={'span'}>
-        <RequestHeaders/>
+        <RequestHeaders customRequest={customRequest} setCustomRequest={setCustomRequest}/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <RequestBody/>
+        <RequestBody customRequest={customRequest} setCustomRequest={setCustomRequest}/>
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        <RequestParams/>
+        <RequestParams customRequest={customRequest} setCustomRequest={setCustomRequest}/>
       </TabPanel>
     </Paper>
   )
 }
+
+const getState = (state) => ({
+  customRequest: state.customRequests.customRequest,
+})
+
+export default connect(
+  getState,
+  {
+    setCustomRequest
+  },
+)(RequestSection);

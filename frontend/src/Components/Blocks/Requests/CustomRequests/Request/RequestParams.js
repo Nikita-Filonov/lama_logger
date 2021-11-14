@@ -1,13 +1,11 @@
 import React, {useCallback, useEffect} from "react";
 import {CustomRequestsStyles} from "../../../../../Styles/Screens";
-import {connect} from "react-redux";
-import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {parseQueryFromUrl} from "../../../../../Utils/Utils/Common";
 import {Button, Checkbox, IconButton, TextField} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 
-const RequestParams = ({customRequest, setCustomRequest}) => {
+export const RequestParams = ({customRequest, setCustomRequest}) => {
   const classes = CustomRequestsStyles();
 
   useEffect(() => {
@@ -91,14 +89,3 @@ const RequestParams = ({customRequest, setCustomRequest}) => {
     </div>
   )
 }
-
-const getState = (state) => ({
-  customRequest: state.customRequests.customRequest,
-})
-
-export default connect(
-  getState,
-  {
-    setCustomRequest
-  },
-)(RequestParams);

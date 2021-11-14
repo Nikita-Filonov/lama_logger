@@ -1,12 +1,12 @@
 import React from "react";
 import {List, Paper, Typography} from "@mui/material";
-import {ChainedRequestAccordion} from "../../../../Items/Reuqests/Requests/ChainedRequestAccordion";
+import ChainedRequestAccordion from "../../../../Items/Reuqests/Requests/ChainedRequestAccordion";
 import {RequestsTableStyles} from "../../../../../Styles/Blocks";
 import {connect} from "react-redux";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
 import {HeaderDivider} from "../../CustomRequests/HeaderDivider";
 
-const RequestsList = ({requestsChain}) => {
+const NodeChainRequestsList = ({requestsChain}) => {
   const classes = RequestsTableStyles();
 
   return (
@@ -31,4 +31,4 @@ const getState = (state) => ({
 export default connect(
   getState,
   null,
-)(RequestsList);
+)(NodeChainRequestsList);
