@@ -47,6 +47,7 @@ const HistoryAccordion = (props) => {
   return (
     <React.Fragment>
       <ListItem
+        button
         disableGutters
         onClick={onOpen}
         onMouseEnter={onActionShow}

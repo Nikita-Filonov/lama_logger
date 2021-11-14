@@ -8,16 +8,26 @@ import HistoryAccordion from "../../../../Items/Reuqests/CustomRequests/HistoryA
 import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
 import {RequestsHistorySkeletons} from "./RequestsHistorySkeletons";
 import {setCustomRequestsHistoryPagination} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import {useWindowSize} from "../../../../../Utils/Hooks/LayoutHooks";
+import _ from 'lodash';
 
 const RequestsHistory = (props) => {
-  const {customRequestsHistory, customRequestsHistoryPagination, setCustomRequestsHistoryPagination} = props;
+  const {
+    customRequest,
+    customRequestsHistory,
+    customRequestsHistoryPagination,
+    setCustomRequestsHistoryPagination
+  } = props;
   const classes = CustomRequestsStyles();
+  const {height} = useWindowSize();
   const {loadHistory} = useCustomRequests();
 
   const paginationCount = useMemo(() =>
       Math.floor(customRequestsHistory?.count / customRequestsHistoryPagination?.rowsPerPage),
     [customRequestsHistory.count]
   );
+
+  const listHeight = useMemo(() => _.isEmpty(customRequest?.responseHeaders) ? height / 1.54 : height / 0.965);
 
   const onChangePage = async (event, page) => setCustomRequestsHistoryPagination({
     ...customRequestsHistoryPagination,
@@ -34,7 +44,7 @@ const RequestsHistory = (props) => {
         </IconButton>
       </div>
       <HeaderDivider/>
-      <List dense className={classes.historyListContainer}>
+      <List dense className={classes.historyListContainer} sx={{maxHeight: listHeight, height: listHeight}}>
         {loadHistory
           ? <RequestsHistorySkeletons/>
           : customRequestsHistory?.results?.map((history, index) =>
@@ -54,6 +64,7 @@ const RequestsHistory = (props) => {
 }
 
 const getState = (state) => ({
+  customRequest: state.customRequests.customRequest,
   customRequestsHistory: state.customRequests.customRequestsHistory,
   customRequestsHistoryPagination: state.customRequests.customRequestsHistoryPagination
 })
