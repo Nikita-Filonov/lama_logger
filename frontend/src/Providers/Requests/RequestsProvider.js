@@ -6,7 +6,9 @@ import {
   SET_REQUEST,
   SET_REQUESTS,
   SET_REQUESTS_CHAIN,
-  SET_SAVED_REQUESTS_FILTERS
+  SET_SAVED_REQUESTS_FILTERS,
+  UPDATE_REQUEST,
+  UPDATE_REQUEST_CHAIN
 } from "../../Redux/Requests/Requests/actionTypes";
 import {useAlerts} from "../AlertsProvider";
 import {queryWithPagination} from "../../Utils/Utils/Common";
@@ -66,7 +68,11 @@ const RequestsProvider = ({children, store}) => {
 
   const updateRequest = async (projectId, requestId, payload) => {
     const {json, error} = await patch(projectsApi + `${projectId}/requests/${requestId}/`, payload);
-    console.log(json, error);
+    if (!error) {
+      store.dispatch({type: UPDATE_REQUEST_CHAIN, payload: {requestId, payload: json}});
+      store.dispatch({type: UPDATE_REQUEST, payload: {requestId, payload: json}});
+    }
+    error && setAlert(json);
   }
 
   const getRequestsFilters = async (projectId) => {

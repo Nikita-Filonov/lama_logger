@@ -38,6 +38,7 @@ const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
   return (
     <React.Fragment>
       <ListItem
+        button
         divider
         disableGutters
         onClick={onSelectRequest}

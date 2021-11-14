@@ -14,7 +14,9 @@ import {
   SET_REQUESTS_REALTIME,
   SET_REQUESTS_TIME_FILTER_MODAL,
   SET_SAVED_REQUESTS_FILTERS,
-  SET_SELECTED_REQUESTS
+  SET_SELECTED_REQUESTS,
+  UPDATE_REQUEST,
+  UPDATE_REQUEST_CHAIN
 } from "./actionTypes";
 
 
@@ -74,6 +76,27 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     case DELETE_SAVED_REQUESTS_FILTER: {
       const {filterId} = action.payload;
       return {...state, savedRequestsFilters: state.savedRequestsFilters.filter(filter => filter.id !== filterId)}
+    }
+    case UPDATE_REQUEST: {
+      const {requestId, payload} = action.payload;
+      return {
+        ...state,
+        requests: {
+          ...state.requests,
+          results: state.requests.results.map(request =>
+            request.requestId === requestId
+              ? payload
+              : request
+          )
+        }
+      }
+    }
+    case UPDATE_REQUEST_CHAIN: {
+      const {requestId, payload} = action.payload;
+      return {
+        ...state,
+        requestsChain: state.requestsChain.map(request => request.requestId === requestId ? payload : request)
+      }
     }
     default:
       return state;

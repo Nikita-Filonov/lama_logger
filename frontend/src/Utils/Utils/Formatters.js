@@ -79,7 +79,15 @@ export const requestToCustomRequest = async (request) => {
 }
 
 export const customRequestToRequest = async (request) => {
-  const requestHeaders = request?.requestHeaders.map(({key, value}) => ({[key]: value}));
+  let requestHeaders = {};
+  for (let index = 0; index < request?.requestHeaders?.length; index++) {
+    const key = request?.requestHeaders[index].key;
+    const value = request?.requestHeaders[index].value;
+    if (request?.requestHeaders[index].include && (key.length > 0 || value.length > 0)) {
+      requestHeaders[key] = value;
+    }
+  }
+
   return {
     requestUrl: request?.requestUrl,
     requestHeaders,

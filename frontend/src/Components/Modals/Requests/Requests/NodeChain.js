@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useMemo} from 'react';
 import {SlideTransition} from "../../../../Utils/Utils/Common";
 import {connect} from "react-redux";
-import {setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
+import {setRequestChain, setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
 import {Container, Dialog, Grid} from "@mui/material";
 import NodeChainRequestsList from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestsList";
 import NodeChainRequestSection from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestSection";
@@ -10,14 +10,19 @@ import {useHistory} from "react-router-dom";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import NodeChainModalHeader from "../../../Blocks/Requests/Requests/NodeChain/NodeChainModalHeader";
 import {customRequestToRequest} from "../../../../Utils/Utils/Formatters";
+import _ from 'lodash';
 
 
 const NodeChain = (props) => {
-  const {requestsNodeChainModal, setRequestsNodeChainModal, project, requestsChain, requestChain} = props;
+  const {
+    requestsNodeChainModal,
+    setRequestsNodeChainModal,
+    project,
+    requestsChain,
+    requestChain,
+  } = props;
   const history = useHistory();
   const {getRequestsChain, updateRequest} = useRequests();
-
-  const onClose = () => setRequestsNodeChainModal(false);
 
   const totalDuration = useMemo(
     () => requestsChain.length > 0
@@ -65,7 +70,6 @@ const NodeChain = (props) => {
     <Dialog
       fullScreen
       open={requestsNodeChainModal}
-      onClose={onClose}
       TransitionComponent={SlideTransition}
     >
       <NodeChainModalHeader/>
@@ -79,12 +83,12 @@ const NodeChain = (props) => {
         {/*</Paper>*/}
 
         <Grid container spacing={2} sx={{mt: 0.1}}>
-          <Grid item xs={6}>
+          <Grid item xs={_.isEmpty(requestChain) ? 12 : 6}>
             <NodeChainRequestsList/>
           </Grid>
-          <Grid item xs={6}>
+          {!_.isEmpty(requestChain) && <Grid item xs={6}>
             <NodeChainRequestSection/>
-          </Grid>
+          </Grid>}
         </Grid>
       </Container>
     </Dialog>
@@ -101,6 +105,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
+    setRequestChain,
     setRequestsNodeChainModal
   },
 )(NodeChain);

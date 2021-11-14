@@ -5,12 +5,15 @@ import {HelpOutline} from "@mui/icons-material";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import {NodeChainReference} from "../../../../Modals/Requests/Requests/NodeChainReference";
 import {connect} from "react-redux";
-import {setRequestsNodeChainModal} from "../../../../../Redux/Requests/Requests/requestsActions";
+import {setRequestChain, setRequestsNodeChainModal} from "../../../../../Redux/Requests/Requests/requestsActions";
 
-const NodeChainModalHeader = ({requestsChain, setRequestsNodeChainModal}) => {
+const NodeChainModalHeader = ({requestsChain, setRequestsNodeChainModal, setRequestChain}) => {
   const [nodeChainRefModal, setNodeChainRefModal] = useState(!localStorage.getItem('nodeChainRefModal'));
 
-  const onClose = () => setRequestsNodeChainModal(false);
+  const onClose = () => {
+    setRequestsNodeChainModal(false);
+    setRequestChain({});
+  };
   const onRef = () => setNodeChainRefModal(true);
   const title = useMemo(() => requestsChain.length > 0 ? requestsChain[0]?.node : 'Unknown', [requestsChain]);
 
@@ -53,6 +56,7 @@ const getState = (state) => ({
 export default connect(
   getState,
   {
+    setRequestChain,
     setRequestsNodeChainModal
   },
 )(NodeChainModalHeader);
