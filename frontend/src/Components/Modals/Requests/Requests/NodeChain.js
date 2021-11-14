@@ -4,35 +4,20 @@ import CloseIcon from '@mui/icons-material/Close';
 import {SlideTransition} from "../../../../Utils/Utils/Common";
 import {connect} from "react-redux";
 import {setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  AppBar,
-  Button,
-  Chip,
-  Container,
-  Dialog,
-  Divider,
-  IconButton,
-  List,
-  Paper,
-  Toolbar,
-  Tooltip,
-  Typography
-} from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {METHOD_COLORS} from "../../../../Utils/Constants";
-import Box from "@mui/material/Box";
-import {getStatusCodeColor} from "../../../../Utils/Utils/Formatters";
-import {RequestsTableStyles} from "../../../../Styles/Blocks";
+import {AppBar, Container, Dialog, Grid, IconButton, Toolbar, Tooltip, Typography} from "@mui/material";
 import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
+import RequestsList from "../../../Blocks/Requests/Requests/NodeChain/RequestsList";
+import {RequestSection} from "../../../Blocks/Requests/CustomRequests/Request/RequestSection";
 
 const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsChain}) => {
-  const classes = RequestsTableStyles();
-
   const onClose = () => setRequestsNodeChainModal(false);
   const title = useMemo(() => requestsChain.length > 0 ? requestsChain[0]?.node : 'Unknown', [requestsChain]);
+  const totalDuration = useMemo(
+    () => requestsChain.length > 0
+      ? requestsChain?.reduce((prev, cur) => ({duration: prev.duration + cur.duration}))
+      : 0,
+    [requestsChain]
+  );
 
   return (
     <Dialog
@@ -54,9 +39,6 @@ const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsC
           <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
             Node: {title}
           </Typography>
-          <Button autoFocus color="inherit" onClick={onClose}>
-            save
-          </Button>
           <Tooltip title={'Run this node'} arrow placement={'left'}>
             <IconButton>
               <PlayArrowOutlinedIcon/>
@@ -65,36 +47,22 @@ const NodeChain = ({requestsNodeChainModal, setRequestsNodeChainModal, requestsC
         </Toolbar>
       </AppBar>
       <Container maxWidth={'xl'}>
-        <Paper elevation={3} sx={{p: 2, mt: 2}}>
-          <Typography>Total requests: {requestsChain?.length}</Typography>
-        </Paper>
-        <List dense className={classes.nodeChainListContainer}>
-          {requestsChain?.map((request, index) =>
-            <Accordion key={index}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
-              >
-                <Typography color={METHOD_COLORS[request?.method]}>{request?.method}</Typography>
-                <Typography sx={{ml: 2}}>{request?.requestUrl}</Typography>
-                <Box sx={{flexGrow: 1}}/>
-                <Chip
-                  size={'small'}
-                  sx={{backgroundColor: getStatusCodeColor(request?.statusCode), mr: 2}}
-                  label={request?.statusCode}
-                />
-              </AccordionSummary>
-              <Divider/>
-              <AccordionDetails>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  malesuada lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          )}
-        </List>
+        {/*<Paper elevation={3} sx={{p: 2, mt: 2, display: 'flex', alignItems: 'center'}}>*/}
+        {/*  <Typography>Total requests: {requestsChain?.length}</Typography>*/}
+        {/*  <Typography sx={{ml: 3}}>*/}
+        {/*    <AccessTime sx={{mr: 1}} fontSize={'small'}/>*/}
+        {/*    Total duration: {getDuration(totalDuration?.duration)} milliseconds*/}
+        {/*  </Typography>*/}
+        {/*</Paper>*/}
+
+        <Grid container spacing={2} sx={{mt: 0.1}}>
+          <Grid item xs={6}>
+            <RequestsList/>
+          </Grid>
+          <Grid item xs={6}>
+            <RequestSection/>
+          </Grid>
+        </Grid>
       </Container>
     </Dialog>
   );
