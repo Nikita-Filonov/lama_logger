@@ -45,7 +45,7 @@ const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
       >
         <Grid container spacing={2}>
           <Grid item xs={1.5} md={1.5} lg={1.5} xl={1.5} sm={1.5}>
-            <Typography color={METHOD_COLORS[request?.method]} sx={{mr: 2}}>{request?.method}</Typography>
+            <Typography color={METHOD_COLORS[request?.method]} sx={{ml: 1}}>{request?.method}</Typography>
           </Grid>
           <Grid item xs={9.5} md={9.5} lg={9.5} xl={9.5} sm={9.5}>
             <Typography style={common.ellipsisText}>{request?.requestUrl}</Typography>
