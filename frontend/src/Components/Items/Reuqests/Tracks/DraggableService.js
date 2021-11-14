@@ -16,11 +16,12 @@ const DraggableService = (props) => {
 
   const onCreateTrack = () => {
     setCreateTrackModal(true);
-    setService(service)
+    setService(service);
   }
 
   const onTrack = (track) => {
     setTrack(track);
+    setService(service);
     history.push(`/projects/${project.id}/tracks/${track.id}`);
   }
 
