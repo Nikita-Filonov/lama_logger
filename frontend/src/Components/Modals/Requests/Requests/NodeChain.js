@@ -1,24 +1,23 @@
 import * as React from 'react';
 import {useEffect, useMemo} from 'react';
-import CloseIcon from '@mui/icons-material/Close';
 import {SlideTransition} from "../../../../Utils/Utils/Common";
 import {connect} from "react-redux";
 import {setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
-import {AppBar, Container, Dialog, Grid, IconButton, Toolbar, Tooltip, Typography} from "@mui/material";
-import PlayArrowOutlinedIcon from '@mui/icons-material/PlayArrowOutlined';
+import {Container, Dialog, Grid} from "@mui/material";
 import NodeChainRequestsList from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestsList";
 import NodeChainRequestSection from "../../../Blocks/Requests/Requests/NodeChain/NodeChainRequestSection";
 import {useHistory} from "react-router-dom";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
+import NodeChainModalHeader from "../../../Blocks/Requests/Requests/NodeChain/NodeChainModalHeader";
 
 
 const NodeChain = (props) => {
-  const {requestsNodeChainModal, setRequestsNodeChainModal, project, requestsChain} = props;
+  const {requestsNodeChainModal, setRequestsNodeChainModal, project, requestsChain, requestChain} = props;
   const history = useHistory();
   const {getRequestsChain} = useRequests();
 
   const onClose = () => setRequestsNodeChainModal(false);
-  const title = useMemo(() => requestsChain.length > 0 ? requestsChain[0]?.node : 'Unknown', [requestsChain]);
+
   const totalDuration = useMemo(
     () => requestsChain.length > 0
       ? requestsChain?.reduce((prev, cur) => ({duration: prev.duration + cur.duration}))
@@ -48,7 +47,14 @@ const NodeChain = (props) => {
     }
 
     history.replace({search: queryParams.toString()});
-  }, [requestsNodeChainModal])
+  }, [requestsNodeChainModal]);
+
+  useEffect(() => {
+    const timeout = setTimeout(async () => (project.id && requestChain?.requestId) && {},
+      700
+    );
+    return () => clearTimeout(timeout);
+  }, [project.id, requestChain])
 
   return (
     <Dialog
@@ -57,26 +63,7 @@ const NodeChain = (props) => {
       onClose={onClose}
       TransitionComponent={SlideTransition}
     >
-      <AppBar sx={{position: 'relative'}}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={onClose}
-            aria-label="close"
-          >
-            <CloseIcon/>
-          </IconButton>
-          <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
-            Node: {title}
-          </Typography>
-          <Tooltip title={'Run this node'} arrow placement={'left'}>
-            <IconButton>
-              <PlayArrowOutlinedIcon/>
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
-      </AppBar>
+      <NodeChainModalHeader/>
       <Container maxWidth={'xl'}>
         {/*<Paper elevation={3} sx={{p: 2, mt: 2, display: 'flex', alignItems: 'center'}}>*/}
         {/*  <Typography>Total requests: {requestsChain?.length}</Typography>*/}
@@ -101,6 +88,7 @@ const NodeChain = (props) => {
 
 const getState = (state) => ({
   project: state.projects.project,
+  requestChain: state.requests.requestChain,
   requestsChain: state.requests.requestsChain,
   requestsNodeChainModal: state.requests.requestsNodeChainModal
 })
