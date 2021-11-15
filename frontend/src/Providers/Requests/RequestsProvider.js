@@ -73,6 +73,13 @@ const RequestsProvider = ({children, store}) => {
       store.dispatch({type: UPDATE_REQUEST, payload: {requestId, payload: json}});
     }
     error && setAlert(json);
+  };
+
+  const sendRequest = async (projectId, requestId) => {
+    setRequest(true);
+    const {json, error} = await post(projectsApi + `${projectId}/custom-requests/${requestId}/send/`);
+    console.log(json, error);
+    setRequest(false);
   }
 
   const getRequestsFilters = async (projectId) => {
@@ -110,6 +117,7 @@ const RequestsProvider = ({children, store}) => {
         updateRequest,
         deleteAllRequests,
         getRequestsChain,
+        sendRequest,
         getRequestsFilters,
         createRequestsFilter,
         deleteRequestsFilter,
