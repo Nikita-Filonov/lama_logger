@@ -11,7 +11,7 @@ from rest_framework.throttling import UserRateThrottle
 from core.calls.helpers.requests.custom_request import send_custom_request
 from core.calls.models import Request
 from core.calls.permissions.requests import IsRequestActionAllowed
-from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
+from core.calls.serializers.requests import RequestsSerializer, RequestSerializer, CustomRequestSerializer
 from core.projects.models import Project
 from utils.exeptions import BadRequest, NotFound
 
@@ -32,7 +32,7 @@ class CustomRequestsApi(views.APIView, LimitOffsetPagination):
     def post(self, request, project_id):
         project = Project.objects.get(id=project_id)
         context = {'user': request.user, 'project': project}
-        serializer = RequestSerializer(data=request.data, context=context)
+        serializer = CustomRequestSerializer(data=request.data, context=context)
         if serializer.is_valid():
             created_request = serializer.save()
 

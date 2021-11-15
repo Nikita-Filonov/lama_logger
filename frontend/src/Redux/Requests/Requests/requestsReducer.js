@@ -88,7 +88,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
               ? payload
               : request
           )
-        }
+        },
+        request: requestId === state.request?.requestId ? payload : state.request
       }
     }
     case UPDATE_REQUEST_CHAIN: {

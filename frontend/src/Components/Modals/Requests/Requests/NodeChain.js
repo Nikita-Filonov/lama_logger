@@ -9,7 +9,6 @@ import NodeChainRequestSection from "../../../Blocks/Requests/Requests/NodeChain
 import {useHistory} from "react-router-dom";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import NodeChainModalHeader from "../../../Blocks/Requests/Requests/NodeChain/NodeChainModalHeader";
-import {customRequestToRequest} from "../../../../Utils/Utils/Formatters";
 import _ from 'lodash';
 
 
@@ -57,10 +56,7 @@ const NodeChain = (props) => {
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-        if (project?.id && requestChain?.requestId) {
-          const payload = await customRequestToRequest(requestChain);
-          await updateRequest(project?.id, requestChain?.requestId, {...requestChain, ...payload});
-        }
+        (project?.id && requestChain?.requestId) && await updateRequest(project?.id, requestChain?.requestId, requestChain);
       }, 700
     );
     return () => clearTimeout(timeout);

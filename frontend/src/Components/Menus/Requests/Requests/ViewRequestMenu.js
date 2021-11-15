@@ -19,9 +19,9 @@ import {copyRequestToCurl} from "../../../../Utils/Api/Curl";
 import {usePermissions} from "../../../../Providers/Users/PermissionsProvider";
 import {common} from "../../../../Styles/Blocks";
 import {REQUEST} from "../../../../Utils/Permissions/Requests";
-import {requestToCustomRequest} from "../../../../Utils/Utils/Formatters";
 import PlaylistPlayOutlinedIcon from '@mui/icons-material/PlaylistPlayOutlined';
 import {setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
+import {requestToCustomRequest} from "../../../../Utils/Utils/Formatters";
 
 const ViewRequestMenu = ({project, request, setConfirmAction, setRequestsNodeChainModal}) => {
   const history = useHistory();

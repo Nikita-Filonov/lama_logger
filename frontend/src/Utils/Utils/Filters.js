@@ -24,16 +24,8 @@ export const makeRequestsFilters = (filters) => {
   const statusCodes = Object.values(filters?.statusCodes).flat()
     .sort((a, b) => a - b);
   const body = filters?.body;
-  const headers = {};
-  for (let i = 0; i < filters?.headers?.length; i++) {
-    const key = filters?.headers[i].key;
-    const value = filters?.headers[i].value;
-    if (key && value) {
-      headers[key] = value;
-    }
-  }
 
-  const headersFilters = {requestHeaders__contains: headers};
+  const headersFilters = {requestHeaders__contains: filters?.headers};
   const responseBodyFilters = body?.responseBody ? {responseBody__contains: body?.responseBody} : {};
   const requestBodyFilters = body?.requestBody ? {requestBody__contains: body?.requestBody} : {}
   const domainFilters = filters?.domain ? {requestUrl__icontains: filters?.domain} : {};

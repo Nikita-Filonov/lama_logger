@@ -13,7 +13,7 @@ import {
 import {METHOD_COLORS} from "../../../../Utils/Constants";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import {common, tabsStyles} from "../../../../Styles/Blocks";
-import {getStatusCodeColor, requestToCustomRequest} from "../../../../Utils/Utils/Formatters";
+import {getStatusCodeColor} from "../../../../Utils/Utils/Formatters";
 import {TabPanel} from "../../../Blocks/Common/Navigation/TabPanel";
 import {Headers} from "../../../Blocks/Requests/Requests/ViewRequest/Headers";
 import {Body} from "../../../Blocks/Requests/Requests/ViewRequest/Body";
@@ -30,10 +30,7 @@ const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
   const onResponseTab = (event, newValue) => setResponseTab(newValue);
   const onOpen = () => setOpen(!open);
 
-  const onSelectRequest = async () => {
-    const payload = await requestToCustomRequest(request);
-    setRequestChain({...request, ...payload, isCustom: false});
-  }
+  const onSelectRequest = async () => setRequestChain({...request, isCustom: false});
 
   return (
     <React.Fragment>

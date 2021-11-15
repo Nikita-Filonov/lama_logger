@@ -41,12 +41,16 @@ const ViewRequestAccordion = ({request, viewMode}) => {
       <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
         <Tab sx={tabsStyles} label="Headers"  {...a11yProps(0)} />
         <Tab sx={tabsStyles} label="Body" {...a11yProps(1)} />
+        <Tab sx={tabsStyles} label="Params" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={requestTab} index={0}>
         <Headers headers={request?.requestHeaders}/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
         <Body responseHeaders={request?.requestHeaders} body={request?.requestBody}/>
+      </TabPanel>
+      <TabPanel value={requestTab} index={2}>
+        <Headers headers={request?.queryParams}/>
       </TabPanel>
 
       <Typography variant={'subtitle1'} gutterBottom>Response</Typography>

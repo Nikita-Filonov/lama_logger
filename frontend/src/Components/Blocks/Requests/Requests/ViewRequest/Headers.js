@@ -4,7 +4,7 @@ import {ViewRequestStyles} from "../../../../../Styles/Blocks";
 
 
 export const Headers = ({headers}) => {
-  const classes = ViewRequestStyles()
+  const classes = ViewRequestStyles();
 
   return (
     <TableContainer className={classes.headersContainer}>
@@ -16,14 +16,14 @@ export const Headers = ({headers}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(headers || {})?.map((key, index) => (
+          {headers?.map(({key, value}, index) => (
             <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
               <TableCell component="th" scope="row">{key}</TableCell>
               <TableCell align="left" style={{
                 wordWrap: 'break-word',
                 whiteSpace: 'pre-line',
                 maxWidth: 300
-              }}>{headers[key]}</TableCell>
+              }}>{value}</TableCell>
             </TableRow>
           ))}
         </TableBody>

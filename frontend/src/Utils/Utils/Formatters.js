@@ -1,5 +1,4 @@
 import moment from "moment";
-import {parseQueryFromUrl} from "./Common";
 
 export const getStatusCodeColor = (statusCode) => {
   if (100 <= statusCode && statusCode <= 299) {
@@ -16,14 +15,9 @@ export const bodyTypeDetect = (responseHeaders, body = null) => {
     return 'text'
   }
 
-  let key, keys = Object.keys(responseHeaders);
-  let n = keys.length;
-  const lowerResponseHeaders = {};
-  while (n--) {
-    key = keys[n];
-    lowerResponseHeaders[key.toLowerCase()] = responseHeaders[key];
-  }
-  const contentType = lowerResponseHeaders['content-type'];
+  const contentType = responseHeaders.find(header =>
+    ['content-type', 'Content-Type', 'Content-type'].includes(header.key)).value;
+
   if (contentType?.startsWith('application/json')) {
     return 'json'
   }
@@ -61,37 +55,12 @@ export const toCalendarWithoutTime = (date) =>
   })
 
 export const requestToCustomRequest = async (request) => {
-  const requestHeaders = Object.keys(request?.requestHeaders).map(key => ({
-    key: key,
-    value: request?.requestHeaders[key],
-    include: true
-  }));
-  const queryObject = await parseQueryFromUrl(request?.requestUrl);
-  const queryParams = Object.keys(queryObject).map(key => ({key: key, value: queryObject[key], include: true}));
   return {
     requestUrl: request?.requestUrl,
-    requestHeaders,
-    queryParams,
+    requestHeaders: request?.requestHeaders,
+    queryParams: request?.queryParams,
     requestBody: request?.requestBody,
     method: request?.method,
     isCustom: true
-  };
-}
-
-export const customRequestToRequest = async (request) => {
-  let requestHeaders = {};
-  for (let index = 0; index < request?.requestHeaders?.length; index++) {
-    const key = request?.requestHeaders[index].key;
-    const value = request?.requestHeaders[index].value;
-    if (request?.requestHeaders[index].include && (key.length > 0 || value.length > 0)) {
-      requestHeaders[key] = value;
-    }
-  }
-
-  return {
-    requestUrl: request?.requestUrl,
-    requestHeaders,
-    requestBody: request?.requestBody,
-    method: request?.method,
   };
 }
