@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import {TextField} from "@mui/material";
 import {objectToQuery} from "../../../../../Utils/Utils/Common";
+import {headersToObject} from "../../../../../Utils/Utils/Formatters";
 
 export const RequestUrl = ({customRequest, setCustomRequest}) => {
 
@@ -9,14 +10,7 @@ export const RequestUrl = ({customRequest, setCustomRequest}) => {
   }, [customRequest?.queryParams]);
 
   const queryObjectToString = useCallback(async () => {
-    let queryObject = {};
-    for (let i = 0; i < customRequest?.queryParams?.length; i++) {
-      const key = customRequest?.queryParams[i].key;
-      const value = customRequest?.queryParams[i].value;
-      if (customRequest?.queryParams[i].include && (key.length > 0 || value.length > 0)) {
-        queryObject[key] = value;
-      }
-    }
+    const queryObject = await headersToObject(customRequest?.queryParams);
 
     const currentUrl = customRequest?.requestUrl.split('?')[0];
     setCustomRequest({...customRequest, requestUrl: currentUrl + await objectToQuery(queryObject)});

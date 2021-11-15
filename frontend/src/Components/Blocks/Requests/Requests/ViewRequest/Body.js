@@ -2,6 +2,7 @@ import React, {useMemo} from "react";
 import {Typography, useTheme} from "@mui/material";
 import ReactJson from "react-json-view";
 import {bodyTypeDetect} from "../../../../../Utils/Utils/Formatters";
+import {isValidJson} from "../../../../../Utils/Utils/Validators";
 
 export const Body = ({body, responseHeaders}) => {
   const {palette} = useTheme();
@@ -11,7 +12,7 @@ export const Body = ({body, responseHeaders}) => {
   switch (bodyTypeDetect(responseHeaders, body)) {
     case 'html': {
       return <div style={{backgroundColor: backgroundText, padding: 10}}>
-        <iframe srcDoc={JSON.parse(body)} width={'100%'} height={300}/>
+        <iframe srcDoc={isValidJson(body) && JSON.parse(body)} width={'100%'} height={300}/>
       </div>
     }
     case 'json':

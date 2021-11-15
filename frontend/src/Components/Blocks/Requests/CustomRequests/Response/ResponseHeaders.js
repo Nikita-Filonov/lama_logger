@@ -11,7 +11,7 @@ export const ResponseHeaders = () => {
 
   return (
     <div className={classes.responseHeadersContainer}>
-      {Object.keys(responseHeaders).map((key, index) =>
+      {responseHeaders?.map(({key, value}, index) =>
         <div className={'d-flex align-items-center mt-2'} key={index}>
           <TextField
             contentEditable={false}
@@ -24,7 +24,7 @@ export const ResponseHeaders = () => {
           />
           <TextField
             contentEditable={false}
-            value={responseHeaders[key]}
+            value={value}
             fullWidth
             variant={'standard'}
             size={'small'}

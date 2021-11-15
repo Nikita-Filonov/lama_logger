@@ -1,3 +1,5 @@
+import {headersToObject} from "../Utils/Formatters";
+
 /**
  * see https://fetch.spec.whatwg.org/#methods
  *
@@ -131,8 +133,10 @@ export const fetchToCurl = async (requestInfo, requestInit) => {
 }
 
 export const copyRequestToCurl = async (request) => {
+  const headers = await headersToObject(request?.requestHeaders);
+
   const options = {
-    headers: request?.requestHeaders,
+    headers,
     method: request?.method,
     body: request?.requestBody
   };

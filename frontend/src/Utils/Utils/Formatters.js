@@ -64,3 +64,15 @@ export const requestToCustomRequest = async (request) => {
     isCustom: true
   };
 }
+
+export const headersToObject = async (headers: Array) => {
+  let safeHeaders = {};
+  for (let index = 0; index < headers?.length; index++) {
+    const key = headers[index].key;
+    const value = headers[index].value;
+    if (headers[index].include && (key.length > 0 || value.length > 0)) {
+      safeHeaders[key] = value;
+    }
+  }
+  return safeHeaders;
+}

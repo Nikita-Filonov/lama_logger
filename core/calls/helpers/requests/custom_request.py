@@ -1,5 +1,8 @@
+import json
+
 from requests import request as lib_request
 
+from core.calls.helpers.utils import to_header_payload
 from core.calls.models import Request
 from utils.exeptions import BadRequest
 
@@ -22,8 +25,8 @@ def send_custom_request(request: Request):
         raise BadRequest('Error happened while sending request', level='warning', data=str(error))
 
     return {
-        'responseHeaders': response.headers,
-        'responseBody': response.text,
+        'responseHeaders': to_header_payload(response.headers),
+        'responseBody': json.dumps(response.text),
         'statusCode': response.status_code,
         'duration': response.elapsed.total_seconds()
     }
