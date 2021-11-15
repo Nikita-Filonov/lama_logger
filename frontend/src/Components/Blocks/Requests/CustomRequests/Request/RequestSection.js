@@ -9,14 +9,21 @@ import RequestBody from "./RequestBody";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
 import {RequestParams} from "./RequestParams";
 import {RequestUrl} from "./RequestUrl";
-import RequestSend from "./RequestSend";
+import {RequestSend} from "./RequestSend";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
+import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
 
-const RequestSection = ({customRequest, setCustomRequest}) => {
+const RequestSection = ({project, customRequest, setCustomRequest}) => {
+  const {request, sendCustomRequest, createCustomRequestsHistory} = useCustomRequests();
   const [requestTab, setRequestTab] = useState(0);
 
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
+
+  const sendRequest = async () => {
+    await sendCustomRequest(project.id, customRequest.requestId)
+    await createCustomRequestsHistory(project.id, customRequest);
+  }
 
   return (
     <Paper sx={{p: 1}} elevation={3}>
@@ -29,7 +36,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
       <div className={'d-flex'}>
         <MethodSelect customRequest={customRequest} setCustomRequest={setCustomRequest}/>
         <RequestUrl customRequest={customRequest} setCustomRequest={setCustomRequest}/>
-        <RequestSend/>
+        <RequestSend request={request} sendRequest={sendRequest}/>
       </div>
       <Divider sx={{mt: 2}}/>
       <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'} className={'mt-3'}>
@@ -51,6 +58,7 @@ const RequestSection = ({customRequest, setCustomRequest}) => {
 }
 
 const getState = (state) => ({
+  project: state.projects.project,
   customRequest: state.customRequests.customRequest,
 })
 
