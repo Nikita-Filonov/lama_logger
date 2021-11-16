@@ -4,6 +4,7 @@ from requests import request as lib_request
 
 from core.calls.helpers.utils import to_header_payload
 from core.calls.models import Request
+from core.calls.serializers.requests import RequestsSerializer
 from utils.exeptions import BadRequest
 
 
@@ -24,7 +25,9 @@ def send_custom_request(request: Request):
     except Exception as error:
         raise BadRequest('Error happened while sending request', level='warning', data=str(error))
 
+    serializer = RequestsSerializer(request, many=False)
     return {
+        **serializer.data,
         'responseHeaders': to_header_payload(response.headers),
         'responseBody': json.dumps(response.text),
         'statusCode': response.status_code,

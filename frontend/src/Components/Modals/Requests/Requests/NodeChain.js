@@ -70,14 +70,6 @@ const NodeChain = (props) => {
     >
       <NodeChainModalHeader/>
       <Container maxWidth={'xl'}>
-        {/*<Paper elevation={3} sx={{p: 2, mt: 2, display: 'flex', alignItems: 'center'}}>*/}
-        {/*  <Typography>Total requests: {requestsChain?.length}</Typography>*/}
-        {/*  <Typography sx={{ml: 3}}>*/}
-        {/*    <AccessTime sx={{mr: 1}} fontSize={'small'}/>*/}
-        {/*    Total duration: {getDuration(totalDuration?.duration)} milliseconds*/}
-        {/*  </Typography>*/}
-        {/*</Paper>*/}
-
         <Grid container spacing={2} sx={{mt: 0.1}}>
           <Grid item xs={_.isEmpty(requestChain) ? 12 : 6}>
             <NodeChainRequestsList/>

@@ -6,15 +6,19 @@ import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import {NodeChainReference} from "../../../../Modals/Requests/Requests/NodeChainReference";
 import {connect} from "react-redux";
 import {setRequestChain, setRequestsNodeChainModal} from "../../../../../Redux/Requests/Requests/requestsActions";
+import RunNodeChain from "../../../../Modals/Requests/Requests/RunNodeChain";
 
-const NodeChainModalHeader = ({requestsChain, setRequestsNodeChainModal, setRequestChain}) => {
+const NodeChainModalHeader = (props) => {
+  const {requestsChain, setRequestsNodeChainModal, setRequestChain} = props;
   const [nodeChainRefModal, setNodeChainRefModal] = useState(!localStorage.getItem('nodeChainRefModal'));
+  const [runNodeChainModal, setRunNodeChainModal] = useState(false);
 
   const onClose = () => {
     setRequestsNodeChainModal(false);
     setRequestChain({});
   };
   const onRef = () => setNodeChainRefModal(true);
+  const onRun = () => setRunNodeChainModal(true);
   const title = useMemo(() => requestsChain.length > 0 ? requestsChain[0]?.node : 'Unknown', [requestsChain]);
 
   return (
@@ -38,12 +42,13 @@ const NodeChainModalHeader = ({requestsChain, setRequestsNodeChainModal, setRequ
             </IconButton>
           </Tooltip>
           <Tooltip title={'Run this node'} arrow placement={'bottom'}>
-            <IconButton>
+            <IconButton onClick={onRun}>
               <PlayArrowOutlinedIcon/>
             </IconButton>
           </Tooltip>
         </Toolbar>
       </AppBar>
+      <RunNodeChain modal={runNodeChainModal} setModal={setRunNodeChainModal}/>
       <NodeChainReference modal={nodeChainRefModal} setModal={setNodeChainRefModal}/>
     </React.Fragment>
   )

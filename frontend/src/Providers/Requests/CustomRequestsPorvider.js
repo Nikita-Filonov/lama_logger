@@ -78,7 +78,7 @@ const CustomRequestsProvider = ({children, store}) => {
     error && setAlert(json);
 
     if (!error) {
-      store.dispatch({type: SET_CUSTOM_REQUEST, payload: {...customRequest, ...json}});
+      store.dispatch({type: SET_CUSTOM_REQUEST, payload: json});
       store.dispatch({type: SET_CUSTOM_REQUEST_ERROR, payload: INITIAL_CUSTOM_REQUESTS.customRequestError});
     }
 

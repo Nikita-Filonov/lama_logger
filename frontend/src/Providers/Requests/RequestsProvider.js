@@ -4,7 +4,6 @@ import {
   DELETE_REQUESTS,
   DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUEST,
-  SET_REQUEST_CHAIN,
   SET_REQUESTS,
   SET_REQUESTS_CHAIN,
   SET_SAVED_REQUESTS_FILTERS,
@@ -27,7 +26,6 @@ const RequestsProvider = ({children, store}) => {
   const [request, setRequest] = useState(false);
 
   const selectedRequest = useSelector(state => state.requests.request);
-  const requestChain = useSelector(state => state.requests.requestChain);
 
   const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
     setLoad(state => state);
@@ -77,17 +75,15 @@ const RequestsProvider = ({children, store}) => {
     error && setAlert(json);
   };
 
-  const sendRequest = async (projectId, requestId) => {
-    setRequest(true);
+  const sendRequest = async (projectId, requestId, isLazy = false) => {
+    !isLazy && setRequest(true);
     const {json, error} = await post(projectsApi + `${projectId}/custom-requests/${requestId}/send/`);
 
     if (!error) {
-      const payload = {...requestChain, ...json};
-      store.dispatch({type: SET_REQUEST_CHAIN, payload});
-      store.dispatch({type: UPDATE_REQUEST_CHAIN, payload: {requestId, payload}});
-      store.dispatch({type: UPDATE_REQUEST, payload: {requestId, payload}});
+      store.dispatch({type: UPDATE_REQUEST_CHAIN, payload: {requestId, payload: json}});
+      store.dispatch({type: UPDATE_REQUEST, payload: {requestId, payload: json}});
     }
-    setRequest(false);
+    !isLazy && setRequest(false);
   }
 
   const getRequestsFilters = async (projectId) => {
