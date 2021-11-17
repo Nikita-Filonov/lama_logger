@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {SlideTransition} from "../../../../Utils/Utils/Common";
 import {connect} from "react-redux";
 import {setRequestChain, setRequestsNodeChainModal} from "../../../../Redux/Requests/Requests/requestsActions";
@@ -23,12 +23,12 @@ const NodeChain = (props) => {
   const history = useHistory();
   const {getRequestsChain, updateRequest} = useRequests();
 
-  const totalDuration = useMemo(
-    () => requestsChain.length > 0
-      ? requestsChain?.reduce((prev, cur) => ({duration: prev.duration + cur.duration}))
-      : 0,
-    [requestsChain]
-  );
+  // const totalDuration = useMemo(
+  //   () => requestsChain.length > 0
+  //     ? requestsChain?.reduce((prev, cur) => ({duration: prev.duration + cur.duration}))
+  //     : 0,
+  //   [requestsChain]
+  // );
 
   useEffect(() => {
     (async () => {

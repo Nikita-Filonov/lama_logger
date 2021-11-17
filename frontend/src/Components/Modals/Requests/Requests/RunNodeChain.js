@@ -28,7 +28,7 @@ const RunNodeChain = ({modal, setModal, project, requestsChain}) => {
       const requestId = requestsChain[index]?.requestId;
       selectedRequests.includes(requestId) && await sendRequest(project?.id, requestId, true);
     }
-    setAlert({message: `Successfully run ${requestsChain?.length} requests`, level: 'success'});
+    setAlert({message: `Successfully run ${selectedRequests?.length} requests`, level: 'success'});
     setRequest(false);
     onClose();
   }
