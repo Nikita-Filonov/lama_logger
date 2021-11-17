@@ -26,8 +26,9 @@ from utils.helpers.common import delete_model
 def create_request(request, project_id):
     project = Project.objects.get(id=project_id)
 
-    analyze_request(project_id, request.data)
-    should_create_request = filter_request(project, request.data)
+    payload = request.data.copy()
+    analyze_request(project_id, payload)
+    should_create_request = filter_request(project, payload)
     if not should_create_request:
         return Response(status=status.HTTP_204_NO_CONTENT)
 
