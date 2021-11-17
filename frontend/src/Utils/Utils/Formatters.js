@@ -18,6 +18,10 @@ export const bodyTypeDetect = (responseHeaders, body = null) => {
   const contentType = responseHeaders.find(header =>
     ['content-type', 'Content-Type', 'Content-type'].includes(header.key)).value;
 
+  if (!contentType) {
+    return 'text'
+  }
+
   if (contentType?.startsWith('application/json')) {
     return 'json'
   }
