@@ -10,13 +10,24 @@ import {RequestsTableStyles} from "../../../../Styles/Blocks";
 import ViewRequestAccordion from "../../../Blocks/Requests/Requests/ViewRequest/ViewRequestAccordion";
 import {setRequest, setSelectedRequests} from "../../../../Redux/Requests/Requests/requestsActions";
 import {METHOD_COLORS} from "../../../../Utils/Constants";
+import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 
 const RequestRow = (props) => {
-  const {request, requests, storeRequest, setRequest, viewMode, selectedRequests, setSelectedRequests} = props;
+  const {
+    request,
+    project,
+    requests,
+    storeRequest,
+    setRequest,
+    viewMode,
+    selectedRequests,
+    setSelectedRequests
+  } = props;
   const classes = RequestsTableStyles()
-  const rowRef = useRef(null)
+  const rowRef = useRef(null);
   const history = useHistory();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const {getRequest} = useRequests();
 
   const isSelected = useMemo(
     () => selectedRequests.indexOf(request.requestId) !== -1,
@@ -33,16 +44,19 @@ const RequestRow = (props) => {
   }
 
   useEffect(() => {
-    if (requests?.length === 0) {
-      return
-    }
+    (async () => {
+      if (requests?.length === 0) {
+        return
+      }
 
-    const query = new URLSearchParams(history.location.search);
-    const requestId = query.get('requestId');
-    if (requestId && requestId === request.requestId) {
-      viewMode.requests === 'accordion' && setOpen(true);
-      rowRef.current.scrollIntoView({behavior: 'smooth'});
-    }
+      const query = new URLSearchParams(history.location.search);
+      const requestId = query.get('requestId');
+      if (requestId && requestId === request.requestId) {
+        await getRequest(project?.id, requestId);
+        viewMode.requests === 'accordion' && setOpen(true);
+        rowRef.current.scrollIntoView({behavior: 'smooth'});
+      }
+    })()
   }, [])
 
   return (
@@ -92,6 +106,7 @@ const RequestRow = (props) => {
 
 const getState = (state) => ({
   viewMode: state.users.viewMode,
+  project: state.projects.project,
   requests: state.requests.requests,
   storeRequest: state.requests.request,
   selectedRequests: state.requests.selectedRequests

@@ -96,7 +96,10 @@ class RequestApi(views.APIView):
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id, request_id):
-        db_request = Request.objects.get(requestId=request_id)
+        try:
+            db_request = Request.objects.get(requestId=request_id)
+        except Request.DoesNotExist:
+            raise NotFound('Request was not found on the server')
         return Response(RequestsSerializer(db_request, many=False).data)
 
     def patch(self, request, project_id, request_id):

@@ -35,6 +35,12 @@ const RequestsProvider = ({children, store}) => {
     setLoad(false);
   }
 
+  const getRequest = async (projectId, requestId) => {
+    const {json, error} = await get(projectsApi + `${projectId}/requests/${requestId}/`);
+    !error && store.dispatch({type: SET_REQUEST, payload: json});
+    error && setAlert(json);
+  }
+
   const deleteRequests = async (projectId, requests) => {
     store.dispatch({type: DELETE_REQUESTS, payload: requests});
     requests.some(requestId => requestId === selectedRequest?.requestId) && store.dispatch({
@@ -115,6 +121,7 @@ const RequestsProvider = ({children, store}) => {
       value={{
         load,
         request,
+        getRequest,
         getRequests,
         deleteRequests,
         deleteRequest,
