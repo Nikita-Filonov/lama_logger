@@ -13,8 +13,8 @@ from utils.seeders.utils import METHODS, random_date, ACTIONS
 
 def seed_stats():
     project_id = os.environ.get('PROJECT_ID', 1)
-    start = datetime.strptime('1/10/2021 1:30 PM', '%d/%m/%Y %I:%M %p')
-    end = datetime.strptime('21/10/2021 1:30 PM', '%d/%m/%Y %I:%M %p')
+    start = datetime.strptime('21/10/2021 1:30 PM', '%d/%m/%Y %I:%M %p')
+    end = datetime.strptime('18/11/2021 1:30 PM', '%d/%m/%Y %I:%M %p')
     payload = [{
         'method': random.choice(METHODS),
         'statusCode': random.randint(200, 504),
