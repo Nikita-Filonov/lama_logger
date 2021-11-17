@@ -21,6 +21,7 @@ import Divider from "@mui/material/Divider";
 import {connect} from "react-redux";
 import {setRequestChain} from "../../../../Redux/Requests/Requests/requestsActions";
 
+// TODO сдлеать отображение информации по реквестам
 const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
   const [open, setOpen] = useState(false);
   const [requestTab, setRequestTab] = useState(0);

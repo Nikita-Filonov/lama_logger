@@ -19,6 +19,7 @@ def seed_stats():
         'method': random.choice(METHODS),
         'statusCode': random.randint(200, 504),
         'created': random_date(start, end),
+        'duration': random.uniform(0.001, 0.5),
         'action': random.choice(ACTIONS),
         'project_id': project_id
     } for _ in range(1000)]
