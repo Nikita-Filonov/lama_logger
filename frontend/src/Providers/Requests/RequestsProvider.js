@@ -30,8 +30,9 @@ const RequestsProvider = ({children, store}) => {
   const getRequests = async (projectId, limit = null, offset = null, filters = {}) => {
     setLoad(state => state);
     const query = await queryWithPagination(filters, limit, offset, 'Requests');
-    const {json} = await get(projectsApi + `${projectId}/requests/${query}`);
-    store.dispatch({type: SET_REQUESTS, payload: json});
+    const {json, error} = await get(projectsApi + `${projectId}/requests/${query}`);
+    !error && store.dispatch({type: SET_REQUESTS, payload: json});
+    error && setAlert(json);
     setLoad(false);
   }
 

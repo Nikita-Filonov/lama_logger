@@ -8,7 +8,8 @@ const AlertsContext = React.createContext(null);
 const AlertsProvider = ({children}) => {
   const alertRef = useRef(null);
 
-  const setAlert = ({message, level}) => alertRef.current.enqueueSnackbar(message, {variant: level});
+  const setAlert = ({message, level}) =>
+    (message && level) && alertRef.current.enqueueSnackbar(message, {variant: level});
   const onClose = (key) => alertRef.current.closeSnackbar(key);
 
   return (
