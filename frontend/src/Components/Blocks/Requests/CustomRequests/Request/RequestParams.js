@@ -1,12 +1,10 @@
 import React, {useCallback, useEffect} from "react";
-import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import {parseQueryFromUrl} from "../../../../../Utils/Utils/Common";
 import {Button, Checkbox, IconButton, TextField} from "@mui/material";
 import {Add, Close} from "@mui/icons-material";
 import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 
-export const RequestParams = ({customRequest, setCustomRequest}) => {
-  const classes = CustomRequestsStyles();
+export const RequestParams = ({customRequest, setCustomRequest, containerClass}) => {
 
   useEffect(() => {
     (async () => customRequest?.requestUrl && await getQueryParams())();
@@ -45,7 +43,7 @@ export const RequestParams = ({customRequest, setCustomRequest}) => {
   }
 
   return (
-    <div className={classes.requestHeadersContainer}>
+    <div className={containerClass}>
       {customRequest?.queryParams?.map(({key, value, include}, index) =>
         <div className={'d-flex align-items-center'} key={index}>
           <Checkbox

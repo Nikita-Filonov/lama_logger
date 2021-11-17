@@ -13,8 +13,10 @@ import {RequestSend} from "./RequestSend";
 import {connect} from "react-redux";
 import {setCustomRequest} from "../../../../../Redux/Requests/CustomRequests/customRequestsActions";
 import {useCustomRequests} from "../../../../../Providers/Requests/CustomRequestsPorvider";
+import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 
 const RequestSection = ({project, customRequest, setCustomRequest}) => {
+  const classes = CustomRequestsStyles();
   const {request, sendCustomRequest, createCustomRequestsHistory} = useCustomRequests();
   const [requestTab, setRequestTab] = useState(0);
 
@@ -45,13 +47,13 @@ const RequestSection = ({project, customRequest, setCustomRequest}) => {
         <Tab sx={tabsStyles} color={'primary'} label="Params"/>
       </Tabs>
       <TabPanel value={requestTab} index={0} component={'span'}>
-        <RequestHeaders customRequest={customRequest} setCustomRequest={setCustomRequest}/>
+        <RequestHeaders customRequest={customRequest} setCustomRequest={setCustomRequest} containerClass={classes}/>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <RequestBody customRequest={customRequest} setCustomRequest={setCustomRequest}/>
+        <RequestBody customRequest={customRequest} setCustomRequest={setCustomRequest} containerClass={classes}/>
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        <RequestParams customRequest={customRequest} setCustomRequest={setCustomRequest}/>
+        <RequestParams customRequest={customRequest} setCustomRequest={setCustomRequest} containerClass={classes}/>
       </TabPanel>
     </Paper>
   )

@@ -7,7 +7,7 @@ import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/Reques
 import {HeaderDivider} from "../../CustomRequests/HeaderDivider";
 import {RequestUrl} from "../../CustomRequests/Request/RequestUrl";
 import {RequestSend} from "../../CustomRequests/Request/RequestSend";
-import {tabsStyles} from "../../../../../Styles/Blocks";
+import {RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {TabPanel} from "../../../Common/Navigation/TabPanel";
 import {RequestParams} from "../../CustomRequests/Request/RequestParams";
 import RequestBody from "../../CustomRequests/Request/RequestBody";
@@ -17,6 +17,7 @@ import {MethodSelect} from "../../CustomRequests/Request/MethodSelect";
 import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
 
 const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
+  const classes = RequestsTableStyles();
   const {request, sendRequest} = useRequests();
   const [requestTab, setRequestTab] = useState(0);
 
@@ -25,7 +26,7 @@ const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
   const onSendRequest = async () => await sendRequest(project?.id, requestChain?.requestId);
 
   return (
-    <Paper sx={{p: 1}} elevation={3}>
+    <Paper sx={{p: 1, height: '100%'}} elevation={3}>
       <div className={'d-flex align-items-center'}>
         <Typography>Request</Typography>
         <div className={'flex-grow-1'}/>
@@ -44,13 +45,25 @@ const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
         <Tab sx={tabsStyles} color={'primary'} label="Params"/>
       </Tabs>
       <TabPanel value={requestTab} index={0} component={'span'}>
-        <RequestHeaders customRequest={requestChain} setCustomRequest={setRequestChain}/>
+        <RequestHeaders
+          customRequest={requestChain}
+          setCustomRequest={setRequestChain}
+          containerClass={classes.nodeChainRequestSection}
+        />
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <RequestBody customRequest={requestChain} setCustomRequest={setRequestChain}/>
+        <RequestBody
+          customRequest={requestChain}
+          setCustomRequest={setRequestChain}
+          containerClass={classes.nodeChainRequestSection}
+        />
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        <RequestParams customRequest={requestChain} setCustomRequest={setRequestChain}/>
+        <RequestParams
+          customRequest={requestChain}
+          setCustomRequest={setRequestChain}
+          containerClass={classes.nodeChainRequestSection}
+        />
       </TabPanel>
     </Paper>
   )

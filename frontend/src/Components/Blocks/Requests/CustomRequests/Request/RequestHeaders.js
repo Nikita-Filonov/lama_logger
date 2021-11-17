@@ -1,13 +1,11 @@
 import React, {useCallback} from "react";
 import {Button} from "@mui/material";
 import {Add} from "@mui/icons-material";
-import {CustomRequestsStyles} from "../../../../../Styles/Screens";
 import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 import HeadersFields from "../../../../Items/Reuqests/CustomRequests/HeadersFields";
 
 
-export const RequestHeaders = ({customRequest, setCustomRequest}) => {
-  const classes = CustomRequestsStyles();
+export const RequestHeaders = ({customRequest, setCustomRequest, containerClass}) => {
 
   const onChange = useCallback(async (value, index, key) => {
     const requestHeaders = customRequest?.requestHeaders?.map((payload, i) =>
@@ -37,7 +35,7 @@ export const RequestHeaders = ({customRequest, setCustomRequest}) => {
   }, [customRequest?.requestHeaders])
 
   return (
-    <div className={classes.requestHeadersContainer}>
+    <div className={containerClass}>
       {customRequest?.requestHeaders?.map((header, index) =>
         <HeadersFields
           key={index}
