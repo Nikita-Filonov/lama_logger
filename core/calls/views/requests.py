@@ -40,7 +40,7 @@ def create_request(request, project_id):
         payload = RequestsSerializer(created_request, many=False).data
         return Response(payload, status=status.HTTP_201_CREATED)
 
-    raise BadRequest('Error happened while creating request')
+    raise BadRequest('Error happened while creating request', data=serializer.errors)
 
 
 @api_view(['DELETE'])
