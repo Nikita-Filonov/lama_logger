@@ -12,25 +12,21 @@ export const getStatusCodeColor = (statusCode) => {
 
 export const bodyTypeDetect = (responseHeaders, body = null) => {
   if (body === null) {
-    return 'text'
+    return 'text';
   }
 
   const contentType = responseHeaders.find(header =>
-    ['content-type', 'Content-Type', 'Content-type'].includes(header.key)).value;
-
-  if (!contentType) {
-    return 'text'
-  }
+    ['content-type', 'Content-Type', 'Content-type'].includes(header.key))?.value;
 
   if (contentType?.startsWith('application/json')) {
-    return 'json'
+    return 'json';
   }
 
   if (contentType?.startsWith('text/html')) {
-    return 'html'
+    return 'html';
   }
 
-  return 'text'
+  return 'text';
 }
 
 export const getTimeFiltersLabel = (filters) => {
