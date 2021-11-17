@@ -3,7 +3,7 @@ import _ from "lodash";
 import {useRequests} from "../../Providers/Requests/RequestsProvider";
 import {connect} from "react-redux";
 import RequestsToolbar from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbar";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import RequestsTable from "../../Components/Blocks/Requests/Requests/RequestsTable/RequestsTable";
 import RequestsToolbarSelected from "../../Components/Blocks/Requests/Requests/Toolbars/RequestsToolbarSelected";
 import TimeFilters from "../../Components/Modals/Requests/Requests/Filters/TimeFilters";
@@ -16,10 +16,18 @@ import NodeChain from "../../Components/Modals/Requests/Requests/NodeChain";
 
 
 const Requests = (props) => {
-  const {request, viewMode, requestsRealtime, selectedRequests, requestsFilters, requestsPagination} = props;
+  const {request, project, viewMode, requestsRealtime, selectedRequests, requestsFilters, requestsPagination} = props;
   const {projectId} = useParams();
+  const history = useHistory();
   const requestsInterval = useRef(null);
-  const {load, getRequests, updateRequestsFilter} = useRequests();
+  const {load, getRequest, getRequests, updateRequestsFilter} = useRequests();
+
+  useEffect(() => {
+    (async () => {
+      const queryParams = new URLSearchParams(history.location.search)
+      queryParams.has('requestId') && await getRequest(project?.id, queryParams.get('requestId'));
+    })()
+  }, [])
 
   useEffect(() => {
     (async () => {
@@ -87,6 +95,7 @@ const Requests = (props) => {
 const getState = (state) => ({
   viewMode: state.users.viewMode,
   request: state.requests.request,
+  project: state.projects.project,
   selectedRequests: state.requests.selectedRequests,
   requestsFilters: state.requests.requestsFilters,
   requestsPagination: state.requests.requestsPagination,
