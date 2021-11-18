@@ -41,7 +41,7 @@ const NodeChainModalHeader = (props) => {
               <HelpOutline/>
             </IconButton>
           </Tooltip>
-          <Tooltip title={'Run this node'} arrow placement={'bottom'}>
+          <Tooltip title={'Launch this node'} arrow placement={'bottom-end'}>
             <IconButton onClick={onRun}>
               <PlayArrowOutlinedIcon/>
             </IconButton>

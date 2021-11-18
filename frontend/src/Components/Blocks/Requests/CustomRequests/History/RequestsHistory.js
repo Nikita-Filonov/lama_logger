@@ -27,7 +27,10 @@ const RequestsHistory = (props) => {
     [customRequestsHistory.count]
   );
 
-  const listHeight = useMemo(() => _.isEmpty(customRequest?.responseHeaders) ? height / 1.54 : height / 0.965);
+  const listHeight = useMemo(
+    () => _.isEmpty(customRequest?.responseHeaders) ? height / 1.54 : height / 1.216,
+    [customRequest?.responseHeaders]
+  );
 
   const onChangePage = async (event, page) => setCustomRequestsHistoryPagination({
     ...customRequestsHistoryPagination,

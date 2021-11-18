@@ -21,7 +21,6 @@ import Divider from "@mui/material/Divider";
 import {connect} from "react-redux";
 import {setRequestChain} from "../../../../Redux/Requests/Requests/requestsActions";
 
-// TODO сдлеать отображение информации по реквестам
 const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
   const [open, setOpen] = useState(false);
   const [requestTab, setRequestTab] = useState(0);
@@ -71,12 +70,16 @@ const ChainedRequestAccordion = ({request, requestChain, setRequestChain}) => {
         <Tabs sx={tabsStyles} value={requestTab} onChange={onRequestTab} indicatorColor={'primary'}>
           <Tab sx={tabsStyles} label="Headers"/>
           <Tab sx={tabsStyles} label="Body"/>
+          <Tab sx={tabsStyles} label="Params"/>
         </Tabs>
         <TabPanel value={requestTab} index={0}>
           <Headers headers={request?.requestHeaders}/>
         </TabPanel>
         <TabPanel value={requestTab} index={1}>
           <Body responseHeaders={request?.requestHeaders} body={request?.requestBody}/>
+        </TabPanel>
+        <TabPanel value={requestTab} index={2}>
+          <Headers headers={request?.queryParams}/>
         </TabPanel>
 
         <Typography variant={'subtitle1'} gutterBottom>Response</Typography>
