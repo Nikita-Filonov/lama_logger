@@ -50,10 +50,14 @@ const ViewRequestAccordion = ({request, viewMode}) => {
         </CommonHandler>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <Body responseHeaders={request?.requestHeaders} body={request?.requestBody}/>
+        <CommonHandler>
+          <Body responseHeaders={request?.requestHeaders} body={request?.requestBody}/>
+        </CommonHandler>
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        <Headers headers={request?.queryParams}/>
+        <CommonHandler>
+          <Headers headers={request?.queryParams}/>
+        </CommonHandler>
       </TabPanel>
 
       <Typography variant={'subtitle1'} gutterBottom>Response</Typography>
@@ -62,10 +66,14 @@ const ViewRequestAccordion = ({request, viewMode}) => {
         <Tab sx={tabsStyles} label="Body" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={responseTab} index={0}>
-        <Headers headers={request?.responseHeaders}/>
+        <CommonHandler>
+          <Headers headers={request?.responseHeaders}/>
+        </CommonHandler>
       </TabPanel>
       <TabPanel value={responseTab} index={1}>
-        <Body responseHeaders={request?.responseHeaders} body={request?.responseBody}/>
+        <CommonHandler>
+          <Body responseHeaders={request?.responseHeaders} body={request?.responseBody}/>
+        </CommonHandler>
       </TabPanel>
 
       <div className={'d-flex align-items-center'}>
