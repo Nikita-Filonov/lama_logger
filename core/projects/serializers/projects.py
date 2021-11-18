@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from itertools import groupby
 
 from rest_framework import serializers
@@ -35,7 +36,9 @@ class ProjectsSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_stats(obj: Project):
-        requests_stats = RequestStat.objects.filter(project=obj).order_by('created')
+        start = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        end = datetime(start.year, start.month + 1, start.day) - timedelta(days=1)
+        requests_stats = RequestStat.objects.filter(project=obj, created__range=[start, end]).order_by('created')
 
         group_type = group_types['days']
         labels, created = [groupby(requests_stats, key=group_type['func']) for _ in range(2)]

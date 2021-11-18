@@ -102,7 +102,8 @@ class Request(models.Model):
         verbose_name='Node id',
         default=uuid.uuid4,
         editable=True,
-        unique=False
+        unique=False,
+        null=True
     )
 
     def __str__(self):

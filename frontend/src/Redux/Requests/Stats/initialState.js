@@ -1,5 +1,12 @@
+import moment from "moment";
+
 export const INITIAL_STATS = {
-  statsFilters: {},
+  statsFilters: {
+    time: {
+      type: 'range',
+      range: [moment().startOf('month'), moment().endOf('month')]
+    }
+  },
   statsGroupBy: JSON.parse(localStorage.getItem('statsGroupBy')) || {
     commonStats: 'days',
     numberOfRequests: 'days',
