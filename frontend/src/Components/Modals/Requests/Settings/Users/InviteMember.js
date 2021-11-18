@@ -25,7 +25,10 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
   const {isAllowed} = usePermissions();
   const {request, inviteMember} = useProjects();
   const [member, setMember] = useState({username: '', roles: [], notify: false});
-  const onClose = () => setInviteMemberModal(false)
+  const onClose = () => {
+    setInviteMemberModal(false);
+    setMember({username: '', roles: [], notify: false});
+  };
 
   const onInvite = async () => {
     const payload = {...member, roles: member.roles.map(r => r.id)}
