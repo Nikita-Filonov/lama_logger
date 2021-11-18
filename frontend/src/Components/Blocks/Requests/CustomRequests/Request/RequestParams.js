@@ -7,7 +7,8 @@ import {parsePastedValue} from "../../../../../Utils/Utils/Filters";
 export const RequestParams = ({customRequest, setCustomRequest, containerClass}) => {
 
   useEffect(() => {
-    (async () => customRequest?.requestUrl && await getQueryParams())();
+    const timeout = setTimeout(async () => customRequest?.requestUrl && await getQueryParams(), 500);
+    return () => clearTimeout(timeout);
   }, [customRequest?.requestUrl]);
 
   const getQueryParams = useCallback(async () => {

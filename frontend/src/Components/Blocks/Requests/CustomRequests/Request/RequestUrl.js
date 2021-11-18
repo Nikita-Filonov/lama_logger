@@ -6,7 +6,8 @@ import {headersToObject} from "../../../../../Utils/Utils/Formatters";
 export const RequestUrl = ({customRequest, setCustomRequest}) => {
 
   useEffect(() => {
-    (async () => customRequest?.requestUrl && await queryObjectToString())()
+    const timeout = setTimeout(async () => customRequest?.requestUrl && await queryObjectToString(), 500);
+    return () => clearTimeout(timeout);
   }, [customRequest?.queryParams]);
 
   const queryObjectToString = useCallback(async () => {
