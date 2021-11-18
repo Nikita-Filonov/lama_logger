@@ -17,8 +17,10 @@ import {REQUEST} from "../../../../Utils/Permissions/Requests";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import {useHistory} from "react-router-dom";
+import {setInviteMemberModal} from "../../../../Redux/Requests/Settings/requestsSettingsActions";
 
-const RequestsMenu = ({project, setConfirmAction, setRequestsFiltersSidebar}) => {
+const RequestsMenu = (props) => {
+  const {project, setConfirmAction, setRequestsFiltersSidebar, setInviteMemberModal} = props;
   const history = useHistory();
   const [menu, setMenu] = useState(null);
   const {isAllowed} = usePermissions();
@@ -35,6 +37,7 @@ const RequestsMenu = ({project, setConfirmAction, setRequestsFiltersSidebar}) =>
     action: async () => await deleteAllRequests(project.id)
   });
   const onSettings = () => history.push(`/projects/${project.id}/settings/general`);
+  const onInviteMember = () => setInviteMemberModal(true);
 
   return (
     <React.Fragment>
@@ -59,7 +62,7 @@ const RequestsMenu = ({project, setConfirmAction, setRequestsFiltersSidebar}) =>
           </ListItemIcon>
           Filters
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={onInviteMember}>
           <ListItemIcon>
             <GroupAddOutlinedIcon fontSize="small"/>
           </ListItemIcon>
@@ -90,6 +93,7 @@ export default connect(
   getState,
   {
     setConfirmAction,
+    setInviteMemberModal,
     setRequestsFiltersSidebar
   },
 )(RequestsMenu);

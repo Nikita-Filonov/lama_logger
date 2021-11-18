@@ -13,6 +13,7 @@ import RequestsSideFilters from "../../Components/Blocks/Requests/Requests/Reque
 import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/RequestsTableSkeletons";
 import ViewRequestSidePanel from "../../Components/Blocks/Requests/Requests/ViewRequest/ViewRequestSidePanel";
 import NodeChain from "../../Components/Modals/Requests/Requests/NodeChain";
+import InviteMember from "../../Components/Modals/Requests/Settings/Users/InviteMember";
 
 
 const Requests = (props) => {
@@ -87,6 +88,7 @@ const Requests = (props) => {
       {/*</Grid>*/}
       <NodeChain/>
       <TimeFilters/>
+      <InviteMember/>
     </Container>
   )
 }
