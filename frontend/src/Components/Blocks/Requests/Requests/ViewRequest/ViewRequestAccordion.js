@@ -11,6 +11,7 @@ import {AccessTime} from "@mui/icons-material";
 import {RequestsTableStyles, tabsStyles} from "../../../../../Styles/Blocks";
 import {getDuration} from "../../../../../Utils/Utils/Common";
 import RequestLink from "./RequestLink";
+import CommonHandler from "../../../Common/Handlers/CommonHandler";
 
 function a11yProps(index) {
   return {
@@ -44,7 +45,9 @@ const ViewRequestAccordion = ({request, viewMode}) => {
         <Tab sx={tabsStyles} label="Params" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={requestTab} index={0}>
-        <Headers headers={request?.requestHeaders}/>
+        <CommonHandler>
+          <Headers headers={request?.requestHeaders}/>
+        </CommonHandler>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
         <Body responseHeaders={request?.requestHeaders} body={request?.requestBody}/>
@@ -67,10 +70,7 @@ const ViewRequestAccordion = ({request, viewMode}) => {
 
       <div className={'d-flex align-items-center'}>
         <AccessTime fontSize={'small'}/>
-        <Typography
-          sx={{ml: 1}}
-          variant={'subtitle1'}
-        >
+        <Typography sx={{ml: 1}} variant={'subtitle1'}>
           Duration {getDuration(request?.duration)} milliseconds
         </Typography>
         <div className={'flex-grow-1'}/>
