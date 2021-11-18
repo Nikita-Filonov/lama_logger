@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lama Logger</title>
+</head>
+<body>
+<div style="font-family: Roboto, sans-serif;">
+    <h3>Hi, {{ receiver.username }}!</h3>
+    <p>
+        You got this message because @{{ sender.username }} has invited
+        you to the <a href="{{ host }}/projects/{{ project.id }}/requests">{{ project.title }}</a> project.
+    </p>
+    <p>
+        Now you can go and explore the <a href="{{ host }}/projects/{{ project.id }}/requests">{{ project.title }}</a>
+    </p>
+</div>
+</body>
+</html>

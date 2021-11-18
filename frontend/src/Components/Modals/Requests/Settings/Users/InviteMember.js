@@ -64,7 +64,7 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
           control={
             <Checkbox
               checked={member.notify}
-              onClick={() => setMember({...member, notify: !member.member})}
+              onClick={() => setMember({...member, notify: !member.notify})}
             />
           }
           label="Send notification"

@@ -2,6 +2,10 @@ import ast
 from shlex import quote
 from typing import Union
 
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django_celery_beat.models import IntervalSchedule
 
 from core.projects.models import Project, Member
@@ -84,3 +88,14 @@ def get_interval(every, period='hours', **kwargs) -> IntervalSchedule:
     defaults = {'every': every, 'period': period}
     interval, _ = IntervalSchedule.objects.get_or_create(defaults=defaults, **defaults)
     return interval
+
+
+def member_invite_mail(receiver: CustomUser, sender: CustomUser, project: Project):
+    """Send member email with invitation"""
+    context = {'receiver': receiver, 'sender': sender, 'project': project, 'host': settings.HOST}
+    subject = 'Lama Logger [Invitation to the project]'
+    html_message = render_to_string('mails/invite_member.html', context)
+    plain_message = strip_tags(html_message)
+    from_email = settings.EMAIL_HOST_USER
+
+    send_mail(subject, plain_message, from_email, [receiver.email], html_message=html_message)

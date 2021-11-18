@@ -1,3 +1,5 @@
+import threading
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from rest_framework import views, status
@@ -5,6 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from core.projects.helpers.utils import member_invite_mail
 from core.projects.models import Member, Project
 from core.projects.serializers.members import MemberSerializer
 from core.projects.serializers.projects import ProjectsSerializer
@@ -41,6 +44,10 @@ class MembersApi(views.APIView):
         member = Member.objects.create(user=user)
         member.roles.set(request.data.get('roles'))
         project.members.add(member)
+
+        if request.data.get('notify'):
+            thread = threading.Thread(target=member_invite_mail, args=(user, request.user, project))
+            thread.start()
 
         return Response(ProjectsSerializer(project, many=False).data)
 
