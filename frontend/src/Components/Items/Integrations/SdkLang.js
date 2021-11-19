@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardActions, CardContent, CardHeader, Grid, IconButton} from "@mui/material";
+import {Card, CardActions, CardContent, CardHeader, Grid, IconButton, Tooltip} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {GitHub} from "@mui/icons-material";
@@ -9,7 +9,8 @@ import {useHistory} from "react-router-dom";
 export const SdkLang = ({lang}) => {
   const history = useHistory();
 
-  const onView = () => history.push(`/integrations/${lang.language}`)
+  const onView = () => history.push(`/integrations/${lang.language}`);
+  const onGitHub = () => window.open(lang?.github, '_blank');
 
   return (
     <Grid item xs={12} sm={6} md={3}>
@@ -21,9 +22,11 @@ export const SdkLang = ({lang}) => {
         <CardActions className={'d-flex'}>
           <Button size="small" onClick={onView}>View code</Button>
           <div className={'flex-grow-1'}/>
-          <IconButton>
-            <GitHub/>
-          </IconButton>
+          <Tooltip title={'View on GitHub'} arrow>
+            <IconButton onClick={onGitHub}>
+              <GitHub/>
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </Card>
     </Grid>

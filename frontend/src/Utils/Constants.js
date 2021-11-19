@@ -125,19 +125,22 @@ export const AVAILABLE_LANGUAGES = [
     language: 'python',
     image: baseUrl + 'static/images/languages/python.png',
     label: 'Python',
-    template: python
+    template: python,
+    github: 'https://github.com/Nikita-Filonov/lama_logger_python_sdk'
   },
   {
     language: 'javascript',
     image: baseUrl + 'static/images/languages/javascript.png',
     label: 'Javascript',
-    template: python
+    template: python,
+    github: 'https://github.com/Nikita-Filonov/lama_logger_python_sdk'
   },
   {
     language: 'csharp',
     image: baseUrl + 'static/images/languages/csharp.png',
     label: 'C#',
-    template: python
+    template: python,
+    github: 'https://github.com/Nikita-Filonov/lama_logger_python_sdk'
   }
 ]
 
