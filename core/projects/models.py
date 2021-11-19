@@ -230,6 +230,52 @@ class ProjectTask(models.Model):
         return self.project.title
 
 
+class ProjectAction(models.Model):
+    member = models.ForeignKey(
+        Member,
+        verbose_name='Member',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    title_en = models.CharField(
+        verbose_name='Title[en]',
+        null=True,
+        blank=True,
+        max_length=255
+    )
+    title_ru = models.CharField(
+        verbose_name='Title[ru]',
+        null=True,
+        blank=True,
+        max_length=255
+    )
+    created = models.DateTimeField(
+        verbose_name='Created at',
+        default=timezone.now,
+        null=False
+    )
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        verbose_name='Project'
+    )
+    backup = models.JSONField(
+        verbose_name='Backup',
+        null=True,
+        blank=True,
+        default=dict
+    )
+
+    def __str__(self):
+        title = f'{self.id}'
+
+        if self.member:
+            title += f', {self.member.user.email}'
+
+        return title
+
+
 @receiver(post_save, sender=Project)
 def on_project_create(sender, instance, **kwargs):
     settings = ProjectSettings.objects.filter(project=instance)

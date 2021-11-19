@@ -1,9 +1,11 @@
 from django.db.models import Q
+from django.forms import model_to_dict
 from rest_framework import views, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from core.projects.helpers.actions.common import update_action
 from core.projects.helpers.utils import query_to_dict
 from core.projects.models import Project
 from core.projects.permissions.common import IsProjectActionAllowed
@@ -51,9 +53,11 @@ class ProjectApi(views.APIView):
     def patch(self, request, project_id):
         project = Project.objects.get(id=project_id)
         serializer = ProjectSerializer(project, data=request.data, partial=True)
+        state_before = model_to_dict(project)
 
         if serializer.is_valid():
             project = serializer.save()
+            update_action(request.user, project, project, state_before)
             return Response(ProjectsSerializer(project, many=False).data)
 
         raise BadRequest(message='Error happened while updating project', data=serializer.errors)
