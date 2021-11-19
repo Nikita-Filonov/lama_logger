@@ -4,7 +4,8 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django_celery_beat.models import PeriodicTask
 
-from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES, DEFAULT_HEADERS, DEFAULT_PATTERNS
+from core.projects.helpers.dumps import DEFAULT_METHODS, DEFAULT_STATUS_CODES, DEFAULT_HEADERS, DEFAULT_PATTERNS, \
+    EXCLUDE_HOSTS
 from core.users.models import CustomUser
 
 
@@ -12,7 +13,7 @@ from core.users.models import CustomUser
 
 
 class Role(models.Model):
-    name = 'Role'
+    model_name = 'Role'
     SCOPES = [
         'Role.View',
         'Role.Create',
@@ -42,7 +43,7 @@ class Role(models.Model):
 
 
 class Member(models.Model):
-    name = 'Member'
+    model_name = 'Member'
     SCOPES = [
         'Member.View',
         'Member.Create',
@@ -65,7 +66,7 @@ class Member(models.Model):
 
 
 class Project(models.Model):
-    name = 'Project'
+    model_name = 'Project'
     SCOPES = [
         'Project.View',
         'Project.Create',
@@ -141,7 +142,7 @@ class Project(models.Model):
 
 
 class ProjectSettings(models.Model):
-    name = 'Project settings'
+    model_name = 'Project settings'
     SCOPES = [
         'ProjectSettings.View',
         'ProjectSettings.Create',
@@ -179,6 +180,11 @@ class ProjectSettings(models.Model):
         default=list,
         blank=True
     )
+    excludeHosts = models.JSONField(
+        verbose_name='Exclude hosts',
+        default=EXCLUDE_HOSTS,
+        blank=True
+    )
     trackPatterns = models.JSONField(
         verbose_name='Track patterns',
         blank=True,
@@ -195,7 +201,7 @@ class ProjectSettings(models.Model):
 
 
 class ProjectTask(models.Model):
-    name = 'Project task'
+    model_name = 'Project task'
     SCOPES = [
         'ProjectTask.View',
         'ProjectTask.Create',

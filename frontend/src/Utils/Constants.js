@@ -78,6 +78,7 @@ export const REQUESTS_STATUS_CODES_FILTERS = {
     423, 424, 426, 428, 429, 431, 451, 500, 501, 502,
     503, 504, 505, 506, 507, 508, 509, 510, 511]
 };
+export const REQUESTS_HOSTS_FILTERS = ['localhost', '127.0.0.1', 'docker.host.internal']
 export const DEFAULT_REQUESTS_FILTERS = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   statusCodes: REQUESTS_STATUS_CODES_FILTERS,

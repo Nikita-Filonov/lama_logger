@@ -2,7 +2,7 @@ from utils.exeptions import NotFound
 
 
 def delete_model(model, **kwargs):
-    model_name = getattr(model, 'name', model.__name__)
+    model_name = getattr(model, 'model_name', model.__name__)
     try:
         model_to_delete = model.objects.get(**kwargs)
     except model.DoesNotExist:

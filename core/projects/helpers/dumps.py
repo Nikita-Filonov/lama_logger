@@ -45,3 +45,5 @@ DEFAULT_PATTERNS = [
         'regex': r'([^>]*)'
     }
 ]
+
+EXCLUDE_HOSTS = ['localhost', 'docker.host.internal', '127.0.0.1']
