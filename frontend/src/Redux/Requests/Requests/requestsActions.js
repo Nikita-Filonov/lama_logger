@@ -1,6 +1,7 @@
 import {
   SET_REQUEST,
   SET_REQUEST_CHAIN,
+  SET_REQUEST_CHAIN_ERROR,
   SET_REQUESTS_CHAIN,
   SET_REQUESTS_FILTERS,
   SET_REQUESTS_FILTERS_SIDEBAR,
@@ -60,5 +61,10 @@ export const setRequestsChain = (state) => ({
 
 export const setRequestChain = (state) => ({
   type: SET_REQUEST_CHAIN,
+  payload: state
+})
+
+export const setRequestChainError = (state) => ({
+  type: SET_REQUEST_CHAIN_ERROR,
   payload: state
 })

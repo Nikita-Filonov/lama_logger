@@ -5,6 +5,7 @@ import {
   DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUEST,
   SET_REQUEST_CHAIN,
+  SET_REQUEST_CHAIN_ERROR,
   SET_REQUESTS,
   SET_REQUESTS_CHAIN,
   SET_REQUESTS_FILTERS,
@@ -99,6 +100,8 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
         requestsChain: state.requestsChain.map(request => request.requestId === requestId ? payload : request)
       }
     }
+    case SET_REQUEST_CHAIN_ERROR:
+      return {...state, requestChainError: action.payload};
     default:
       return state;
   }

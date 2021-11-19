@@ -17,6 +17,10 @@ export const INITIAL_REQUESTS = {
   selectedRequests: [],
   requestsChain: [],
   requestChain: {},
+  requestChainError: {
+    level: 'error',
+    data: null
+  },
   requestsFiltersSidebar: localStorage.getItem('requestsFiltersSidebar') !== 'false',
   requestsTimeFilterModal: false,
   requestsNodeChainModal: false,

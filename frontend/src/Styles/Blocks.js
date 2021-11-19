@@ -172,6 +172,14 @@ export const RequestsTableStyles = makeStyles((theme) => ({
     "&:hover": {
       overflowY: "overlay",
     }
+  },
+  nodeChainRequestSectionWithError: {
+    maxHeight: 300,
+    height: 300,
+    overflow: 'hidden',
+    "&:hover": {
+      overflowY: "overlay",
+    }
   }
 }));
 

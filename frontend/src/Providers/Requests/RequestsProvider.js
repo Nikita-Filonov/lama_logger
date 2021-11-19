@@ -4,6 +4,7 @@ import {
   DELETE_REQUESTS,
   DELETE_SAVED_REQUESTS_FILTER,
   SET_REQUEST,
+  SET_REQUEST_CHAIN_ERROR,
   SET_REQUESTS,
   SET_REQUESTS_CHAIN,
   SET_SAVED_REQUESTS_FILTERS,
@@ -89,6 +90,11 @@ const RequestsProvider = ({children, store}) => {
     if (!error) {
       store.dispatch({type: UPDATE_REQUEST_CHAIN, payload: {requestId, payload: json}});
       store.dispatch({type: UPDATE_REQUEST, payload: {requestId, payload: json}});
+    }
+
+    if (error && json?.data) {
+      setAlert(json);
+      store.dispatch({type: SET_REQUEST_CHAIN_ERROR, payload: json});
     }
     !isLazy && setRequest(false);
   }

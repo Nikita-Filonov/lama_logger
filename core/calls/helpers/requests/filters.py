@@ -11,6 +11,7 @@ from core.projects.models import Project, ProjectSettings
 from core.stats.models import RequestStat
 
 
+# TODO добавить фильтр для хоста
 def filter_request(project: Project, payload: dict):
     track_stat = RequestStat.objects.create
     settings = ProjectSettings.objects.get(project=project)

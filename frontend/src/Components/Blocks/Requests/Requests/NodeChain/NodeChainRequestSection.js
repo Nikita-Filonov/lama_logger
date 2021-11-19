@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Paper, Tab, Tabs} from "@mui/material";
 import {connect} from "react-redux";
-import {setRequestChain} from "../../../../../Redux/Requests/Requests/requestsActions";
+import {setRequestChain, setRequestChainError} from "../../../../../Redux/Requests/Requests/requestsActions";
 import Typography from "@mui/material/Typography";
 import RequestSectionMenu from "../../../../Menus/Requests/CustomRequests/RequestSectionMenu";
 import {HeaderDivider} from "../../CustomRequests/HeaderDivider";
@@ -15,8 +15,12 @@ import {RequestHeaders} from "../../CustomRequests/Request/RequestHeaders";
 import Divider from "@mui/material/Divider";
 import {MethodSelect} from "../../CustomRequests/Request/MethodSelect";
 import {useRequests} from "../../../../../Providers/Requests/RequestsProvider";
+import {INITIAL_REQUESTS} from "../../../../../Redux/Requests/Requests/initialState";
+import {ResponseErrorAlert} from "../../CustomRequests/Response/ResponseErrorAlert";
+import CommonHandler from "../../../Common/Handlers/CommonHandler";
 
-const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
+const NodeChainRequestSection = (props) => {
+  const {project, requestChain, setRequestChain, requestChainError, setRequestChainError} = props;
   const classes = RequestsTableStyles();
   const {request, sendRequest} = useRequests();
   const [requestTab, setRequestTab] = useState(0);
@@ -24,6 +28,13 @@ const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
   const onRequestTab = (event, newValue) => setRequestTab(newValue);
 
   const onSendRequest = async () => await sendRequest(project?.id, requestChain?.requestId);
+
+  useEffect(() => setRequestChainError(INITIAL_REQUESTS.requestChainError), [requestChain?.requestId]);
+  const hasError = useMemo(() => requestChainError?.data, [requestChainError]);
+  const tabClasses = useMemo(
+    () => hasError ? classes.nodeChainRequestSectionWithError : classes.nodeChainRequestSection,
+    [hasError]
+  )
 
   return (
     <Paper sx={{p: 1, height: '100%'}} elevation={3}>
@@ -45,26 +56,21 @@ const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
         <Tab sx={tabsStyles} color={'primary'} label="Params"/>
       </Tabs>
       <TabPanel value={requestTab} index={0} component={'span'}>
-        <RequestHeaders
-          customRequest={requestChain}
-          setCustomRequest={setRequestChain}
-          containerClass={classes.nodeChainRequestSection}
-        />
+        <CommonHandler>
+          <RequestHeaders customRequest={requestChain} setCustomRequest={setRequestChain} containerClass={tabClasses}/>
+        </CommonHandler>
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <RequestBody
-          customRequest={requestChain}
-          setCustomRequest={setRequestChain}
-          containerClass={classes.nodeChainRequestSection}
-        />
+        <CommonHandler>
+          <RequestBody customRequest={requestChain} setCustomRequest={setRequestChain} containerClass={tabClasses}/>
+        </CommonHandler>
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        <RequestParams
-          customRequest={requestChain}
-          setCustomRequest={setRequestChain}
-          containerClass={classes.nodeChainRequestSection}
-        />
+        <CommonHandler>
+          <RequestParams customRequest={requestChain} setCustomRequest={setRequestChain} containerClass={tabClasses}/>
+        </CommonHandler>
       </TabPanel>
+      {requestChainError?.data && <ResponseErrorAlert error={requestChainError} setError={setRequestChainError}/>}
     </Paper>
   )
 }
@@ -72,11 +78,13 @@ const NodeChainRequestSection = ({project, requestChain, setRequestChain}) => {
 const getState = (state) => ({
   project: state.projects.project,
   requestChain: state.requests.requestChain,
+  requestChainError: state.requests.requestChainError
 })
 
 export default connect(
   getState,
   {
-    setRequestChain
+    setRequestChain,
+    setRequestChainError
   },
 )(NodeChainRequestSection);

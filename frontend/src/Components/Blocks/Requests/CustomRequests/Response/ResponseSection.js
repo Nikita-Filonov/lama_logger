@@ -15,7 +15,7 @@ import {setCustomRequestError} from "../../../../../Redux/Requests/CustomRequest
 import {INITIAL_CUSTOM_REQUESTS} from "../../../../../Redux/Requests/CustomRequests/initialState";
 import {isValidJson} from "../../../../../Utils/Utils/Validators";
 import {Body} from "../../Requests/ViewRequest/Body";
-import ResponseErrorAlert from "./ResponseErrorAlert";
+import {ResponseErrorAlert} from "./ResponseErrorAlert";
 import {getDuration} from "../../../../../Utils/Utils/Common";
 
 
@@ -49,7 +49,7 @@ const ResponseSection = ({customRequest, customRequestError, setCustomRequestErr
         Response will be shown after request is sent
       </Alert>}
       {/*when some error happens*/}
-      {customRequestError?.data && <ResponseErrorAlert/>}
+      {customRequestError?.data && <ResponseErrorAlert error={customRequestError} setError={setCustomRequestError}/>}
       {/*when response is valid*/}
       {isRequestValid && <div>
         <div className={'d-flex align-items-center'}>
