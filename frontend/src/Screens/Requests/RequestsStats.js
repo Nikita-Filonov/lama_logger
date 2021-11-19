@@ -7,6 +7,7 @@ import RatioStatusCodesChart from "../../Components/Blocks/Requests/Stats/Charts
 import ResponseTimeChart from "../../Components/Blocks/Requests/Stats/Charts/ResponseTimeChart";
 import {useRequestsStats} from "../../Providers/Requests/RequestsStatsProvider";
 import {ChartSkeletons} from "../../Components/Blocks/Requests/Stats/Tools/ChartSkeletons";
+import CommonHandler from "../../Components/Blocks/Common/Handlers/CommonHandler";
 
 
 const RequestsStats = () => {
@@ -15,7 +16,9 @@ const RequestsStats = () => {
   return (
     <Container maxWidth={'xl'}>
       <StatsToolbar/>
-      <StatsInfoGrid/>
+      <CommonHandler>
+        <StatsInfoGrid/>
+      </CommonHandler>
       {/*<Grid container spacing={2}>*/}
       {/*  <Grid item xs={6}>*/}
       {/*    <StatsChart groupBy={groupBy} setGroupBy={setGroupBy}/>*/}
@@ -26,13 +29,28 @@ const RequestsStats = () => {
       {/*</Grid>*/}
       <Grid container spacing={2} sx={{mt: 0.5, mb: 4}}>
         <Grid item xs={6}>
-          {loadNumberOfRequests ? <ChartSkeletons/> : <NumberOfRequestsChart/>}
+          {loadNumberOfRequests
+            ? <ChartSkeletons/>
+            : <CommonHandler>
+              <NumberOfRequestsChart/>
+            </CommonHandler>
+          }
         </Grid>
         <Grid item xs={6}>
-          {loadRatioStatusCodes ? <ChartSkeletons/> : <RatioStatusCodesChart/>}
+          {loadRatioStatusCodes
+            ? <ChartSkeletons/>
+            : <CommonHandler>
+              <RatioStatusCodesChart/>
+            </CommonHandler>
+          }
         </Grid>
         <Grid item xs={6}>
-          {loadResponseTime ? <ChartSkeletons/> : <ResponseTimeChart/>}
+          {loadResponseTime
+            ? <ChartSkeletons/>
+            : <CommonHandler>
+              <ResponseTimeChart/>
+            </CommonHandler>
+          }
         </Grid>
       </Grid>
     </Container>

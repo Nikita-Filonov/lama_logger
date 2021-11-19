@@ -1,40 +1,32 @@
 import React, {useState} from "react";
 import {useUsers} from "../../Providers/Users/UsersProvider";
-import {baseUrl} from "../../Utils/Constants";
-import {useHistory, Link as RouterLink} from 'react-router-dom'
-import {Container, CssBaseline, Grid, InputAdornment, TextField, Typography} from '@mui/material';
+import {Link as RouterLink, useHistory} from 'react-router-dom'
+import {Alert, Container, CssBaseline, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import Link from "@mui/material/Link";
+import {post} from "../../Utils/Api/Fetch";
+import _ from 'lodash';
 
 
 export const Login = () => {
   const history = useHistory();
   const {onLogin} = useUsers();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordSecure, setPasswordSecure] = useState('password');
   const [errors, setErrors] = useState({})
 
   const onShowPassword = () => setPasswordSecure(passwordSecure === 'password' ? 'text' : 'password')
   const onLoginPress = async () => {
-    await fetch(baseUrl + 'api-token-auth/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username, password})
-    })
-      .then(response => response.json())
-      .then(async data => {
-        if (data?.token) {
-          await onLogin(data.token)
-          history.push('/projects')
-        } else {
-          setErrors(data)
-        }
-      });
+    const {json, error} = await post('api/v1/login/', {email, password}, false);
+    error && setErrors(json);
+
+    if (!error && json?.token) {
+      await onLogin(json.token);
+      history.push('/projects');
+    }
   };
 
   return (
@@ -46,9 +38,12 @@ export const Login = () => {
       <Grid container spacing={2}>
         <Grid item xs={2}/>
         <Grid item xs={8}>
+          {!_.isEmpty(errors) && <Alert severity={errors?.level || 'error'} sx={{mt: 1}}>
+            {errors?.message}
+          </Alert>}
           <TextField
-            value={username}
-            onChange={event => setUsername(event.target.value)}
+            value={email}
+            onChange={event => setEmail(event.target.value)}
             fullWidth
             label="E-mail"
             variant="standard"

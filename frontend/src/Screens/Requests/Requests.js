@@ -14,6 +14,7 @@ import {RequestsTableSkeletons} from "../../Components/Blocks/Requests/Requests/
 import ViewRequestSidePanel from "../../Components/Blocks/Requests/Requests/ViewRequest/ViewRequestSidePanel";
 import NodeChain from "../../Components/Modals/Requests/Requests/NodeChain";
 import InviteMember from "../../Components/Modals/Requests/Settings/Users/InviteMember";
+import CommonHandler from "../../Components/Blocks/Common/Handlers/CommonHandler";
 
 
 const Requests = (props) => {
@@ -68,11 +69,18 @@ const Requests = (props) => {
         <RequestsSideFilters/>
         <Grid container>
           <Grid item xs={(viewMode.requests === 'side' && !_.isEmpty(request)) ? 6 : 12}>
-            {load ? <RequestsTableSkeletons/> : <RequestsTable/>}
+            {load
+              ? <RequestsTableSkeletons/>
+              : <CommonHandler>
+                <RequestsTable/>
+              </CommonHandler>
+            }
           </Grid>
           {(viewMode.requests === 'side' && !_.isEmpty(request)) &&
           <Grid item xs={6}>
-            <ViewRequestSidePanel/>
+            <CommonHandler>
+              <ViewRequestSidePanel/>
+            </CommonHandler>
           </Grid>}
         </Grid>
       </div>

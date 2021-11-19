@@ -15,11 +15,13 @@ import {
 import {useSelector} from "react-redux";
 import {useAlerts} from "../AlertsProvider";
 import {INITIAL_CUSTOM_REQUESTS} from "../../Redux/Requests/CustomRequests/initialState";
+import {useUsers} from "../Users/UsersProvider";
 
 
 const CustomRequestsContext = React.createContext(null);
 
 const CustomRequestsProvider = ({children, store}) => {
+  const {token} = useUsers();
   const {setAlert} = useAlerts();
   const projectsApi = 'api/v1/projects/';
   const [loadRequests, setLoadRequests] = useState(true);
@@ -32,17 +34,17 @@ const CustomRequestsProvider = ({children, store}) => {
 
   useEffect(() => {
     (async () => {
-      await getCustomRequests(project.id, 50, 0, {filters: JSON.stringify({isCustom: true})})
+      token && await getCustomRequests(project.id, 50, 0, {filters: JSON.stringify({isCustom: true})});
     })()
-  }, [project.id]);
+  }, [token, project.id]);
 
   useEffect(() => {
-    (async () => await getCustomRequestsHistory(
+    (async () => token && await getCustomRequestsHistory(
       project.id,
       historyPagination.rowsPerPage,
       historyPagination.page * historyPagination.rowsPerPage
     ))()
-  }, [project.id, historyPagination])
+  }, [token, project.id, historyPagination])
 
 
   const getCustomRequests = async (projectId, limit = 50, offset = 0, filters = {}) => {
