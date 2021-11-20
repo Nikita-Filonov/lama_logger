@@ -47,13 +47,25 @@ const RequestSection = ({project, customRequest, setCustomRequest}) => {
         <Tab sx={tabsStyles} color={'primary'} label="Params"/>
       </Tabs>
       <TabPanel value={requestTab} index={0} component={'span'}>
-        <RequestHeaders customRequest={customRequest} setCustomRequest={setCustomRequest} containerClass={classes}/>
+        <RequestHeaders
+          customRequest={customRequest}
+          setCustomRequest={setCustomRequest}
+          containerClass={classes.requestHeadersContainer}
+        />
       </TabPanel>
       <TabPanel value={requestTab} index={1}>
-        <RequestBody customRequest={customRequest} setCustomRequest={setCustomRequest} containerClass={classes}/>
+        <RequestBody
+          customRequest={customRequest}
+          setCustomRequest={setCustomRequest}
+          containerClass={classes.requestHeadersContainer}
+        />
       </TabPanel>
       <TabPanel value={requestTab} index={2}>
-        <RequestParams customRequest={customRequest} setCustomRequest={setCustomRequest} containerClass={classes}/>
+        <RequestParams
+          customRequest={customRequest}
+          setCustomRequest={setCustomRequest}
+          containerClass={classes.requestHeadersContainer}
+        />
       </TabPanel>
     </Paper>
   )

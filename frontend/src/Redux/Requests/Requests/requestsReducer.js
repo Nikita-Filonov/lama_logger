@@ -26,7 +26,11 @@ export const requestsReducer = (state = INITIAL_REQUESTS, action = {}) => {
     case SET_REQUESTS:
       return {...state, requests: action.payload}
     case SET_REQUEST: {
-      localStorage.setItem('request', JSON.stringify(action.payload))
+      try {
+        localStorage.setItem('request', JSON.stringify(action.payload))
+      } catch (error) {
+        console.warn(error);
+      }
       return {...state, request: action.payload};
     }
     case SET_REQUESTS_FILTERS: {

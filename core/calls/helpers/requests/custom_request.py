@@ -1,5 +1,3 @@
-import json
-
 from requests import request as lib_request
 
 from core.calls.helpers.utils import to_header_payload
@@ -29,7 +27,7 @@ def send_custom_request(request: Request):
     return {
         **serializer.data,
         'responseHeaders': to_header_payload(response.headers),
-        'responseBody': json.dumps(response.text),
+        'responseBody': response.text,
         'statusCode': response.status_code,
         'duration': response.elapsed.total_seconds()
     }
