@@ -10,7 +10,13 @@ export const INITIAL_REQUESTS_SETTINGS = {
   },
   selectedMembers: [],
   selectedRoles: [],
-  periodicTask: {interval: {every: 5, period: 'hours'}, name: '', description: '', task: ''},
+  periodicTask: {
+    interval: {every: 5, period: 'hours'},
+    name: '',
+    description: '',
+    task: '',
+    kwargs: '{}'
+  },
   inviteMemberModal: false,
   createRoleModal: false,
   createTaskModal: false,

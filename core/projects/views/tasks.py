@@ -26,10 +26,8 @@ class ProjectTasksApi(views.APIView):
         serializer = ProjectTaskSerializer(data=request.data, context=context)
         if serializer.is_valid():
             project_task = serializer.save()
-            return Response(
-                ProjectTasksSerializer(project_task, many=False).data,
-                status=status.HTTP_201_CREATED
-            )
+            serializer = ProjectTasksSerializer(project_task, many=False)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         raise BadRequest(message='Error happened while creating task', data=serializer.errors)
 

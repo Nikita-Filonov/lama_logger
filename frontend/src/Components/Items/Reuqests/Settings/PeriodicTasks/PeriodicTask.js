@@ -6,6 +6,7 @@ import {useProjectTasks} from "../../../../../Providers/Requests/ProjectTasksPro
 import {connect} from "react-redux";
 import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
 import {PROJECT_TASKS} from "../../../../../Utils/Permissions/Projects";
+import moment from "moment";
 
 const PeriodicTask = ({task, project}) => {
   const {isAllowed} = usePermissions();
@@ -32,6 +33,13 @@ const PeriodicTask = ({task, project}) => {
       <ListItemText
         primary={task?.task?.name}
         secondary={`Every ${task?.task?.interval?.every} ${task?.task?.interval?.period}`}
+      />
+      <ListItemText
+        primary={`Starts at ${moment(task?.task?.start_time).format('MMM D, YYYY, HH:mm')}`}
+        secondary={`Last run at ${task?.task?.last_run_at
+          ? moment(task?.task?.last_run_at).format('MMM D, YYYY, HH:mm')
+          : '---'
+        }`}
       />
       <ListItemIcon>
         <AccessAlarm/>

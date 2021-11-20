@@ -33,10 +33,13 @@ const CreatePeriodicTask = (props) => {
     setPeriodicTask(INITIAL_REQUESTS_SETTINGS.periodicTask);
   }
 
-  const onCreate = async () => (periodicTask.editMode
-      ? updateTask(project.id, periodicTask.taskId, {task: periodicTask})
-      : createTask(project.id, {task: periodicTask})
-  ).then(() => onClose());
+  const onCreate = async () => {
+    const payload = {task: {...periodicTask, kwargs: `{"project_id":${project.id}}`}};
+    (periodicTask.editMode
+        ? updateTask(project.id, periodicTask.taskId, payload)
+        : createTask(project.id, payload)
+    ).then(() => onClose())
+  };
 
   return (
     <Dialog
