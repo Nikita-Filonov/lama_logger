@@ -20,7 +20,11 @@ export const customRequestsReducer = (state = INITIAL_CUSTOM_REQUESTS, action = 
     case SET_CUSTOM_REQUESTS:
       return {...state, customRequests: action.payload};
     case SET_CUSTOM_REQUEST:
-      localStorage.setItem('customRequest', JSON.stringify(action.payload));
+      try {
+        localStorage.setItem('customRequest', JSON.stringify(action.payload));
+      } catch (error) {
+        console.warn(error);
+      }
       return {...state, customRequest: action.payload};
     case SET_CUSTOM_REQUEST_ERROR:
       return {...state, customRequestError: action.payload};
