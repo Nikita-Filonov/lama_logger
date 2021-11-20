@@ -9,9 +9,8 @@ const SavedFilters = (props) => {
   const {getRequestsFilters} = useRequests();
 
   useEffect(() => {
-    (async () => await getRequestsFilters(project.id))()
-  }, [project])
-
+    (async () => await getRequestsFilters(project?.id))();
+  }, [project?.id]);
 
   return (
     <React.Fragment>

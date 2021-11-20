@@ -100,8 +100,9 @@ const RequestsProvider = ({children, store}) => {
   }
 
   const getRequestsFilters = async (projectId) => {
-    const {json} = await get(projectsApi + `${projectId}/requests/filters/`);
-    store.dispatch({type: SET_SAVED_REQUESTS_FILTERS, payload: json})
+    const {json, error} = await get(projectsApi + `${projectId}/requests/filters/`);
+    !error && store.dispatch({type: SET_SAVED_REQUESTS_FILTERS, payload: json});
+    error && setAlert(json);
   }
 
   const createRequestsFilter = async (projectId, payload) => {
