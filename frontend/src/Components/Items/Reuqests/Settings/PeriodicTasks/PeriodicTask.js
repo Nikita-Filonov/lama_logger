@@ -22,7 +22,7 @@ const PeriodicTask = ({task, project}) => {
   return (
     <ListItem key={task.id} disableGutters divider>
       <ListItemIcon>
-        <Tooltip title={task?.task?.enabled ? 'Disable task' : 'Enable task'} placement={'left'}>
+        <Tooltip title={task?.task?.enabled ? 'Disable task' : 'Enable task'} placement={'left'} arrow>
           <Checkbox
             checked={task?.task?.enabled}
             onClick={onEnable}
