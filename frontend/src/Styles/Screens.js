@@ -70,6 +70,8 @@ export const CustomRequestsStyles = makeStyles({
     }
   },
   historyListContainer: {
-    overflow: "auto"
+    overflow: "auto",
+    height: window.innerHeight / 1.54,
+    maxHeight: window.innerHeight / 1.54
   }
 });
