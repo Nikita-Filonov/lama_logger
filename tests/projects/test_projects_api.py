@@ -14,12 +14,13 @@ project_view = ProjectApi.as_view()
 projects_api = Endpoints.PROJECTS.value
 
 
+@pytest.mark.api
 @pytest.mark.projects
 @allure.epic('API')
 @allure.feature('Projects')
 @allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.django_db(transaction=True)
-class TestMonstersApi:
+class TestProjectsApi:
 
     @allure.title('Get projects')
     def test_get_projects(self, user):
@@ -46,9 +47,9 @@ class TestMonstersApi:
     @allure.title('Update project')
     def test_update_project(self, project, user):
         project_payload = get_project_payload()
-        request = patch(projects_api + f'{project["id"]}/', project_payload, user)
+        request = patch(projects_api + f'{project.id}/', project_payload, user)
 
-        response = project_view(request, project_id=project["id"])
+        response = project_view(request, project_id=project.id)
         json_response = to_json(response)
 
         assert response.status_code == status.HTTP_200_OK
@@ -59,15 +60,15 @@ class TestMonstersApi:
         assert len(json_response['roles']) == len(DEFAULT_ROLES)
 
     @allure.title('Get project')
-    def test_get_project(self, project, user):
-        request = get(projects_api + f'{project["id"]}/', user)
-        response = project_view(request, project_id=project["id"])
+    def test_get_project(self, project, project_json, user):
+        request = get(projects_api + f'{project.id}/', user)
+        response = project_view(request, project_id=project.id)
         json_response = to_json(response)
 
         assert response.status_code == status.HTTP_200_OK
-        assert json_response['id'] == project['id']
-        assert json_response['title'] == project['title']
-        assert json_response['short'] == project['short']
-        assert json_response['description'] == project['description']
-        assert json_response['members'] == project['members']
-        assert json_response['roles'] == project['roles']
+        assert json_response['id'] == project_json['id']
+        assert json_response['title'] == project_json['title']
+        assert json_response['short'] == project_json['short']
+        assert json_response['description'] == project_json['description']
+        assert json_response['members'] == project_json['members']
+        assert json_response['roles'] == project_json['roles']

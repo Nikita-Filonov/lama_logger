@@ -2,7 +2,8 @@ import pytest
 from django.test import Client
 from rest_framework.test import APIRequestFactory
 
-from core.projects.models import Member
+from core.projects.models import Member, Project
+from core.projects.serializers.projects import ProjectsSerializer
 from core.projects.views.projects import ProjectsApi
 from core.users.models import CustomUser
 from tests.api import Endpoints, post
@@ -35,9 +36,16 @@ def member(user):
 
 @pytest.fixture(scope='function')
 @pytest.mark.django_db
-def project(factory, user):
+def project(user):
     project_payload = get_project_payload()
     request = post(Endpoints.PROJECTS.value, project_payload, user)
 
     response = ProjectsApi.as_view()(request)
-    return to_json(response)
+    project_id = to_json(response)['id']
+    return Project.objects.get(id=project_id)
+
+
+@pytest.fixture(scope='function')
+@pytest.mark.django_db
+def project_json(project):
+    return ProjectsSerializer(project, many=False).data
