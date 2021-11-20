@@ -5,6 +5,7 @@ import {SET_CONFIRM_ACTION, SET_DRAWER, SET_THEME, SET_USER, SET_USER_SETTINGS, 
 export const usersReducer = (state = INITIAL_USERS, action = {}) => {
   switch (action.type) {
     case SET_THEME:
+      localStorage.setItem('theme', JSON.stringify(action.payload));
       return {...state, theme: action.payload};
     case SET_DRAWER:
       return {...state, drawer: action.payload};

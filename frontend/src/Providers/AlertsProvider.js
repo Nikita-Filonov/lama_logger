@@ -2,11 +2,14 @@ import React, {useContext, useRef} from 'react';
 import {IconButton} from "@mui/material";
 import {SnackbarProvider} from "notistack";
 import {Close} from "@mui/icons-material";
+import {useSelector} from "react-redux";
+import {TRANSITIONS} from "../Utils/Constants";
 
 const AlertsContext = React.createContext(null);
 
 const AlertsProvider = ({children}) => {
   const alertRef = useRef(null);
+  const theme = useSelector(state => state.users.theme);
 
   const setAlert = ({message, level}) =>
     (message && level) && alertRef.current.enqueueSnackbar(message, {variant: level});
@@ -23,10 +26,11 @@ const AlertsProvider = ({children}) => {
         maxSnack={5}
         autoHideDuration={4000}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: theme?.snackbar?.vertical || 'bottom',
+          horizontal: theme?.snackbar?.horizontal || 'right',
         }}
         action={key => <IconButton onClick={() => onClose(key)}><Close/></IconButton>}
+        TransitionComponent={TRANSITIONS[theme?.snackbar?.transition || 'slide']}
       >
         {children}
       </SnackbarProvider>

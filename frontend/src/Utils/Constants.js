@@ -1,5 +1,6 @@
 import python from './../Utils/Integrations/Templates/python.json'
 import {getProjectName, getSdkLanguage, getTrackName} from "./Utils/Routing";
+import {Collapse, Fade, Grow, Slide, Zoom} from "@mui/material";
 
 export const baseUrl = 'http://localhost:8000/';
 
@@ -58,6 +59,15 @@ export const DEFAULT_USER_SETTINGS = {
     highlightActiveLine: true
   },
   skeletonAnimation: "wave"
+};
+
+export const DEFAULT_THEME_SETTINGS = {
+  themeMode: 'light',
+  snackbar: {
+    vertical: 'bottom',
+    horizontal: 'right',
+    transition: 'slide',
+  }
 }
 
 export const UNITS = [
@@ -162,3 +172,11 @@ export const CUSTOM_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 
 
 export const REQUESTS_PAGINATION = 'rowsPerPageRequests';
 export const TRACK_REQUESTS_PAGINATION = 'rowsPerPageTrackRequests';
+
+export const TRANSITIONS = {
+  'slide': Slide,
+  'grow': Grow,
+  'fade': Fade,
+  'zoom': Zoom,
+  'collapse': Collapse,
+}

@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {connect} from "react-redux";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 
 const ThemeWrapper = ({children, theme}) => {
+
+  const safeTheme = useMemo(() => theme?.themeMode || 'light', [theme]);
+
   const darkTheme = createTheme({
     palette: {
-      mode: theme,
-      ...(theme === 'light'
+      mode: safeTheme,
+      ...(safeTheme === 'light'
         ? {}
         : {
           background: {

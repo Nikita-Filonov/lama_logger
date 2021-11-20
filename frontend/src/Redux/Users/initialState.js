@@ -1,4 +1,4 @@
-import {DEFAULT_USER_SETTINGS} from "../../Utils/Constants";
+import {DEFAULT_THEME_SETTINGS, DEFAULT_USER_SETTINGS} from "../../Utils/Constants";
 
 export const INITIAL_USERS = {
   user: {
@@ -6,7 +6,7 @@ export const INITIAL_USERS = {
     username: '',
   },
   drawer: false,
-  theme: localStorage.getItem('theme') || 'light',
+  theme: JSON.parse(localStorage.getItem('theme')) || DEFAULT_THEME_SETTINGS,
   userSettings: JSON.parse(localStorage.getItem('userSettings')) || DEFAULT_USER_SETTINGS,
   confirmAction: {
     modal: false,

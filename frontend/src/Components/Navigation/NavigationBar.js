@@ -10,7 +10,7 @@ import {NavigationBreadcrumbs} from "./NavigationBreadcrumbs";
 import AccountNavbarMenu from "../Menus/AccountNavbarMenu";
 
 
-const NavigationBar = ({drawer, setTheme, setDrawer, drawerOpen}) => {
+const NavigationBar = ({drawer, theme, setTheme, setDrawer, drawerOpen}) => {
   const {palette} = useTheme();
   const [themeButton, setThemeButton] = useState(true);
 
@@ -20,9 +20,8 @@ const NavigationBar = ({drawer, setTheme, setDrawer, drawerOpen}) => {
   const onTheme = async () => {
     setThemeButton(false);
     await setTimeout(() => setThemeButton(true), 200)
-    const theme = palette.mode === 'light' ? 'dark' : 'light'
-    setTheme(theme)
-    localStorage.setItem('theme', theme)
+    const themeMode = palette.mode === 'light' ? 'dark' : 'light';
+    setTheme({...theme, themeMode});
   }
 
   return (
@@ -62,7 +61,8 @@ const NavigationBar = ({drawer, setTheme, setDrawer, drawerOpen}) => {
 }
 
 const getState = (state) => ({
-  drawerOpen: state.users.drawer
+  theme: state.users.theme,
+  drawerOpen: state.users.drawer,
 })
 
 export default connect(
