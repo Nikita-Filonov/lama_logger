@@ -13,23 +13,16 @@ import _ from 'lodash';
 
 const RequestsHistory = (props) => {
   const {
-    customRequest,
     customRequestsHistory,
     customRequestsHistoryPagination,
     setCustomRequestsHistoryPagination
   } = props;
   const classes = CustomRequestsStyles();
-  const {height} = useWindowSize();
   const {loadHistory} = useCustomRequests();
 
   const paginationCount = useMemo(() =>
       Math.floor(customRequestsHistory?.count / customRequestsHistoryPagination?.rowsPerPage),
     [customRequestsHistory.count]
-  );
-
-  const listHeight = useMemo(
-    () => _.isEmpty(customRequest?.responseHeaders) ? height / 1.54 : height / 1.216,
-    [height, customRequest?.responseHeaders]
   );
 
   const onChangePage = async (event, page) => setCustomRequestsHistoryPagination({
@@ -47,7 +40,7 @@ const RequestsHistory = (props) => {
         </IconButton>
       </div>
       <HeaderDivider/>
-      <List dense className={classes.historyListContainer} sx={{maxHeight: listHeight, height: listHeight}}>
+      <List dense className={classes.historyListContainer}>
         {loadHistory
           ? <RequestsHistorySkeletons/>
           : customRequestsHistory?.results?.map((history, index) =>
@@ -67,7 +60,6 @@ const RequestsHistory = (props) => {
 }
 
 const getState = (state) => ({
-  customRequest: state.customRequests.customRequest,
   customRequestsHistory: state.customRequests.customRequestsHistory,
   customRequestsHistoryPagination: state.customRequests.customRequestsHistoryPagination
 })
