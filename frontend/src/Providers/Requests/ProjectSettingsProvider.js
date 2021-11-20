@@ -23,8 +23,9 @@ const ProjectSettingsProvider = ({children, store}) => {
 
   const getProjectSettings = async (projectId) => {
     setLoad(true)
-    const {json} = await get(projectsApi + `${projectId}/settings/`);
-    store.dispatch({type: SET_PROJECT_SETTINGS, payload: json});
+    const {json, error} = await get(projectsApi + `${projectId}/settings/`);
+    !error && store.dispatch({type: SET_PROJECT_SETTINGS, payload: json});
+    error && setAlert(json);
     setLoad(false);
   }
 

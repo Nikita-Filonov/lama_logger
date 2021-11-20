@@ -5,13 +5,14 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.projects.models import ProjectTask, Project
+from core.projects.permissions.common import IsProjectTaskActionAllowed
 from core.projects.serializers.tasks import ProjectTasksSerializer, ProjectTaskSerializer
 from utils.exeptions import BadRequest, NotFound
 
 
 class ProjectTasksApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsProjectTaskActionAllowed]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id):
@@ -35,7 +36,7 @@ class ProjectTasksApi(views.APIView):
 
 class ProjectTaskApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsProjectTaskActionAllowed]
     throttle_classes = [UserRateThrottle]
 
     def patch(self, request, project_id, task_id):

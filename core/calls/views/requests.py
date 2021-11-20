@@ -11,6 +11,7 @@ from rest_framework.throttling import UserRateThrottle
 from core.calls.helpers.requests.authenticators import IntegrationTokenAuthentication
 from core.calls.helpers.requests.filters import filter_request
 from core.calls.models import Request
+from core.calls.permissions.common import IsRequestAllowed
 from core.calls.serializers.requests import RequestsSerializer, RequestSerializer
 from core.projects.models import Project
 from core.stats.tracks.requests import track_request, track_requests
@@ -21,7 +22,7 @@ from utils.helpers.common import delete_model
 
 @api_view(['POST'])
 @authentication_classes((IntegrationTokenAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated, IsRequestAllowed))
 @throttle_classes((UserRateThrottle,))
 def create_request(request, project_id):
     project = Project.objects.get(id=project_id)
@@ -46,7 +47,7 @@ def create_request(request, project_id):
 
 @api_view(['DELETE'])
 @authentication_classes((TokenAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated, IsRequestAllowed))
 @throttle_classes((UserRateThrottle,))
 def delete_all_requests(request, project_id):
     requests = Request.objects.filter(project_id=project_id)
@@ -56,7 +57,7 @@ def delete_all_requests(request, project_id):
 
 @api_view(['GET'])
 @authentication_classes((TokenAuthentication,))
-@permission_classes((IsAuthenticated,))
+@permission_classes((IsAuthenticated, IsRequestAllowed))
 @throttle_classes((UserRateThrottle,))
 def get_requests_chain(request, project_id, node_id):
     requests = Request.objects.filter(project_id=project_id, nodeId=node_id).order_by('created')
@@ -66,7 +67,7 @@ def get_requests_chain(request, project_id, node_id):
 
 class RequestsApi(views.APIView, LimitOffsetPagination):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestAllowed]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id):
@@ -93,7 +94,7 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
 
 class RequestApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestAllowed]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id, request_id):

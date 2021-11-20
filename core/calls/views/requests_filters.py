@@ -5,13 +5,14 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.calls.models import RequestsFilter
+from core.calls.permissions.common import IsRequestsFilterAllowed
 from core.calls.serializers.requests_filters import RequestsFiltersSerializer, RequestsFilterSerializer
 from utils.exeptions import BadRequest, NotFound
 
 
 class RequestsFiltersApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestsFilterAllowed]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id):
@@ -33,7 +34,7 @@ class RequestsFiltersApi(views.APIView):
 
 class RequestsFilterApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRequestsFilterAllowed]
     throttle_classes = [UserRateThrottle]
 
     def patch(self, request, project_id, filter_id):

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.projects.models import Project, Role
+from core.projects.permissions.common import IsRoleActionAllowed
 from core.projects.serializers.projects import ProjectsSerializer
 from core.projects.serializers.roles import RoleSerializer
 from utils.helpers.common import delete_model
@@ -12,7 +13,7 @@ from utils.helpers.common import delete_model
 
 class RolesApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRoleActionAllowed]
     throttle_classes = [UserRateThrottle]
 
     def post(self, request, project_id):
@@ -35,7 +36,7 @@ class RolesApi(views.APIView):
 
 class RoleApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsRoleActionAllowed]
     throttle_classes = [UserRateThrottle]
 
     def patch(self, request, project_id, role_id):

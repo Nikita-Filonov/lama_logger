@@ -9,6 +9,7 @@ from rest_framework.response import Response
 
 from core.projects.helpers.utils import member_invite_mail
 from core.projects.models import Member, Project
+from core.projects.permissions.common import IsMemberActionAllowed
 from core.projects.serializers.members import MemberSerializer
 from core.projects.serializers.projects import ProjectsSerializer
 from core.users.models import CustomUser
@@ -16,7 +17,7 @@ from core.users.models import CustomUser
 
 class MembersApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsMemberActionAllowed]
 
     def post(self, request, project_id):
         username = request.data.get('username')
@@ -62,7 +63,7 @@ class MembersApi(views.APIView):
 
 class MemberApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsMemberActionAllowed]
 
     def patch(self, request, project_id, member_id):
         member = Member.objects.get(id=member_id)

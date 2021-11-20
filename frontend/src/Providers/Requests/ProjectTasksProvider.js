@@ -23,8 +23,9 @@ const ProjectTasksProvider = ({children}) => {
 
   const getTasks = async (projectId) => {
     setLoad(true);
-    const {json} = await get(projectsApi + `${projectId}/tasks/`);
-    setTasks(json);
+    const {json, error} = await get(projectsApi + `${projectId}/tasks/`);
+    !error && setTasks(json);
+    error && setAlert(json);
     setLoad(false)
   }
 

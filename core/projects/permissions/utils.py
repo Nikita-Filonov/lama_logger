@@ -1,6 +1,15 @@
+import re
+from enum import Enum
 from itertools import chain
 
 from core.projects.helpers.utils import get_member
+
+
+class Action(Enum):
+    GET = 'read'
+    POST = 'create'
+    PATCH = 'update'
+    DELETE = 'delete'
 
 
 def to_scope(model):
@@ -24,3 +33,12 @@ def common_check(view, request, scopes):
 
     member_roles = list(chain.from_iterable([role.scope for role in member.roles.all()]))
     return scopes[request.method] in member_roles
+
+
+def to_forbid_message(method, model):
+    action = Action[method]
+
+    model_parts = re.findall('[A-Z][^A-Z]*', model.__name__)
+    model_name = ' '.join([part.lower() for part in model_parts])
+
+    return f'You can not {action.value} {model_name} of this project'

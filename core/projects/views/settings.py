@@ -5,12 +5,13 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 
 from core.projects.models import ProjectSettings
+from core.projects.permissions.common import IsProjectSettingsActionAllowed
 from core.projects.serializers.settings import ProjectSettingsSerializer, ProjectSettingSerializer
 
 
 class ProjectSettingsApi(views.APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsProjectSettingsActionAllowed]
     throttle_classes = [UserRateThrottle]
 
     def get(self, request, project_id):
