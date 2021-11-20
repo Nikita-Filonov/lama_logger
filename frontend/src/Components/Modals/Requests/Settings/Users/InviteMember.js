@@ -19,6 +19,7 @@ import {setInviteMemberModal} from "../../../../../Redux/Requests/Settings/reque
 import {LoadingButton} from "@mui/lab";
 import {usePermissions} from "../../../../../Providers/Users/PermissionsProvider";
 import {MEMBER} from "../../../../../Utils/Permissions/Projects";
+import {SlideTransition} from "../../../../../Utils/Utils/Common";
 
 
 const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
@@ -42,7 +43,13 @@ const InviteMember = ({project, inviteMemberModal, setInviteMemberModal}) => {
   }
 
   return (
-    <Dialog open={inviteMemberModal} onClose={onClose} maxWidth={'sm'} fullWidth>
+    <Dialog
+      open={inviteMemberModal}
+      onClose={onClose}
+      maxWidth={'sm'}
+      fullWidth
+      TransitionComponent={SlideTransition}
+    >
       <DialogTitle>Invite member</DialogTitle>
       <DialogContent>
         <DialogContentText>

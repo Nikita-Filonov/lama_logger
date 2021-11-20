@@ -39,10 +39,12 @@ const RequestsToolbar = (props) => {
     >
       <ProjectSelect/>
       <Divider orientation={'vertical'} flexItem style={RequestsToolbarStyles.buttonsDivider}/>
-      <Button startIcon={<AccessTime/>} color={'inherit'} onClick={onTimeFilters}
-              style={RequestsToolbarStyles.timeFiltersButton}>
-        <Typography style={common.ellipsisText}>{timeFiltersLabel}</Typography>
-      </Button>
+      <Tooltip title={timeFiltersLabel} arrow>
+        <Button startIcon={<AccessTime/>} color={'inherit'} onClick={onTimeFilters}
+                style={RequestsToolbarStyles.timeFiltersButton}>
+          <Typography style={common.ellipsisText}>{timeFiltersLabel}</Typography>
+        </Button>
+      </Tooltip>
       <Divider orientation={'vertical'} flexItem style={RequestsToolbarStyles.buttonsDivider}/>
       <Button startIcon={<PeopleOutline/>} color={'inherit'} onClick={onTimeFilters}>
         Members filters
