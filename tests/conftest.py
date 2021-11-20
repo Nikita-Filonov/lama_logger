@@ -3,9 +3,11 @@ from django.test import Client
 from rest_framework.test import APIRequestFactory
 
 from core.projects.models import Member
+from core.projects.views.projects import ProjectsApi
 from core.users.models import CustomUser
-from tests.api import Endpoints
+from tests.api import Endpoints, post
 from tests.params import users_data, get_project_payload
+from tests.utils.utils import to_json
 
 pytest_plugins = []
 
@@ -33,6 +35,9 @@ def member(user):
 
 @pytest.fixture(scope='function')
 @pytest.mark.django_db
-def project(factory):
+def project(factory, user):
     project_payload = get_project_payload()
-    factory.post(Endpoints.PROJECTS.value, data=project_payload)
+    request = post(Endpoints.PROJECTS.value, project_payload, user)
+
+    response = ProjectsApi.as_view()(request)
+    return to_json(response)

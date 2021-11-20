@@ -82,3 +82,6 @@ class AccountManager:
         *ROLE,
         *MEMBER,
     ]
+
+
+DEFAULT_ROLES = [Admin, Developer, AccountManager, AutomationEngineer]

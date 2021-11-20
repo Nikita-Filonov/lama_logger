@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from core.calls.models import Request
 from core.projects.models import Project, Member, Role
-from core.projects.permissions.roles import Admin, AccountManager, Developer, AutomationEngineer
+from core.projects.permissions.roles import DEFAULT_ROLES
 from core.projects.serializers.members import MembersSerializer
 from core.projects.serializers.roles import RolesSerializer
 from core.stats.helper.utils import group_types, filter_action
@@ -63,7 +63,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         project = Project.objects.create(**validated_data, creator=self.context)
 
-        for role in [Admin, Developer, AccountManager, AutomationEngineer]:
+        for role in DEFAULT_ROLES:
             created_role = Role.objects.create(name=role.name, scope=role.scopes)
             project.roles.add(created_role)
 

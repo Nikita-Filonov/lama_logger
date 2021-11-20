@@ -2,6 +2,7 @@ import allure
 import pytest
 from rest_framework.status import HTTP_201_CREATED
 
+from core.projects.permissions.roles import DEFAULT_ROLES
 from core.projects.views.projects import ProjectsApi, ProjectApi
 from tests.api import Endpoints, post
 from tests.params import get_project_payload
@@ -19,7 +20,6 @@ projects_api = Endpoints.PROJECTS.value
 @allure.severity(allure.severity_level.CRITICAL)
 @pytest.mark.django_db(transaction=True)
 class TestMonstersApi:
-    @pytest.mark.test
     @allure.title('Create project')
     def test_create_project(self, user):
         project_payload = get_project_payload()
@@ -29,3 +29,8 @@ class TestMonstersApi:
         json_response = to_json(response)
 
         assert response.status_code == HTTP_201_CREATED
+        assert json_response['title'] == project_payload['title']
+        assert json_response['short'] == project_payload['short']
+        assert json_response['description'] == project_payload['description']
+        assert len(json_response['members']) == 1
+        assert len(json_response['roles']) == len(DEFAULT_ROLES)
