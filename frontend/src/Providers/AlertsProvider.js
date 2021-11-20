@@ -3,7 +3,7 @@ import {IconButton} from "@mui/material";
 import {SnackbarProvider} from "notistack";
 import {Close} from "@mui/icons-material";
 import {useSelector} from "react-redux";
-import {TRANSITIONS} from "../Utils/Constants";
+import {DEFAULT_THEME_SETTINGS, TRANSITIONS} from "../Utils/Constants";
 
 const AlertsContext = React.createContext(null);
 
@@ -23,14 +23,14 @@ const AlertsProvider = ({children}) => {
     >
       <SnackbarProvider
         ref={alertRef}
-        maxSnack={5}
+        maxSnack={theme?.snackbar?.maxStack || DEFAULT_THEME_SETTINGS.snackbar.maxStack}
         autoHideDuration={4000}
         anchorOrigin={{
-          vertical: theme?.snackbar?.vertical || 'bottom',
-          horizontal: theme?.snackbar?.horizontal || 'right',
+          vertical: theme?.snackbar?.vertical || DEFAULT_THEME_SETTINGS.snackbar.vertical,
+          horizontal: theme?.snackbar?.horizontal || DEFAULT_THEME_SETTINGS.snackbar.horizontal,
         }}
         action={key => <IconButton onClick={() => onClose(key)}><Close/></IconButton>}
-        TransitionComponent={TRANSITIONS[theme?.snackbar?.transition || 'slide']}
+        TransitionComponent={TRANSITIONS[theme?.snackbar?.transition || DEFAULT_THEME_SETTINGS.snackbar.transition]}
       >
         {children}
       </SnackbarProvider>

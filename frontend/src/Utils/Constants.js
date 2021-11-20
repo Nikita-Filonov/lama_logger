@@ -67,6 +67,7 @@ export const DEFAULT_THEME_SETTINGS = {
     vertical: 'bottom',
     horizontal: 'right',
     transition: 'slide',
+    maxStack: 5
   }
 }
 
