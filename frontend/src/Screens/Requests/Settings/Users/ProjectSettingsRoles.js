@@ -24,9 +24,8 @@ const ProjectSettingsRoles = ({selectedRoles, setCreateRoleModal}) => {
           placeholder={'Search by name'}
         />
       }
-
       <div className={'mt-3'}>
-        <RolesTable/>
+        <RolesTable search={search}/>
       </div>
       <ZoomFab action={onCreate} title={'Create'}/>
       <CreateRole/>
