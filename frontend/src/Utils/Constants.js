@@ -2,7 +2,7 @@ import python from './../Utils/Integrations/Templates/python.json'
 import {getProjectName, getSdkLanguage, getTrackName} from "./Utils/Routing";
 import {Collapse, Fade, Grow, Slide, Zoom} from "@mui/material";
 
-export const baseUrl = 'https://lama-logger.herokuapp.com/';
+export const baseUrl = 'http://localhost:8000/';
 
 
 export const BREADCRUMB_ROUTES = [
