@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'core.stats.apps.StatsConfig',
     'core.calls.apps.CallsConfig',
     'core.tracks.apps.TracksConfig',
+    'core.performance.apps.PerformanceConfig',
     'django_celery_beat'
 ]
 

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core.stats.apps.StatsConfig',
     'core.calls.apps.CallsConfig',
     'core.tracks.apps.TracksConfig',
+    'core.performance.apps.PerformanceConfig',
     'django_celery_beat'
 ]
 
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'core.calls.middleware.ActiveUserMiddleware'
 ]
 
 ROOT_URLCONF = 'lama_logger.urls'
