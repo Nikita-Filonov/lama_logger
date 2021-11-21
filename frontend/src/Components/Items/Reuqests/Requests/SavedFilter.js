@@ -22,7 +22,7 @@ const SavedFilter = ({filter, setRequestsFilters, requestsFilters}) => {
   }
 
   return (
-    <Tooltip title={filter?.title} placement={'right'}>
+    <Tooltip title={filter?.title} placement={'right'} arrow>
       <ListItem
         divider
         button
