@@ -18,7 +18,15 @@ import CommonHandler from "../../Components/Blocks/Common/Handlers/CommonHandler
 
 
 const Requests = (props) => {
-  const {request, project, viewMode, requestsRealtime, selectedRequests, requestsFilters, requestsPagination} = props;
+  const {
+    request,
+    project,
+    viewMode,
+    requestsRealtime,
+    selectedRequests,
+    requestsFilters,
+    requestsPagination
+  } = props;
   const {projectId} = useParams();
   const history = useHistory();
   const requestsInterval = useRef(null);

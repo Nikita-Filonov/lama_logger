@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {useApiTokens} from "../../Providers/Users/ApiTokensProvider";
 import ApiToken from "../../Components/Items/Profile/ApiToken";
 import {ApiTokensSkeletons} from "../../Components/Blocks/Profile/ApiTokens/ApiTokensSkeletons";
+import {EmptyList} from "../../Components/Blocks/Common/EmptyList";
 
 export const ApiTokens = () => {
   const classes = ProjectSettingsStyles();
@@ -22,6 +23,8 @@ export const ApiTokens = () => {
         because you will not be able to view it again.
       </Typography>
       <Grid item xs={12} className={'mt-3'}>
+        {tokens?.length === 0 && !load && <EmptyList
+          text={'There is not API Tokens'} description={'Click on "New token" to create new one'}/>}
         {load
           ? <ApiTokensSkeletons/>
           : <List dense>

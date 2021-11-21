@@ -28,12 +28,12 @@ const RequestsSideFilters = (props) => {
     <Box sx={{width: 200, mr: 2}} hidden={requestsFiltersSidebar}>
       <Paper className={'p-1 ps-2 pb-2'}>
         <div className={'d-flex'}>
-          <Tooltip title={'Filters settings'} placement={'top'}>
+          <Tooltip title={'Filters settings'} placement={'top'} arrow>
             <IconButton size={'small'} onClick={onSettings}>
               <Settings fontSize={'small'}/>
             </IconButton>
           </Tooltip>
-          <Tooltip title={view === 'fields' ? 'Filters fields' : 'Saved filters'} placement={'top'}>
+          <Tooltip title={view === 'fields' ? 'Filters fields' : 'Saved filters'} placement={'top'} arrow>
             <IconButton size={'small'} sx={{ml: .5}} onClick={onView}>
               {view === 'fields' ? <FormatListBulletedIcon fontSize={'small'}/> : <FilterList fontSize={'small'}/>}
             </IconButton>

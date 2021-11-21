@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {setRequestsPagination} from "../../../../../Redux/Requests/Requests/requestsActions";
 import {getComparator, stableSort} from "../../../../../Utils/Utils/Sorting";
 import {REQUESTS_PAGINATION} from "../../../../../Utils/Constants";
+import {EmptyList} from "../../../Common/EmptyList";
 
 
 const RequestsTable = (props) => {
@@ -29,16 +30,20 @@ const RequestsTable = (props) => {
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
+      {requests?.results?.length === 0 && <EmptyList
+        text={'There is no requests'}
+        description={'When your autotests/application will start sending requests they will appear here'}
+      />}
       <Table className={'w-100'} size={'small'} aria-label="a dense table" stickyHeader>
-        <RequestsTableHeader
+        {requests?.results?.length > 0 && <RequestsTableHeader
           order={order}
           orderBy={orderBy}
           onRequestSort={onRequestSort}
-        />
+        />}
         <TableBody>
           {
             stableSort(requests?.results, getComparator(order, orderBy))
-            .map(request => <RequestRow request={request} key={request.requestId}/>)
+              .map(request => <RequestRow request={request} key={request.requestId}/>)
           }
         </TableBody>
 

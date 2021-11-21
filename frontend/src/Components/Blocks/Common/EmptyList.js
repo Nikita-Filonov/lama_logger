@@ -22,12 +22,12 @@ const useStyles = makeStyles(
   {defaultTheme},
 );
 
-export const EmptyList = ({text, description = null}) => {
+export const EmptyList = ({text, description = null, withImage = true}) => {
   const classes = useStyles();
 
   return (
     <div>
-      <img className={classes.image} src={baseUrl + 'static/images/empty_list.png'}/>
+      {withImage && <img className={classes.image} src={baseUrl + 'static/images/empty_list.png'}/>}
       <div className={classes.label}>
         <Typography variant={'body1'} className={classes.label}>{text}</Typography>
         {description && <Typography variant={'caption'} className={classes.label}>{description}</Typography>}
