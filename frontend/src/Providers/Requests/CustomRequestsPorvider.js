@@ -34,7 +34,7 @@ const CustomRequestsProvider = ({children, store}) => {
 
   useEffect(() => {
     (async () => {
-      token && await getCustomRequests(project.id, 50, 0, {filters: JSON.stringify({isCustom: true})});
+      token && await getCustomRequests(project.id, 50, 0, {filters: JSON.stringify({})});
     })()
   }, [token, project.id]);
 

@@ -72,7 +72,7 @@ class RequestsApi(views.APIView, LimitOffsetPagination):
 
     def get(self, request, project_id):
         filters = json.loads(request.query_params.get('filters', '{}'))
-        requests = Request.objects.filter(**filters, project_id=project_id).order_by('-created')
+        requests = Request.objects.filter(**filters, project_id=project_id, isCustom=False).order_by('-created')
 
         results = self.paginate_queryset(requests, request, view=self)
         serializer = RequestsSerializer(results, many=True)
