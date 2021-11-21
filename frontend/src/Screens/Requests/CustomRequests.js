@@ -34,7 +34,10 @@ const CustomRequests = ({project, customRequest}) => {
                 <RequestSection/>
                 <ResponseSection/>
               </React.Fragment>
-              : <EmptyList text={'You can select request from history or from requests section'}/>
+              : <EmptyList
+                text={'There is no custom requests'}
+                description={'You can select request from history or from requests section'}
+              />
             }
           </Grid>
         </Grid>

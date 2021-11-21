@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import Project from "../../Components/Items/Projects/Project";
 import {useProjects} from "../../Providers/ProjectsProvider";
 import {ProjectsSkeletons} from "../../Components/Blocks/Projects/ProjectsSkeletons";
+import {EmptyList} from "../../Components/Blocks/Common/EmptyList";
 
 const Projects = ({projects}) => {
   const {load} = useProjects();
@@ -24,6 +25,8 @@ const Projects = ({projects}) => {
         placeholder={'Search by project name'}
         title={'Projects'}
       />
+      {projects?.length === 0 && !load &&
+      <EmptyList text={'There is no projects'} description={'Click on "Create" to create new one'}/>}
       <div className={'d-flex mt-3 mb-3'}>
         <Grid
           container

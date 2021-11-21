@@ -50,23 +50,19 @@ class Forbidden(APIException):
 COMMON_STATUSES = [401, 405, 500, 404]
 COMMON_EXCEPTIONS = {
     401: {
-        'message': 'You are not authenticated. Please log in',
+        'message': 'You are not authenticated. Please log in (401)',
         'level': ERROR
     },
     405: {
-        'message': 'Such method not allowed',
+        'message': 'Such method not allowed (405)',
         'level': ERROR
     },
     500: {
-        'message': 'Server error. Please try refresh the page',
+        'message': 'Server error. Please try refresh the page (500)',
         'level': ERROR
     },
     404: {
-        'message': 'Resource was not fond on the server',
-        'level': ERROR
-    },
-    400: {
-        'message': 'Bad request. Make sure to all fields correct',
+        'message': 'Resource was not fond on the server (404)',
         'level': ERROR
     }
 }
