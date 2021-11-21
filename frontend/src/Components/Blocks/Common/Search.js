@@ -7,9 +7,13 @@ import IconButton from "@mui/material/IconButton";
 const SearchInput = styled('div')(({theme}) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: theme.palette.mode === 'dark'
+    ? alpha(theme.palette.common.white, 0.15)
+    : alpha(theme.palette.common.black, 0.10),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: theme.palette.mode === 'dark'
+      ? alpha(theme.palette.common.white, 0.25)
+      : alpha(theme.palette.common.black, 0.05)
   },
   marginLeft: 0,
   width: '100%',
@@ -40,7 +44,7 @@ const StyledInputBase = styled(InputBase)(({theme, search}) => ({
     [theme.breakpoints.up('sm')]: {
       width: '20ch',
       '&:focus': {
-        width: search?.length > 0 ? '25ch' : '30ch',
+        width: '30ch',
       },
     },
     textOverflow: 'ellipsis',

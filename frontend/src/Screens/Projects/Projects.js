@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Container, Fab, Grid} from '@mui/material';
 import {CreateProject} from "../../Components/Modals/Projects/CreateProject";
 import {common} from "../../Styles/Blocks";
@@ -17,6 +17,11 @@ const Projects = ({projects}) => {
 
   const onCreateProject = () => setCreateProjectModal(true);
 
+  const filteredProjects = useMemo(
+    () => projects.filter(p => p?.title?.toLowerCase().includes(search?.toLowerCase())),
+    [search, projects]
+  )
+
   return (
     <Container maxWidth={'xl'}>
       <ProjectsToolbar
@@ -25,7 +30,7 @@ const Projects = ({projects}) => {
         placeholder={'Search by project name'}
         title={'Projects'}
       />
-      {projects?.length === 0 && !load &&
+      {filteredProjects?.length === 0 && !load &&
       <EmptyList text={'There is no projects'} description={'Click on "Create" to create new one'}/>}
       <div className={'d-flex mt-3 mb-3'}>
         <Grid
@@ -37,7 +42,7 @@ const Projects = ({projects}) => {
         >
           {load
             ? <ProjectsSkeletons/>
-            : projects.map(project => <Project key={project.id} project={project}/>)
+            : filteredProjects.map(project => <Project key={project.id} project={project}/>)
           }
         </Grid>
       </div>

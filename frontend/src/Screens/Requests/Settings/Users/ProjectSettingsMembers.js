@@ -10,9 +10,9 @@ import MembersToolbar from "../../../../Components/Blocks/Requests/Settings/User
 
 const ProjectSettingsMembers = ({setInviteMemberModal, selectedMembers}) => {
   const classes = ProjectSettingsStyles();
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
 
-  const onInvite = () => setInviteMemberModal(true)
+  const onInvite = () => setInviteMemberModal(true);
 
   return (
     <div className={classes.contentContainer}>
@@ -26,7 +26,7 @@ const ProjectSettingsMembers = ({setInviteMemberModal, selectedMembers}) => {
         />
       }
       <div className={'mt-3'}>
-        <MembersTable/>
+        <MembersTable search={search}/>
       </div>
       <ZoomFab action={onInvite} title={'Invite'}/>
       <InviteMember/>
