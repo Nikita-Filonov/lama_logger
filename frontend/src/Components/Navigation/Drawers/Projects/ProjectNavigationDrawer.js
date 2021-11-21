@@ -14,11 +14,13 @@ import {useHistory, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {DrawerHeaderStyled, DrawerStyled} from "../../../../Styles/Blocks";
 import {setRequest} from "../../../../Redux/Requests/Requests/requestsActions";
+import {useUsers} from "../../../../Providers/Users/UsersProvider";
 
 const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
   const history = useHistory();
   const theme = useTheme();
   const location = useLocation();
+  const {onLogout} = useUsers();
 
   const onProjects = () => {
     history.push('/projects')
@@ -27,6 +29,10 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
   const onProfile = () => history.push('/user/profile');
   const onIntegrations = () => history.push('/integrations');
   const onSettings = () => history.push('/settings/theme');
+  const onLogoutPress = async () => {
+    await onLogout();
+    history.push('/login');
+  }
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -61,7 +67,7 @@ const ProjectNavigationDrawer = ({open, onClose, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'Settings'}/>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={onLogoutPress}>
           <ListItemIcon>
             <Logout/>
           </ListItemIcon>

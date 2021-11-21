@@ -4,32 +4,25 @@ import ListItemText from "@mui/material/ListItemText";
 import {common} from "../../../../Styles/Blocks";
 import ListItem from "@mui/material/ListItem";
 import {connect} from "react-redux";
-import {setProject} from "../../../../Redux/Projects/projectActions";
-import {generateProjectPath} from "../../../../Utils/Utils/Routing";
-import {useHistory} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import {Settings} from "@mui/icons-material";
 import List from "@mui/material/List";
+import {useProjects} from "../../../../Providers/ProjectsProvider";
 
-const DrawerSelectProject = ({drawerOpen, project, projects, setProject}) => {
-  const history = useHistory();
+const DrawerSelectProject = ({drawerOpen, project, projects}) => {
+  const {onSelectProject, onSelectProjectSettings} = useProjects();
   const [selectProjectPopover, setSelectProjectPopover] = useState(null);
 
   const onOpen = (event) => setSelectProjectPopover(event.currentTarget);
   const onClose = () => setSelectProjectPopover(null);
 
-  const onSelectProject = async (projectId) => {
-    const selectedProject = projects.find(p => p.id === projectId)
-    setProject(selectedProject);
-    const path = generateProjectPath(history.location.pathname, selectedProject.id)
-    history.push(path);
-    onClose()
-  }
+  const onProject = async (projectId) => {
+    await onSelectProject(projectId);
+    onClose();
+  };
 
   const onSettings = async (projectId) => {
-    const selectedProject = projects.find(p => p.id === projectId)
-    setProject(selectedProject);
-    history.push(`/projects/${projectId}/settings/general`);
+    await onSelectProjectSettings(projectId);
     onClose();
   }
 
@@ -67,7 +60,7 @@ const DrawerSelectProject = ({drawerOpen, project, projects, setProject}) => {
               disableGutters
               key={p.id}
               sx={{maxWidth: 200, pl: 1, pr: 1, width: 200}}
-              onClick={async () => await onSelectProject(p.id)}
+              onClick={async () => await onProject(p.id)}
               selected={project.id === p.id}
             >
               <Typography style={common.ellipsisText} sx={{mr: 2}}>{p.title}</Typography>
@@ -92,7 +85,5 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  {
-    setProject
-  },
+  null,
 )(DrawerSelectProject);

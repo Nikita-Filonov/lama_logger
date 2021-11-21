@@ -28,7 +28,7 @@ const UsersProvider = ({children, store}) => {
 
   const onLogout = async () => {
     setToken(null);
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   };
 
   const getUser = useCallback(async () => {

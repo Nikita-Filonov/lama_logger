@@ -24,8 +24,8 @@ const AccountNavbarMenu = ({user}) => {
   const onClose = () => setMenu(null);
 
   const onLogoutPress = async () => {
-    await onLogout()
-    history.push('/login')
+    await onLogout();
+    history.push('/login');
   }
 
   const onProfile = () => history.push('/user/profile');

@@ -1,30 +1,28 @@
 import React, {useState} from "react";
-import {Button, Menu, Tooltip} from "@mui/material";
+import {Button, ListItem, ListItemSecondaryAction, Menu, Tooltip} from "@mui/material";
 import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
-import {setProject} from "../../../../../Redux/Projects/projectActions";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import {common} from "../../../../../Styles/Blocks";
 import IconButton from "@mui/material/IconButton";
 import {Settings} from "@mui/icons-material";
-import {generateProjectPath} from "../../../../../Utils/Utils/Routing";
+import {useProjects} from "../../../../../Providers/ProjectsProvider";
 
-const ProjectSelect = ({project, projects, setProject}) => {
-  const history = useHistory();
+const ProjectSelect = ({project, projects}) => {
   const [menu, setMenu] = useState(null);
   const onOpen = (event) => setMenu(event.currentTarget);
   const onClose = () => setMenu(null);
+  const {onSelectProject, onSelectProjectSettings} = useProjects();
 
+  const onProject = async (projectId) => {
+    await onSelectProject(projectId);
+    onClose();
+  };
 
-  const onSelectProject = (projectId) => {
-    const selectedProject = projects.find(p => p.id === projectId);
-    setProject(selectedProject);
-    const path = generateProjectPath(history.location.pathname, selectedProject.id)
-    history.push(path);
-    onClose()
+  const onSettings = async (projectId) => {
+    await onSelectProjectSettings(projectId);
+    onClose();
   }
 
   return (
@@ -47,17 +45,22 @@ const ProjectSelect = ({project, projects, setProject}) => {
         open={Boolean(menu)}
         onClose={onClose}
       >
-        {projects.map(p => <MenuItem
+        {projects.map(p => <ListItem
+          button
           value={p.id}
           key={p.id}
           sx={{maxWidth: 300, width: 300}}
-          onClick={() => onSelectProject(p.id)}
+          onClick={async () => await onProject(p.id)}
           selected={project.id === p.id}
         >
-          <Typography onClick={() => onSelectProject(p.id)} style={common.ellipsisText}>{p.title}</Typography>
+          <Typography style={common.ellipsisText}>{p.title}</Typography>
           <div className={'flex-grow-1'}/>
-          <IconButton size={'small'}><Settings fontSize={'small'}/></IconButton>
-        </MenuItem>)}
+          <ListItemSecondaryAction>
+            <IconButton size={'small'} onClick={async () => await onSettings(p.id)}>
+              <Settings fontSize={'small'}/>
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>)}
       </Menu>
     </React.Fragment>
   )
@@ -71,7 +74,5 @@ const getState = (state) => ({
 
 export default connect(
   getState,
-  {
-    setProject
-  },
+  null,
 )(ProjectSelect);

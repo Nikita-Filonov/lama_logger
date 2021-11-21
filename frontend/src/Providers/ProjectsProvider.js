@@ -5,6 +5,8 @@ import {useAlerts} from "./AlertsProvider";
 import {objectToQuery} from "../Utils/Utils/Common";
 import {get, patch, post, remove} from "../Utils/Api/Fetch";
 import {useHistory} from "react-router-dom";
+import {generateProjectPath} from "../Utils/Utils/Routing";
+import {useSelector} from "react-redux";
 
 
 const ProjectsContext = React.createContext(null);
@@ -17,6 +19,7 @@ const ProjectsProvider = ({children, store}) => {
   const [load, setLoad] = useState(true);
   const [request, setRequest] = useState(false);
 
+  const projects = useSelector(state => state.projects.projects);
 
   useEffect(() => {
     (async () => token && await getProjects())();
@@ -31,6 +34,19 @@ const ProjectsProvider = ({children, store}) => {
     !error && await updateProjectState(json);
     setAlert(error ? json : (successMessage || json));
     setRequest(false);
+  }
+
+  const onSelectProject = async (projectId) => {
+    const selectedProject = projects.find(p => p.id === projectId);
+    store.dispatch({type: SET_PROJECT, payload: selectedProject});
+    const path = generateProjectPath(history.location.pathname, selectedProject?.id)
+    history.push(path)
+  }
+
+  const onSelectProjectSettings = async (projectId) => {
+    const selectedProject = projects.find(p => p.id === projectId)
+    store.dispatch({type: SET_PROJECT, payload: selectedProject});
+    history.push(`/projects/${projectId}/settings/general`);
   }
 
   const getProjects = useCallback(async (query = {archived: 'False'}) => {
@@ -112,7 +128,9 @@ const ProjectsProvider = ({children, store}) => {
         deleteMembers,
         createRole,
         updateRole,
-        deleteRole
+        deleteRole,
+        onSelectProject,
+        onSelectProjectSettings
       }}
     >
       {children}
