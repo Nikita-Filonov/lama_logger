@@ -9,7 +9,9 @@ class Transaction(models.Model):
     project = models.ForeignKey(
         Project,
         verbose_name='Project',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
     method = models.CharField(
         verbose_name='Method',

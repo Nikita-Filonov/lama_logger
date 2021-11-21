@@ -32,6 +32,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
   const onStats = () => history.push(baseRoute + '/stats');
   const onTracks = () => history.push(baseRoute + '/tracks');
   const onUsersRequests = () => history.push(baseRoute + '/custom-requests');
+  const onPerformance = () => history.push(baseRoute + `/performance`);
 
   return (
     <DrawerStyled variant="permanent" open={open}>
@@ -70,7 +71,7 @@ const RequestNavigationDrawer = ({open, onClose, project, setRequest}) => {
           </ListItemIcon>
           <ListItemText primary={'API Libraries'}/>
         </ListItem>
-        <ListItem button onClick={onProjects}>
+        <ListItem button onClick={onPerformance} selected={/\/projects\/[0-9]+\/performance/.test(location.pathname)}>
           <ListItemIcon>
             <FlashOn/>
           </ListItemIcon>

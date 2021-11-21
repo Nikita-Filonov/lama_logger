@@ -27,6 +27,8 @@ import TracksPatternsSettings from "../../../../Screens/Requests/Settings/Tracks
 import {PermissionsProvider} from "../../../../Providers/Users/PermissionsProvider";
 import TracksDomainsSettings from "../../../../Screens/Requests/Settings/Tracks/TracksDomainsSettings";
 import {CustomRequestsProvider} from "../../../../Providers/Requests/CustomRequestsPorvider";
+import {PerformanceProvider} from "../../../../Providers/Requests/PerformanceProvider";
+import Performance from "../../../../Screens/Requests/Performance";
 
 export const RequestsRoutes = ({store}) =>
   <RequestsProvider store={store}>
@@ -61,6 +63,13 @@ export const RequestsRoutes = ({store}) =>
                 component={props => <RequestsStatsProvider store={store}>
                   <RequestsStats {...props}/>
                 </RequestsStatsProvider>}
+              />
+              <RequestRoute
+                exact
+                ath="/projects/:projectId/performance"
+                component={props => <PerformanceProvider store={store}>
+                  <Performance {...props}/>
+                </PerformanceProvider>}
               />
               <RequestsSettingsRoute exact path="/projects/:projectId/settings/general"
                                      component={ProjectSettingsGeneral}/>

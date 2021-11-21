@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/v1/', include('core.calls.urls')),
     path('api/v1/', include('core.tracks.urls')),
     path('api/v1/', include('core.projects.urls')),
+    path('api/v1/', include('core.performance.urls')),
 
     path('login/', TemplateView.as_view(template_name='index.html'), name='index'),
     path('registration/', TemplateView.as_view(template_name='index.html'), name='index'),
