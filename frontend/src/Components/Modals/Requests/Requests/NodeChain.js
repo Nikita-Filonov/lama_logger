@@ -10,6 +10,7 @@ import {useHistory} from "react-router-dom";
 import {useRequests} from "../../../../Providers/Requests/RequestsProvider";
 import NodeChainModalHeader from "../../../Blocks/Requests/Requests/NodeChain/NodeChainModalHeader";
 import _ from 'lodash';
+import {EmptyList} from "../../../Blocks/Common/EmptyList";
 
 
 const NodeChain = (props) => {
@@ -22,13 +23,6 @@ const NodeChain = (props) => {
   } = props;
   const history = useHistory();
   const {getRequestsChain, updateRequest} = useRequests();
-
-  // const totalDuration = useMemo(
-  //   () => requestsChain.length > 0
-  //     ? requestsChain?.reduce((prev, cur) => ({duration: prev.duration + cur.duration}))
-  //     : 0,
-  //   [requestsChain]
-  // );
 
   useEffect(() => {
     (async () => {
@@ -70,14 +64,18 @@ const NodeChain = (props) => {
     >
       <NodeChainModalHeader/>
       <Container maxWidth={'xl'}>
-        <Grid container spacing={2} sx={{mt: 0.1}}>
+        {requestsChain?.length === 0 && <EmptyList
+          text={'There is nothing to chain'}
+          description={'Requests only could be chained if they having node and nodeId'}
+        />}
+        {requestsChain?.length > 0 && <Grid container spacing={2} sx={{mt: 0.1}}>
           <Grid item xs={_.isEmpty(requestChain) ? 12 : 6}>
             <NodeChainRequestsList/>
           </Grid>
           {!_.isEmpty(requestChain) && <Grid item xs={6}>
             <NodeChainRequestSection/>
           </Grid>}
-        </Grid>
+        </Grid>}
       </Container>
     </Dialog>
   );

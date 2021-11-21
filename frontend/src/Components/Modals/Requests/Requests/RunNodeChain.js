@@ -10,6 +10,7 @@ import {setConfirmAction} from "../../../../Redux/Users/usersActions";
 import List from "@mui/material/List";
 import {LoadingButton} from "@mui/lab";
 import {RunNodeChainRequest} from "../../../Items/Reuqests/Requests/RunNodeChainRequest";
+import {EmptyList} from "../../../Blocks/Common/EmptyList";
 
 
 const RunNodeChain = ({modal, setModal, project, requestsChain}) => {
@@ -47,6 +48,7 @@ const RunNodeChain = ({modal, setModal, project, requestsChain}) => {
         <DialogContentText sx={{mt: 2}}>
           Select requests
         </DialogContentText>
+        {requestsChain?.length === 0 && <EmptyList text={'There is nothing to run'}/>}
         <List dense>
           {requestsChain.map((request) =>
             <RunNodeChainRequest
@@ -60,7 +62,13 @@ const RunNodeChain = ({modal, setModal, project, requestsChain}) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <LoadingButton loading={request} onClick={onRunNode}>Run</LoadingButton>
+        <LoadingButton
+          loading={request}
+          onClick={onRunNode}
+          disabled={requestsChain?.length === 0}
+        >
+          Run
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
