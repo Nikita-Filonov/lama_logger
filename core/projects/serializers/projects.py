@@ -37,7 +37,7 @@ class ProjectsSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_stats(obj: Project):
         start = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        end = datetime(start.year, start.month + 1, start.day) - timedelta(days=1)
+        end = datetime(start.year, start.month, start.day) - timedelta(days=1)
         requests_stats = RequestStat.objects.filter(project=obj, created__range=[start, end]).order_by('created')
 
         group_type = group_types['days']
